@@ -55,7 +55,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   .home-intro {
-    font-size: var(--fs-base);
+    font-size: var(--fs-sm);
     font-weight: 400;
     color: var(--text-light);
     margin-bottom: var(--space-sm);
@@ -63,7 +63,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   .home-tagline {
-    margin-bottom: var(--space-xl);
+    margin-bottom: clamp(3rem, 6vw, 6rem);
   }
 
   .greeting-lead {
@@ -71,7 +71,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     font-weight: 500;
     font-style: italic;
     color: var(--text);
-    margin-bottom: var(--space-xs);
+    margin-bottom: var(--space-sm);
   }
 
   .greeting-body {
@@ -83,9 +83,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   .greeting-source {
-    font-size: var(--fs-sm);
+    font-size: clamp(0.8rem, 0.75rem + 0.3vw, 0.9rem);
     color: var(--text-light);
-    opacity: 0.6;
+    opacity: 0.5;
     margin-top: var(--space-xs);
     font-style: italic;
   }
@@ -109,7 +109,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .home-choices {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-md);
+    gap: var(--space-lg);
     justify-content: center;
   }
 
@@ -117,11 +117,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--space-md) var(--space-lg);
-    border: 1px solid var(--border);
+    padding: var(--space-md) var(--space-xl);
+    border: 1.5px solid var(--border);
     border-radius: 12px;
     background: rgba(255, 255, 255, 0.4);
-    min-width: 14rem;
+    min-width: 16rem;
     transition: all 0.3s ease;
     text-decoration: none;
     color: var(--text);
@@ -130,7 +130,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .choice-card:hover {
     opacity: 1;
     background: rgba(255, 255, 255, 0.7);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    border-color: #ccc8c2;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
     transform: translateY(-2px);
   }
 
@@ -140,9 +141,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   .choice-label {
-    font-size: var(--fs-base);
-    font-weight: 500;
-    letter-spacing: 0.03em;
+    font-size: clamp(1.1rem, 1rem + 0.5vw, 1.35rem);
+    font-weight: 600;
+    letter-spacing: 0.05em;
   }
 
   /* Mobile: stack vertically */
