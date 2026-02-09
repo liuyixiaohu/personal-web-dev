@@ -8,7 +8,7 @@ interface Props {
   description?: string;
 }
 
-const { title = "Likun", description = "Likun's Personal Brand" } = Astro.props;
+const { title = "Kun Li", description = "I wasn't great at math or English, yet somehow I ended up a data scientist in the U.S., and eventually found my way back to expression." } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -20,14 +20,16 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="author" content="Likun" />
     <meta name="theme-color" content="#FAF7F2" />
     <link rel="canonical" href={canonicalURL} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="256x256" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Likun" />
+    <meta property="og:site_name" content="Kun Li" />
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter Card -->

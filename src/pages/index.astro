@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Kun Li" description="Kun Li's personal brand — Product Marketing, Data Science, Visual Design, and a life journey across the globe.">
+<BaseLayout title="Kun Li" description="I wasn't great at math or English, yet somehow I ended up a data scientist in the U.S., and eventually found my way back to expression.">
   <main class="home">
     <div class="last-updated">
       <span data-i18n="home.lastUpdated">Last updated</span>: 02-08-2026
@@ -18,10 +18,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
 
       <nav class="home-choices">
-        <a href="/professional" class="choice-card">
+        <a href="/professional" class="choice-link choice-link--professional">
+          <span class="choice-dot"></span>
           <span class="choice-label" data-i18n="home.professional">Professional Architecture</span>
         </a>
-        <a href="/life-journey" class="choice-card">
+        <a href="/life-journey" class="choice-link choice-link--journey">
+          <span class="choice-dot"></span>
           <span class="choice-label" data-i18n="home.lifeJourney">Life Journey</span>
         </a>
       </nav>
@@ -109,41 +111,39 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .home-choices {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-lg);
+    gap: var(--space-md);
     justify-content: center;
   }
 
-  .choice-card {
-    display: flex;
+  .choice-link {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    padding: var(--space-md) var(--space-xl);
-    border: 1.5px solid var(--border);
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.4);
-    min-width: 16rem;
-    transition: all 0.3s ease;
+    gap: 0.45em;
     text-decoration: none;
-    color: var(--text);
+    transition: opacity 0.2s ease;
   }
 
-  .choice-card:hover {
-    opacity: 1;
-    background: rgba(255, 255, 255, 0.7);
-    border-color: #ccc8c2;
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
-    transform: translateY(-2px);
+  .choice-link:hover {
+    opacity: 0.7;
   }
 
-  .choice-card:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  .choice-dot {
+    width: 0.45em;
+    height: 0.45em;
+    border-radius: 50%;
+    flex-shrink: 0;
   }
+
+  .choice-link--professional { color: #7FB6DD; }
+  .choice-link--professional .choice-dot { background: #7FB6DD; }
+
+  .choice-link--journey { color: #A8D7C6; }
+  .choice-link--journey .choice-dot { background: #A8D7C6; }
 
   .choice-label {
-    font-size: clamp(1.1rem, 1rem + 0.5vw, 1.35rem);
-    font-weight: 600;
-    letter-spacing: 0.05em;
+    font-size: clamp(0.95rem, 0.9rem + 0.3vw, 1.1rem);
+    font-weight: 500;
+    letter-spacing: 0.03em;
   }
 
   /* Mobile: stack vertically */
@@ -151,10 +151,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     .home-choices {
       flex-direction: column;
       align-items: center;
-    }
-    .choice-card {
-      width: 100%;
-      max-width: 16rem;
     }
     .last-updated {
       top: 3.5rem;

@@ -28,7 +28,7 @@ export const translations: Record<string, Record<Lang, string>> = {
     zh: 'Lucky 和 Happy 的深夜特别消息',
   },
   'lateNight.body': {
-    en: 'We are Lucky (cat food quality inspector)\nand Happy (curtain\u2011to\u2011mop\u2011cloth magician).\n\nWhy are you still awake? Is something bothering you?\n\nKun (our poop\u2011scooping servant) often gets scolded\nby his mom for staying up late (she actually just worries about him).\n\nWishing you good health and happiness every day.\nGo to sleep soon!',
+    en: 'We are Lucky (cat food quality inspector)\nand Happy (curtain\u2011to\u2011mop\u2011cloth magician).\n\nWhy are you still awake? Is something bothering you?\n\nKun (our poop\u2011scooper) often gets scolded\nby his mom for staying up late (she actually just worries about him).\n\nWishing you good health and happiness every day.\nGo to sleep soon!',
     zh: '我们是 Lucky（猫罐头质检员）\n和 Happy（窗帘变拖把布魔术大师）。\n\n为什么你还醒着，是有什么烦心事吗？\n\nKun（我们的铲屎官）经常因为熬夜\n而挨他妈妈的批评（实际是心疼）。\n\n祝你身体健康，每天快乐。\n赶快入睡！',
   },
 
