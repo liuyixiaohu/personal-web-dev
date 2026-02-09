@@ -18,7 +18,14 @@
 
     const rect = container.getBoundingClientRect();
     const camera = new THREE.PerspectiveCamera(50, rect.width / rect.height, 0.1, 2000);
-    camera.position.z = 220;
+    // Position camera to face Berkeley, CA (37.87°N, 122.27°W)
+    const camDist = 220;
+    const targetLat = 37.87 * Math.PI / 180;
+    const targetLng = -122.27 * Math.PI / 180;
+    camera.position.x = camDist * Math.cos(targetLat) * Math.sin(targetLng);
+    camera.position.y = camDist * Math.sin(targetLat);
+    camera.position.z = camDist * Math.cos(targetLat) * Math.cos(targetLng);
+    camera.lookAt(0, 0, 0);
 
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -80,7 +87,7 @@
       .customLayerData(pinData)
       .customThreeObject((d: any) => {
         // Small dot marker
-        const geometry = new THREE.SphereGeometry(0.6, 12, 12);
+        const geometry = new THREE.SphereGeometry(0.35, 12, 12);
         const material = new THREE.MeshPhongMaterial({
           color: new THREE.Color(d.color),
           emissive: new THREE.Color(d.color),
@@ -146,7 +153,7 @@
 
       let closestPin: PinData | null = null;
       let closestDist = Infinity;
-      const PIN_CLICK_RADIUS = 30;
+      const PIN_CLICK_RADIUS = 20;
 
       for (const pin of pins) {
         const screen = pinToScreen(pin, canvasRect);
@@ -195,7 +202,7 @@
         if (!screen) continue;
 
         const dist = Math.sqrt((mx - screen.x) ** 2 + (my - screen.y) ** 2);
-        if (dist < 30) {
+        if (dist < 20) {
           hovering = true;
           break;
         }
