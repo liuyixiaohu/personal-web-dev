@@ -62,6 +62,41 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <script>
       import { initLang, getLang, t } from '../i18n/langStore';
 
+      // Time-aware greetings (Truman Show inspired)
+      const greetings = {
+        morning: {
+          en: 'Good morning, and in case I don\u2019t see you, good afternoon, good evening, and good night!',
+          zh: '早上好~ 如果再也见不到你，祝你下午好、晚上好、晚安。',
+        },
+        afternoon: {
+          en: 'Good afternoon, and in case I don\u2019t see you, good morning, good evening, and good night!',
+          zh: '下午好~ 如果再也见不到你，祝你早上好、晚上好、晚安。',
+        },
+        evening: {
+          en: 'Good evening, and in case I don\u2019t see you, good morning, good afternoon, and good night!',
+          zh: '晚上好~ 如果再也见不到你，祝你早上好、中午好，早安。',
+        },
+        lateNight: {
+          en: 'We are Lucky (cat food quality inspector) and Happy (curtain\u2011to\u2011mop\u2011cloth magician). Why are you still awake? Is something bothering you? Kun (our poop\u2011scooping servant) often gets scolded by his mom for staying up late (she actually just worries about him). Wishing you good health and happiness every day. Go to sleep soon!',
+          zh: '我们是 Lucky（猫罐头质检员）和 Happy（窗帘变拖把布魔术大师）。为什么你还醒着，是有什么烦心事吗？Kun（我们的铲屎官）经常因为熬夜而挨他妈妈的批评（实际是心疼）。祝你身体健康，每天快乐，赶快入睡。',
+        },
+      };
+
+      function getGreeting(lang: string): { text: string; isLateNight: boolean } {
+        const hour = new Date().getHours();
+        if (hour >= 4 && hour < 11) {
+          return { text: greetings.morning[lang as 'en' | 'zh'], isLateNight: false };
+        }
+        if (hour >= 11 && hour < 18) {
+          return { text: greetings.afternoon[lang as 'en' | 'zh'], isLateNight: false };
+        }
+        if (hour >= 18) {
+          return { text: greetings.evening[lang as 'en' | 'zh'], isLateNight: false };
+        }
+        // 0:00 ~ 3:59
+        return { text: greetings.lateNight[lang as 'en' | 'zh'], isLateNight: true };
+      }
+
       function applyTranslations() {
         initLang();
         const lang = getLang();
@@ -70,6 +105,18 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           const key = el.getAttribute('data-i18n');
           if (key) el.textContent = t(key);
         });
+
+        // Apply time-aware greeting on homepage
+        const taglineEl = document.getElementById('home-tagline');
+        if (taglineEl) {
+          const { text, isLateNight } = getGreeting(lang);
+          taglineEl.textContent = text;
+          if (isLateNight) {
+            taglineEl.setAttribute('data-late-night', '');
+          } else {
+            taglineEl.removeAttribute('data-late-night');
+          }
+        }
       }
 
       // Apply on initial load

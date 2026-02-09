@@ -5,8 +5,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title="Likun" description="Likun's personal brand — Product Marketing, Data Science, Visual Design, and a life journey across the globe.">
   <main class="home">
     <div class="home-content">
-      <h1 class="home-title">Likun</h1>
-      <p class="home-tagline" data-i18n="home.tagline">Welcome</p>
+      <h1 class="home-title" data-i18n="home.name">Kun Li</h1>
+      <p class="home-tagline" id="home-tagline"></p>
 
       <nav class="home-choices">
         <a href="/professional" class="choice-card">
@@ -55,6 +55,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     font-style: italic;
     color: var(--text-light);
     margin-bottom: var(--space-xl);
+    transition: font-size 0.3s ease;
+  }
+
+  /* Late-night mode: longer text, smaller font, no italic */
+  .home-tagline[data-late-night] {
+    font-size: var(--fs-sm);
+    font-style: normal;
+    line-height: 1.9;
+    max-width: 30rem;
+    margin-inline: auto;
   }
 
   .home-choices {
