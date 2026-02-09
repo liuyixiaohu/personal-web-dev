@@ -92,7 +92,7 @@
   }
 
   .bubble-label {
-    font-family: 'EB Garamond', Garamond, serif;
+    font-family: inherit;
     font-size: clamp(0.7rem, 0.6rem + 0.5vw, 0.95rem);
     font-weight: 500;
     color: #5A636B;

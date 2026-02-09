@@ -98,7 +98,7 @@
     max-width: 32rem;
     width: 100%;
     padding: clamp(1.5rem, 3vw, 2.5rem);
-    font-family: 'EB Garamond', Garamond, serif;
+    font-family: inherit;
   }
 
   .modal-header {
@@ -149,6 +149,10 @@
     color: #5A636B;
     margin-bottom: 1rem;
     line-height: 1.3;
+  }
+
+  :global(html[data-lang="zh"]) .modal-title {
+    font-family: var(--font-zh-heading);
   }
 
   .modal-body {

@@ -29,7 +29,7 @@
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    font-family: 'EB Garamond', Garamond, serif;
+    font-family: inherit;
     font-size: 0.85rem;
     font-weight: 500;
     color: var(--text, #5A636B);

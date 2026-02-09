@@ -3,8 +3,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import BubbleScene from '../../components/bubbles/BubbleScene.svelte';
 ---
 
-<BaseLayout title="Professional — Likun">
+<BaseLayout title="Professional — Likun" description="Likun's professional expertise — Product Marketing, Data Science, and Visual Design.">
   <main class="professional-page">
+    <h1 class="sr-only">Professional</h1>
     <a href="/" class="back-link" data-i18n="nav.back">&larr; Back</a>
     <BubbleScene client:only="svelte" />
   </main>
