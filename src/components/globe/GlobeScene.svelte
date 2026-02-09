@@ -11,7 +11,6 @@
   onMount(async () => {
     const THREE = await import('three');
     const { OrbitControls } = await import('three/addons/controls/OrbitControls.js');
-    const { CSS2DRenderer, CSS2DObject } = await import('three/addons/renderers/CSS2DRenderer.js');
     const ThreeGlobe = (await import('three-globe')).default;
 
     // --- Scene Setup ---
@@ -28,15 +27,6 @@
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(rect.width, rect.height);
     container.appendChild(renderer.domElement);
-
-    // CSS2D renderer for HTML pin labels
-    const labelRenderer = new CSS2DRenderer();
-    labelRenderer.setSize(rect.width, rect.height);
-    labelRenderer.domElement.style.position = 'absolute';
-    labelRenderer.domElement.style.top = '0';
-    labelRenderer.domElement.style.left = '0';
-    labelRenderer.domElement.style.pointerEvents = 'none';
-    container.appendChild(labelRenderer.domElement);
 
     // --- Lighting (neutral white to preserve ocean blue color) ---
     const ambientLight = new THREE.AmbientLight(0xffffff, 1.8);
@@ -83,66 +73,32 @@
       console.warn('Failed to load world data:', err);
     }
 
-    // --- Custom pin layer using three-globe's built-in lat/lng system ---
-    // This ensures pins stay in sync with the globe's rotation automatically.
+    // --- Custom dot layer using three-globe's built-in lat/lng system ---
     const pinData = pins.map(p => ({ ...p, alt: 0.01 }));
 
     globe
       .customLayerData(pinData)
       .customThreeObject((d: any) => {
-        // Teardrop / water-drop shape via LatheGeometry
-        // 2D profile: rounded at bottom, tapers to a point at top
-        const points: InstanceType<typeof THREE.Vector2>[] = [];
-        const SEGMENTS = 24;
-        for (let i = 0; i <= SEGMENTS; i++) {
-          const t = i / SEGMENTS; // 0 = bottom tip, 1 = top
-          const angle = t * Math.PI;
-          // Radius: bulges in upper half, tapers to point at bottom
-          const r = Math.sin(angle) * (0.6 + t * 0.5);
-          const y = t * 4.0; // total height ~4 units
-          points.push(new THREE.Vector2(r * 1.0, y));
-        }
-        // Ensure bottom tip closes to 0
-        points[0] = new THREE.Vector2(0, 0);
-
-        const geometry = new THREE.LatheGeometry(points, 16);
+        // Small dot marker
+        const geometry = new THREE.SphereGeometry(0.6, 12, 12);
         const material = new THREE.MeshPhongMaterial({
           color: new THREE.Color(d.color),
           emissive: new THREE.Color(d.color),
-          emissiveIntensity: 0.4,
-          shininess: 60,
-          transparent: true,
-          opacity: 0.85,
+          emissiveIntensity: 0.5,
+          shininess: 80,
         });
         const mesh = new THREE.Mesh(geometry, material);
         return mesh;
       })
       .customThreeObjectUpdate((obj: any, d: any) => {
-        // Position the pin using three-globe's coordinate system
+        // Position the dot using three-globe's coordinate system
         const coords = globe.getCoords(d.lat, d.lng, d.alt);
         if (coords) {
           Object.assign(obj.position, coords);
-
-          // Orient pin to point radially outward from globe center
-          const normal = new THREE.Vector3(coords.x, coords.y, coords.z).normalize();
-          const up = new THREE.Vector3(0, 1, 0);
-          const quaternion = new THREE.Quaternion().setFromUnitVectors(up, normal);
-          obj.quaternion.copy(quaternion);
         }
       });
 
     scene.add(globe);
-
-    // --- CSS2D labels for pin cities (added to scene, positioned in animate) ---
-    const labelObjects: { label: any; pin: PinData }[] = [];
-    for (const pin of pins) {
-      const labelEl = document.createElement('div');
-      labelEl.className = 'pin-label-3d';
-      labelEl.textContent = pin.city;
-      const label = new CSS2DObject(labelEl);
-      scene.add(label);
-      labelObjects.push({ label, pin });
-    }
 
     // --- OrbitControls ---
     const controls = new OrbitControls(camera, renderer.domElement);
@@ -159,6 +115,25 @@
     controls.rotateSpeed = 0.8;
     controls.zoomSpeed = 0.8;
 
+    // --- Helper: project pin lat/lng to screen coordinates ---
+    function pinToScreen(pin: PinData, canvasRect: DOMRect) {
+      const coords = globe.getCoords(pin.lat, pin.lng, 0.01);
+      if (!coords) return null;
+
+      const worldPos = new THREE.Vector3(coords.x, coords.y, coords.z);
+
+      // Skip pins on back side of globe
+      const camToPin = worldPos.clone().sub(camera.position);
+      const camToCenter = new THREE.Vector3(0, 0, 0).sub(camera.position);
+      if (camToPin.length() > camToCenter.length() + GLOBE_RADIUS * 0.3) return null;
+
+      const projected = worldPos.clone().project(camera);
+      return {
+        x: (projected.x * 0.5 + 0.5) * canvasRect.width,
+        y: (-projected.y * 0.5 + 0.5) * canvasRect.height,
+      };
+    }
+
     // --- Pin click detection (screen-space projection) ---
     function onClickHandler(event: MouseEvent) {
       if (selectedPin) return;
@@ -173,21 +148,12 @@
       let closestDist = Infinity;
       const PIN_CLICK_RADIUS = 30;
 
-      for (const { label, pin } of labelObjects) {
-        const worldPos = new THREE.Vector3();
-        label.getWorldPosition(worldPos);
+      for (const pin of pins) {
+        const screen = pinToScreen(pin, canvasRect);
+        if (!screen) continue;
 
-        // Skip pins on back side of globe
-        const camToPin = worldPos.clone().sub(camera.position);
-        const camToCenter = new THREE.Vector3(0, 0, 0).sub(camera.position);
-        if (camToPin.length() > camToCenter.length() + GLOBE_RADIUS * 0.3) continue;
-
-        const projected = worldPos.clone().project(camera);
-        const screenX = (projected.x * 0.5 + 0.5) * canvasRect.width;
-        const screenY = (-projected.y * 0.5 + 0.5) * canvasRect.height;
-
-        const dx = clickX - screenX;
-        const dy = clickY - screenY;
+        const dx = clickX - screen.x;
+        const dy = clickY - screen.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
         if (dist < PIN_CLICK_RADIUS && dist < closestDist) {
@@ -224,18 +190,11 @@
       const my = event.clientY - canvasRect.top;
 
       let hovering = false;
-      for (const { label } of labelObjects) {
-        const worldPos = new THREE.Vector3();
-        label.getWorldPosition(worldPos);
+      for (const pin of pins) {
+        const screen = pinToScreen(pin, canvasRect);
+        if (!screen) continue;
 
-        const camToPin = worldPos.clone().sub(camera.position);
-        const camToCenter = new THREE.Vector3(0, 0, 0).sub(camera.position);
-        if (camToPin.length() > camToCenter.length() + GLOBE_RADIUS * 0.3) continue;
-
-        const projected = worldPos.clone().project(camera);
-        const sx = (projected.x * 0.5 + 0.5) * canvasRect.width;
-        const sy = (-projected.y * 0.5 + 0.5) * canvasRect.height;
-        const dist = Math.sqrt((mx - sx) ** 2 + (my - sy) ** 2);
+        const dist = Math.sqrt((mx - screen.x) ** 2 + (my - screen.y) ** 2);
         if (dist < 30) {
           hovering = true;
           break;
@@ -250,17 +209,7 @@
     function animate() {
       animId = requestAnimationFrame(animate);
       controls.update();
-
-      // Update CSS2D label positions to match globe's lat/lng
-      for (const { label, pin } of labelObjects) {
-        const coords = globe.getCoords(pin.lat, pin.lng, 0.04);
-        if (coords) {
-          label.position.set(coords.x, coords.y, coords.z);
-        }
-      }
-
       renderer.render(scene, camera);
-      labelRenderer.render(scene, camera);
     }
     animate();
 
@@ -272,7 +221,6 @@
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
       renderer.setSize(width, height);
-      labelRenderer.setSize(width, height);
     });
     resizeObserver.observe(container);
 
@@ -285,9 +233,6 @@
       renderer.domElement.removeEventListener('mousemove', onMoveHandler);
       if (renderer.domElement.parentNode) {
         renderer.domElement.parentNode.removeChild(renderer.domElement);
-      }
-      if (labelRenderer.domElement.parentNode) {
-        labelRenderer.domElement.parentNode.removeChild(labelRenderer.domElement);
       }
     };
   });
@@ -311,18 +256,5 @@
     position: absolute;
     inset: 0;
     overflow: hidden;
-  }
-
-  :global(.pin-label-3d) {
-    font-family: 'EB Garamond', Garamond, serif;
-    font-size: 11px;
-    font-weight: 500;
-    color: #5A636B;
-    white-space: nowrap;
-    pointer-events: none;
-    text-shadow:
-      0 0 3px rgba(250, 247, 242, 0.95),
-      0 0 6px rgba(250, 247, 242, 0.8);
-    transform: translateY(-6px);
   }
 </style>

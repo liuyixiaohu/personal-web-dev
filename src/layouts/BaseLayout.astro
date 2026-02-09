@@ -25,6 +25,15 @@ const { title = "Likun", description = "Likun's Personal Brand" } = Astro.props;
     />
     <ClientRouter />
     <title>{title}</title>
+
+    <!-- Google Analytics -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-HKNZ4QGXL6"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HKNZ4QGXL6');
+    </script>
   </head>
   <body transition:animate="fade">
     <LanguageToggle client:load />
