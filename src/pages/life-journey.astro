@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GlobeScene from '../components/globe/GlobeScene.svelte';
+---
+
+<BaseLayout title="Kun's Life Journey — Likun">
+  <main class="journey-page">
+    <a href="/" class="back-link" data-i18n="nav.back">&larr; Back</a>
+    <GlobeScene client:only="svelte" />
+  </main>
+</BaseLayout>
+
+<style>
+  .journey-page {
+    position: relative;
+    min-height: 100dvh;
+    overflow: hidden;
+  }
+
+  .back-link {
+    position: fixed;
+    top: var(--space-md);
+    left: var(--space-md);
+    font-size: var(--fs-sm);
+    color: var(--text-light);
+    z-index: 10;
+  }
+
+  .back-link:hover {
+    color: var(--text);
+    opacity: 1;
+  }
+</style>

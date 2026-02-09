@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BubbleScene from '../../components/bubbles/BubbleScene.svelte';
+---
+
+<BaseLayout title="Professional — Likun">
+  <main class="professional-page">
+    <a href="/" class="back-link" data-i18n="nav.back">&larr; Back</a>
+    <BubbleScene client:only="svelte" />
+  </main>
+</BaseLayout>
+
+<style>
+  .professional-page {
+    position: relative;
+    min-height: 100dvh;
+    overflow: hidden;
+  }
+
+  .back-link {
+    position: fixed;
+    top: var(--space-md);
+    left: var(--space-md);
+    font-size: var(--fs-sm);
+    color: var(--text-light);
+    z-index: 10;
+  }
+
+  .back-link:hover {
+    color: var(--text);
+    opacity: 1;
+  }
+</style>

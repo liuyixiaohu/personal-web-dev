@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Visual Design — Likun">
+  <main class="page">
+    <div class="container">
+      <a href="/professional" class="back-link" data-i18n="nav.backToProfessional">&larr; Back to Professional</a>
+      <h1 data-i18n="professional.visualDesign">Visual Design</h1>
+      <p class="placeholder" data-i18n="common.comingSoon">Content coming soon...</p>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .page {
+    min-height: 100dvh;
+    padding: var(--space-xl) 0;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: var(--fs-sm);
+    margin-bottom: var(--space-lg);
+    color: var(--text-light);
+  }
+
+  .back-link:hover {
+    color: var(--text);
+    opacity: 1;
+  }
+
+  h1 {
+    font-size: var(--fs-lg);
+    font-weight: 500;
+    margin-bottom: var(--space-md);
+    color: #5a8a6e;
+  }
+
+  .placeholder {
+    font-style: italic;
+    color: var(--text-light);
+  }
+</style>
