@@ -88,14 +88,18 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       };
 
       // Late night cat message (0:00 ~ 3:59)
+      // Inline SVG cat heads: Lucky (dark gray) and Happy (tortoiseshell)
+      const catLucky = '<svg class="cat-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 3L7 10H17L21 3" fill="#4a4a4a"/><ellipse cx="12" cy="14.5" rx="8" ry="7.5" fill="#4a4a4a"/><circle cx="9" cy="13" r="1.2" fill="#FAF7F2"/><circle cx="15" cy="13" r="1.2" fill="#FAF7F2"/><ellipse cx="12" cy="15.5" rx="1" ry="0.6" fill="#e8a0a0"/></svg>';
+      const catHappy = '<svg class="cat-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 3L7 10H17L21 3" fill="#c47d3b"/><ellipse cx="12" cy="14.5" rx="8" ry="7.5" fill="#c47d3b"/><path d="M4 14.5Q8 11 12 14.5Q16 11 20 14.5" fill="#5a5a5a" opacity="0.45"/><circle cx="9" cy="13" r="1.2" fill="#FAF7F2"/><circle cx="15" cy="13" r="1.2" fill="#FAF7F2"/><ellipse cx="12" cy="15.5" rx="1" ry="0.6" fill="#e8a0a0"/></svg>';
+
       const lateNight = {
         lead: {
-          en: 'Lucky & Happy\u2019s Late Night Message',
-          zh: 'Lucky 和 Happy 的深夜特别消息',
+          en: `Lucky\u00A0${catLucky} &amp; Happy\u00A0${catHappy}\u2019s Late Night Message`,
+          zh: `Lucky\u00A0${catLucky} 和 Happy\u00A0${catHappy} 的深夜特别消息`,
         },
         body: {
-          en: 'We are Lucky (cat food quality inspector) and Happy (curtain\u2011to\u2011mop\u2011cloth magician). Why are you still awake? Is something bothering you? Kun (our poop\u2011scooping servant) often gets scolded by his mom for staying up late (she actually just worries about him). Wishing you good health and happiness every day. Go to sleep soon!',
-          zh: '我们是 Lucky（猫罐头质检员）和 Happy（窗帘变拖把布魔术大师）。为什么你还醒着，是有什么烦心事吗？Kun（我们的铲屎官）经常因为熬夜而挨他妈妈的批评（实际是心疼）。祝你身体健康，每天快乐，赶快入睡。',
+          en: 'We are Lucky (cat food quality inspector)<br>and Happy (curtain\u2011to\u2011mop\u2011cloth magician).<br><br>Why are you still awake? Is something bothering you?<br><br>Kun (our poop\u2011scooping servant) often gets scolded<br>by his mom for staying up late (she actually just worries about him).<br><br>Wishing you good health and happiness every day.<br>Go to sleep soon!',
+          zh: '我们是 Lucky（猫罐头质检员）<br>和 Happy（窗帘变拖把布魔术大师）。<br><br>为什么你还醒着，是有什么烦心事吗？<br><br>Kun（我们的铲屎官）经常因为熬夜<br>而挨他妈妈的批评（实际是心疼）。<br><br>祝你身体健康，每天快乐。<br>赶快入睡！',
         },
       };
 
@@ -122,9 +126,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           const isLateNight = hour >= 0 && hour < 4;
 
           if (isLateNight) {
-            // Late night: cats message, hide intro
-            leadEl.textContent = lateNight.lead[lang];
-            bodyEl.textContent = lateNight.body[lang];
+            // Late night: cats message, hide intro (innerHTML for SVG icons + <br> line breaks)
+            leadEl.innerHTML = lateNight.lead[lang];
+            bodyEl.innerHTML = lateNight.body[lang];
             sourceEl.textContent = '';
             sourceEl.style.display = 'none';
             taglineEl.setAttribute('data-late-night', '');
