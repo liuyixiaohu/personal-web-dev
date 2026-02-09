@@ -107,7 +107,7 @@
     controls.enableRotate = true;
     controls.enablePan = false;
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.4;
+    controls.autoRotateSpeed = 0.15;
     controls.enableDamping = true;
     controls.dampingFactor = 0.1;
     controls.minDistance = 150;
