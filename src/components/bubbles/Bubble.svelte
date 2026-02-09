@@ -17,11 +17,11 @@
   };
 
   initLang();
-  let translatedLabel = $state(t(labelKeyMap[bubble.id] ?? '') || bubble.label);
+  let translatedLabel = $state(t(labelKeyMap[bubble.id] ?? ''));
 
   $effect(() => {
     const unsub = subscribe(() => {
-      translatedLabel = t(labelKeyMap[bubble.id] ?? '') || bubble.label;
+      translatedLabel = t(labelKeyMap[bubble.id] ?? '');
     });
     return unsub;
   });

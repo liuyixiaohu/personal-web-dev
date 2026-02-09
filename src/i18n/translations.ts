@@ -11,6 +11,27 @@ export const translations: Record<string, Record<Lang, string>> = {
   'home.professional': { en: 'Professional Architecture', zh: '专业架构' },
   'home.lifeJourney': { en: 'Life Journey', zh: '人生旅途' },
 
+  // --- Greeting (time-aware) ---
+  'greeting.morning': { en: 'Good morning,', zh: '早上好哇,' },
+  'greeting.afternoon': { en: 'Good afternoon,', zh: '下午好哇,' },
+  'greeting.evening': { en: 'Good evening,', zh: '晚上好哇,' },
+  'greeting.body': {
+    en: 'and in case I don\u2019t see you, good afternoon, good evening, and good night!',
+    zh: '假如很难再次遇见你，祝你早安、午安、晚安。',
+  },
+  'greeting.source': { en: '\u2014 The Truman Show', zh: '\u2014\u2014《楚门的世界》' },
+
+  // --- Late night message (0:00–3:59) ---
+  // Use \n as line break marker; render with innerHTML after replacing \n → <br>
+  'lateNight.lead': {
+    en: 'Lucky & Happy\u2019s Late Night Message',
+    zh: 'Lucky 和 Happy 的深夜特别消息',
+  },
+  'lateNight.body': {
+    en: 'We are Lucky (cat food quality inspector)\nand Happy (curtain\u2011to\u2011mop\u2011cloth magician).\n\nWhy are you still awake? Is something bothering you?\n\nKun (our poop\u2011scooping servant) often gets scolded\nby his mom for staying up late (she actually just worries about him).\n\nWishing you good health and happiness every day.\nGo to sleep soon!',
+    zh: '我们是 Lucky（猫罐头质检员）\n和 Happy（窗帘变拖把布魔术大师）。\n\n为什么你还醒着，是有什么烦心事吗？\n\nKun（我们的铲屎官）经常因为熬夜\n而挨他妈妈的批评（实际是心疼）。\n\n祝你身体健康，每天快乐。\n赶快入睡！',
+  },
+
   // --- Navigation ---
   'nav.back': { en: '\u2190 Back', zh: '\u2190 返回' },
   'nav.backToProfessional': { en: '\u2190 Back to Professional', zh: '\u2190 返回职业' },

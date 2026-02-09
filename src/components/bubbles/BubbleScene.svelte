@@ -3,6 +3,7 @@
   import { navigate } from 'astro:transitions/client';
   import Bubble from './Bubble.svelte';
   import BurstEffect from './BurstEffect.svelte';
+  import { lighten, darken } from '../../utils/colors';
   import {
     createBubbles,
     updateBubble,
@@ -255,26 +256,6 @@
     }
   }
 
-  // --- Color Helpers ---
-  function lighten(hex: string): string {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
-    const lr = Math.min(255, r + 30);
-    const lg = Math.min(255, g + 30);
-    const lb = Math.min(255, b + 30);
-    return `rgb(${lr}, ${lg}, ${lb})`;
-  }
-
-  function darken(hex: string): string {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
-    const dr = Math.max(0, r - 40);
-    const dg = Math.max(0, g - 40);
-    const db = Math.max(0, b - 40);
-    return `rgb(${dr}, ${dg}, ${db})`;
-  }
 </script>
 
 <div class="bubble-scene" bind:this={container}>

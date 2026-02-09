@@ -8,13 +8,11 @@ export type BubbleId = 'pm' | 'ds' | 'visual';
 
 export interface BubbleConfig {
   id: BubbleId;
-  label: string;
   color: string;
 }
 
 export interface BubbleState {
   id: BubbleId;
-  label: string;
   color: string;
   x: number;
   y: number;
@@ -35,9 +33,9 @@ export interface BubbleState {
 // === Bubble Configurations ===
 
 export const BUBBLE_CONFIGS: BubbleConfig[] = [
-  { id: 'pm', label: 'Product Marketing', color: '#F0D7D7' },
-  { id: 'ds', label: 'Data Science', color: '#D6E6F3' },
-  { id: 'visual', label: 'Visual Design', color: '#DDEEE7' },
+  { id: 'pm', color: '#F0D7D7' },
+  { id: 'ds', color: '#D6E6F3' },
+  { id: 'visual', color: '#DDEEE7' },
 ];
 
 // === Route Tables ===

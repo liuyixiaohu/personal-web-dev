@@ -16,13 +16,13 @@
   }
 
   initLang();
-  let translatedTitle = $state(t(pinKey(pin.id, 'title')) || pin.title);
-  let translatedStory = $state(t(pinKey(pin.id, 'story')) || pin.story);
+  let translatedTitle = $state(t(pinKey(pin.id, 'title')));
+  let translatedStory = $state(t(pinKey(pin.id, 'story')));
 
   $effect(() => {
     const unsub = subscribe(() => {
-      translatedTitle = t(pinKey(pin.id, 'title')) || pin.title;
-      translatedStory = t(pinKey(pin.id, 'story')) || pin.story;
+      translatedTitle = t(pinKey(pin.id, 'title'));
+      translatedStory = t(pinKey(pin.id, 'story'));
     });
     return unsub;
   });
