@@ -71,9 +71,9 @@ export const translations: Record<string, Record<Lang, string>> = {
   'bar.drink.pm': { en: 'Product Marketing', zh: '产品营销' },
   'bar.drink.ds': { en: 'Data Science', zh: '数据科学' },
   'bar.drink.visual': { en: 'Visual Design', zh: '视觉设计' },
-  'bar.drink.pm.desc': { en: 'A smooth pink blend of strategy and storytelling.', zh: '策略与叙事的丝滑粉色调酒。' },
-  'bar.drink.ds.desc': { en: 'A cool blue concoction of numbers and insight.', zh: '数字与洞察的清凉蓝色调酒。' },
-  'bar.drink.visual.desc': { en: 'A refreshing green mix of form and feeling.', zh: '形式与感受的清新绿色调酒。' },
+  'bar.drink.pm.desc': { en: 'Product Marketing — smooth, persuasive, and dangerously drinkable.', zh: '产品营销 — 丝滑、有说服力、让人一杯接一杯停不下来。' },
+  'bar.drink.ds.desc': { en: 'Data Science — 95% confidence this one slaps.', zh: '数据科学 — 有 95% 的置信度认为这杯超好喝。' },
+  'bar.drink.visual.desc': { en: 'Visual Design — looks so good you almost forget to drink it.', zh: '视觉设计 — 好看到让你差点忘了喝。' },
 
   // --- Globe pin titles ---
   'pin.jiaozhou.title': { en: 'Where it all began', zh: '一切开始的地方' },
