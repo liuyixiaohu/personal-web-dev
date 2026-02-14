@@ -66,6 +66,15 @@ export const translations: Record<string, Record<Lang, string>> = {
   'bubble.ds': { en: 'Data Science', zh: '数据科学' },
   'bubble.visual': { en: 'Visual Design', zh: '视觉设计' },
 
+  // --- Bartender dialog ---
+  'bar.greeting': { en: 'What can I get for you today?', zh: '今天想来点什么？' },
+  'bar.drink.pm': { en: 'Product Marketing', zh: '产品营销' },
+  'bar.drink.ds': { en: 'Data Science', zh: '数据科学' },
+  'bar.drink.visual': { en: 'Visual Design', zh: '视觉设计' },
+  'bar.drink.pm.desc': { en: 'A smooth pink blend of strategy and storytelling.', zh: '策略与叙事的丝滑粉色调酒。' },
+  'bar.drink.ds.desc': { en: 'A cool blue concoction of numbers and insight.', zh: '数字与洞察的清凉蓝色调酒。' },
+  'bar.drink.visual.desc': { en: 'A refreshing green mix of form and feeling.', zh: '形式与感受的清新绿色调酒。' },
+
   // --- Globe pin titles ---
   'pin.jiaozhou.title': { en: 'Where it all began', zh: '一切开始的地方' },
   'pin.qingdao.title': { en: 'Coastal memories', zh: '海边的记忆' },
