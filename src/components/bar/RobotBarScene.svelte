@@ -91,9 +91,9 @@
     const scene = new THREE.Scene();
 
     const rect = container.getBoundingClientRect();
-    const camera = new THREE.PerspectiveCamera(30, rect.width / rect.height, 0.1, 100);
-    camera.position.set(0, 1.0, 5.2);
-    camera.lookAt(0, 0.85, 0);
+    const camera = new THREE.PerspectiveCamera(28, rect.width / rect.height, 0.1, 100);
+    camera.position.set(0, 1.4, 6.0);
+    camera.lookAt(0, 0.9, 0);
 
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -273,32 +273,35 @@
     <p class="speech-text">{dialogText}</p>
   </div>
 
-  <!-- 3D Canvas -->
-  <div class="canvas-container" bind:this={container}></div>
+  <!-- Stage: canvas + overlapping bar -->
+  <div class="stage">
+    <!-- 3D Canvas -->
+    <div class="canvas-container" bind:this={container}></div>
 
-  <!-- Bar Counter + Drinks -->
-  <div class="bar-area">
-    <div class="drinks-row">
-      {#each DRINKS as drink}
-        <button
-          class="drink-item"
-          class:hovered={hoveredDrink === drink.id}
-          aria-label={t(`bar.drink.${drink.id}`)}
-          onmouseenter={() => handleDrinkHover(drink.id)}
-          onmouseleave={() => handleDrinkLeave()}
-          onclick={() => handleDrinkClick(drink.id)}
-          onfocus={() => handleDrinkHover(drink.id)}
-          onblur={() => handleDrinkLeave()}
-        >
-          <div class="coupe-bowl" style="background: {drink.color}"></div>
-          <div class="coupe-stem"></div>
-          <div class="coupe-base"></div>
-        </button>
-      {/each}
-    </div>
-    <div class="bar-counter">
-      <div class="counter-top"></div>
-      <div class="counter-body"></div>
+    <!-- Bar Counter + Drinks — overlaps bottom of canvas -->
+    <div class="bar-area">
+      <div class="drinks-row">
+        {#each DRINKS as drink}
+          <button
+            class="drink-item"
+            class:hovered={hoveredDrink === drink.id}
+            aria-label={t(`bar.drink.${drink.id}`)}
+            onmouseenter={() => handleDrinkHover(drink.id)}
+            onmouseleave={() => handleDrinkLeave()}
+            onclick={() => handleDrinkClick(drink.id)}
+            onfocus={() => handleDrinkHover(drink.id)}
+            onblur={() => handleDrinkLeave()}
+          >
+            <div class="coupe-bowl" style="background: {drink.color}"></div>
+            <div class="coupe-stem"></div>
+            <div class="coupe-base"></div>
+          </button>
+        {/each}
+      </div>
+      <div class="bar-counter">
+        <div class="counter-top"></div>
+        <div class="counter-body"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -327,7 +330,7 @@
     border-radius: 26px;
     opacity: 0;
     transition: opacity 0.5s ease;
-    z-index: 2;
+    z-index: 3;
   }
 
   .speech-bubble.visible {
@@ -366,14 +369,21 @@
     margin: 0;
   }
 
-  /* --- 3D Canvas --- */
-  .canvas-container {
+  /* --- Stage: layered canvas + bar --- */
+  .stage {
+    position: relative;
     width: 80%;
     max-width: 960px;
-    height: 52vh;
-    min-height: 300px;
-    max-height: 560px;
+  }
+
+  /* --- 3D Canvas --- */
+  .canvas-container {
+    width: 100%;
+    height: 58vh;
+    min-height: 340px;
+    max-height: 600px;
     position: relative;
+    z-index: 1;
   }
 
   .canvas-container :global(canvas) {
@@ -382,13 +392,13 @@
     height: 100% !important;
   }
 
-  /* --- Bar Area (counter + drinks) --- */
+  /* --- Bar Area: overlaps bottom 25% of canvas --- */
   .bar-area {
-    position: relative;
-    width: 80%;
-    max-width: 960px;
-    margin-top: -28px;
-    z-index: 1;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
   }
 
   .drinks-row {
@@ -472,14 +482,13 @@
       padding: var(--space-xs);
     }
 
-    .canvas-container {
+    .stage {
       width: 92%;
-      height: 40vh;
-      min-height: 220px;
     }
 
-    .bar-area {
-      width: 92%;
+    .canvas-container {
+      height: 45vh;
+      min-height: 260px;
     }
 
     .coupe-bowl {
