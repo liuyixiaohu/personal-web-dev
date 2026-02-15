@@ -91,9 +91,9 @@
     const scene = new THREE.Scene();
 
     const rect = container.getBoundingClientRect();
-    const camera = new THREE.PerspectiveCamera(35, rect.width / rect.height, 0.1, 100);
-    camera.position.set(0, 1.2, 3.5);
-    camera.lookAt(0, 1.0, 0);
+    const camera = new THREE.PerspectiveCamera(30, rect.width / rect.height, 0.1, 100);
+    camera.position.set(0, 1.0, 5.2);
+    camera.lookAt(0, 0.85, 0);
 
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -368,11 +368,11 @@
 
   /* --- 3D Canvas --- */
   .canvas-container {
-    width: 100%;
-    max-width: 600px;
-    height: 46vh;
-    min-height: 260px;
-    max-height: 440px;
+    width: 80%;
+    max-width: 960px;
+    height: 52vh;
+    min-height: 300px;
+    max-height: 560px;
     position: relative;
   }
 
@@ -385,9 +385,9 @@
   /* --- Bar Area (counter + drinks) --- */
   .bar-area {
     position: relative;
-    width: 100%;
-    max-width: 720px;
-    margin-top: -24px;
+    width: 80%;
+    max-width: 960px;
+    margin-top: -28px;
     z-index: 1;
   }
 
@@ -396,8 +396,8 @@
     z-index: 2;
     display: flex;
     justify-content: center;
-    gap: clamp(2.5rem, 7vw, 5rem);
-    padding-bottom: 4px;
+    gap: clamp(3rem, 8vw, 6rem);
+    padding-bottom: 6px;
   }
 
   /* --- Drink (coupe glass) --- */
@@ -424,8 +424,8 @@
   }
 
   .coupe-bowl {
-    width: 50px;
-    height: 28px;
+    width: 64px;
+    height: 36px;
     border-radius: 4px 4px 50% 50%;
     transition: filter 0.25s ease;
   }
@@ -435,14 +435,14 @@
   }
 
   .coupe-stem {
-    width: 4px;
-    height: 18px;
+    width: 5px;
+    height: 22px;
     background: #d5d0ca;
   }
 
   .coupe-base {
-    width: 28px;
-    height: 6px;
+    width: 36px;
+    height: 7px;
     background: #d5d0ca;
     border-radius: 50%;
   }
@@ -454,40 +454,49 @@
   }
 
   .counter-top {
-    height: 10px;
+    height: 12px;
     background: #d5d0ca;
     border-radius: 4px 4px 0 0;
     box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.3);
   }
 
   .counter-body {
-    height: 100px;
+    height: 120px;
     background: #eae6e0;
     border-radius: 0 0 4px 4px;
   }
 
   /* --- Responsive --- */
   @media (max-width: 480px) {
+    .robot-bar-scene {
+      padding: var(--space-xs);
+    }
+
     .canvas-container {
-      height: 38vh;
-      min-height: 200px;
+      width: 92%;
+      height: 40vh;
+      min-height: 220px;
+    }
+
+    .bar-area {
+      width: 92%;
     }
 
     .coupe-bowl {
-      width: 38px;
-      height: 22px;
+      width: 44px;
+      height: 26px;
     }
 
     .coupe-stem {
-      height: 14px;
+      height: 16px;
     }
 
     .coupe-base {
-      width: 22px;
+      width: 26px;
     }
 
     .counter-body {
-      height: 60px;
+      height: 70px;
     }
 
     .speech-bubble {
