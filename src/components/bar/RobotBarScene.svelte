@@ -92,8 +92,8 @@
 
     const rect = container.getBoundingClientRect();
     const camera = new THREE.PerspectiveCamera(28, rect.width / rect.height, 0.1, 100);
-    camera.position.set(0, 1.4, 6.0);
-    camera.lookAt(0, 0.9, 0);
+    camera.position.set(0, 0.7, 3.0);
+    camera.lookAt(0, 0.45, 0);
 
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -152,6 +152,7 @@
 
     loader.load('/models/RobotExpressive.glb', (gltf) => {
       const model = gltf.scene;
+      model.scale.set(0.5, 0.5, 0.5);
       model.position.set(0, 0, 0);
       model.rotation.y = Math.PI * 0.05;
       scene.add(model);
@@ -392,12 +393,13 @@
     height: 100% !important;
   }
 
-  /* --- Bar Area: overlaps bottom 25% of canvas --- */
+  /* --- Bar Area: counter-top at 45% height from bottom --- */
   .bar-area {
     position: absolute;
-    bottom: 0;
+    top: 55%;
     left: 0;
     right: 0;
+    bottom: 0;
     z-index: 2;
   }
 
@@ -471,9 +473,9 @@
   }
 
   .counter-body {
-    height: 120px;
+    height: 45vh;
     background: #eae6e0;
-    border-radius: 0 0 4px 4px;
+    border-radius: 0;
   }
 
   /* --- Responsive --- */
