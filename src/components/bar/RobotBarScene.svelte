@@ -92,8 +92,8 @@
 
     const rect = container.getBoundingClientRect();
     const camera = new THREE.PerspectiveCamera(28, rect.width / rect.height, 0.1, 100);
-    camera.position.set(0, 0.7, 3.0);
-    camera.lookAt(0, 0.2, 0);
+    camera.position.set(0, 1.0, 4.0);
+    camera.lookAt(0, 0.35, 0);
 
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -316,7 +316,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    padding: var(--space-sm) var(--space-md);
+    padding: var(--space-sm) 0 0 0;
   }
 
   /* --- Speech Bubble --- */
@@ -373,8 +373,7 @@
   /* --- Stage: layered canvas + bar --- */
   .stage {
     position: relative;
-    width: 80%;
-    max-width: 960px;
+    width: 100%;
   }
 
   /* --- 3D Canvas --- */
