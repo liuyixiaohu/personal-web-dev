@@ -152,7 +152,7 @@
 
     loader.load('/models/RobotExpressive.glb', (gltf) => {
       const model = gltf.scene;
-      model.scale.set(0.35, 0.35, 0.35);
+      model.scale.set(0.45, 0.45, 0.45);
       model.position.set(0, -0.6, 0);
       model.rotation.y = Math.PI * 0.05;
       scene.add(model);
