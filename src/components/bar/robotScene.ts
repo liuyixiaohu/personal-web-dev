@@ -38,7 +38,7 @@ const LIGHTING = {
 const ROBOT = {
   modelPath: '/models/RobotExpressive.glb',
   scale: 0.4,
-  position: [-1, -0.72, 0] as const,
+  position: [-0.8, -0.72, 0] as const,
   rotationY: Math.PI * 0.05,
 } as const;
 
