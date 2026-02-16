@@ -206,7 +206,8 @@
   .drinks-row {
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    padding-left: calc(50% - 34px);
     gap: clamp(3rem, 8vw, 6rem);
     margin-bottom: -4px;
   }
@@ -253,6 +254,7 @@
     }
 
     .drinks-row {
+      padding-left: calc(50% - 24px);
       gap: clamp(1.5rem, 6vw, 3rem);
     }
   }
