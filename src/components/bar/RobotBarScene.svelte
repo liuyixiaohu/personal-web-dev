@@ -153,7 +153,7 @@
     loader.load('/models/RobotExpressive.glb', (gltf) => {
       const model = gltf.scene;
       model.scale.set(0.5, 0.5, 0.5);
-      model.position.set(0, -0.25, 0);
+      model.position.set(0, -0.6, 0);
       model.rotation.y = Math.PI * 0.05;
       scene.add(model);
 
@@ -321,10 +321,11 @@
 
   /* --- Speech Bubble --- */
   .speech-bubble {
-    position: relative;
+    position: absolute;
+    top: clamp(1rem, 8vh, 3rem);
+    right: clamp(1rem, 8vw, 4rem);
     max-width: 380px;
-    width: 100%;
-    margin-bottom: var(--space-xs);
+    width: auto;
     padding: 0.55rem 1.2rem;
     background: white;
     border: 1.2px solid #e2ded8;
@@ -338,27 +339,25 @@
     opacity: 1;
   }
 
-  /* Tail pointing down */
+  /* Tail pointing to bottom-left (toward robot head) */
   .speech-bubble::after {
     content: '';
     position: absolute;
-    bottom: -9px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-left: 9px solid transparent;
-    border-right: 9px solid transparent;
-    border-top: 9px solid white;
+    bottom: 8px;
+    left: -9px;
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    border-right: 9px solid white;
   }
 
   .speech-bubble::before {
     content: '';
     position: absolute;
-    bottom: -11px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid #e2ded8;
+    bottom: 7px;
+    left: -11px;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #e2ded8;
   }
 
   .speech-text {
