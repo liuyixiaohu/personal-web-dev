@@ -192,9 +192,9 @@
 
     // Position glasses on bar counter (Y = -0.6 is counter-top level in world space)
     const glassPositions = [
-      { id: 'pm' as DrinkId, x: -0.5, z: -0.6 },
-      { id: 'ds' as DrinkId, x: 0, z: -0.6 },
-      { id: 'visual' as DrinkId, x: 0.5, z: -0.6 },
+      { id: 'pm' as DrinkId, x: -0.5, z: 0.2 },
+      { id: 'ds' as DrinkId, x: 0, z: 0.2 },
+      { id: 'visual' as DrinkId, x: 0.5, z: 0.2 },
     ];
 
     glassPositions.forEach(pos => {
@@ -433,9 +433,9 @@
   /* --- Speech Bubble --- */
   .speech-bubble {
     position: absolute;
-    top: clamp(0.5rem, 4vh, 1.5rem);
+    top: 12%;
     left: 50%;
-    transform: translateX(15%);
+    transform: translateX(-50%);
     max-width: 380px;
     width: auto;
     padding: 0.55rem 1.2rem;
