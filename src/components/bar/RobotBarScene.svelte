@@ -114,8 +114,6 @@
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(rect.width, rect.height);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.0;
     container.appendChild(renderer.domElement);
 
     // --- Lighting (warm tones to match site) ---
@@ -141,7 +139,7 @@
     ));
     envScene.add(new THREE.AmbientLight(0xffffff, 1));
     const envRT = pmremGenerator.fromScene(envScene);
-    scene.environment = envRT.texture;
+    const glassEnvMap = envRT.texture;
     pmremGenerator.dispose();
 
     // --- Create 3D Coupe Glasses ---
@@ -156,6 +154,7 @@
         transmission: 0.4,
         thickness: 0.5,
         ior: 1.5,
+        envMap: glassEnvMap,
         envMapIntensity: 1,
         clearcoat: 1,
         clearcoatRoughness: 0.05,
@@ -170,6 +169,7 @@
         roughness: 0.3,
         transmission: 0.15,
         thickness: 0.3,
+        envMap: glassEnvMap,
         transparent: true,
         opacity: 0.85,
       });
