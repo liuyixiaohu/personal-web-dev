@@ -152,7 +152,7 @@
 
     loader.load('/models/RobotExpressive.glb', (gltf) => {
       const model = gltf.scene;
-      model.scale.set(0.5, 0.5, 0.5);
+      model.scale.set(0.35, 0.35, 0.35);
       model.position.set(0, -0.6, 0);
       model.rotation.y = Math.PI * 0.05;
       scene.add(model);
@@ -322,8 +322,9 @@
   /* --- Speech Bubble --- */
   .speech-bubble {
     position: absolute;
-    top: clamp(1rem, 8vh, 3rem);
-    right: clamp(1rem, 8vw, 4rem);
+    top: clamp(1rem, 12vh, 4rem);
+    left: 50%;
+    transform: translateX(10%);
     max-width: 380px;
     width: auto;
     padding: 0.55rem 1.2rem;
