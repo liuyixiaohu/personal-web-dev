@@ -31,7 +31,6 @@
   // Three.js refs (set inside onMount)
   let fadeToAction: ((name: string, duration?: number) => void) | null = null;
   let setMouthOpen: ((open: boolean) => void) | null = null;
-  let drinkMeshes: Map<DrinkId, any> = new Map();
 
   // === i18n ===
   initLang();
@@ -56,12 +55,6 @@
     dialogText = t(drink.descKey);
     isSpeaking = true;
 
-    // Animate drink glass
-    const drinkMesh = drinkMeshes.get(drinkId);
-    if (drinkMesh) {
-      drinkMesh.userData.targetY = 0.15; // Lift up slightly
-    }
-
     // Robot reaction
     fadeToAction?.('ThumbsUp', 0.4);
     setMouthOpen?.(true);
@@ -79,11 +72,6 @@
     isSpeaking = false;
     setMouthOpen?.(false);
 
-    // Reset all drink glasses
-    drinkMeshes.forEach(mesh => {
-      mesh.userData.targetY = 0;
-    });
-
     fadeToAction?.('Idle', 0.5);
 
     if (speechTimeout) clearTimeout(speechTimeout);
@@ -94,7 +82,7 @@
     navigate(drink.route);
   }
 
-  // === Three.js Setup ===
+  // === Three.js Setup (robot only) ===
   onMount(async () => {
     const THREE = await import('three');
     const { GLTFLoader } = await import('three/addons/loaders/GLTFLoader.js');
@@ -128,103 +116,6 @@
     const fillLight = new THREE.DirectionalLight(0xfff0e8, 0.4);
     fillLight.position.set(-3, 3, 2);
     scene.add(fillLight);
-
-    // --- Environment map for glass refraction ---
-    const pmremGenerator = new THREE.PMREMGenerator(renderer);
-    const envScene = new THREE.Scene();
-    envScene.background = new THREE.Color(0xfff5e6);
-    envScene.add(new THREE.Mesh(
-      new THREE.SphereGeometry(5, 16, 16),
-      new THREE.MeshBasicMaterial({ color: 0xfff0e0, side: THREE.BackSide })
-    ));
-    envScene.add(new THREE.AmbientLight(0xffffff, 1));
-    const envRT = pmremGenerator.fromScene(envScene);
-    const glassEnvMap = envRT.texture;
-    pmremGenerator.dispose();
-
-    // --- Create 3D Coupe Glasses ---
-    function createCoupeGlass(color: string) {
-      const group = new THREE.Group();
-
-      // Glass material (transparent with slight tint)
-      const glassMaterial = new THREE.MeshPhysicalMaterial({
-        color: 0xffffff,
-        metalness: 0.05,
-        roughness: 0.05,
-        transmission: 0.4,
-        thickness: 0.5,
-        ior: 1.5,
-        envMap: glassEnvMap,
-        envMapIntensity: 1,
-        clearcoat: 1,
-        clearcoatRoughness: 0.05,
-        transparent: true,
-        opacity: 0.35,
-      });
-
-      // Liquid material (colored, semi-transparent)
-      const liquidMaterial = new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color(color),
-        metalness: 0.1,
-        roughness: 0.3,
-        transmission: 0.15,
-        thickness: 0.3,
-        envMap: glassEnvMap,
-        transparent: true,
-        opacity: 0.85,
-      });
-
-      // Bowl (wide shallow cup — opening upward)
-      const bowlGeometry = new THREE.SphereGeometry(0.08, 16, 16, 0, Math.PI * 2, Math.PI * 0.55, Math.PI * 0.45);
-      const bowl = new THREE.Mesh(bowlGeometry, glassMaterial);
-      bowl.position.y = 0.1;
-      group.add(bowl);
-
-      // Liquid inside
-      const liquidGeometry = new THREE.SphereGeometry(0.075, 16, 16, 0, Math.PI * 2, Math.PI * 0.6, Math.PI * 0.4);
-      const liquid = new THREE.Mesh(liquidGeometry, liquidMaterial);
-      liquid.position.y = 0.095;
-      group.add(liquid);
-
-      // Stem
-      const stemGeometry = new THREE.CylinderGeometry(0.008, 0.008, 0.09, 8);
-      const stemMaterial = new THREE.MeshPhysicalMaterial({
-        color: 0xe8e4de,
-        metalness: 0.1,
-        roughness: 0.3,
-      });
-      const stem = new THREE.Mesh(stemGeometry, stemMaterial);
-      stem.position.y = 0.045;
-      group.add(stem);
-
-      // Base
-      const baseGeometry = new THREE.CylinderGeometry(0.045, 0.045, 0.01, 16);
-      const base = new THREE.Mesh(baseGeometry, stemMaterial);
-      base.position.y = 0.005;
-      group.add(base);
-
-      // Animation data
-      group.userData.targetY = 0;
-      group.userData.currentY = 0;
-
-      return group;
-    }
-
-    // Position glasses on bar counter (base sits above CSS counter-top at 65%)
-    const glassPositions = [
-      { id: 'pm' as DrinkId, x: -0.5, z: 0.2 },
-      { id: 'ds' as DrinkId, x: 0, z: 0.2 },
-      { id: 'visual' as DrinkId, x: 0.5, z: 0.2 },
-    ];
-
-    glassPositions.forEach(pos => {
-      const drink = DRINKS.find(d => d.id === pos.id)!;
-      const glass = createCoupeGlass(drink.color);
-      glass.scale.set(1.8, 1.8, 1.8);
-      glass.position.set(pos.x, 0.15, pos.z);
-      scene.add(glass);
-      drinkMeshes.set(pos.id, glass);
-    });
 
     // --- Load Robot Model ---
     const loader = new GLTFLoader();
@@ -308,39 +199,6 @@
       isLoaded = true;
     });
 
-    // --- Raycaster for glass interaction ---
-    const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2();
-
-    function onMouseMove(event: MouseEvent) {
-      const canvasRect = container.getBoundingClientRect();
-      mouse.x = ((event.clientX - canvasRect.left) / canvasRect.width) * 2 - 1;
-      mouse.y = -((event.clientY - canvasRect.top) / canvasRect.height) * 2 + 1;
-
-      raycaster.setFromCamera(mouse, camera);
-      const glassArray = Array.from(drinkMeshes.values());
-      const intersects = raycaster.intersectObjects(glassArray, true);
-
-      if (intersects.length > 0) {
-        const intersectedGroup = intersects[0].object.parent;
-        const drinkId = Array.from(drinkMeshes.entries()).find(([_, mesh]) => mesh === intersectedGroup)?.[0];
-        if (drinkId && drinkId !== hoveredDrink) {
-          handleDrinkHover(drinkId);
-        }
-      } else if (hoveredDrink) {
-        handleDrinkLeave();
-      }
-    }
-
-    function onMouseClick(event: MouseEvent) {
-      if (hoveredDrink) {
-        handleDrinkClick(hoveredDrink);
-      }
-    }
-
-    container.addEventListener('mousemove', onMouseMove);
-    container.addEventListener('click', onMouseClick);
-
     // --- Animation Loop ---
     const clock = new THREE.Clock();
     let animId: number;
@@ -352,12 +210,6 @@
       if (mixer) {
         mixer.update(delta);
       }
-
-      // Animate glass lift on hover
-      drinkMeshes.forEach(glass => {
-        glass.userData.currentY += (glass.userData.targetY - glass.userData.currentY) * 0.1;
-        glass.position.y = 0.15 + glass.userData.currentY;
-      });
 
       // Mouth morph target animation
       if (mouthAnimating && face && face.morphTargetDictionary && face.morphTargetInfluences) {
@@ -394,8 +246,6 @@
     return () => {
       cancelAnimationFrame(animId);
       resizeObserver.disconnect();
-      container.removeEventListener('mousemove', onMouseMove);
-      container.removeEventListener('click', onMouseClick);
       mixer?.stopAllAction();
       renderer.dispose();
 
@@ -426,11 +276,34 @@
 
   <!-- Stage: canvas + overlapping bar -->
   <div class="stage">
-    <!-- 3D Canvas (includes robot + glasses) -->
+    <!-- 3D Canvas (robot only) -->
     <div class="canvas-container" bind:this={container}></div>
 
-    <!-- Bar Counter only (no CSS drinks) -->
+    <!-- Bar Area: CSS glasses + counter -->
     <div class="bar-area">
+      <!-- CSS Coupe Glasses -->
+      <div class="drinks-row">
+        {#each DRINKS as drink}
+          <button
+            class="glass-btn"
+            class:hovered={hoveredDrink === drink.id}
+            onmouseenter={() => handleDrinkHover(drink.id)}
+            onmouseleave={() => handleDrinkLeave()}
+            onclick={() => handleDrinkClick(drink.id)}
+          >
+            <div class="coupe-glass">
+              <div class="glass-bowl">
+                <div class="glass-liquid" style="background: {drink.color}"></div>
+                <div class="glass-shine"></div>
+              </div>
+              <div class="glass-stem"></div>
+              <div class="glass-base"></div>
+            </div>
+          </button>
+        {/each}
+      </div>
+
+      <!-- Bar Counter -->
       <div class="bar-counter">
         <div class="counter-top"></div>
         <div class="counter-body"></div>
@@ -516,7 +389,6 @@
     max-height: 600px;
     position: relative;
     z-index: 1;
-    cursor: pointer;
   }
 
   .canvas-container :global(canvas) {
@@ -533,7 +405,125 @@
     right: 0;
     bottom: 0;
     z-index: 2;
-    pointer-events: none; /* Let raycaster handle glass clicks */
+    pointer-events: none;
+  }
+
+  /* --- CSS Coupe Glasses --- */
+  .drinks-row {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    gap: clamp(3rem, 8vw, 6rem);
+    margin-bottom: -4px;
+  }
+
+  .glass-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+    pointer-events: auto;
+    outline: none;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .glass-btn:focus-visible {
+    outline: 2px solid #5A636B;
+    outline-offset: 6px;
+    border-radius: 8px;
+  }
+
+  .glass-btn.hovered {
+    transform: translateY(-12px);
+  }
+
+  .coupe-glass {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.06));
+    transition: filter 0.3s ease;
+  }
+
+  .glass-btn.hovered .coupe-glass {
+    filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.10));
+  }
+
+  /* Bowl */
+  .glass-bowl {
+    position: relative;
+    width: 68px;
+    height: 36px;
+    border-radius: 6px 6px 50% 50%;
+    background: rgba(255, 255, 255, 0.28);
+    border: 1.5px solid rgba(255, 255, 255, 0.55);
+    overflow: hidden;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.3),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.03);
+  }
+
+  /* Liquid */
+  .glass-liquid {
+    position: absolute;
+    bottom: 0;
+    left: 2px;
+    right: 2px;
+    height: 72%;
+    border-radius: 0 0 50% 50%;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+  }
+
+  .glass-btn.hovered .glass-liquid {
+    opacity: 0.92;
+  }
+
+  /* Glass shine highlight */
+  .glass-shine {
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    width: 40%;
+    height: 55%;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%
+    );
+    border-radius: 4px 2px 40% 20%;
+    pointer-events: none;
+  }
+
+  /* Stem */
+  .glass-stem {
+    width: 4px;
+    height: 22px;
+    background: linear-gradient(
+      to right,
+      #ccc8c1,
+      #e0dcd6 40%,
+      #d5d0ca 60%,
+      #c8c3bc
+    );
+    border-radius: 1px;
+  }
+
+  /* Base */
+  .glass-base {
+    width: 36px;
+    height: 6px;
+    background: linear-gradient(
+      to bottom,
+      #d8d4cd,
+      #c8c3bc
+    );
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
   }
 
   /* --- Bar Counter --- */
@@ -576,6 +566,25 @@
 
     .speech-bubble {
       max-width: 280px;
+    }
+
+    .drinks-row {
+      gap: clamp(1.5rem, 6vw, 3rem);
+    }
+
+    .glass-bowl {
+      width: 48px;
+      height: 26px;
+    }
+
+    .glass-stem {
+      height: 16px;
+      width: 3px;
+    }
+
+    .glass-base {
+      width: 28px;
+      height: 5px;
     }
   }
 </style>
