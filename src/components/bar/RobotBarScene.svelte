@@ -174,14 +174,14 @@
         opacity: 0.85,
       });
 
-      // Bowl (wide shallow cup)
-      const bowlGeometry = new THREE.SphereGeometry(0.08, 16, 16, 0, Math.PI * 2, 0, Math.PI * 0.45);
+      // Bowl (wide shallow cup — opening upward)
+      const bowlGeometry = new THREE.SphereGeometry(0.08, 16, 16, 0, Math.PI * 2, Math.PI * 0.55, Math.PI * 0.45);
       const bowl = new THREE.Mesh(bowlGeometry, glassMaterial);
       bowl.position.y = 0.1;
       group.add(bowl);
 
       // Liquid inside
-      const liquidGeometry = new THREE.SphereGeometry(0.075, 16, 16, 0, Math.PI * 2, 0, Math.PI * 0.4);
+      const liquidGeometry = new THREE.SphereGeometry(0.075, 16, 16, 0, Math.PI * 2, Math.PI * 0.6, Math.PI * 0.4);
       const liquid = new THREE.Mesh(liquidGeometry, liquidMaterial);
       liquid.position.y = 0.095;
       group.add(liquid);
@@ -210,7 +210,7 @@
       return group;
     }
 
-    // Position glasses on bar counter (Y = 0.05 aligns with CSS counter-top at 65%)
+    // Position glasses on bar counter (base sits above CSS counter-top at 65%)
     const glassPositions = [
       { id: 'pm' as DrinkId, x: -0.5, z: 0.2 },
       { id: 'ds' as DrinkId, x: 0, z: 0.2 },
@@ -221,7 +221,7 @@
       const drink = DRINKS.find(d => d.id === pos.id)!;
       const glass = createCoupeGlass(drink.color);
       glass.scale.set(1.8, 1.8, 1.8);
-      glass.position.set(pos.x, 0.05, pos.z);
+      glass.position.set(pos.x, 0.15, pos.z);
       scene.add(glass);
       drinkMeshes.set(pos.id, glass);
     });
@@ -356,7 +356,7 @@
       // Animate glass lift on hover
       drinkMeshes.forEach(glass => {
         glass.userData.currentY += (glass.userData.targetY - glass.userData.currentY) * 0.1;
-        glass.position.y = 0.05 + glass.userData.currentY;
+        glass.position.y = 0.15 + glass.userData.currentY;
       });
 
       // Mouth morph target animation
