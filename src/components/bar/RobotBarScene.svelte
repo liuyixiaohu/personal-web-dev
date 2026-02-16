@@ -322,9 +322,9 @@
   /* --- Speech Bubble --- */
   .speech-bubble {
     position: absolute;
-    top: clamp(1rem, 12vh, 4rem);
+    top: clamp(0.5rem, 4vh, 1.5rem);
     left: 50%;
-    transform: translateX(10%);
+    transform: translateX(15%);
     max-width: 380px;
     width: auto;
     padding: 0.55rem 1.2rem;
@@ -344,21 +344,21 @@
   .speech-bubble::after {
     content: '';
     position: absolute;
-    bottom: 8px;
-    left: -9px;
-    border-top: 9px solid transparent;
-    border-bottom: 9px solid transparent;
-    border-right: 9px solid white;
+    bottom: -9px;
+    left: 20%;
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-top: 9px solid white;
   }
 
   .speech-bubble::before {
     content: '';
     position: absolute;
-    bottom: 7px;
-    left: -11px;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-right: 10px solid #e2ded8;
+    bottom: -11px;
+    left: calc(20% - 1px);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #e2ded8;
   }
 
   .speech-text {
