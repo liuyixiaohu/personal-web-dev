@@ -114,6 +114,8 @@
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(rect.width, rect.height);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.0;
     container.appendChild(renderer.domElement);
 
     // --- Lighting (warm tones to match site) ---
@@ -129,6 +131,19 @@
     fillLight.position.set(-3, 3, 2);
     scene.add(fillLight);
 
+    // --- Environment map for glass refraction ---
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    const envScene = new THREE.Scene();
+    envScene.background = new THREE.Color(0xfff5e6);
+    envScene.add(new THREE.Mesh(
+      new THREE.SphereGeometry(5, 16, 16),
+      new THREE.MeshBasicMaterial({ color: 0xfff0e0, side: THREE.BackSide })
+    ));
+    envScene.add(new THREE.AmbientLight(0xffffff, 1));
+    const envRT = pmremGenerator.fromScene(envScene);
+    scene.environment = envRT.texture;
+    pmremGenerator.dispose();
+
     // --- Create 3D Coupe Glasses ---
     function createCoupeGlass(color: string) {
       const group = new THREE.Group();
@@ -136,22 +151,27 @@
       // Glass material (transparent with slight tint)
       const glassMaterial = new THREE.MeshPhysicalMaterial({
         color: 0xffffff,
-        metalness: 0,
-        roughness: 0.1,
-        transmission: 0.9,
+        metalness: 0.05,
+        roughness: 0.05,
+        transmission: 0.4,
         thickness: 0.5,
+        ior: 1.5,
         envMapIntensity: 1,
         clearcoat: 1,
-        clearcoatRoughness: 0.1,
+        clearcoatRoughness: 0.05,
+        transparent: true,
+        opacity: 0.35,
       });
 
       // Liquid material (colored, semi-transparent)
       const liquidMaterial = new THREE.MeshPhysicalMaterial({
         color: new THREE.Color(color),
         metalness: 0.1,
-        roughness: 0.2,
-        transmission: 0.6,
+        roughness: 0.3,
+        transmission: 0.15,
         thickness: 0.3,
+        transparent: true,
+        opacity: 0.85,
       });
 
       // Bowl (wide shallow cup)
@@ -190,7 +210,7 @@
       return group;
     }
 
-    // Position glasses on bar counter (Y = -0.6 is counter-top level in world space)
+    // Position glasses on bar counter (Y = 0.05 aligns with CSS counter-top at 65%)
     const glassPositions = [
       { id: 'pm' as DrinkId, x: -0.5, z: 0.2 },
       { id: 'ds' as DrinkId, x: 0, z: 0.2 },
@@ -200,7 +220,8 @@
     glassPositions.forEach(pos => {
       const drink = DRINKS.find(d => d.id === pos.id)!;
       const glass = createCoupeGlass(drink.color);
-      glass.position.set(pos.x, -0.6, pos.z);
+      glass.scale.set(1.8, 1.8, 1.8);
+      glass.position.set(pos.x, 0.05, pos.z);
       scene.add(glass);
       drinkMeshes.set(pos.id, glass);
     });
@@ -335,7 +356,7 @@
       // Animate glass lift on hover
       drinkMeshes.forEach(glass => {
         glass.userData.currentY += (glass.userData.targetY - glass.userData.currentY) * 0.1;
-        glass.position.y = -0.6 + glass.userData.currentY;
+        glass.position.y = 0.05 + glass.userData.currentY;
       });
 
       // Mouth morph target animation
