@@ -507,7 +507,7 @@
   /* --- Bar Area --- */
   .bar-area {
     position: absolute;
-    top: 45%;
+    top: 65%;
     left: 0;
     right: 0;
     bottom: 0;
@@ -529,7 +529,7 @@
   }
 
   .counter-body {
-    height: 55vh;
+    height: 35vh;
     background: #eae6e0;
     border-radius: 0;
   }
