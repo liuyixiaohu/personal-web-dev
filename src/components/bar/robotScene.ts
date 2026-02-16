@@ -38,7 +38,7 @@ const LIGHTING = {
 const ROBOT = {
   modelPath: '/models/RobotExpressive.glb',
   scale: 0.4,
-  position: [-0.6, -0.72, 0] as const,
+  position: [-1, -0.72, 0] as const,
   rotationY: Math.PI * 0.05,
 } as const;
 
@@ -47,6 +47,12 @@ const MOUTH = {
   amplitude: 0.35,
   closeSpeed: 3,
   morphTarget: 'Surprised',
+} as const;
+
+const BACKGROUND = {
+  topColor: '#FAF7F2',
+  bottomColor: '#E4DDD2',
+  height: 256,
 } as const;
 
 const EMOTE_ACTIONS = ['Wave', 'ThumbsUp', 'Yes', 'No', 'Punch', 'Jump', 'Death'] as const;
@@ -89,7 +95,8 @@ export async function createRobotScene(
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   container.appendChild(renderer.domElement);
 
-  // --- Lighting ---
+  // --- Background & Lighting ---
+  setupBackground(THREE, scene);
   setupLighting(THREE, scene);
 
   // --- State ---
@@ -242,6 +249,23 @@ export async function createRobotScene(
 }
 
 // === Internal Helpers ===
+
+function setupBackground(THREE: typeof THREE_NS, scene: THREE_NS.Scene) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 2;
+  canvas.height = BACKGROUND.height;
+
+  const ctx = canvas.getContext('2d')!;
+  const grad = ctx.createLinearGradient(0, 0, 0, BACKGROUND.height);
+  grad.addColorStop(0, BACKGROUND.topColor);
+  grad.addColorStop(1, BACKGROUND.bottomColor);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 2, BACKGROUND.height);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  scene.background = texture;
+}
 
 function setupLighting(THREE: typeof THREE_NS, scene: THREE_NS.Scene) {
   const { hemisphere: h, directional: d, fill: f } = LIGHTING;
