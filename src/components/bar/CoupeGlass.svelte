@@ -2,7 +2,7 @@
   CoupeGlass — Interactive coupe cocktail glass button
   Used by RobotBarScene to represent professional expertise drinks.
   Follows Bubble.svelte pattern: receives props, emits events.
-  Supports: hover lift, selected glow, pour-out/pour-in animations.
+  Supports: hover lift, selected glow, pour-out (lift+tilt)/pour-in animations.
 -->
 <script lang="ts">
   interface Props {
@@ -10,6 +10,7 @@
     hovered: boolean;
     selected: boolean;
     pouring: 'out' | 'in' | null;
+    pourDirection: 'left' | 'right' | null;
     blendColor: string | null;
     onhover: () => void;
     onleave: () => void;
@@ -21,11 +22,15 @@
     hovered,
     selected = false,
     pouring = null,
+    pourDirection = null,
     blendColor = null,
     onhover,
     onleave,
     onclick,
   }: Props = $props();
+
+  // Tilt sign: pour-right → positive rotation, pour-left → negative
+  const tiltSign = $derived(pourDirection === 'left' ? -1 : 1);
 </script>
 
 <button
@@ -34,6 +39,9 @@
   class:selected
   class:pouring-out={pouring === 'out'}
   class:pouring-in={pouring === 'in'}
+  class:pour-left={pouring === 'out' && pourDirection === 'left'}
+  class:pour-right={pouring === 'out' && pourDirection === 'right'}
+  style="--tilt-sign: {tiltSign}"
   onmouseenter={onhover}
   onmouseleave={onleave}
   {onclick}
@@ -151,9 +159,42 @@
     opacity: 0.92;
   }
 
-  /* Pour-out: liquid empties */
+  /* ===== Pour-out: lift up, tilt, empty ===== */
+
+  /* Whole button lifts up + shifts toward target */
+  .glass-btn.pouring-out {
+    animation: pour-lift 1400ms ease-in-out forwards;
+  }
+
+  @keyframes pour-lift {
+    0%   { transform: translateY(-12px); }
+    20%  { transform: translateY(-70px); }
+    100% { transform: translateY(-70px); }
+  }
+
+  /* Glass tilts in pour direction (after lift completes) */
+  .glass-btn.pour-right .coupe-glass {
+    animation: tilt-pour-right 1100ms ease-in-out 300ms forwards;
+  }
+  .glass-btn.pour-left .coupe-glass {
+    animation: tilt-pour-left 1100ms ease-in-out 300ms forwards;
+  }
+
+  @keyframes tilt-pour-right {
+    0%   { transform: rotate(0deg) translateX(0); }
+    30%  { transform: rotate(35deg) translateX(6px); }
+    100% { transform: rotate(40deg) translateX(8px); }
+  }
+
+  @keyframes tilt-pour-left {
+    0%   { transform: rotate(0deg) translateX(0); }
+    30%  { transform: rotate(-35deg) translateX(-6px); }
+    100% { transform: rotate(-40deg) translateX(-8px); }
+  }
+
+  /* Liquid empties after lift+tilt begins */
   .glass-btn.pouring-out .glass-liquid {
-    animation: pour-out 800ms ease-in forwards;
+    animation: pour-out 800ms ease-in 400ms forwards;
   }
 
   @keyframes pour-out {
@@ -162,25 +203,15 @@
     100% { height: 0%;  opacity: 0; }
   }
 
-  /* Pour-out: glass tilts */
-  .glass-btn.pouring-out .coupe-glass {
-    animation: tilt-pour 800ms ease-in-out forwards;
-  }
+  /* ===== Pour-in: receive blended liquid ===== */
 
-  @keyframes tilt-pour {
-    0%   { transform: rotate(0deg); }
-    40%  { transform: rotate(-20deg) translateX(-4px); }
-    100% { transform: rotate(-25deg) translateX(-6px); }
-  }
-
-  /* Pour-in: liquid receives blend color */
   .glass-btn.pouring-in .glass-liquid {
-    animation: pour-in 600ms ease-out 600ms forwards;
+    animation: pour-in 700ms ease-out 800ms forwards;
   }
 
   @keyframes pour-in {
     0%   { background: var(--liquid-color); height: 72%; }
-    30%  { height: 80%; }
+    40%  { height: 82%; }
     100% { background: var(--blend-color); height: 72%; }
   }
 
@@ -245,11 +276,23 @@
       height: 5px;
     }
 
-    /* Smaller tilt on mobile */
-    @keyframes tilt-pour {
-      0%   { transform: rotate(0deg); }
-      40%  { transform: rotate(-12deg) translateX(-2px); }
-      100% { transform: rotate(-15deg) translateX(-3px); }
+    /* Smaller lift + tilt on mobile */
+    @keyframes pour-lift {
+      0%   { transform: translateY(-12px); }
+      20%  { transform: translateY(-45px); }
+      100% { transform: translateY(-45px); }
+    }
+
+    @keyframes tilt-pour-right {
+      0%   { transform: rotate(0deg) translateX(0); }
+      30%  { transform: rotate(25deg) translateX(3px); }
+      100% { transform: rotate(30deg) translateX(4px); }
+    }
+
+    @keyframes tilt-pour-left {
+      0%   { transform: rotate(0deg) translateX(0); }
+      30%  { transform: rotate(-25deg) translateX(-3px); }
+      100% { transform: rotate(-30deg) translateX(-4px); }
     }
   }
 </style>

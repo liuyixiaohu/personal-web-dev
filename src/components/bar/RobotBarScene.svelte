@@ -1,7 +1,7 @@
 <!--
   RobotBarScene — Interactive robot bartender with coupe glass drinks.
   Orchestrates: robotScene.ts (Three.js), CoupeGlass.svelte (UI), drinks.ts (data).
-  Supports: single-drink navigation + two-drink mixing with pour animation.
+  Supports: single-drink navigation + two-drink mixing with pour animation + SVG stream.
 -->
 <script lang="ts">
   import { onMount } from 'svelte';
@@ -12,11 +12,12 @@
   import CoupeGlass from './CoupeGlass.svelte';
 
   // === Animation Timing Constants ===
-  const SPEECH_DURATION = 1800; // ms before mouth stops
-  const MIX_NAVIGATE_DELAY = 1800; // ms total before navigation after mixing
+  const SPEECH_DURATION = 1800;
+  const MIX_NAVIGATE_DELAY = 2200; // total time before page navigation
 
   // === State ===
   let container: HTMLDivElement;
+  let drinksRowEl: HTMLDivElement;
   let hoveredDrink   = $state<DrinkId | null>(null);
   let selectedDrink  = $state<DrinkId | null>(null);
   let mixingState    = $state<{ from: DrinkId; to: DrinkId } | null>(null);
@@ -26,6 +27,65 @@
   let speechTimeout: ReturnType<typeof setTimeout> | null = null;
   let mixTimeout: ReturnType<typeof setTimeout> | null = null;
   let robot: RobotController | null = null;
+
+  // Glass element refs for position calculation
+  let glassEls: Partial<Record<DrinkId, HTMLDivElement>> = {};
+
+  // SVG pour stream path data (computed on mix trigger)
+  let streamPath = $state('');
+  let streamColor = $state('');
+  let streamVisible = $state(false);
+  let svgViewBox = $state('0 0 0 0');
+  let svgStyle = $state('');
+  let pathLength = $state(0);
+
+  // === Pour direction ===
+  function getPourDirection(from: DrinkId, to: DrinkId): 'left' | 'right' {
+    const fromIdx = DRINKS.findIndex(d => d.id === from);
+    const toIdx = DRINKS.findIndex(d => d.id === to);
+    return toIdx > fromIdx ? 'right' : 'left';
+  }
+
+  // === Compute SVG pour stream between two glasses ===
+  function computeStream(from: DrinkId, to: DrinkId) {
+    const fromEl = glassEls[from];
+    const toEl = glassEls[to];
+    if (!fromEl || !toEl || !drinksRowEl) return;
+
+    const rowRect = drinksRowEl.getBoundingClientRect();
+    const fromRect = fromEl.getBoundingClientRect();
+    const toRect = toEl.getBoundingClientRect();
+
+    // Source: rim of lifted+tilted glass (center-top of source, offset up for the lift)
+    const fromX = fromRect.left + fromRect.width / 2 - rowRect.left;
+    const fromY = -50; // above the drinks-row (glass lifts -70px from -12px base)
+
+    // Target: center-top of target glass bowl
+    const toX = toRect.left + toRect.width / 2 - rowRect.left;
+    const toY = 4; // top of target glass bowl
+
+    // Control point for the arc: midpoint X, higher Y for a nice parabolic arc
+    const cpX = (fromX + toX) / 2;
+    const cpY = Math.min(fromY, toY) - 25;
+
+    // SVG path: quadratic bezier
+    streamPath = `M ${fromX} ${fromY} Q ${cpX} ${cpY} ${toX} ${toY}`;
+    streamColor = getDrink(from).color;
+
+    // Compute viewBox to contain the path with padding
+    const minX = Math.min(fromX, toX, cpX) - 10;
+    const maxX = Math.max(fromX, toX, cpX) + 10;
+    const minY = Math.min(fromY, toY, cpY) - 10;
+    const maxY = Math.max(fromY, toY) + 10;
+
+    svgViewBox = `${minX} ${minY} ${maxX - minX} ${maxY - minY}`;
+    svgStyle = `left: ${minX}px; top: ${minY}px; width: ${maxX - minX}px; height: ${maxY - minY}px;`;
+
+    // Approximate path length for dash animation
+    const dx = toX - fromX;
+    const dy = toY - fromY;
+    pathLength = Math.sqrt(dx * dx + dy * dy) * 1.3;
+  }
 
   // === i18n ===
   initLang();
@@ -60,13 +120,12 @@
 
   // === Handlers ===
   function handleDrinkHover(drinkId: DrinkId) {
-    if (mixingState) return; // Ignore hovers during mixing
+    if (mixingState) return;
 
     hoveredDrink = drinkId;
     isSpeaking = true;
 
     if (selectedDrink && drinkId !== selectedDrink) {
-      // Preview the mix
       const key = getMixDescKey(selectedDrink, drinkId);
       dialogText = key ? t(key) : t('bar.greeting');
     } else {
@@ -79,7 +138,7 @@
   }
 
   function handleDrinkLeave() {
-    if (mixingState) return; // Ignore during mixing
+    if (mixingState) return;
 
     hoveredDrink = null;
     isSpeaking = false;
@@ -96,25 +155,27 @@
   }
 
   function handleDrinkClick(drinkId: DrinkId) {
-    if (mixingState) return; // Ignore during mixing animation
+    if (mixingState) return;
 
     if (selectedDrink === null) {
-      // IDLE → SELECTED: first click selects a drink
+      // IDLE → SELECTED
       selectedDrink = drinkId;
       dialogText = t('bar.select.prompt');
-
       robot?.fadeToAction('Yes', 0.4);
       robot?.setMouthOpen(true);
       scheduleMouthClose(1500);
     } else if (selectedDrink === drinkId) {
-      // SELECTED → same drink clicked: navigate to that drink's page
+      // SELECTED → same drink: navigate
       navigate(getDrink(drinkId).route);
     } else {
-      // SELECTED → different drink clicked: trigger mixing!
+      // SELECTED → different drink: mix!
       const from = selectedDrink;
       const to = drinkId;
       const route = getMixRoute(from, to);
       if (!route) return;
+
+      // Compute SVG stream before setting state (need rects before animation moves things)
+      computeStream(from, to);
 
       mixingState = { from, to };
       selectedDrink = null;
@@ -125,7 +186,13 @@
       robot?.fadeToAction('Jump', 0.3);
       robot?.setMouthOpen(true);
 
-      // Navigate after animation completes
+      // Show stream after pour begins (400ms delay)
+      setTimeout(() => { streamVisible = true; }, 400);
+
+      // Hide stream as pour completes
+      setTimeout(() => { streamVisible = false; }, 1400);
+
+      // Navigate after animation
       mixTimeout = setTimeout(() => {
         navigate(route);
       }, MIX_NAVIGATE_DELAY);
@@ -133,7 +200,6 @@
   }
 
   function handleBackgroundClick(e: MouseEvent) {
-    // Deselect when clicking outside any glass
     if (
       !(e.target as HTMLElement).closest('.glass-btn') &&
       selectedDrink &&
@@ -173,22 +239,56 @@
 
     <!-- Bar Area: CSS glasses + counter -->
     <div class="bar-area">
-      <div class="drinks-row">
+      <div class="drinks-row" bind:this={drinksRowEl}>
         {#each DRINKS as drink}
-          <CoupeGlass
-            color={drink.color}
-            hovered={hoveredDrink === drink.id}
-            selected={selectedDrink === drink.id}
-            pouring={mixingState?.from === drink.id ? 'out' :
-                     mixingState?.to === drink.id ? 'in' : null}
-            blendColor={mixingState?.to === drink.id
-              ? blendColors(getDrink(mixingState.from).color, drink.color)
-              : null}
-            onhover={() => handleDrinkHover(drink.id)}
-            onleave={() => handleDrinkLeave()}
-            onclick={() => handleDrinkClick(drink.id)}
-          />
+          <div class="glass-wrapper" bind:this={glassEls[drink.id]}>
+            <CoupeGlass
+              color={drink.color}
+              hovered={hoveredDrink === drink.id}
+              selected={selectedDrink === drink.id}
+              pouring={mixingState?.from === drink.id ? 'out' :
+                       mixingState?.to === drink.id ? 'in' : null}
+              pourDirection={mixingState?.from === drink.id
+                ? getPourDirection(mixingState.from, mixingState.to)
+                : null}
+              blendColor={mixingState?.to === drink.id
+                ? blendColors(getDrink(mixingState.from).color, drink.color)
+                : null}
+              onhover={() => handleDrinkHover(drink.id)}
+              onleave={() => handleDrinkLeave()}
+              onclick={() => handleDrinkClick(drink.id)}
+            />
+          </div>
         {/each}
+
+        <!-- SVG Pour Stream -->
+        {#if mixingState && streamPath}
+          <svg
+            class="pour-stream"
+            class:visible={streamVisible}
+            viewBox={svgViewBox}
+            style={svgStyle}
+            style:--path-length={pathLength}
+          >
+            <path
+              d={streamPath}
+              fill="none"
+              stroke={streamColor}
+              stroke-width="3.5"
+              stroke-linecap="round"
+              opacity="0.7"
+            />
+            <!-- Drip at the end -->
+            <circle
+              cx={streamPath.split(' ').slice(-2, -1)[0]}
+              cy={streamPath.split(' ').slice(-1)[0]}
+              r="3"
+              fill={streamColor}
+              opacity="0.6"
+              class="drip"
+            />
+          </svg>
+        {/if}
       </div>
 
       <div class="bar-counter">
@@ -300,6 +400,49 @@
     padding-left: calc(50% - 34px - clamp(3rem, 8vw, 6rem));
     gap: clamp(3rem, 8vw, 6rem);
     margin-bottom: -4px;
+  }
+
+  .glass-wrapper {
+    position: relative;
+  }
+
+  /* --- Pour Stream SVG --- */
+  .pour-stream {
+    position: absolute;
+    pointer-events: none;
+    z-index: 4;
+    overflow: visible;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .pour-stream.visible {
+    opacity: 1;
+  }
+
+  .pour-stream path {
+    stroke-dasharray: calc(var(--path-length) * 1px);
+    stroke-dashoffset: calc(var(--path-length) * 1px);
+    animation: stream-flow 600ms ease-in-out forwards;
+  }
+
+  .pour-stream.visible path {
+    animation: stream-flow 600ms ease-in-out forwards;
+  }
+
+  @keyframes stream-flow {
+    to { stroke-dashoffset: 0; }
+  }
+
+  .pour-stream .drip {
+    opacity: 0;
+    animation: drip-appear 300ms ease-out 500ms forwards;
+  }
+
+  @keyframes drip-appear {
+    0%   { opacity: 0; r: 2; }
+    50%  { opacity: 0.7; r: 4; }
+    100% { opacity: 0; r: 5; }
   }
 
   /* --- Bar Counter --- */
