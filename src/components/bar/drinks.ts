@@ -24,3 +24,41 @@ export function getDrink(id: DrinkId): Drink {
   if (!drink) throw new Error(`Unknown drink: ${id}`);
   return drink;
 }
+
+// === Mix (Blend) Routes ===
+// Mirrors physics.ts COLLISION_ROUTES pattern — both key orderings stored
+
+const MIX_ROUTES: Record<string, string> = {
+  'pm+visual':  '/professional/brand-narrative',
+  'visual+pm':  '/professional/brand-narrative',
+  'pm+ds':      '/professional/quant-insights',
+  'ds+pm':      '/professional/quant-insights',
+  'ds+visual':  '/professional/information-design',
+  'visual+ds':  '/professional/information-design',
+};
+
+const MIX_DESC_KEYS: Record<string, string> = {
+  'pm+ds':      'bar.mix.pm_ds.desc',
+  'ds+pm':      'bar.mix.pm_ds.desc',
+  'pm+visual':  'bar.mix.pm_visual.desc',
+  'visual+pm':  'bar.mix.pm_visual.desc',
+  'ds+visual':  'bar.mix.ds_visual.desc',
+  'visual+ds':  'bar.mix.ds_visual.desc',
+};
+
+export function getMixRoute(a: DrinkId, b: DrinkId): string | undefined {
+  return MIX_ROUTES[`${a}+${b}`];
+}
+
+export function getMixDescKey(a: DrinkId, b: DrinkId): string | undefined {
+  return MIX_DESC_KEYS[`${a}+${b}`];
+}
+
+/** Average two hex colors for the blended liquid */
+export function blendColors(hexA: string, hexB: string): string {
+  const parse = (h: string, i: number) => parseInt(h.slice(i, i + 2), 16);
+  const r = Math.round((parse(hexA, 1) + parse(hexB, 1)) / 2);
+  const g = Math.round((parse(hexA, 3) + parse(hexB, 3)) / 2);
+  const b = Math.round((parse(hexA, 5) + parse(hexB, 5)) / 2);
+  return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+}

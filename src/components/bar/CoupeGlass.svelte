@@ -2,22 +2,38 @@
   CoupeGlass — Interactive coupe cocktail glass button
   Used by RobotBarScene to represent professional expertise drinks.
   Follows Bubble.svelte pattern: receives props, emits events.
+  Supports: hover lift, selected glow, pour-out/pour-in animations.
 -->
 <script lang="ts">
   interface Props {
     color: string;
     hovered: boolean;
+    selected: boolean;
+    pouring: 'out' | 'in' | null;
+    blendColor: string | null;
     onhover: () => void;
     onleave: () => void;
     onclick: () => void;
   }
 
-  let { color, hovered, onhover, onleave, onclick }: Props = $props();
+  let {
+    color,
+    hovered,
+    selected = false,
+    pouring = null,
+    blendColor = null,
+    onhover,
+    onleave,
+    onclick,
+  }: Props = $props();
 </script>
 
 <button
   class="glass-btn"
   class:hovered
+  class:selected
+  class:pouring-out={pouring === 'out'}
+  class:pouring-in={pouring === 'in'}
   onmouseenter={onhover}
   onmouseleave={onleave}
   {onclick}
@@ -26,7 +42,10 @@
 >
   <div class="coupe-glass">
     <div class="glass-bowl">
-      <div class="glass-liquid" style="background: {color}"></div>
+      <div
+        class="glass-liquid"
+        style="--liquid-color: {color}; --blend-color: {blendColor ?? color}"
+      ></div>
       <div class="glass-shine"></div>
     </div>
     <div class="glass-stem"></div>
@@ -54,7 +73,8 @@
     border-radius: 8px;
   }
 
-  .glass-btn.hovered {
+  .glass-btn.hovered,
+  .glass-btn.selected {
     transform: translateY(-12px);
   }
 
@@ -66,7 +86,8 @@
     transition: filter 0.3s ease;
   }
 
-  .glass-btn.hovered .coupe-glass {
+  .glass-btn.hovered .coupe-glass,
+  .glass-btn.selected .coupe-glass {
     filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.10));
   }
 
@@ -82,6 +103,34 @@
     box-shadow:
       inset 0 0 0 1px rgba(255, 255, 255, 0.3),
       inset 0 -2px 4px rgba(0, 0, 0, 0.03);
+    transition: box-shadow 0.3s ease;
+  }
+
+  /* Selected: pulsing ring */
+  .glass-btn.selected .glass-bowl {
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.3),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.03),
+      0 0 0 3px rgba(90, 99, 107, 0.18),
+      0 0 12px rgba(90, 99, 107, 0.10);
+    animation: pulse-ring 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse-ring {
+    0%, 100% {
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.3),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.03),
+        0 0 0 3px rgba(90, 99, 107, 0.18),
+        0 0 12px rgba(90, 99, 107, 0.10);
+    }
+    50% {
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.3),
+        inset 0 -2px 4px rgba(0, 0, 0, 0.03),
+        0 0 0 4px rgba(90, 99, 107, 0.28),
+        0 0 16px rgba(90, 99, 107, 0.15);
+    }
   }
 
   /* Liquid */
@@ -92,12 +141,47 @@
     right: 2px;
     height: 72%;
     border-radius: 0 0 50% 50%;
+    background: var(--liquid-color);
     opacity: 0.8;
     transition: opacity 0.3s ease;
   }
 
-  .glass-btn.hovered .glass-liquid {
+  .glass-btn.hovered .glass-liquid,
+  .glass-btn.selected .glass-liquid {
     opacity: 0.92;
+  }
+
+  /* Pour-out: liquid empties */
+  .glass-btn.pouring-out .glass-liquid {
+    animation: pour-out 800ms ease-in forwards;
+  }
+
+  @keyframes pour-out {
+    0%   { height: 72%; opacity: 0.85; }
+    70%  { height: 8%;  opacity: 0.6; }
+    100% { height: 0%;  opacity: 0; }
+  }
+
+  /* Pour-out: glass tilts */
+  .glass-btn.pouring-out .coupe-glass {
+    animation: tilt-pour 800ms ease-in-out forwards;
+  }
+
+  @keyframes tilt-pour {
+    0%   { transform: rotate(0deg); }
+    40%  { transform: rotate(-20deg) translateX(-4px); }
+    100% { transform: rotate(-25deg) translateX(-6px); }
+  }
+
+  /* Pour-in: liquid receives blend color */
+  .glass-btn.pouring-in .glass-liquid {
+    animation: pour-in 600ms ease-out 600ms forwards;
+  }
+
+  @keyframes pour-in {
+    0%   { background: var(--liquid-color); height: 72%; }
+    30%  { height: 80%; }
+    100% { background: var(--blend-color); height: 72%; }
   }
 
   /* Glass shine highlight */
@@ -159,6 +243,13 @@
     .glass-base {
       width: 28px;
       height: 5px;
+    }
+
+    /* Smaller tilt on mobile */
+    @keyframes tilt-pour {
+      0%   { transform: rotate(0deg); }
+      40%  { transform: rotate(-12deg) translateX(-2px); }
+      100% { transform: rotate(-15deg) translateX(-3px); }
     }
   }
 </style>

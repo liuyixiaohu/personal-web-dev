@@ -1,25 +1,30 @@
 <!--
   RobotBarScene — Interactive robot bartender with coupe glass drinks.
   Orchestrates: robotScene.ts (Three.js), CoupeGlass.svelte (UI), drinks.ts (data).
+  Supports: single-drink navigation + two-drink mixing with pour animation.
 -->
 <script lang="ts">
   import { onMount } from 'svelte';
   import { navigate } from 'astro:transitions/client';
   import { subscribe, initLang, t } from '../../i18n/langStore';
-  import { DRINKS, getDrink, type DrinkId } from './drinks';
+  import { DRINKS, getDrink, getMixRoute, getMixDescKey, blendColors, type DrinkId } from './drinks';
   import { createRobotScene, type RobotController } from './robotScene';
   import CoupeGlass from './CoupeGlass.svelte';
 
-  // === Constants ===
+  // === Animation Timing Constants ===
   const SPEECH_DURATION = 1800; // ms before mouth stops
+  const MIX_NAVIGATE_DELAY = 1800; // ms total before navigation after mixing
 
   // === State ===
   let container: HTMLDivElement;
-  let hoveredDrink = $state<DrinkId | null>(null);
-  let isSpeaking   = $state(false);
-  let dialogText   = $state('');
-  let isLoaded     = $state(false);
+  let hoveredDrink   = $state<DrinkId | null>(null);
+  let selectedDrink  = $state<DrinkId | null>(null);
+  let mixingState    = $state<{ from: DrinkId; to: DrinkId } | null>(null);
+  let isSpeaking     = $state(false);
+  let dialogText     = $state('');
+  let isLoaded       = $state(false);
   let speechTimeout: ReturnType<typeof setTimeout> | null = null;
+  let mixTimeout: ReturnType<typeof setTimeout> | null = null;
   let robot: RobotController | null = null;
 
   // === i18n ===
@@ -28,8 +33,15 @@
 
   $effect(() => {
     const unsub = subscribe(() => {
-      if (hoveredDrink) {
+      if (mixingState) {
+        dialogText = t('bar.mixing');
+      } else if (hoveredDrink && selectedDrink && hoveredDrink !== selectedDrink) {
+        const key = getMixDescKey(selectedDrink, hoveredDrink);
+        dialogText = key ? t(key) : t('bar.greeting');
+      } else if (hoveredDrink) {
         dialogText = t(getDrink(hoveredDrink).descKey);
+      } else if (selectedDrink) {
+        dialogText = t('bar.select.prompt');
       } else {
         dialogText = t('bar.greeting');
       }
@@ -37,34 +49,100 @@
     return unsub;
   });
 
-  // === Handlers ===
-  function handleDrinkHover(drinkId: DrinkId) {
-    hoveredDrink = drinkId;
-    dialogText = t(getDrink(drinkId).descKey);
-    isSpeaking = true;
-
-    robot?.fadeToAction('ThumbsUp', 0.4);
-    robot?.setMouthOpen(true);
-
+  // === Helpers ===
+  function scheduleMouthClose(duration = SPEECH_DURATION) {
     if (speechTimeout) clearTimeout(speechTimeout);
     speechTimeout = setTimeout(() => {
       isSpeaking = false;
       robot?.setMouthOpen(false);
-    }, SPEECH_DURATION);
+    }, duration);
+  }
+
+  // === Handlers ===
+  function handleDrinkHover(drinkId: DrinkId) {
+    if (mixingState) return; // Ignore hovers during mixing
+
+    hoveredDrink = drinkId;
+    isSpeaking = true;
+
+    if (selectedDrink && drinkId !== selectedDrink) {
+      // Preview the mix
+      const key = getMixDescKey(selectedDrink, drinkId);
+      dialogText = key ? t(key) : t('bar.greeting');
+    } else {
+      dialogText = t(getDrink(drinkId).descKey);
+    }
+
+    robot?.fadeToAction('ThumbsUp', 0.4);
+    robot?.setMouthOpen(true);
+    scheduleMouthClose();
   }
 
   function handleDrinkLeave() {
+    if (mixingState) return; // Ignore during mixing
+
     hoveredDrink = null;
-    dialogText = t('bar.greeting');
     isSpeaking = false;
     robot?.setMouthOpen(false);
-    robot?.fadeToAction('Idle', 0.5);
 
+    if (selectedDrink) {
+      dialogText = t('bar.select.prompt');
+    } else {
+      dialogText = t('bar.greeting');
+    }
+
+    robot?.fadeToAction('Idle', 0.5);
     if (speechTimeout) clearTimeout(speechTimeout);
   }
 
   function handleDrinkClick(drinkId: DrinkId) {
-    navigate(getDrink(drinkId).route);
+    if (mixingState) return; // Ignore during mixing animation
+
+    if (selectedDrink === null) {
+      // IDLE → SELECTED: first click selects a drink
+      selectedDrink = drinkId;
+      dialogText = t('bar.select.prompt');
+
+      robot?.fadeToAction('Yes', 0.4);
+      robot?.setMouthOpen(true);
+      scheduleMouthClose(1500);
+    } else if (selectedDrink === drinkId) {
+      // SELECTED → same drink clicked: navigate to that drink's page
+      navigate(getDrink(drinkId).route);
+    } else {
+      // SELECTED → different drink clicked: trigger mixing!
+      const from = selectedDrink;
+      const to = drinkId;
+      const route = getMixRoute(from, to);
+      if (!route) return;
+
+      mixingState = { from, to };
+      selectedDrink = null;
+      hoveredDrink = null;
+
+      // Robot gets excited
+      dialogText = t('bar.mixing');
+      robot?.fadeToAction('Jump', 0.3);
+      robot?.setMouthOpen(true);
+
+      // Navigate after animation completes
+      mixTimeout = setTimeout(() => {
+        navigate(route);
+      }, MIX_NAVIGATE_DELAY);
+    }
+  }
+
+  function handleBackgroundClick(e: MouseEvent) {
+    // Deselect when clicking outside any glass
+    if (
+      !(e.target as HTMLElement).closest('.glass-btn') &&
+      selectedDrink &&
+      !mixingState
+    ) {
+      selectedDrink = null;
+      dialogText = t('bar.greeting');
+      robot?.fadeToAction('Idle', 0.5);
+    }
   }
 
   // === Lifecycle ===
@@ -72,11 +150,17 @@
     robot = await createRobotScene(container, () => {
       isLoaded = true;
     });
-    return () => robot?.dispose();
+    return () => {
+      robot?.dispose();
+      if (speechTimeout) clearTimeout(speechTimeout);
+      if (mixTimeout) clearTimeout(mixTimeout);
+    };
   });
 </script>
 
-<div class="robot-bar-scene">
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div class="robot-bar-scene" onclick={handleBackgroundClick}>
   <!-- Speech Bubble -->
   <div class="speech-bubble" class:visible={isLoaded}>
     <p class="speech-text">{dialogText}</p>
@@ -94,6 +178,12 @@
           <CoupeGlass
             color={drink.color}
             hovered={hoveredDrink === drink.id}
+            selected={selectedDrink === drink.id}
+            pouring={mixingState?.from === drink.id ? 'out' :
+                     mixingState?.to === drink.id ? 'in' : null}
+            blendColor={mixingState?.to === drink.id
+              ? blendColors(getDrink(mixingState.from).color, drink.color)
+              : null}
             onhover={() => handleDrinkHover(drink.id)}
             onleave={() => handleDrinkLeave()}
             onclick={() => handleDrinkClick(drink.id)}
