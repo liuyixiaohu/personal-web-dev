@@ -77,7 +77,6 @@ export const translations: Record<string, Record<Lang, string>> = {
 
   // --- Bartender mixing dialog ---
   'bar.select.prompt': { en: 'Pick another drink to mix! Or click again for this one.', zh: '再选一杯来调配吧！或者再次点击同一杯。' },
-  'bar.mixing': { en: 'Mixing up something special...', zh: '正在调配特别的东西……' },
   'bar.mix.pm_ds.desc': { en: 'PM + DS — a cocktail of strategy and numbers!', zh: 'PM + DS — 一杯策略与数据的鸡尾酒！' },
   'bar.mix.pm_visual.desc': { en: 'PM + Visual — where stories meet aesthetics!', zh: 'PM + Visual — 故事与美学的邂逅！' },
   'bar.mix.ds_visual.desc': { en: 'DS + Visual — data, but make it beautiful!', zh: 'DS + Visual — 让数据变得好看！' },

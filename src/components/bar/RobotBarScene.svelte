@@ -1,90 +1,34 @@
 <!--
   RobotBarScene — Interactive robot bartender with coupe glass drinks.
   Orchestrates: robotScene.ts (Three.js), CoupeGlass.svelte (UI), drinks.ts (data).
-  Supports: single-drink navigation + two-drink mixing with pour animation + SVG stream.
+  Supports: weather-based greeting, single-drink navigation, two-click mixing.
 -->
 <script lang="ts">
   import { onMount } from 'svelte';
   import { navigate } from 'astro:transitions/client';
-  import { subscribe, initLang, t } from '../../i18n/langStore';
-  import { DRINKS, getDrink, getMixRoute, getMixDescKey, blendColors, type DrinkId } from './drinks';
+  import { subscribe, initLang, getLang, t } from '../../i18n/langStore';
+  import { DRINKS, getDrink, getMixRoute, getMixDescKey, type DrinkId } from './drinks';
   import { createRobotScene, type RobotController } from './robotScene';
+  import { getWeatherGreeting, getCachedGreeting } from '../../utils/weather';
   import CoupeGlass from './CoupeGlass.svelte';
 
-  // === Animation Timing Constants ===
+  // === Constants ===
   const SPEECH_DURATION = 1800;
-  const MIX_NAVIGATE_DELAY = 2200; // total time before page navigation
 
   // === State ===
   let container: HTMLDivElement;
-  let drinksRowEl: HTMLDivElement;
   let hoveredDrink   = $state<DrinkId | null>(null);
   let selectedDrink  = $state<DrinkId | null>(null);
-  let mixingState    = $state<{ from: DrinkId; to: DrinkId } | null>(null);
   let isSpeaking     = $state(false);
   let dialogText     = $state('');
   let isLoaded       = $state(false);
   let speechTimeout: ReturnType<typeof setTimeout> | null = null;
-  let mixTimeout: ReturnType<typeof setTimeout> | null = null;
   let robot: RobotController | null = null;
+  let weatherLoaded  = false;
 
-  // Glass element refs for position calculation
-  let glassEls: Partial<Record<DrinkId, HTMLDivElement>> = {};
-
-  // SVG pour stream path data (computed on mix trigger)
-  let streamPath = $state('');
-  let streamColor = $state('');
-  let streamVisible = $state(false);
-  let svgViewBox = $state('0 0 0 0');
-  let svgStyle = $state('');
-  let pathLength = $state(0);
-
-  // === Pour direction ===
-  function getPourDirection(from: DrinkId, to: DrinkId): 'left' | 'right' {
-    const fromIdx = DRINKS.findIndex(d => d.id === from);
-    const toIdx = DRINKS.findIndex(d => d.id === to);
-    return toIdx > fromIdx ? 'right' : 'left';
-  }
-
-  // === Compute SVG pour stream between two glasses ===
-  function computeStream(from: DrinkId, to: DrinkId) {
-    const fromEl = glassEls[from];
-    const toEl = glassEls[to];
-    if (!fromEl || !toEl || !drinksRowEl) return;
-
-    const rowRect = drinksRowEl.getBoundingClientRect();
-    const fromRect = fromEl.getBoundingClientRect();
-    const toRect = toEl.getBoundingClientRect();
-
-    // Source: rim of lifted+tilted glass (center-top of source, offset up for the lift)
-    const fromX = fromRect.left + fromRect.width / 2 - rowRect.left;
-    const fromY = -50; // above the drinks-row (glass lifts -70px from -12px base)
-
-    // Target: center-top of target glass bowl
-    const toX = toRect.left + toRect.width / 2 - rowRect.left;
-    const toY = 4; // top of target glass bowl
-
-    // Control point for the arc: midpoint X, higher Y for a nice parabolic arc
-    const cpX = (fromX + toX) / 2;
-    const cpY = Math.min(fromY, toY) - 25;
-
-    // SVG path: quadratic bezier
-    streamPath = `M ${fromX} ${fromY} Q ${cpX} ${cpY} ${toX} ${toY}`;
-    streamColor = getDrink(from).color;
-
-    // Compute viewBox to contain the path with padding
-    const minX = Math.min(fromX, toX, cpX) - 10;
-    const maxX = Math.max(fromX, toX, cpX) + 10;
-    const minY = Math.min(fromY, toY, cpY) - 10;
-    const maxY = Math.max(fromY, toY) + 10;
-
-    svgViewBox = `${minX} ${minY} ${maxX - minX} ${maxY - minY}`;
-    svgStyle = `left: ${minX}px; top: ${minY}px; width: ${maxX - minX}px; height: ${maxY - minY}px;`;
-
-    // Approximate path length for dash animation
-    const dx = toX - fromX;
-    const dy = toY - fromY;
-    pathLength = Math.sqrt(dx * dx + dy * dy) * 1.3;
+  // === Default greeting (before weather loads) ===
+  function getDefaultGreeting(): string {
+    return getCachedGreeting(getLang()) ?? t('bar.greeting');
   }
 
   // === i18n ===
@@ -93,17 +37,15 @@
 
   $effect(() => {
     const unsub = subscribe(() => {
-      if (mixingState) {
-        dialogText = t('bar.mixing');
-      } else if (hoveredDrink && selectedDrink && hoveredDrink !== selectedDrink) {
+      if (hoveredDrink && selectedDrink && hoveredDrink !== selectedDrink) {
         const key = getMixDescKey(selectedDrink, hoveredDrink);
-        dialogText = key ? t(key) : t('bar.greeting');
+        dialogText = key ? t(key) : getDefaultGreeting();
       } else if (hoveredDrink) {
         dialogText = t(getDrink(hoveredDrink).descKey);
       } else if (selectedDrink) {
         dialogText = t('bar.select.prompt');
       } else {
-        dialogText = t('bar.greeting');
+        dialogText = getDefaultGreeting();
       }
     });
     return unsub;
@@ -120,14 +62,12 @@
 
   // === Handlers ===
   function handleDrinkHover(drinkId: DrinkId) {
-    if (mixingState) return;
-
     hoveredDrink = drinkId;
     isSpeaking = true;
 
     if (selectedDrink && drinkId !== selectedDrink) {
       const key = getMixDescKey(selectedDrink, drinkId);
-      dialogText = key ? t(key) : t('bar.greeting');
+      dialogText = key ? t(key) : getDefaultGreeting();
     } else {
       dialogText = t(getDrink(drinkId).descKey);
     }
@@ -138,8 +78,6 @@
   }
 
   function handleDrinkLeave() {
-    if (mixingState) return;
-
     hoveredDrink = null;
     isSpeaking = false;
     robot?.setMouthOpen(false);
@@ -147,7 +85,7 @@
     if (selectedDrink) {
       dialogText = t('bar.select.prompt');
     } else {
-      dialogText = t('bar.greeting');
+      dialogText = getDefaultGreeting();
     }
 
     robot?.fadeToAction('Idle', 0.5);
@@ -155,8 +93,6 @@
   }
 
   function handleDrinkClick(drinkId: DrinkId) {
-    if (mixingState) return;
-
     if (selectedDrink === null) {
       // IDLE → SELECTED
       selectedDrink = drinkId;
@@ -168,45 +104,19 @@
       // SELECTED → same drink: navigate
       navigate(getDrink(drinkId).route);
     } else {
-      // SELECTED → different drink: mix!
-      const from = selectedDrink;
-      const to = drinkId;
-      const route = getMixRoute(from, to);
-      if (!route) return;
-
-      // Compute SVG stream before setting state (need rects before animation moves things)
-      computeStream(from, to);
-
-      mixingState = { from, to };
-      selectedDrink = null;
-      hoveredDrink = null;
-
-      // Robot gets excited
-      dialogText = t('bar.mixing');
-      robot?.fadeToAction('Jump', 0.3);
-      robot?.setMouthOpen(true);
-
-      // Show stream after pour begins (400ms delay)
-      setTimeout(() => { streamVisible = true; }, 400);
-
-      // Hide stream as pour completes
-      setTimeout(() => { streamVisible = false; }, 1400);
-
-      // Navigate after animation
-      mixTimeout = setTimeout(() => {
-        navigate(route);
-      }, MIX_NAVIGATE_DELAY);
+      // SELECTED → different drink: navigate to mix page
+      const route = getMixRoute(selectedDrink, drinkId);
+      if (route) navigate(route);
     }
   }
 
   function handleBackgroundClick(e: MouseEvent) {
     if (
       !(e.target as HTMLElement).closest('.glass-btn') &&
-      selectedDrink &&
-      !mixingState
+      selectedDrink
     ) {
       selectedDrink = null;
-      dialogText = t('bar.greeting');
+      dialogText = getDefaultGreeting();
       robot?.fadeToAction('Idle', 0.5);
     }
   }
@@ -216,10 +126,20 @@
     robot = await createRobotScene(container, () => {
       isLoaded = true;
     });
+
+    // Load weather greeting async (non-blocking)
+    getWeatherGreeting().then((greeting) => {
+      weatherLoaded = true;
+      const lang = getLang();
+      // Only update if still on default greeting (not hovering/selecting)
+      if (!hoveredDrink && !selectedDrink) {
+        dialogText = greeting[lang];
+      }
+    });
+
     return () => {
       robot?.dispose();
       if (speechTimeout) clearTimeout(speechTimeout);
-      if (mixTimeout) clearTimeout(mixTimeout);
     };
   });
 </script>
@@ -227,7 +147,7 @@
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div class="robot-bar-scene" onclick={handleBackgroundClick}>
-  <!-- Speech Bubble -->
+  <!-- Speech Bubble — positioned near robot's head -->
   <div class="speech-bubble" class:visible={isLoaded}>
     <p class="speech-text">{dialogText}</p>
   </div>
@@ -239,56 +159,17 @@
 
     <!-- Bar Area: CSS glasses + counter -->
     <div class="bar-area">
-      <div class="drinks-row" bind:this={drinksRowEl}>
+      <div class="drinks-row">
         {#each DRINKS as drink}
-          <div class="glass-wrapper" bind:this={glassEls[drink.id]}>
-            <CoupeGlass
-              color={drink.color}
-              hovered={hoveredDrink === drink.id}
-              selected={selectedDrink === drink.id}
-              pouring={mixingState?.from === drink.id ? 'out' :
-                       mixingState?.to === drink.id ? 'in' : null}
-              pourDirection={mixingState?.from === drink.id
-                ? getPourDirection(mixingState.from, mixingState.to)
-                : null}
-              blendColor={mixingState?.to === drink.id
-                ? blendColors(getDrink(mixingState.from).color, drink.color)
-                : null}
-              onhover={() => handleDrinkHover(drink.id)}
-              onleave={() => handleDrinkLeave()}
-              onclick={() => handleDrinkClick(drink.id)}
-            />
-          </div>
+          <CoupeGlass
+            color={drink.color}
+            hovered={hoveredDrink === drink.id}
+            selected={selectedDrink === drink.id}
+            onhover={() => handleDrinkHover(drink.id)}
+            onleave={() => handleDrinkLeave()}
+            onclick={() => handleDrinkClick(drink.id)}
+          />
         {/each}
-
-        <!-- SVG Pour Stream -->
-        {#if mixingState && streamPath}
-          <svg
-            class="pour-stream"
-            class:visible={streamVisible}
-            viewBox={svgViewBox}
-            style={svgStyle}
-            style:--path-length={pathLength}
-          >
-            <path
-              d={streamPath}
-              fill="none"
-              stroke={streamColor}
-              stroke-width="3.5"
-              stroke-linecap="round"
-              opacity="0.7"
-            />
-            <!-- Drip at the end -->
-            <circle
-              cx={streamPath.split(' ').slice(-2, -1)[0]}
-              cy={streamPath.split(' ').slice(-1)[0]}
-              r="3"
-              fill={streamColor}
-              opacity="0.6"
-              class="drip"
-            />
-          </svg>
-        {/if}
       </div>
 
       <div class="bar-counter">
@@ -311,11 +192,11 @@
     padding: var(--space-sm) 0 0 0;
   }
 
-  /* --- Speech Bubble --- */
+  /* --- Speech Bubble (near robot head, right side) --- */
   .speech-bubble {
     position: absolute;
-    top: 12%;
-    left: 50%;
+    top: 18%;
+    left: 38%;
     transform: translateX(-50%);
     max-width: 380px;
     width: auto;
@@ -332,11 +213,12 @@
     opacity: 1;
   }
 
+  /* Arrow pointing toward robot */
   .speech-bubble::after {
     content: '';
     position: absolute;
     bottom: -9px;
-    left: 20%;
+    left: 15%;
     border-left: 9px solid transparent;
     border-right: 9px solid transparent;
     border-top: 9px solid white;
@@ -346,7 +228,7 @@
     content: '';
     position: absolute;
     bottom: -11px;
-    left: calc(20% - 1px);
+    left: calc(15% - 1px);
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-top: 10px solid #e2ded8;
@@ -402,49 +284,6 @@
     margin-bottom: -4px;
   }
 
-  .glass-wrapper {
-    position: relative;
-  }
-
-  /* --- Pour Stream SVG --- */
-  .pour-stream {
-    position: absolute;
-    pointer-events: none;
-    z-index: 4;
-    overflow: visible;
-    opacity: 0;
-    transition: opacity 0.25s ease;
-  }
-
-  .pour-stream.visible {
-    opacity: 1;
-  }
-
-  .pour-stream path {
-    stroke-dasharray: calc(var(--path-length) * 1px);
-    stroke-dashoffset: calc(var(--path-length) * 1px);
-    animation: stream-flow 600ms ease-in-out forwards;
-  }
-
-  .pour-stream.visible path {
-    animation: stream-flow 600ms ease-in-out forwards;
-  }
-
-  @keyframes stream-flow {
-    to { stroke-dashoffset: 0; }
-  }
-
-  .pour-stream .drip {
-    opacity: 0;
-    animation: drip-appear 300ms ease-out 500ms forwards;
-  }
-
-  @keyframes drip-appear {
-    0%   { opacity: 0; r: 2; }
-    50%  { opacity: 0.7; r: 4; }
-    100% { opacity: 0; r: 5; }
-  }
-
   /* --- Bar Counter --- */
   .bar-counter {
     position: relative;
@@ -484,6 +323,16 @@
 
     .speech-bubble {
       max-width: 280px;
+      left: 50%;
+      top: 10%;
+    }
+
+    .speech-bubble::after {
+      left: 20%;
+    }
+
+    .speech-bubble::before {
+      left: calc(20% - 1px);
     }
 
     .drinks-row {

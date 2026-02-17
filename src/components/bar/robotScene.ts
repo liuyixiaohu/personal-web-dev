@@ -50,7 +50,7 @@ const MOUTH = {
 } as const;
 
 const BACKGROUND = {
-  topColor: '#FAF7F2',
+  topColor: '#E4DDD2',
   bottomColor: '#E4DDD2',
   height: 256,
 } as const;

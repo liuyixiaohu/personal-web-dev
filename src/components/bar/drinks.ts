@@ -53,12 +53,3 @@ export function getMixRoute(a: DrinkId, b: DrinkId): string | undefined {
 export function getMixDescKey(a: DrinkId, b: DrinkId): string | undefined {
   return MIX_DESC_KEYS[`${a}+${b}`];
 }
-
-/** Average two hex colors for the blended liquid */
-export function blendColors(hexA: string, hexB: string): string {
-  const parse = (h: string, i: number) => parseInt(h.slice(i, i + 2), 16);
-  const r = Math.round((parse(hexA, 1) + parse(hexB, 1)) / 2);
-  const g = Math.round((parse(hexA, 3) + parse(hexB, 3)) / 2);
-  const b = Math.round((parse(hexA, 5) + parse(hexB, 5)) / 2);
-  return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
-}
