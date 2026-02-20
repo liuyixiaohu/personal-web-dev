@@ -87,7 +87,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           const period = getTimePeriod(new Date().getHours());
 
           if (period === 'lateNight') {
-            leadEl.textContent = t('lateNight.lead');
+            const leadText = t('lateNight.lead');
+            const leadSuffix = t('lateNight.leadSuffix');
+            leadEl.innerHTML = `${leadText} <img src="/images/lucky.png" alt="Lucky" class="cat-avatar"> &amp; <img src="/images/happy.png" alt="Happy" class="cat-avatar">${leadSuffix}`;
             bodyEl.innerHTML = t('lateNight.body').split('\n\n').map(p => `<p>${p}</p>`).join('');
             sourceEl.textContent = '';
             sourceEl.style.display = 'none';

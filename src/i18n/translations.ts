@@ -22,14 +22,18 @@ export const translations: Record<string, Record<Lang, string>> = {
   'greeting.source': { en: '\u2014 The Truman Show', zh: '\u2014\u2014《楚门的世界》' },
 
   // --- Late night message (0:00–3:59) ---
-  // Use \n as line break marker; render with innerHTML after replacing \n → <br>
+  // Lead rendered with innerHTML to include cat images; body uses \n\n as paragraph separator
   'lateNight.lead': {
-    en: '\uD83D\uDC08\u200D\u2B1B & \uD83D\uDC31\u2019s Late Night Message',
-    zh: '\uD83D\uDC08\u200D\u2B1B 和 \uD83D\uDC31 的深夜特别消息',
+    en: 'Late Night Message from',
+    zh: '来自',
+  },
+  'lateNight.leadSuffix': {
+    en: '',
+    zh: ' 的深夜消息',
   },
   'lateNight.body': {
-    en: 'We are Lucky (cat food quality inspector) and Happy (curtain\u2011to\u2011mop\u2011cloth magician).\n\nWhy are you still awake? Is something bothering you?\n\nKun (our poop\u2011scooper) often gets scolded by his mom for staying up late (she actually just worries about him).\n\nWishing you good health and happiness every day, and FALL INTO SLEEP soon!',
-    zh: '我们是 Lucky（猫罐头质检员）和 Happy（窗帘变拖把布魔术大师）。\n\n为什么你还醒着，是有什么烦心事吗？\n\nKun（我们的铲屎官）经常因为熬夜而挨他妈妈的批评（实际是心疼）。\n\n祝你身体健康，每天快乐，赶快入睡！',
+    en: 'Lucky (cat food quality inspector) and Happy (curtain\u2011to\u2011mop\u2011cloth magician) here.\n\nStill awake? Anything bothering you?\n\nKun (our poop\u2011scooper) often gets scolded by his mommy for staying up late.\n\nShe actually just worries about him, though.\n\nWishing you happiness every day, and FALL INTO SLEEP soon!',
+    zh: 'Lucky（猫罐头质检员）和 Happy（窗帘变拖把布魔术大师）在此。\n\n还没睡？有什么烦心事吗？\n\nKun（我们的铲屎官）经常因为熬夜而挨他妈妈的骂。\n\n其实她只是担心他。\n\n祝你每天快乐，赶快入睡！',
   },
 
   // --- Navigation ---
