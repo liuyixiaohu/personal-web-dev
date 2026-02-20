@@ -73,6 +73,16 @@ img, video, svg {
   display: block;
 }
 
+/* Inline cat avatars (dynamically injected, needs global scope) */
+.cat-avatar {
+  height: 1em;
+  width: auto;
+  max-width: none;
+  display: inline;
+  object-fit: contain;
+  vertical-align: middle;
+}
+
 /* Links */
 a {
   color: var(--text);
