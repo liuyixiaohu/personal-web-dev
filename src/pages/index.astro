@@ -30,10 +30,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <style>
   .home {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     min-height: 100dvh;
     padding: var(--content-padding);
+    padding-top: 38vh;
   }
 
   .last-updated {
@@ -99,9 +100,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .home-tagline[data-late-night] .greeting-body {
     font-size: var(--fs-sm);
     font-style: normal;
-    line-height: 1.9;
+    line-height: 1.5;
     max-width: 30rem;
     margin-inline: auto;
+  }
+
+  .home-tagline[data-late-night] .greeting-body p {
+    margin: 0 0 0.4em 0;
+  }
+
+  .home-tagline[data-late-night] .greeting-body p:last-child {
+    margin-bottom: 0;
   }
 
   .home-choices {

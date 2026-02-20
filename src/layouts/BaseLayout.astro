@@ -88,7 +88,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
           if (period === 'lateNight') {
             leadEl.textContent = t('lateNight.lead');
-            bodyEl.innerHTML = t('lateNight.body').replace(/\n/g, '<br>');
+            bodyEl.innerHTML = t('lateNight.body').split('\n\n').map(p => `<p>${p}</p>`).join('');
             sourceEl.textContent = '';
             sourceEl.style.display = 'none';
             taglineEl.setAttribute('data-late-night', '');
