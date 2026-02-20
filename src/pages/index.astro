@@ -11,22 +11,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="home-content">
       <p class="home-intro" id="home-intro"></p>
 
+      <nav class="home-choices">
+        <a href="/professional" class="choice-link choice-link--professional">
+          <span class="choice-emoji">🍵</span>
+          <span class="choice-label" data-i18n="home.professional">Enter Chaguan</span>
+        </a>
+      </nav>
+
       <div class="home-tagline" id="home-tagline">
         <p class="greeting-lead" id="greeting-lead"></p>
         <p class="greeting-body" id="greeting-body"></p>
         <p class="greeting-source" id="greeting-source"></p>
       </div>
-
-      <nav class="home-choices">
-        <a href="/professional" class="choice-link choice-link--professional">
-          <span class="choice-dot"></span>
-          <span class="choice-label" data-i18n="home.professional">Professional Architecture</span>
-        </a>
-        <a href="/life-journey" class="choice-link choice-link--journey">
-          <span class="choice-dot"></span>
-          <span class="choice-label" data-i18n="home.lifeJourney">Life Journey</span>
-        </a>
-      </nav>
     </div>
   </main>
 </BaseLayout>
@@ -65,7 +61,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   .home-tagline {
-    margin-bottom: clamp(3rem, 6vw, 6rem);
+    margin-bottom: clamp(1rem, 2vw, 2rem);
   }
 
   .greeting-lead {
@@ -113,6 +109,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     flex-wrap: wrap;
     gap: var(--space-md);
     justify-content: center;
+    margin-bottom: var(--space-md);
   }
 
   .choice-link {
@@ -127,21 +124,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     opacity: 0.7;
   }
 
-  .choice-dot {
-    width: 0.45em;
-    height: 0.45em;
-    border-radius: 50%;
-    flex-shrink: 0;
+  .choice-emoji {
+    font-size: 1.4em;
+    line-height: 1;
   }
 
   .choice-link--professional { color: #7FB6DD; }
-  .choice-link--professional .choice-dot { background: #7FB6DD; }
-
-  .choice-link--journey { color: #A8D7C6; }
-  .choice-link--journey .choice-dot { background: #A8D7C6; }
 
   .choice-label {
-    font-size: clamp(0.95rem, 0.9rem + 0.3vw, 1.1rem);
+    font-size: clamp(1.3rem, 1.2rem + 0.5vw, 1.6rem);
     font-weight: 500;
     letter-spacing: 0.03em;
   }

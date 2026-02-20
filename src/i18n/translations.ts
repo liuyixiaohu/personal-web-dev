@@ -8,7 +8,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   // --- Homepage ---
   'home.intro': { en: 'This is Kun. Before knowing more about me, I wanna say:', zh: '我是昆。在了解更多之前，我想说：' },
   'home.lastUpdated': { en: 'Last updated', zh: '最近更新' },
-  'home.professional': { en: 'Professional Architecture', zh: '专业架构' },
+  'home.professional': { en: 'Enter Chaguan', zh: '进入茶馆' },
   'home.lifeJourney': { en: 'Life Journey', zh: '人生旅途' },
 
   // --- Greeting (time-aware) ---
