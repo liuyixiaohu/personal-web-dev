@@ -9,13 +9,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
 
     <div class="home-content">
-      <nav class="home-choices">
-        <a href="/professional" class="choice-link choice-link--professional">
-          <span class="choice-emoji">🍵</span>
-          <span class="choice-label" data-i18n="home.professional">Enter Chaguan</span>
-        </a>
-      </nav>
-
       <p class="home-intro" id="home-intro"></p>
 
       <div class="home-tagline" id="home-tagline">
@@ -24,17 +17,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p class="greeting-source" id="greeting-source"></p>
       </div>
     </div>
+
+    <nav class="home-choices">
+      <a href="/professional" class="choice-link choice-link--professional">
+        <span class="choice-emoji">🍵</span>
+        <span class="choice-label" data-i18n="home.professional">Enter Chaguan</span>
+      </a>
+    </nav>
   </main>
 </BaseLayout>
 
 <style>
   .home {
+    position: relative;
     display: flex;
     align-items: flex-start;
     justify-content: center;
     min-height: 100dvh;
     padding: var(--content-padding);
-    padding-top: 38vh;
+    padding-top: 30vh;
   }
 
   .last-updated {
@@ -66,7 +67,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   .greeting-lead {
-    font-size: var(--fs-lg);
+    font-size: clamp(1.15rem, 1rem + 0.8vw, 1.5rem);
     font-weight: 500;
     font-style: italic;
     color: var(--text);
@@ -115,11 +116,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   .home-choices {
+    position: absolute;
+    top: 60vh;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-md);
     justify-content: center;
-    margin-bottom: var(--space-md);
   }
 
   .choice-link {

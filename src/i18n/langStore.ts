@@ -17,7 +17,7 @@ export function getLang(): Lang {
 /** Set language, persist to localStorage, and notify all subscribers */
 export function setLang(lang: Lang): void {
   currentLang = lang;
-  if (typeof localStorage !== 'undefined') {
+  if (typeof localStorage !== 'undefined' && typeof localStorage.setItem === 'function') {
     localStorage.setItem('lang', lang);
   }
   // Notify Svelte subscribers
@@ -35,7 +35,7 @@ export function toggleLang(): void {
 
 /** Initialize language from localStorage (call once on mount) */
 export function initLang(): void {
-  if (typeof localStorage !== 'undefined') {
+  if (typeof localStorage !== 'undefined' && typeof localStorage.getItem === 'function') {
     const saved = localStorage.getItem('lang');
     if (saved === 'en' || saved === 'zh') {
       currentLang = saved;
