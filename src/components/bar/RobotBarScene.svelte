@@ -7,14 +7,12 @@
   import { onMount } from 'svelte';
   import { navigate } from 'astro:transitions/client';
   import { subscribe, initLang, getLang, t } from '../../i18n/langStore';
-  import { DRINKS, getDrink, getMix, getMixRoute, getMixDescKey, type DrinkId, type Mix, type SkillBottle } from './drinks';
+  import { DRINKS, getDrink, getMix, getMixRoute, getMixDescKey, type DrinkId, type Mix } from './drinks';
   import { createRobotScene, type RobotController } from './robotScene';
   import { getWeatherGreeting, getCachedGreeting } from '../../utils/weather';
   import CoupeGlass from './CoupeGlass.svelte';
-  import BarShelf from './BarShelf.svelte';
   import BarNote from './BarNote.svelte';
   import MixPreviewCard from './MixPreviewCard.svelte';
-  import BottleDetailCard from './BottleDetailCard.svelte';
 
   // === Constants ===
   const SPEECH_DURATION = 1800;
@@ -28,9 +26,6 @@
   let isLoaded       = $state(false);
   let showMixCard    = $state(false);
   let activeMix      = $state<Mix | null>(null);
-  let showBottleCard = $state(false);
-  let activeBottle   = $state<SkillBottle | null>(null);
-  let bottleRect     = $state<DOMRect | null>(null);
   let speechTimeout: ReturnType<typeof setTimeout> | null = null;
   let robot: RobotController | null = null;
   let weatherLoaded  = false;
@@ -129,12 +124,6 @@
     if (showMixCard) return; // card has its own overlay dismiss
     const target = e.target as HTMLElement;
 
-    // Dismiss bottle tooltip on click outside
-    if (showBottleCard && !target.closest('.bottle-tooltip') && !target.closest('.rack-cell')) {
-      handleBottleDismiss();
-      return;
-    }
-
     if (
       !target.closest('.glass-btn') &&
       selectedDrink
@@ -158,24 +147,6 @@
     robot?.fadeToAction('Idle', 0.5);
   }
 
-  // === Bottle (skill shelf) handlers ===
-  function handleBottleClick(bottle: SkillBottle, rect: DOMRect) {
-    // Toggle: clicking the same bottle dismisses
-    if (activeBottle?.id === bottle.id && showBottleCard) {
-      handleBottleDismiss();
-      return;
-    }
-    activeBottle = bottle;
-    bottleRect = rect;
-    showBottleCard = true;
-  }
-
-  function handleBottleDismiss() {
-    showBottleCard = false;
-    activeBottle = null;
-    bottleRect = null;
-  }
-
   // === Lifecycle ===
   onMount(async () => {
     robot = await createRobotScene(container, () => {
@@ -191,6 +162,14 @@
         dialogText = greeting[lang];
       }
     });
+
+    // Geolocation drives the wall clock
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        () => robot?.setClockAlive(true),   // granted → real-time ticking
+        () => robot?.setClockAlive(false),  // denied → frozen at 10:10
+      );
+    }
 
     return () => {
       robot?.dispose();
@@ -211,11 +190,6 @@
   <div class="stage">
     <!-- 3D Canvas (robot only) -->
     <div class="canvas-container" bind:this={container}></div>
-
-    <!-- Back wall: tool labels as atmospheric decoration -->
-    <div class="back-wall">
-      <BarShelf onBottleClick={handleBottleClick} />
-    </div>
 
     <!-- Bar Area: CSS glasses + counter -->
     <div class="bar-area">
@@ -250,14 +224,6 @@
     />
   {/if}
 
-  <!-- Bottle tooltip (skill shelf popup) -->
-  {#if showBottleCard && activeBottle && bottleRect}
-    <BottleDetailCard
-      bottle={activeBottle}
-      anchorRect={bottleRect}
-      onDismiss={handleBottleDismiss}
-    />
-  {/if}
 </div>
 
 <style>
@@ -373,7 +339,7 @@
 
   .counter-top {
     height: 12px;
-    background: #d5d0ca;
+    background: var(--bg);
     border-radius: 4px 4px 0 0;
     box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.3);
   }
@@ -381,18 +347,6 @@
   .counter-body {
     background: var(--bg);
     padding: var(--space-sm) 0 var(--space-md);
-  }
-
-  /* --- Back wall decoration --- */
-  .back-wall {
-    position: absolute;
-    bottom: 42%;
-    left: 0;
-    right: 0;
-    z-index: 1;
-    display: flex;
-    justify-content: flex-end;
-    padding: 0 2rem 0 0;
   }
 
   /* --- Responsive --- */
@@ -434,9 +388,5 @@
       gap: clamp(1.5rem, 6vw, 3rem);
     }
 
-    .back-wall {
-      bottom: 44%;
-      padding: 0 0.5rem 0 0;
-    }
   }
 </style>
