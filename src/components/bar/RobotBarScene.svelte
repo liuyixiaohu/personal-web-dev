@@ -183,6 +183,11 @@
     <!-- 3D Canvas (robot only) -->
     <div class="canvas-container" bind:this={container}></div>
 
+    <!-- Back wall: tool labels as atmospheric decoration -->
+    <div class="back-wall">
+      <BarShelf />
+    </div>
+
     <!-- Bar Area: CSS glasses + counter -->
     <div class="bar-area">
       <div class="drinks-row">
@@ -201,8 +206,6 @@
       <div class="bar-counter">
         <div class="counter-top"></div>
         <div class="counter-body">
-          <BarShelf />
-          <div class="counter-divider"></div>
           <BarNote />
         </div>
       </div>
@@ -339,15 +342,20 @@
 
   .counter-body {
     background: #eae6e0;
-    padding-top: var(--space-sm);
-    padding-bottom: var(--space-md);
+    padding: var(--space-sm) 0 var(--space-md);
   }
 
-  .counter-divider {
-    height: 1px;
-    background: rgba(0, 0, 0, 0.05);
-    max-width: 520px;
-    margin: var(--space-xs) auto;
+  /* --- Back wall decoration --- */
+  .back-wall {
+    position: absolute;
+    bottom: 36%;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    padding: 0 var(--space-md);
   }
 
   /* --- Responsive --- */
@@ -387,6 +395,10 @@
     .drinks-row {
       padding-left: calc(50% - 24px - clamp(1.5rem, 6vw, 3rem));
       gap: clamp(1.5rem, 6vw, 3rem);
+    }
+
+    .back-wall {
+      bottom: 38%;
     }
   }
 </style>
