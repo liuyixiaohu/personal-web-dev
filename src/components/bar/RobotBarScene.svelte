@@ -7,13 +7,14 @@
   import { onMount } from 'svelte';
   import { navigate } from 'astro:transitions/client';
   import { subscribe, initLang, getLang, t } from '../../i18n/langStore';
-  import { DRINKS, getDrink, getMix, getMixRoute, getMixDescKey, type DrinkId, type Mix } from './drinks';
+  import { DRINKS, getDrink, getMix, getMixRoute, getMixDescKey, type DrinkId, type Mix, type SkillBottle } from './drinks';
   import { createRobotScene, type RobotController } from './robotScene';
   import { getWeatherGreeting, getCachedGreeting } from '../../utils/weather';
   import CoupeGlass from './CoupeGlass.svelte';
   import BarShelf from './BarShelf.svelte';
   import BarNote from './BarNote.svelte';
   import MixPreviewCard from './MixPreviewCard.svelte';
+  import BottleDetailCard from './BottleDetailCard.svelte';
 
   // === Constants ===
   const SPEECH_DURATION = 1800;
@@ -27,6 +28,8 @@
   let isLoaded       = $state(false);
   let showMixCard    = $state(false);
   let activeMix      = $state<Mix | null>(null);
+  let showBottleCard = $state(false);
+  let activeBottle   = $state<SkillBottle | null>(null);
   let speechTimeout: ReturnType<typeof setTimeout> | null = null;
   let robot: RobotController | null = null;
   let weatherLoaded  = false;
@@ -147,6 +150,17 @@
     robot?.fadeToAction('Idle', 0.5);
   }
 
+  // === Bottle (skill shelf) handlers ===
+  function handleBottleClick(bottle: SkillBottle) {
+    activeBottle = bottle;
+    showBottleCard = true;
+  }
+
+  function handleBottleDismiss() {
+    showBottleCard = false;
+    activeBottle = null;
+  }
+
   // === Lifecycle ===
   onMount(async () => {
     robot = await createRobotScene(container, () => {
@@ -185,7 +199,7 @@
 
     <!-- Back wall: tool labels as atmospheric decoration -->
     <div class="back-wall">
-      <BarShelf />
+      <BarShelf onBottleClick={handleBottleClick} />
     </div>
 
     <!-- Bar Area: CSS glasses + counter -->
@@ -218,6 +232,14 @@
       mix={activeMix}
       onNavigate={handleMixNavigate}
       onDismiss={handleMixDismiss}
+    />
+  {/if}
+
+  <!-- Bottle Detail Card (skill shelf popup) -->
+  {#if showBottleCard && activeBottle}
+    <BottleDetailCard
+      bottle={activeBottle}
+      onDismiss={handleBottleDismiss}
     />
   {/if}
 </div>
@@ -352,7 +374,6 @@
     left: 0;
     right: 0;
     z-index: 1;
-    pointer-events: none;
     display: flex;
     justify-content: flex-end;
     padding: 0 2rem 0 0;

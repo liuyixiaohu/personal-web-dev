@@ -77,3 +77,24 @@ export function getMix(a: DrinkId, b: DrinkId): Mix | undefined {
     (m.drinks[0] === b && m.drinks[1] === a)
   );
 }
+
+// === Skill Bottles (Back-Wall Wine Rack) ===
+// High-level skill categories displayed as clickable bottles
+
+export interface SkillBottle {
+  id: string;
+  category: DrinkId;
+  label: string;        // English fallback (short, for bottle body)
+  labelKey: string;     // i18n key for translated label
+  descKey: string;      // i18n key for card description
+  tools: string[];      // Specific tools / brand names (no translation)
+}
+
+export const BOTTLES: SkillBottle[] = [
+  { id: 'strategy',  category: 'pm',     label: 'Strategy',  labelKey: 'bar.bottle.strategy',  descKey: 'bar.bottle.strategy.desc',  tools: ['Salesforce', 'HubSpot'] },
+  { id: 'analytics', category: 'pm',     label: 'Analytics', labelKey: 'bar.bottle.analytics', descKey: 'bar.bottle.analytics.desc', tools: ['GA4', 'Optimizely'] },
+  { id: 'coding',    category: 'ds',     label: 'Coding',    labelKey: 'bar.bottle.coding',    descKey: 'bar.bottle.coding.desc',    tools: ['Python', 'SQL'] },
+  { id: 'ml',        category: 'ds',     label: 'ML & Viz',  labelKey: 'bar.bottle.ml',        descKey: 'bar.bottle.ml.desc',        tools: ['Tableau', 'Jupyter'] },
+  { id: 'design',    category: 'visual', label: 'Design',    labelKey: 'bar.bottle.design',    descKey: 'bar.bottle.design.desc',    tools: ['Figma', 'Adobe CC'] },
+  { id: '3d',        category: 'visual', label: '3D & Web',  labelKey: 'bar.bottle.3d',        descKey: 'bar.bottle.3d.desc',        tools: ['Blender', 'Three.js'] },
+];
