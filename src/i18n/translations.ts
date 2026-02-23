@@ -85,11 +85,38 @@ export const translations: Record<string, Record<Lang, string>> = {
   'bar.mix.pm_visual.desc': { en: 'PM + Visual — where stories meet aesthetics!', zh: 'PM + Visual — 故事与美学的邂逅！' },
   'bar.mix.ds_visual.desc': { en: 'DS + Visual — data, but make it beautiful!', zh: 'DS + Visual — 让数据变得好看！' },
 
-  // --- Bar menu & mix card ---
-  'bar.menu.singles': { en: 'Single Pours', zh: '单品' },
-  'bar.menu.blends': { en: 'House Blends', zh: '特调' },
+  // --- Bar mix card ---
   'bar.card.cta': { en: 'Taste this blend \u2192', zh: '品尝这杯特调 \u2192' },
   'bar.card.dismiss': { en: 'Maybe later', zh: '下次再说' },
+
+  // --- Bar shelf ---
+  'bar.shelf.title': { en: 'Behind the bar', zh: '吧台后面' },
+
+  // --- Bartender notes (random, one per visit) ---
+  'bar.note.1': {
+    en: 'The best cocktails, like the best campaigns, start with knowing your audience.',
+    zh: '最好的鸡尾酒，就像最好的营销，都从了解你的受众开始。',
+  },
+  'bar.note.2': {
+    en: 'House rule: we don\'t do pie charts here. Not even for dessert.',
+    zh: '店规：这里不做饼图。甜点也不行。',
+  },
+  'bar.note.3': {
+    en: 'Kun once spent 3 hours adjusting a gradient. The client said "looks the same." It was not the same.',
+    zh: 'Kun 曾花了 3 小时调一个渐变色。甲方说"看起来一样啊。"并不一样。',
+  },
+  'bar.note.4': {
+    en: 'Side effects of mixing data science with design may include career confusion.',
+    zh: '将数据科学和设计混在一起的副作用：职业方向困惑。',
+  },
+  'bar.note.5': {
+    en: 'A p-value can\'t tell you if your landing page is ugly.',
+    zh: 'p 值没法告诉你落地页好不好看。',
+  },
+  'bar.note.6': {
+    en: 'This bar doesn\'t have a happy hour. Just happy accidents.',
+    zh: '本店没有欢乐时光，只有快乐的意外。',
+  },
 
   // --- Globe pin titles ---
   'pin.jiaozhou.title': { en: 'Where it all began', zh: '一切开始的地方' },

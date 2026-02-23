@@ -7,11 +7,12 @@
   import { onMount } from 'svelte';
   import { navigate } from 'astro:transitions/client';
   import { subscribe, initLang, getLang, t } from '../../i18n/langStore';
-  import { DRINKS, MIXES, getDrink, getMix, getMixRoute, getMixDescKey, type DrinkId, type Mix } from './drinks';
+  import { DRINKS, getDrink, getMix, getMixRoute, getMixDescKey, type DrinkId, type Mix } from './drinks';
   import { createRobotScene, type RobotController } from './robotScene';
   import { getWeatherGreeting, getCachedGreeting } from '../../utils/weather';
   import CoupeGlass from './CoupeGlass.svelte';
-  import BarMenu from './BarMenu.svelte';
+  import BarShelf from './BarShelf.svelte';
+  import BarNote from './BarNote.svelte';
   import MixPreviewCard from './MixPreviewCard.svelte';
 
   // === Constants ===
@@ -26,7 +27,6 @@
   let isLoaded       = $state(false);
   let showMixCard    = $state(false);
   let activeMix      = $state<Mix | null>(null);
-  let hoveredMix     = $state<string | null>(null);
   let speechTimeout: ReturnType<typeof setTimeout> | null = null;
   let robot: RobotController | null = null;
   let weatherLoaded  = false;
@@ -126,7 +126,6 @@
     const target = e.target as HTMLElement;
     if (
       !target.closest('.glass-btn') &&
-      !target.closest('.bar-menu') &&
       selectedDrink
     ) {
       selectedDrink = null;
@@ -146,32 +145,6 @@
     selectedDrink = null;
     dialogText = getDefaultGreeting();
     robot?.fadeToAction('Idle', 0.5);
-  }
-
-  // === Bar Menu handlers ===
-  function handleMenuItemHover(drinkId: DrinkId | null, mixId?: string | null) {
-    if (mixId) {
-      hoveredMix = mixId;
-      hoveredDrink = null;
-      const mix = MIXES.find(m => m.id === mixId);
-      if (mix) {
-        isSpeaking = true;
-        dialogText = t(mix.descKey);
-        robot?.fadeToAction('ThumbsUp', 0.4);
-        robot?.setMouthOpen(true);
-        scheduleMouthClose();
-      }
-    } else if (drinkId) {
-      hoveredMix = null;
-      handleDrinkHover(drinkId);
-    } else {
-      hoveredMix = null;
-      handleDrinkLeave();
-    }
-  }
-
-  function handleMenuItemClick(route: string) {
-    navigate(route);
   }
 
   // === Lifecycle ===
@@ -216,7 +189,7 @@
         {#each DRINKS as drink}
           <CoupeGlass
             color={drink.color}
-            hovered={hoveredDrink === drink.id || (hoveredMix != null && (MIXES.find(m => m.id === hoveredMix)?.drinks.includes(drink.id) ?? false))}
+            hovered={hoveredDrink === drink.id}
             selected={selectedDrink === drink.id}
             onhover={() => handleDrinkHover(drink.id)}
             onleave={() => handleDrinkLeave()}
@@ -228,12 +201,9 @@
       <div class="bar-counter">
         <div class="counter-top"></div>
         <div class="counter-body">
-          <BarMenu
-            {hoveredDrink}
-            {selectedDrink}
-            onItemHover={handleMenuItemHover}
-            onItemClick={handleMenuItemClick}
-          />
+          <BarShelf />
+          <div class="counter-divider"></div>
+          <BarNote />
         </div>
       </div>
     </div>
@@ -368,10 +338,16 @@
   }
 
   .counter-body {
-    min-height: 35vh;
     background: #eae6e0;
-    padding-top: var(--space-xs);
+    padding-top: var(--space-sm);
     padding-bottom: var(--space-md);
+  }
+
+  .counter-divider {
+    height: 1px;
+    background: rgba(0, 0, 0, 0.05);
+    max-width: 520px;
+    margin: var(--space-xs) auto;
   }
 
   /* --- Responsive --- */
