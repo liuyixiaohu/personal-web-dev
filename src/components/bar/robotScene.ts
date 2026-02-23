@@ -55,23 +55,6 @@ const BACKGROUND = {
   height: 256,
 } as const;
 
-const WALL_CLOCK = {
-  position: [0.25, 1.15, 0.0] as const,
-  radius: 0.3,
-  colors: {
-    face: 0xfaf7f2,       // cream white
-    rim: 0xc8c3bc,        // warm gray border
-    tick: 0x8a9199,        // subtle gray
-    hand: 0x5a636b,        // dark gray
-    second: 0xc17f59,      // warm copper
-    center: 0x5a636b,
-  },
-  // Classic display time: 10:10:30 (symmetric V)
-  staticTime: { h: 10, m: 10, s: 30 },
-} as const;
-
-const DEG2RAD = Math.PI / 180;
-
 const EMOTE_ACTIONS = ['Wave', 'ThumbsUp', 'Yes', 'No', 'Punch', 'Jump', 'Death'] as const;
 
 // === Public Interface ===
@@ -79,7 +62,6 @@ const EMOTE_ACTIONS = ['Wave', 'ThumbsUp', 'Yes', 'No', 'Punch', 'Jump', 'Death'
 export interface RobotController {
   fadeToAction: (name: string, duration?: number) => void;
   setMouthOpen: (open: boolean) => void;
-  setClockAlive: (alive: boolean) => void;
   dispose: () => void;
 }
 
@@ -117,9 +99,6 @@ export async function createRobotScene(
   setupBackground(THREE, scene);
   setupLighting(THREE, scene);
 
-  // --- Wall Clock ---
-  const wallClock = createWallClock(THREE, scene);
-
   // --- State ---
   let mixer: THREE_NS.AnimationMixer | null = null;
   let actions: Record<string, THREE_NS.AnimationAction> = {};
@@ -150,10 +129,6 @@ export async function createRobotScene(
   function setMouthOpen(open: boolean) {
     mouthAnimating = open;
     if (!open) mouthTime = 0;
-  }
-
-  function setClockAlive(alive: boolean) {
-    wallClock.setAlive(alive);
   }
 
   // --- Load Model ---
@@ -214,7 +189,6 @@ export async function createRobotScene(
 
     mixer?.update(delta);
     updateMouth(face, delta);
-    wallClock.update();
     renderer.render(scene, camera);
   }
 
@@ -271,7 +245,7 @@ export async function createRobotScene(
     renderer.domElement.parentNode?.removeChild(renderer.domElement);
   }
 
-  return { fadeToAction, setMouthOpen, setClockAlive, dispose };
+  return { fadeToAction, setMouthOpen, dispose };
 }
 
 // === Internal Helpers ===
@@ -291,131 +265,6 @@ function setupBackground(THREE: typeof THREE_NS, scene: THREE_NS.Scene) {
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
   scene.background = texture;
-}
-
-interface WallClockHandle {
-  update: () => void;
-  setAlive: (alive: boolean) => void;
-}
-
-function createWallClock(THREE: typeof THREE_NS, scene: THREE_NS.Scene): WallClockHandle {
-  const C = WALL_CLOCK;
-  const R = C.radius;
-
-  const group = new THREE.Group();
-  group.position.set(...C.position);
-
-  // --- Face (cream circle) ---
-  const faceMat = new THREE.MeshStandardMaterial({
-    color: C.colors.face,
-    roughness: 0.9,
-    metalness: 0.0,
-  });
-  const faceMesh = new THREE.Mesh(new THREE.CircleGeometry(R * 0.92, 64), faceMat);
-  faceMesh.position.z = 0.005;
-  group.add(faceMesh);
-
-  // --- Rim (outer ring) ---
-  const rimMat = new THREE.MeshStandardMaterial({
-    color: C.colors.rim,
-    roughness: 0.6,
-    metalness: 0.1,
-  });
-  const rimMesh = new THREE.Mesh(new THREE.RingGeometry(R * 0.9, R, 64), rimMat);
-  rimMesh.position.z = 0.003;
-  group.add(rimMesh);
-
-  // --- Hour ticks (12 marks) ---
-  const tickMat = new THREE.MeshStandardMaterial({ color: C.colors.tick });
-  for (let i = 0; i < 12; i++) {
-    const angle = (i / 12) * Math.PI * 2;
-    const isQuarter = i % 3 === 0;
-    const len = isQuarter ? R * 0.14 : R * 0.08;
-    const width = isQuarter ? R * 0.035 : R * 0.02;
-    const tickGeo = new THREE.PlaneGeometry(width, len);
-    const tick = new THREE.Mesh(tickGeo, tickMat);
-
-    // Position at the inner edge of the rim
-    const dist = R * 0.82 - len / 2;
-    tick.position.x = Math.sin(angle) * dist;
-    tick.position.y = Math.cos(angle) * dist;
-    tick.position.z = 0.008;
-    tick.rotation.z = -angle;
-    group.add(tick);
-  }
-
-  // --- Hands ---
-  const handMat = new THREE.MeshStandardMaterial({
-    color: C.colors.hand,
-    roughness: 0.5,
-    metalness: 0.2,
-  });
-  const secMat = new THREE.MeshStandardMaterial({
-    color: C.colors.second,
-    roughness: 0.4,
-    metalness: 0.3,
-  });
-
-  // Hour hand: short, thick
-  const hourLen = R * 0.5;
-  const hourGeo = new THREE.PlaneGeometry(R * 0.045, hourLen);
-  hourGeo.translate(0, hourLen / 2, 0); // pivot at bottom
-  const hourHand = new THREE.Mesh(hourGeo, handMat);
-  hourHand.position.z = 0.012;
-  group.add(hourHand);
-
-  // Minute hand: longer, thinner
-  const minLen = R * 0.72;
-  const minGeo = new THREE.PlaneGeometry(R * 0.03, minLen);
-  minGeo.translate(0, minLen / 2, 0);
-  const minuteHand = new THREE.Mesh(minGeo, handMat);
-  minuteHand.position.z = 0.014;
-  group.add(minuteHand);
-
-  // Second hand: longest, thinnest, copper
-  const secLen = R * 0.78;
-  const secGeo = new THREE.PlaneGeometry(R * 0.012, secLen);
-  secGeo.translate(0, secLen / 2, 0);
-  const secondHand = new THREE.Mesh(secGeo, secMat);
-  secondHand.position.z = 0.016;
-  secondHand.visible = false; // hidden until alive
-  group.add(secondHand);
-
-  // --- Center dot ---
-  const dotMat = new THREE.MeshStandardMaterial({ color: C.colors.center });
-  const dot = new THREE.Mesh(new THREE.CircleGeometry(R * 0.05, 24), dotMat);
-  dot.position.z = 0.018;
-  group.add(dot);
-
-  scene.add(group);
-
-  // --- State ---
-  let alive = false;
-
-  // Set initial static time (10:10:30)
-  setHandsToTime(C.staticTime.h, C.staticTime.m, C.staticTime.s);
-
-  function setHandsToTime(h: number, m: number, s: number) {
-    hourHand.rotation.z = -((h % 12) * 30 + m * 0.5) * DEG2RAD;
-    minuteHand.rotation.z = -(m * 6 + s * 0.1) * DEG2RAD;
-    secondHand.rotation.z = -(s * 6) * DEG2RAD;
-  }
-
-  function update() {
-    if (!alive) return;
-    const now = new Date();
-    setHandsToTime(now.getHours(), now.getMinutes(), now.getSeconds());
-  }
-
-  function setAlive(isAlive: boolean) {
-    alive = isAlive;
-    secondHand.visible = isAlive;
-    if (!isAlive) {
-      setHandsToTime(C.staticTime.h, C.staticTime.m, C.staticTime.s);
-    }
-  }
-
-  return { update, setAlive };
 }
 
 function setupLighting(THREE: typeof THREE_NS, scene: THREE_NS.Scene) {

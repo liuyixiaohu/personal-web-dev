@@ -71,7 +71,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'bubble.visual': { en: 'Visual Design', zh: '视觉设计' },
 
   // --- Bartender dialog ---
-  'bar.greeting': { en: 'What can I get for you today?', zh: '今天想来点什么？' },
+  'bar.greeting': { en: 'Let me know where you are — I might have something different to say.', zh: '让我知道你在哪，也许我会告诉你一些不一样的。' },
   'bar.drink.pm': { en: 'Product Marketing', zh: '产品营销' },
   'bar.drink.ds': { en: 'Data Science', zh: '数据科学' },
   'bar.drink.visual': { en: 'Visual Design', zh: '视觉设计' },

@@ -67,7 +67,7 @@
     max-width: 380px;
     width: 100%;
     padding: 0.75rem 1.1rem;
-    background: #d5d0ca;
+    background: #faf7f2;
     border-radius: 6px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     transform: rotate(-1.5deg);

@@ -163,14 +163,6 @@
       }
     });
 
-    // Geolocation drives the wall clock
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        () => robot?.setClockAlive(true),   // granted → real-time ticking
-        () => robot?.setClockAlive(false),  // denied → frozen at 10:10
-      );
-    }
-
     return () => {
       robot?.dispose();
       if (speechTimeout) clearTimeout(speechTimeout);
@@ -339,7 +331,7 @@
 
   .counter-top {
     height: 12px;
-    background: var(--bg);
+    background: #d5d0ca;
     border-radius: 4px 4px 0 0;
     box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.3);
   }
