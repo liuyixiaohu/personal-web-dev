@@ -30,6 +30,7 @@
   let activeMix      = $state<Mix | null>(null);
   let showBottleCard = $state(false);
   let activeBottle   = $state<SkillBottle | null>(null);
+  let bottleRect     = $state<DOMRect | null>(null);
   let speechTimeout: ReturnType<typeof setTimeout> | null = null;
   let robot: RobotController | null = null;
   let weatherLoaded  = false;
@@ -127,6 +128,13 @@
   function handleBackgroundClick(e: MouseEvent) {
     if (showMixCard) return; // card has its own overlay dismiss
     const target = e.target as HTMLElement;
+
+    // Dismiss bottle tooltip on click outside
+    if (showBottleCard && !target.closest('.bottle-tooltip') && !target.closest('.rack-cell')) {
+      handleBottleDismiss();
+      return;
+    }
+
     if (
       !target.closest('.glass-btn') &&
       selectedDrink
@@ -151,14 +159,21 @@
   }
 
   // === Bottle (skill shelf) handlers ===
-  function handleBottleClick(bottle: SkillBottle) {
+  function handleBottleClick(bottle: SkillBottle, rect: DOMRect) {
+    // Toggle: clicking the same bottle dismisses
+    if (activeBottle?.id === bottle.id && showBottleCard) {
+      handleBottleDismiss();
+      return;
+    }
     activeBottle = bottle;
+    bottleRect = rect;
     showBottleCard = true;
   }
 
   function handleBottleDismiss() {
     showBottleCard = false;
     activeBottle = null;
+    bottleRect = null;
   }
 
   // === Lifecycle ===
@@ -235,10 +250,11 @@
     />
   {/if}
 
-  <!-- Bottle Detail Card (skill shelf popup) -->
-  {#if showBottleCard && activeBottle}
+  <!-- Bottle tooltip (skill shelf popup) -->
+  {#if showBottleCard && activeBottle && bottleRect}
     <BottleDetailCard
       bottle={activeBottle}
+      anchorRect={bottleRect}
       onDismiss={handleBottleDismiss}
     />
   {/if}

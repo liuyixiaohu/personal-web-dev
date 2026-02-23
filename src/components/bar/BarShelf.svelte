@@ -8,7 +8,7 @@
   import { subscribe, initLang, t } from '../../i18n/langStore';
 
   interface Props {
-    onBottleClick?: (bottle: SkillBottle) => void;
+    onBottleClick?: (bottle: SkillBottle, rect: DOMRect) => void;
   }
 
   let { onBottleClick }: Props = $props();
@@ -30,8 +30,9 @@
     return DRINKS.find(d => d.id === category)?.color ?? '#ccc';
   }
 
-  function handleClick(bottle: SkillBottle) {
-    onBottleClick?.(bottle);
+  function handleClick(bottle: SkillBottle, e: MouseEvent) {
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    onBottleClick?.(bottle, rect);
   }
 </script>
 
@@ -39,7 +40,7 @@
   {#each BOTTLES as bottle}
     <button
       class="rack-cell"
-      onclick={() => handleClick(bottle)}
+      onclick={(e) => handleClick(bottle, e)}
       aria-label={label(bottle)}
     >
       <div class="bottle">
