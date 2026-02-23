@@ -53,3 +53,27 @@ export function getMixRoute(a: DrinkId, b: DrinkId): string | undefined {
 export function getMixDescKey(a: DrinkId, b: DrinkId): string | undefined {
   return MIX_DESC_KEYS[`${a}+${b}`];
 }
+
+// === Structured Mix Data (for Bar Menu & Mix Preview Card) ===
+
+export interface Mix {
+  id: string;
+  drinks: [DrinkId, DrinkId];
+  route: string;
+  descKey: string;
+  titleKey: string;
+  subtitleKey: string;
+}
+
+export const MIXES: Mix[] = [
+  { id: 'pm_ds',     drinks: ['pm', 'ds'],     route: '/professional/quant-insights',    descKey: 'bar.mix.pm_ds.desc',    titleKey: 'professional.quantInsights',     subtitleKey: 'professional.quantSubtitle' },
+  { id: 'pm_visual', drinks: ['pm', 'visual'], route: '/professional/brand-narrative',    descKey: 'bar.mix.pm_visual.desc', titleKey: 'professional.brandNarrative',    subtitleKey: 'professional.brandSubtitle' },
+  { id: 'ds_visual', drinks: ['ds', 'visual'], route: '/professional/information-design', descKey: 'bar.mix.ds_visual.desc', titleKey: 'professional.informationDesign', subtitleKey: 'professional.infoSubtitle' },
+];
+
+export function getMix(a: DrinkId, b: DrinkId): Mix | undefined {
+  return MIXES.find(m =>
+    (m.drinks[0] === a && m.drinks[1] === b) ||
+    (m.drinks[0] === b && m.drinks[1] === a)
+  );
+}

@@ -7,10 +7,12 @@
   import { onMount } from 'svelte';
   import { navigate } from 'astro:transitions/client';
   import { subscribe, initLang, getLang, t } from '../../i18n/langStore';
-  import { DRINKS, getDrink, getMixRoute, getMixDescKey, type DrinkId } from './drinks';
+  import { DRINKS, MIXES, getDrink, getMix, getMixRoute, getMixDescKey, type DrinkId, type Mix } from './drinks';
   import { createRobotScene, type RobotController } from './robotScene';
   import { getWeatherGreeting, getCachedGreeting } from '../../utils/weather';
   import CoupeGlass from './CoupeGlass.svelte';
+  import BarMenu from './BarMenu.svelte';
+  import MixPreviewCard from './MixPreviewCard.svelte';
 
   // === Constants ===
   const SPEECH_DURATION = 1800;
@@ -22,6 +24,9 @@
   let isSpeaking     = $state(false);
   let dialogText     = $state('');
   let isLoaded       = $state(false);
+  let showMixCard    = $state(false);
+  let activeMix      = $state<Mix | null>(null);
+  let hoveredMix     = $state<string | null>(null);
   let speechTimeout: ReturnType<typeof setTimeout> | null = null;
   let robot: RobotController | null = null;
   let weatherLoaded  = false;
@@ -104,21 +109,69 @@
       // SELECTED → same drink: navigate
       navigate(getDrink(drinkId).route);
     } else {
-      // SELECTED → different drink: navigate to mix page
-      const route = getMixRoute(selectedDrink, drinkId);
-      if (route) navigate(route);
+      // SELECTED → different drink: show mix preview card
+      const mix = getMix(selectedDrink, drinkId);
+      if (mix) {
+        activeMix = mix;
+        showMixCard = true;
+        robot?.fadeToAction('Jump', 0.4);
+        robot?.setMouthOpen(true);
+        scheduleMouthClose(2000);
+      }
     }
   }
 
   function handleBackgroundClick(e: MouseEvent) {
+    if (showMixCard) return; // card has its own overlay dismiss
+    const target = e.target as HTMLElement;
     if (
-      !(e.target as HTMLElement).closest('.glass-btn') &&
+      !target.closest('.glass-btn') &&
+      !target.closest('.bar-menu') &&
       selectedDrink
     ) {
       selectedDrink = null;
       dialogText = getDefaultGreeting();
       robot?.fadeToAction('Idle', 0.5);
     }
+  }
+
+  // === Mix Card handlers ===
+  function handleMixNavigate() {
+    if (activeMix) navigate(activeMix.route);
+  }
+
+  function handleMixDismiss() {
+    showMixCard = false;
+    activeMix = null;
+    selectedDrink = null;
+    dialogText = getDefaultGreeting();
+    robot?.fadeToAction('Idle', 0.5);
+  }
+
+  // === Bar Menu handlers ===
+  function handleMenuItemHover(drinkId: DrinkId | null, mixId?: string | null) {
+    if (mixId) {
+      hoveredMix = mixId;
+      hoveredDrink = null;
+      const mix = MIXES.find(m => m.id === mixId);
+      if (mix) {
+        isSpeaking = true;
+        dialogText = t(mix.descKey);
+        robot?.fadeToAction('ThumbsUp', 0.4);
+        robot?.setMouthOpen(true);
+        scheduleMouthClose();
+      }
+    } else if (drinkId) {
+      hoveredMix = null;
+      handleDrinkHover(drinkId);
+    } else {
+      hoveredMix = null;
+      handleDrinkLeave();
+    }
+  }
+
+  function handleMenuItemClick(route: string) {
+    navigate(route);
   }
 
   // === Lifecycle ===
@@ -163,7 +216,7 @@
         {#each DRINKS as drink}
           <CoupeGlass
             color={drink.color}
-            hovered={hoveredDrink === drink.id}
+            hovered={hoveredDrink === drink.id || (hoveredMix != null && (MIXES.find(m => m.id === hoveredMix)?.drinks.includes(drink.id) ?? false))}
             selected={selectedDrink === drink.id}
             onhover={() => handleDrinkHover(drink.id)}
             onleave={() => handleDrinkLeave()}
@@ -174,10 +227,26 @@
 
       <div class="bar-counter">
         <div class="counter-top"></div>
-        <div class="counter-body"></div>
+        <div class="counter-body">
+          <BarMenu
+            {hoveredDrink}
+            {selectedDrink}
+            onItemHover={handleMenuItemHover}
+            onItemClick={handleMenuItemClick}
+          />
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- Mix Preview Card -->
+  {#if showMixCard && activeMix}
+    <MixPreviewCard
+      mix={activeMix}
+      onNavigate={handleMixNavigate}
+      onDismiss={handleMixDismiss}
+    />
+  {/if}
 </div>
 
 <style>
@@ -188,7 +257,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     padding: var(--space-sm) 0 0 0;
   }
 
@@ -298,8 +368,10 @@
   }
 
   .counter-body {
-    height: 35vh;
+    min-height: 35vh;
     background: #eae6e0;
+    padding-top: var(--space-xs);
+    padding-bottom: var(--space-md);
   }
 
   /* --- Responsive --- */
@@ -318,7 +390,8 @@
     }
 
     .counter-body {
-      height: 70px;
+      min-height: auto;
+      padding-bottom: var(--space-sm);
     }
 
     .speech-bubble {

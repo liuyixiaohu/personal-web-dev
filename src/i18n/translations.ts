@@ -85,6 +85,12 @@ export const translations: Record<string, Record<Lang, string>> = {
   'bar.mix.pm_visual.desc': { en: 'PM + Visual — where stories meet aesthetics!', zh: 'PM + Visual — 故事与美学的邂逅！' },
   'bar.mix.ds_visual.desc': { en: 'DS + Visual — data, but make it beautiful!', zh: 'DS + Visual — 让数据变得好看！' },
 
+  // --- Bar menu & mix card ---
+  'bar.menu.singles': { en: 'Single Pours', zh: '单品' },
+  'bar.menu.blends': { en: 'House Blends', zh: '特调' },
+  'bar.card.cta': { en: 'Taste this blend \u2192', zh: '品尝这杯特调 \u2192' },
+  'bar.card.dismiss': { en: 'Maybe later', zh: '下次再说' },
+
   // --- Globe pin titles ---
   'pin.jiaozhou.title': { en: 'Where it all began', zh: '一切开始的地方' },
   'pin.qingdao.title': { en: 'Coastal memories', zh: '海边的记忆' },
