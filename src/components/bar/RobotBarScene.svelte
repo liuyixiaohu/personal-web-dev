@@ -354,8 +354,8 @@
     z-index: 1;
     pointer-events: none;
     display: flex;
-    justify-content: center;
-    padding: 0 var(--space-md);
+    justify-content: flex-end;
+    padding: 0 2rem 0 0;
   }
 
   /* --- Responsive --- */
@@ -399,6 +399,7 @@
 
     .back-wall {
       bottom: 44%;
+      padding: 0 0.5rem 0 0;
     }
   }
 </style>
