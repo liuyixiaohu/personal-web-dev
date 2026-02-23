@@ -1,6 +1,6 @@
 <!--
-  BarShelf — Background wall decoration behind the bar counter.
-  Shows tools/technologies grouped by expertise area (drink color).
+  BarShelf — Decorative bottle display on the back wall behind the bar.
+  Shows tools/technologies as colored bottles grouped by expertise area.
   Purely atmospheric — low opacity, no interactivity.
 -->
 <script lang="ts">
@@ -26,10 +26,15 @@
     {#each SHELF as group}
       <div class="shelf-group">
         {#each group.tools as tool}
-          <span
-            class="shelf-label"
-            style="border-bottom-color: {getColor(group.category)}"
-          >{tool}</span>
+          <div class="bottle">
+            <div class="bottle-cap"></div>
+            <div class="bottle-neck"></div>
+            <div class="bottle-body">
+              <div class="bottle-liquid" style="background: {getColor(group.category)}"></div>
+              <div class="bottle-shine"></div>
+            </div>
+            <span class="bottle-label">{tool}</span>
+          </div>
         {/each}
       </div>
     {/each}
@@ -37,64 +42,154 @@
 </div>
 
 <style>
+  /* === Container === */
   .bar-shelf {
-    max-width: 520px;
+    max-width: 560px;
     margin: 0 auto;
     padding: 0 var(--space-md);
     pointer-events: none;
-    opacity: 0.45;
+    opacity: 0.5;
   }
 
   .shelf-groups {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    gap: 0.4rem;
+    gap: 1.2rem;
   }
 
   .shelf-group {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.4rem;
+    align-items: flex-end;
+    gap: 0.6rem;
   }
 
   /* Subtle separator between groups */
   .shelf-group + .shelf-group::before {
     content: '';
     width: 1px;
-    height: 16px;
-    background: rgba(0, 0, 0, 0.08);
+    height: 32px;
+    background: rgba(0, 0, 0, 0.06);
     align-self: center;
     margin: 0 0.2rem;
   }
 
-  .shelf-label {
-    display: inline-block;
-    padding: 0.22rem 0.65rem;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.2);
-    border-bottom: 2px solid transparent; /* overridden by inline style */
-    font-size: clamp(0.65rem, 0.6rem + 0.25vw, 0.78rem);
-    color: var(--text-light);
-    white-space: nowrap;
-    letter-spacing: 0.03em;
+  /* === Single bottle === */
+  .bottle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
   }
 
-  /* Mobile: smaller, tighter */
+  /* Cap */
+  .bottle-cap {
+    width: 8px;
+    height: 5px;
+    background: linear-gradient(to bottom, #d5d0ca, #c8c3bc);
+    border-radius: 2px 2px 1px 1px;
+  }
+
+  /* Neck */
+  .bottle-neck {
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-top: none;
+    border-radius: 0;
+  }
+
+  /* Body */
+  .bottle-body {
+    position: relative;
+    width: 24px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 3px 3px 6px 6px;
+    overflow: hidden;
+    box-shadow:
+      inset 0 0 0 0.5px rgba(255, 255, 255, 0.25),
+      inset 0 -1px 3px rgba(0, 0, 0, 0.03);
+  }
+
+  /* Liquid fill */
+  .bottle-liquid {
+    position: absolute;
+    bottom: 1px;
+    left: 1px;
+    right: 1px;
+    height: 70%;
+    border-radius: 0 0 5px 5px;
+    opacity: 0.7;
+  }
+
+  /* Glass highlight */
+  .bottle-shine {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 35%;
+    height: 50%;
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.45) 0%,
+      rgba(255, 255, 255, 0.08) 50%,
+      transparent 100%
+    );
+    border-radius: 2px 1px 30% 15%;
+    pointer-events: none;
+  }
+
+  /* Label below bottle */
+  .bottle-label {
+    display: block;
+    margin-top: 3px;
+    font-size: clamp(0.52rem, 0.48rem + 0.2vw, 0.62rem);
+    color: var(--text-light);
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  /* === Mobile === */
   @media (max-width: 480px) {
     .bar-shelf {
-      padding: 0 var(--space-sm);
+      padding: 0;
       opacity: 0.35;
     }
 
-    .shelf-label {
-      padding: 0.15rem 0.45rem;
-      font-size: clamp(0.55rem, 0.5rem + 0.18vw, 0.62rem);
+    .shelf-groups {
+      gap: 0.4rem;
+    }
+
+    .shelf-group {
+      gap: 0.2rem;
     }
 
     .shelf-group + .shelf-group::before {
       display: none;
+    }
+
+    .bottle-cap {
+      width: 5px;
+      height: 3px;
+    }
+
+    .bottle-neck {
+      width: 7px;
+      height: 5px;
+    }
+
+    .bottle-body {
+      width: 14px;
+      height: 20px;
+    }
+
+    .bottle-label {
+      font-size: 0.4rem;
+      letter-spacing: 0;
     }
   }
 </style>

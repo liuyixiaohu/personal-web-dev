@@ -341,14 +341,14 @@
   }
 
   .counter-body {
-    background: #eae6e0;
+    background: var(--bg);
     padding: var(--space-sm) 0 var(--space-md);
   }
 
   /* --- Back wall decoration --- */
   .back-wall {
     position: absolute;
-    bottom: 36%;
+    bottom: 42%;
     left: 0;
     right: 0;
     z-index: 1;
@@ -398,7 +398,7 @@
     }
 
     .back-wall {
-      bottom: 38%;
+      bottom: 44%;
     }
   }
 </style>
