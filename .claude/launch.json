@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 4321
+    },
+    {
+      "name": "excel-tool",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--", "--open", "/tools/excel"],
+      "port": 4321
     }
   ]
 }
