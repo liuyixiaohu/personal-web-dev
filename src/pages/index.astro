@@ -12,7 +12,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <p class="home-intro" id="home-intro"></p>
 
       <div class="home-tagline" id="home-tagline">
-        <p class="greeting-lead" id="greeting-lead"></p>
+        <div class="greeting-line">
+          <p class="greeting-lead" id="greeting-lead"></p>
+          <span class="secret-heart" id="secret-heart">♥</span>
+        </div>
         <p class="greeting-body" id="greeting-body"></p>
         <p class="greeting-source" id="greeting-source"></p>
       </div>
@@ -66,12 +69,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     margin-bottom: clamp(1rem, 2vw, 2rem);
   }
 
+  .greeting-line {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.35em;
+    margin-bottom: var(--space-sm);
+  }
+
   .greeting-lead {
     font-size: clamp(1.15rem, 1rem + 0.8vw, 1.5rem);
     font-weight: 500;
     font-style: italic;
     color: var(--text);
-    margin-bottom: var(--space-sm);
   }
 
   .greeting-body {
@@ -149,6 +159,26 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     font-size: clamp(1.3rem, 1.2rem + 0.5vw, 1.6rem);
     font-weight: 500;
     letter-spacing: 0.03em;
+  }
+
+  /* Secret heart — hidden entrance */
+  .secret-heart {
+    display: inline-block;
+    font-size: 0.75em;
+    color: var(--border);
+    cursor: default;
+    user-select: none;
+    transition: color 0.6s ease, opacity 0.6s ease;
+    opacity: 0.4;
+  }
+
+  .secret-heart:hover {
+    opacity: 0.7;
+  }
+
+  .secret-heart.revealed {
+    color: #F0D7D7;
+    opacity: 1;
   }
 
   /* Mobile: stack vertically */
