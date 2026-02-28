@@ -132,7 +132,7 @@
 
   function classifyFile(name: string): { role: FileRole; label: string } | null {
     const lower = name.toLowerCase();
-    if (name.includes('保险登记表')) return { role: 'output', label: '输出表' };
+    if (name.includes('保险登记')) return { role: 'output', label: '输出表' };
     if (name.includes('人保')) return { role: 'renBao', label: '人保' };
     if (name.includes('优米')) return { role: 'youmi', label: '优米' };
     if (name.includes('安淇瑞')) return { role: 'youmi', label: '优米' };
@@ -253,9 +253,19 @@
     return null;
   }
 
+  /** Normalize Chinese header: strip whitespace, full-width → half-width parens */
+  function normalizeHeader(s: string): string {
+    return s.trim()
+      .replace(/\s+/g, '')
+      .replace(/（/g, '(')
+      .replace(/）/g, ')');
+  }
+
   function findColumnIndex(headers: any[], ...names: string[]): number {
+    const normalized = headers.map(h => h ? normalizeHeader(String(h)) : '');
     for (const name of names) {
-      const idx = headers.findIndex(h => h && String(h).trim() === name);
+      const target = normalizeHeader(name);
+      const idx = normalized.findIndex(h => h === target);
       if (idx >= 0) return idx;
     }
     return -1;
@@ -276,7 +286,10 @@
         const companyCol = findColumnIndex(headers, '被派遣单位');
         const amountCol = findColumnIndex(headers, '费用（元）');
         const dateCol = findColumnIndex(headers, '保险起期');
-        if (companyCol < 0 || amountCol < 0) continue;
+        if (companyCol < 0 || amountCol < 0) {
+          console.warn(`[${fileName}] Sheet "${sheetName}": 优米列缺失 — 被派遣单位=${companyCol >= 0 ? '✓' : '✗'}, 费用（元）=${amountCol >= 0 ? '✓' : '✗'}`);
+          continue;
+        }
 
         for (let i = 1; i < data.length; i++) {
           const row = data[i];
@@ -293,7 +306,10 @@
       } else {
         // renBao
         const amountCol = findColumnIndex(headers, '保费（分）');
-        if (amountCol < 0) continue;
+        if (amountCol < 0) {
+          console.warn(`[${fileName}] Sheet "${sheetName}": 人保列缺失 — 保费（分）未找到`);
+          continue;
+        }
 
         // Detect short-term vs long-term
         const siteCol = findColumnIndex(headers, '场地名称');
@@ -700,7 +716,7 @@
       for (const f of rawFiles) {
         const parsed = parseRawFile(f.buffer, f.name, f.role as InsuranceType, XLSX);
         if (parsed.records.length === 0) {
-          statusMessage = `${f.name} 中没有找到有效数据`;
+          statusMessage = `${f.name} 中没有找到有效数据 — 请确认表头列名正确`;
           processing = false;
           return;
         }
