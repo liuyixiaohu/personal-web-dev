@@ -553,7 +553,6 @@
 
     // 合计 row
     const totalRow = ws.getRow(currentRow);
-    totalRow.getCell(1).value = '合计';
     totalRow.getCell(2).value = '合计';
     for (let c = 0; c < allColumns.length; c++) {
       const val = block.totals[allColumns[c]];
@@ -572,11 +571,14 @@
       fgColor: { argb: 'FFFFFF00' },
     };
 
-    // Apply border + bold to 合计 row
-    for (let ci = 1; ci <= grandTotalCol; ci++) {
+    // Apply border + bold to 合计 row (only data columns, not grandTotal)
+    const lastDataCol = allColumns.length + 2;
+    for (let ci = 1; ci <= lastDataCol; ci++) {
       totalRow.getCell(ci).border = thinBorder;
       totalRow.getCell(ci).font = { bold: true };
     }
+    // grandTotal cell: bold + yellow only, no border
+    totalRow.getCell(grandTotalCol).font = { bold: true };
     totalRow.commit();
     currentRow++;
 
@@ -619,16 +621,16 @@
     // Sort months in descending order
     const sortedMonths = [...existingBlocks.keys()].sort((a, b) => b - a);
 
-    // Clear the sheet content
-    // ExcelJS doesn't have a clean "clear all" — we remove all rows
+    // Clear the sheet content — iterate all columns explicitly
+    // (eachCell skips cells with formatting but no value)
     const rowCount = ws.rowCount;
     for (let r = rowCount; r >= 1; r--) {
-      // Clear each row's cells
       const row = ws.getRow(r);
-      row.eachCell((cell) => {
+      for (let c = 1; c <= 20; c++) {
+        const cell = row.getCell(c);
         cell.value = null;
         cell.style = {};
-      });
+      }
       row.commit();
     }
 
