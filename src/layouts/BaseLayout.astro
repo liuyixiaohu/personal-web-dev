@@ -88,8 +88,19 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       import { getTimePeriod } from '../utils/greeting';
 
       function applyTranslations() {
-        initLang();
-        const lang = getLang() as 'en' | 'zh';
+        const isToolPage = window.location.pathname.startsWith('/tools/');
+        const langToggle = document.querySelector('.lang-toggle') as HTMLElement | null;
+
+        if (isToolPage) {
+          // Tool pages: force Chinese, hide language toggle
+          document.documentElement.setAttribute('data-lang', 'zh');
+          if (langToggle) langToggle.style.display = 'none';
+        } else {
+          initLang();
+          if (langToggle) langToggle.style.display = '';
+        }
+
+        const lang = (isToolPage ? 'zh' : getLang()) as 'en' | 'zh';
         document.documentElement.setAttribute('data-lang', lang);
 
         // Apply static data-i18n translations
