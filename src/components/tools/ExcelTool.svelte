@@ -538,11 +538,17 @@
     for (let c = 0; c < allColumns.length; c++) {
       headerRow.getCell(c + 3).value = allColumns[c];
     }
-    // Apply border and bold to header
+    // Apply border, bold, centered, and background to header
     for (let c = 1; c <= allColumns.length + 2; c++) {
       const cell = headerRow.getCell(c);
       cell.border = thinBorder;
       cell.font = { bold: true };
+      cell.alignment = { horizontal: 'center' };
+      cell.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { theme: 7, tint: 0.6 },
+      };
     }
     headerRow.commit();
 
@@ -557,6 +563,7 @@
         const val = row.amounts[allColumns[c]];
         if (val !== undefined && val !== 0) {
           r.getCell(c + 3).value = val;
+          r.getCell(c + 3).numFmt = '#,##0.00';
         }
       }
       // Apply border
@@ -569,17 +576,19 @@
 
     // 合计 row
     const totalRow = ws.getRow(currentRow);
-    totalRow.getCell(2).value = '合计';
+    totalRow.getCell(1).value = '合计';
     for (let c = 0; c < allColumns.length; c++) {
       const val = block.totals[allColumns[c]];
       if (val !== undefined && val !== 0) {
         totalRow.getCell(c + 3).value = val;
+        totalRow.getCell(c + 3).numFmt = '#,##0.00';
       }
     }
 
     // Grand total in the column after the last insurance column
     const grandTotalCol = allColumns.length + 3;
     totalRow.getCell(grandTotalCol).value = block.grandTotal;
+    totalRow.getCell(grandTotalCol).numFmt = '#,##0.00';
     // Yellow background for grand total cell
     totalRow.getCell(grandTotalCol).fill = {
       type: 'pattern',
