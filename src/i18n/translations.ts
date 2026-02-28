@@ -32,8 +32,8 @@ export const translations: Record<string, Record<Lang, string>> = {
     zh: ' 的深夜消息',
   },
   'lateNight.body': {
-    en: 'Lucky (cat food quality inspector) and Happy (curtain\u2011to\u2011mop\u2011cloth magician) here.\n\nStill awake? Anything bothering you?\n\nKun (our poop\u2011scooper) often gets scolded by his mommy for staying up late.\n\nShe actually just worries about him, though.\n\nWishing you happiness every day, and FALL INTO SLEEP soon!',
-    zh: 'Lucky（猫罐头质检员）和 Happy（窗帘变拖把布魔术大师）在此。\n\n还没睡？有什么烦心事吗？\n\nKun（我们的铲屎官）经常因为熬夜而挨他妈妈的骂。\n\n其实她只是担心他。\n\n祝你每天快乐，赶快入睡！',
+    en: 'Lucky (cat food quality inspector) and Happy (curtain\u2011to\u2011mop\u2011cloth magician) here.\n\nStill awake? Anything bothering you?\n\nKun (our poop\u2011scooper) often gets yelled at by his mom for staying up late (she just worries about him, though).\n\nWishing you happiness every day, and FALL INTO SLEEP soon!',
+    zh: 'Lucky（猫罐头质检员）和 Happy（窗帘变拖把布魔术大师）在此。\n\n还没睡？有什么烦心事吗？\n\nKun（我们的铲屎官）经常因为熬夜被妈妈凶（其实她只是担心他）。\n\n祝你每天快乐，赶快入睡！',
   },
 
   // --- Navigation ---

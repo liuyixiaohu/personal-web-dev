@@ -831,7 +831,7 @@
         onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') document.getElementById('file-input')?.click(); }}
       >
         <p class="drop-text">
-          {dragging ? '松开即可上传' : 'Excel 搁这儿！'}
+          {dragging ? '松开即可上传' : '文件搁这儿！'}
         </p>
         {#if fileTypeError}
           <p class="drop-error">{fileTypeError}</p>
