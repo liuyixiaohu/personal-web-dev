@@ -116,14 +116,31 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         }
       }
 
+      function setupSecretHeart() {
+        const heart = document.getElementById('secret-heart');
+        if (!heart) return;
+        heart.replaceWith(heart.cloneNode(true));
+        const freshHeart = document.getElementById('secret-heart')!;
+        freshHeart.addEventListener('click', () => {
+          freshHeart.classList.add('revealed');
+          setTimeout(() => {
+            window.location.href = '/tools/excel';
+          }, 600);
+        });
+      }
+
       // Apply on initial load
       applyTranslations();
+      setupSecretHeart();
 
       // Apply when language changes (from LanguageToggle click)
       document.addEventListener('lang-change', applyTranslations);
 
       // Apply after Astro View Transition page swap
-      document.addEventListener('astro:after-swap', applyTranslations);
+      document.addEventListener('astro:after-swap', () => {
+        applyTranslations();
+        setupSecretHeart();
+      });
     </script>
   </body>
 </html>
