@@ -1,6 +1,7 @@
 <script lang="ts">
-  import ExcelJS from 'exceljs';
-  import * as XLSX from 'xlsx';
+  // ExcelJS and XLSX are dynamically imported when needed (saves ~1.2 MB on initial load)
+  type ExcelJSModule = typeof import('exceljs');
+  type XLSXModule = typeof import('xlsx');
 
   const PASSWORD_HASH = '5dde896887f6754c9b15bfe3a441ae4806df2fde94001311e08bf110622e0bbe';
 
@@ -260,7 +261,7 @@
     return -1;
   }
 
-  function parseRawFile(buffer: ArrayBuffer, fileName: string, insuranceType: InsuranceType): RawFileData {
+  function parseRawFile(buffer: ArrayBuffer, fileName: string, insuranceType: InsuranceType, XLSX: XLSXModule): RawFileData {
     const wb = XLSX.read(buffer, { type: 'array' });
     const records: RawRecord[] = [];
 
@@ -423,7 +424,7 @@
     return `${shortYear}年`;
   }
 
-  function parseExistingBlocks(ws: ExcelJS.Worksheet): Map<number, MonthBlock> {
+  function parseExistingBlocks(ws: any): Map<number, MonthBlock> {
     const blocks = new Map<number, MonthBlock>();
     let currentBlock: {
       month: number;
@@ -502,12 +503,12 @@
   }
 
   function writeMonthBlock(
-    ws: ExcelJS.Worksheet,
+    ws: any,
     startRow: number,
     block: MonthBlock
   ): number {
     const allColumns = block.headers;
-    const thinBorder: Partial<ExcelJS.Borders> = {
+    const thinBorder = {
       top: { style: 'thin' },
       left: { style: 'thin' },
       bottom: { style: 'thin' },
@@ -584,7 +585,8 @@
 
   async function updateOutputFile(
     outputBuffer: ArrayBuffer,
-    aggregated: AggregatedResult
+    aggregated: AggregatedResult,
+    ExcelJS: ExcelJSModule
   ): Promise<ArrayBuffer> {
     const workbook = new ExcelJS.Workbook();
     await workbook.xlsx.load(outputBuffer);
@@ -684,10 +686,17 @@
         return;
       }
 
+      // Dynamically import heavy libraries (saves ~1.2 MB on initial page load)
+      statusMessage = '加载处理引擎…';
+      const [ExcelJS, XLSX] = await Promise.all([
+        import('exceljs'),
+        import('xlsx'),
+      ]);
+
       // 2. Parse raw data files
       const parsedRawFiles: RawFileData[] = [];
       for (const f of rawFiles) {
-        const parsed = parseRawFile(f.buffer, f.name, f.role as InsuranceType);
+        const parsed = parseRawFile(f.buffer, f.name, f.role as InsuranceType, XLSX);
         if (parsed.records.length === 0) {
           statusMessage = `${f.name} 中没有找到有效数据`;
           processing = false;
@@ -695,6 +704,8 @@
         }
         parsedRawFiles.push(parsed);
       }
+
+      statusMessage = '处理中…';
 
       // 3. Aggregate data (includes month validation)
       const result = aggregateData(parsedRawFiles);
@@ -705,7 +716,7 @@
       }
 
       // 4. Update output file
-      const updatedBuffer = await updateOutputFile(outputFile.buffer, result);
+      const updatedBuffer = await updateOutputFile(outputFile.buffer, result, ExcelJS);
 
       // 5. Download
       const blob = new Blob([updatedBuffer], {

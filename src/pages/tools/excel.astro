@@ -6,7 +6,7 @@ import ExcelTool from '../../components/tools/ExcelTool.svelte';
 <BaseLayout title="笑笑的摸鱼工作台 — Likun" description="Browser-based Excel processing tool.">
   <main class="tool-page">
     <a href="/" class="back-link">&larr; 返回</a>
-    <ExcelTool client:load />
+    <ExcelTool client:only="svelte" />
   </main>
 </BaseLayout>
 
