@@ -829,7 +829,10 @@
     <!-- File list -->
     {#if files.length > 0}
       <div class="file-list">
-        <h2 class="section-label">已上传文件</h2>
+        <div class="file-list-header">
+          <h2 class="section-label">已上传文件</h2>
+          <button class="clear-all" onclick={() => { files = []; statusMessage = ''; fileTypeError = ''; }}>清空</button>
+        </div>
         {#each files as file, i}
           <div class="file-item">
             <span class="file-name">
@@ -1051,6 +1054,13 @@
     margin-top: 1.8rem;
   }
 
+  .file-list-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 0.6rem;
+  }
+
   .section-label {
     font-size: 0.7rem;
     font-weight: 500;
@@ -1058,7 +1068,24 @@
     letter-spacing: 0.12em;
     color: var(--text-light);
     opacity: 0.5;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0;
+  }
+
+  .clear-all {
+    background: none;
+    border: none;
+    font-size: 0.72rem;
+    font-family: inherit;
+    color: var(--text-light);
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.15s;
+    padding: 0;
+  }
+
+  .clear-all:hover {
+    opacity: 1;
+    color: #b55;
   }
 
   .file-item {
