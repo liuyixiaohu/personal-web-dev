@@ -1,35 +1,267 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import RobotBarScene from '../../components/bar/RobotBarScene.svelte';
 ---
 
 <BaseLayout title="Professional — Likun" description="Likun's professional expertise — Product Marketing, Data Science, and Visual Design.">
-  <main class="professional-page">
-    <h1 class="sr-only">Professional</h1>
+  <main class="pro-page">
     <a href="/" class="back-link" data-i18n="nav.back">&larr; Back</a>
-    <RobotBarScene client:only="svelte" />
+
+    <!-- Core areas -->
+    <section class="section">
+      <a href="/professional/product-marketing" class="item item--pm">
+        <span class="item-title" data-i18n="bar.drink.pm">Product Marketing</span>
+        <span class="item-desc" data-i18n="bar.drink.pm.desc">Product Marketing — smooth, persuasive, and dangerously drinkable.</span>
+      </a>
+      <a href="/professional/data-science" class="item item--ds">
+        <span class="item-title" data-i18n="bar.drink.ds">Data Science</span>
+        <span class="item-desc" data-i18n="bar.drink.ds.desc">Data Science — 95% confidence this one slaps.</span>
+      </a>
+      <a href="/professional/visual-design" class="item item--visual">
+        <span class="item-title" data-i18n="bar.drink.visual">Visual Design</span>
+        <span class="item-desc" data-i18n="bar.drink.visual.desc">Visual Design — looks so good you almost forget to drink it.</span>
+      </a>
+    </section>
+
+    <!-- Blends -->
+    <section class="section">
+      <h2 class="section-label" data-i18n="bar.section.blends">Blends</h2>
+      <a href="/professional/quant-insights" class="item">
+        <span class="item-title"><span data-i18n="bar.mix.pm_ds">Quant Insights</span> <span class="item-sub" data-i18n="bar.mix.pm_ds.sub">PM × DS</span></span>
+        <span class="item-desc" data-i18n="bar.mix.pm_ds.desc">PM + DS — a cocktail of strategy and numbers!</span>
+      </a>
+      <a href="/professional/brand-narrative" class="item">
+        <span class="item-title"><span data-i18n="bar.mix.pm_visual">Brand Narrative</span> <span class="item-sub" data-i18n="bar.mix.pm_visual.sub">PM × Visual</span></span>
+        <span class="item-desc" data-i18n="bar.mix.pm_visual.desc">PM + Visual — where stories meet aesthetics!</span>
+      </a>
+      <a href="/professional/information-design" class="item">
+        <span class="item-title"><span data-i18n="bar.mix.ds_visual">Information Design</span> <span class="item-sub" data-i18n="bar.mix.ds_visual.sub">DS × Visual</span></span>
+        <span class="item-desc" data-i18n="bar.mix.ds_visual.desc">DS + Visual — data, but make it beautiful!</span>
+      </a>
+    </section>
+
+    <!-- Life Journey -->
+    <section class="section">
+      <a href="/life-journey" class="item item--journey">
+        <span class="item-title" data-i18n="home.lifeJourney">Life Journey</span>
+      </a>
+    </section>
+
+    <!-- Skills & Tools -->
+    <section class="section">
+      <h2 class="section-label" data-i18n="bar.section.skills">Skills &amp; Tools</h2>
+      <div class="skills-grid">
+        <div class="skill">
+          <span class="skill-name" data-i18n="bar.bottle.strategy">Strategy</span>
+          <span class="skill-desc" data-i18n="bar.bottle.strategy.desc">CRM platforms and go-to-market tools</span>
+          <span class="skill-tools">Salesforce · HubSpot</span>
+        </div>
+        <div class="skill">
+          <span class="skill-name" data-i18n="bar.bottle.analytics">Analytics</span>
+          <span class="skill-desc" data-i18n="bar.bottle.analytics.desc">Measurement, tracking, and experimentation</span>
+          <span class="skill-tools">GA4 · Optimizely</span>
+        </div>
+        <div class="skill">
+          <span class="skill-name" data-i18n="bar.bottle.coding">Coding</span>
+          <span class="skill-desc" data-i18n="bar.bottle.coding.desc">Languages and frameworks for data work</span>
+          <span class="skill-tools">Python · SQL</span>
+        </div>
+        <div class="skill">
+          <span class="skill-name" data-i18n="bar.bottle.ml">ML &amp; Viz</span>
+          <span class="skill-desc" data-i18n="bar.bottle.ml.desc">Machine learning and data visualization</span>
+          <span class="skill-tools">Tableau · Jupyter</span>
+        </div>
+        <div class="skill">
+          <span class="skill-name" data-i18n="bar.bottle.design">Design</span>
+          <span class="skill-desc" data-i18n="bar.bottle.design.desc">UI/UX design and creative tools</span>
+          <span class="skill-tools">Figma · Adobe CC</span>
+        </div>
+        <div class="skill">
+          <span class="skill-name" data-i18n="bar.bottle.3d">3D &amp; Web</span>
+          <span class="skill-desc" data-i18n="bar.bottle.3d.desc">3D modeling and interactive web graphics</span>
+          <span class="skill-tools">Blender · Three.js</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Notes -->
+    <section class="section section--notes">
+      <h2 class="section-label" data-i18n="bar.section.notes">Notes from the bar</h2>
+      <ul class="notes">
+        <li data-i18n="bar.note.1">The best cocktails, like the best campaigns, start with knowing your audience.</li>
+        <li data-i18n="bar.note.2">House rule: we don't do pie charts here. Not even for dessert.</li>
+        <li data-i18n="bar.note.3">Kun once spent 3 hours adjusting a gradient. The client said "looks the same." It was not the same.</li>
+        <li data-i18n="bar.note.4">Side effects of mixing data science with design may include career confusion.</li>
+        <li data-i18n="bar.note.5">A p-value can't tell you if your landing page is ugly.</li>
+        <li data-i18n="bar.note.6">This bar doesn't have a happy hour. Just happy accidents.</li>
+      </ul>
+    </section>
   </main>
 </BaseLayout>
 
 <style>
-  .professional-page {
-    position: relative;
+  .pro-page {
+    max-width: 36rem;
+    margin: 0 auto;
+    padding: clamp(4rem, 8vh, 6rem) var(--content-padding) 4rem;
     min-height: 100dvh;
-    overflow-x: hidden;
-    background: #E4DDD2;
   }
 
   .back-link {
-    position: fixed;
-    top: var(--space-md);
-    left: var(--space-md);
+    display: inline-block;
     font-size: var(--fs-sm);
     color: var(--text-light);
-    z-index: 10;
+    margin-bottom: 2.5rem;
   }
 
   .back-link:hover {
     color: var(--text);
-    opacity: 1;
+  }
+
+  /* --- Sections --- */
+  .section {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-light);
+    opacity: 0.5;
+    margin-bottom: 1rem;
+  }
+
+  /* --- Items (links) --- */
+  .item {
+    display: block;
+    text-decoration: none;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    transition: opacity 0.15s ease;
+  }
+
+  .item:last-child {
+    border-bottom: none;
+  }
+
+  .item:hover {
+    opacity: 0.6;
+  }
+
+  .item-title {
+    display: block;
+    font-size: clamp(1rem, 0.9rem + 0.4vw, 1.15rem);
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .item-sub {
+    font-size: 0.8em;
+    font-weight: 400;
+    color: var(--text-light);
+    opacity: 0.6;
+    margin-left: 0.3em;
+  }
+
+  .item-desc {
+    display: block;
+    font-size: clamp(0.78rem, 0.72rem + 0.25vw, 0.88rem);
+    font-style: italic;
+    color: var(--text-light);
+    line-height: 1.5;
+    margin-top: 0.15rem;
+  }
+
+  /* Drink accent colors on title */
+  .item--pm .item-title { color: #9a6868; }
+  .item--ds .item-title { color: #5a7a94; }
+  .item--visual .item-title { color: #5a8a6e; }
+  .item--journey .item-title { color: #7FB6DD; }
+
+  /* --- Skills grid --- */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem 1.5rem;
+  }
+
+  .skill {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .skill-name {
+    font-size: clamp(0.85rem, 0.8rem + 0.2vw, 0.95rem);
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .skill-desc {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    line-height: 1.4;
+  }
+
+  .skill-tools {
+    font-size: 0.72rem;
+    color: var(--text-light);
+    opacity: 0.55;
+    letter-spacing: 0.01em;
+  }
+
+  /* --- Notes --- */
+  .section--notes {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .notes {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .notes li {
+    font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.82rem);
+    font-style: italic;
+    color: var(--text-light);
+    line-height: 1.55;
+    padding-left: 1em;
+    text-indent: -1em;
+  }
+
+  .notes li::before {
+    content: '~ ';
+    opacity: 0.35;
+  }
+
+  /* Chinese font for notes */
+  :global(html[data-lang="zh"]) .notes li {
+    font-family: var(--font-zh-body);
+    font-style: normal;
+  }
+
+  :global(html[data-lang="zh"]) .item-desc {
+    font-family: var(--font-zh-body);
+    font-style: normal;
+  }
+
+  /* --- Mobile --- */
+  @media (max-width: 480px) {
+    .pro-page {
+      padding-top: 3rem;
+    }
+
+    .skills-grid {
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+    }
   }
 </style>

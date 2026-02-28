@@ -81,9 +81,20 @@ export const translations: Record<string, Record<Lang, string>> = {
 
   // --- Bartender mixing dialog ---
   'bar.select.prompt': { en: 'Pick another drink to mix! Or click again for this one.', zh: '再选一杯来调配吧！或者再次点击同一杯。' },
+  'bar.mix.pm_ds': { en: 'Quant Insights', zh: '量化洞察' },
+  'bar.mix.pm_ds.sub': { en: 'PM × DS', zh: 'PM × DS' },
   'bar.mix.pm_ds.desc': { en: 'PM + DS — a cocktail of strategy and numbers!', zh: 'PM + DS — 一杯策略与数据的鸡尾酒！' },
+  'bar.mix.pm_visual': { en: 'Brand Narrative', zh: '品牌叙事' },
+  'bar.mix.pm_visual.sub': { en: 'PM × Visual', zh: 'PM × Visual' },
   'bar.mix.pm_visual.desc': { en: 'PM + Visual — where stories meet aesthetics!', zh: 'PM + Visual — 故事与美学的邂逅！' },
+  'bar.mix.ds_visual': { en: 'Information Design', zh: '信息设计' },
+  'bar.mix.ds_visual.sub': { en: 'DS × Visual', zh: 'DS × Visual' },
   'bar.mix.ds_visual.desc': { en: 'DS + Visual — data, but make it beautiful!', zh: 'DS + Visual — 让数据变得好看！' },
+
+  // --- Section headers ---
+  'bar.section.blends': { en: 'Blends', zh: '混合调配' },
+  'bar.section.skills': { en: 'Skills & Tools', zh: '技能与工具' },
+  'bar.section.notes': { en: 'Notes from the bar', zh: '吧台便条' },
 
   // --- Bar mix card ---
   'bar.card.cta': { en: 'Taste this blend \u2192', zh: '品尝这杯特调 \u2192' },
