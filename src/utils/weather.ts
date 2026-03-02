@@ -30,8 +30,6 @@ function categorizeWeather(code: number): WeatherType {
 
 // === Greeting Templates ===
 
-const BERKELEY_FALLBACK = true;
-
 type GreetingPool = Record<TimePeriod, Record<WeatherType, WeatherGreeting[]>>;
 
 /** Greetings when we know the user's location */
