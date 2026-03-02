@@ -28,7 +28,6 @@
   let activeMix      = $state<Mix | null>(null);
   let speechTimeout: ReturnType<typeof setTimeout> | null = null;
   let robot: RobotController | null = null;
-  let weatherLoaded  = false;
 
   // === Default greeting (before weather loads) ===
   function getDefaultGreeting(): string {
@@ -155,7 +154,6 @@
 
     // Load weather greeting async (non-blocking)
     getWeatherGreeting().then((greeting) => {
-      weatherLoaded = true;
       const lang = getLang();
       // Only update if still on default greeting (not hovering/selecting)
       if (!hoveredDrink && !selectedDrink) {
