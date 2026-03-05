@@ -108,9 +108,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           if (key) el.textContent = t(key);
         });
 
-        // Homepage dynamic elements (static greeting, no time logic)
-        const introEl = document.getElementById('home-intro');
-        if (introEl) introEl.textContent = t('home.intro');
       }
 
       function setupSecretHeart() {
