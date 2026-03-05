@@ -36,35 +36,6 @@ export const translations: Record<string, Record<Lang, string>> = {
   'bar.drink.ds.desc': { en: 'Data Science — 95% confidence this one slaps.', zh: '数据科学 — 有 95% 的置信度认为这杯超好喝。' },
   'bar.drink.visual.desc': { en: 'Visual Design — looks so good you almost forget to drink it.', zh: '视觉设计 — 好看到让你差点忘了喝。' },
 
-  // --- Section headers ---
-  'bar.section.notes': { en: 'Notes from the bar', zh: '吧台便条' },
-
-  // --- Bartender notes (random, one per visit) ---
-  'bar.note.1': {
-    en: 'The best cocktails, like the best campaigns, start with knowing your audience.',
-    zh: '最好的鸡尾酒，就像最好的营销，都从了解你的受众开始。',
-  },
-  'bar.note.2': {
-    en: 'House rule: we don\'t do pie charts here. Not even for dessert.',
-    zh: '店规：这里不做饼图。甜点也不行。',
-  },
-  'bar.note.3': {
-    en: 'Kun once spent 3 hours adjusting a gradient. The client said "looks the same." It was not the same.',
-    zh: 'Kun 曾花了 3 小时调一个渐变色。甲方说"看起来一样啊。"并不一样。',
-  },
-  'bar.note.4': {
-    en: 'Side effects of mixing data science with design may include career confusion.',
-    zh: '将数据科学和设计混在一起的副作用：职业方向困惑。',
-  },
-  'bar.note.5': {
-    en: 'A p-value can\'t tell you if your landing page is ugly.',
-    zh: 'p 值没法告诉你落地页好不好看。',
-  },
-  'bar.note.6': {
-    en: 'This bar doesn\'t have a happy hour. Just happy accidents.',
-    zh: '本店没有欢乐时光，只有快乐的意外。',
-  },
-
   // --- Globe pin titles ---
   'pin.jiaozhou.title': { en: 'Where it all began', zh: '一切开始的地方' },
   'pin.qingdao.title': { en: 'Coastal memories', zh: '海边的记忆' },

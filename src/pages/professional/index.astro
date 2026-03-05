@@ -30,18 +30,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </a>
     </section>
 
-    <!-- Notes -->
-    <section class="section section--notes">
-      <h2 class="section-label" data-i18n="bar.section.notes">Notes from the bar</h2>
-      <ul class="notes">
-        <li data-i18n="bar.note.1">The best cocktails, like the best campaigns, start with knowing your audience.</li>
-        <li data-i18n="bar.note.2">House rule: we don't do pie charts here. Not even for dessert.</li>
-        <li data-i18n="bar.note.3">Kun once spent 3 hours adjusting a gradient. The client said "looks the same." It was not the same.</li>
-        <li data-i18n="bar.note.4">Side effects of mixing data science with design may include career confusion.</li>
-        <li data-i18n="bar.note.5">A p-value can't tell you if your landing page is ugly.</li>
-        <li data-i18n="bar.note.6">This bar doesn't have a happy hour. Just happy accidents.</li>
-      </ul>
-    </section>
   </main>
 </BaseLayout>
 
@@ -64,16 +52,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   /* --- Sections --- */
   .section {
     margin-bottom: 2.5rem;
-  }
-
-  .section-label {
-    font-size: var(--fs-xs);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--text-light);
-    opacity: 0.5;
-    margin-bottom: 1rem;
   }
 
   /* --- Items (links) --- */
@@ -115,42 +93,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   .item--ds .item-title { color: #5a7a94; }
   .item--visual .item-title { color: #5a8a6e; }
   .item--journey .item-title { color: #7FB6DD; }
-
-  /* --- Notes --- */
-  .section--notes {
-    margin-top: 3rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
-  }
-
-  .notes {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-
-  .notes li {
-    font-size: var(--fs-sm);
-    font-style: italic;
-    color: var(--text-light);
-    line-height: 1.55;
-    padding-left: 1em;
-    text-indent: -1em;
-  }
-
-  .notes li::before {
-    content: '~ ';
-    opacity: 0.35;
-  }
-
-  /* Chinese font for notes */
-  :global(html[data-lang="zh"]) .notes li {
-    font-family: var(--font-zh-body);
-    font-style: normal;
-  }
 
   :global(html[data-lang="zh"]) .item-desc {
     font-family: var(--font-zh-body);
