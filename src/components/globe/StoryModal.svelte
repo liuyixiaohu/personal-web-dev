@@ -109,7 +109,7 @@
   }
 
   .modal-location {
-    font-size: clamp(0.9rem, 0.85rem + 0.3vw, 1.05rem);
+    font-size: 1rem;
     color: #8a9199;
     font-style: italic;
   }
@@ -144,7 +144,7 @@
   }
 
   .modal-title {
-    font-size: clamp(1.3rem, 1.1rem + 1vw, 1.8rem);
+    font-size: var(--fs-lg);
     font-weight: 500;
     color: #1F2328;
     margin-bottom: 1rem;
@@ -156,7 +156,7 @@
   }
 
   .modal-body {
-    font-size: clamp(0.95rem, 0.9rem + 0.3vw, 1.1rem);
+    font-size: 1rem;
     color: #6b737b;
     line-height: 1.7;
   }

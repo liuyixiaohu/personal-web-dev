@@ -14,15 +14,17 @@
   --bubble-ds: #D6E6F3;
   --bubble-visual: #DDEEE7;
 
-  /* Typography — Fluid / Flowed */
+  /* Typography — Major Third modular scale (1.25×) */
   --font-body: 'EB Garamond', Garamond, 'Times New Roman', serif;
   --font-zh: 'LXGW WenKai', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --font-zh-body: var(--font-zh);
   --font-zh-heading: var(--font-zh);
-  --fs-base: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
-  --fs-lg: clamp(1.5rem, 1.2rem + 1.5vw, 2.5rem);
-  --fs-xl: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);
-  --fs-sm: clamp(0.875rem, 0.8rem + 0.4vw, 1rem);
+  --fs-base: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);  /* root font-size */
+  --fs-xs: 0.64rem;    /* 1.25⁻² — labels, tags */
+  --fs-sm: 0.8rem;     /* 1.25⁻¹ — secondary text, captions */
+  --fs-md: 1.25rem;    /* 1.25¹  — subheadings, nav titles */
+  --fs-lg: 1.563rem;   /* 1.25²  — page headings */
+  --fs-xl: 1.953rem;   /* 1.25³  — hero / display */
 
   /* Spacing — Fluid */
   --space-xs: clamp(0.5rem, 1vw, 0.75rem);
