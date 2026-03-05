@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { geoNaturalEarth1, geoPath } from 'd3-geo';
-  import { zoom } from 'd3-zoom';
+  import { zoom, type ZoomBehavior } from 'd3-zoom';
   import { select } from 'd3-selection';
   import { feature, mesh } from 'topojson-client';
   import { pins, type PinData } from './pins';
@@ -15,8 +15,11 @@
   let transform = $state('');
   let currentScale = $state(1);
   let svgEl: SVGSVGElement;
+  let zoomBehavior: ZoomBehavior<SVGSVGElement, unknown>;
 
   const PROVINCE_ZOOM_THRESHOLD = 3;
+  const MIN_ZOOM = 1;
+  const MAX_ZOOM = 12;
   const width = 960;
   const height = 500;
 
@@ -32,6 +35,29 @@
   });
 
   let showProvinces = $derived(currentScale >= PROVINCE_ZOOM_THRESHOLD);
+
+  // Slider value mapped logarithmically for smoother feel
+  let sliderValue = $derived(Math.log(currentScale) / Math.log(MAX_ZOOM) * 100);
+
+  function handleSlider(e: Event) {
+    const val = +(e.target as HTMLInputElement).value;
+    const scale = Math.pow(MAX_ZOOM, val / 100);
+    const sel = select(svgEl);
+    sel.transition().duration(200).call(
+      zoomBehavior.scaleTo as any,
+      scale,
+    );
+  }
+
+  function zoomIn() {
+    const sel = select(svgEl);
+    sel.transition().duration(300).call(zoomBehavior.scaleBy as any, 1.5);
+  }
+
+  function zoomOut() {
+    const sel = select(svgEl);
+    sel.transition().duration(300).call(zoomBehavior.scaleBy as any, 1 / 1.5);
+  }
 
   async function loadProvinces() {
     if (provincesLoaded || provincesLoading) return;
@@ -65,18 +91,33 @@
       .map((f: any) => pathGenerator(f))
       .filter(Boolean) as string[];
 
-    const zoomBehavior = zoom()
-      .scaleExtent([1, 12])
+    zoomBehavior = zoom<SVGSVGElement, unknown>()
+      .scaleExtent([MIN_ZOOM, MAX_ZOOM])
       .on('zoom', (e) => {
         transform = `translate(${e.transform.x},${e.transform.y}) scale(${e.transform.k})`;
         currentScale = e.transform.k;
       });
 
-    select(svgEl).call(zoomBehavior as any);
+    select(svgEl).call(zoomBehavior);
   });
 </script>
 
 <div class="map-container">
+  <div class="zoom-controls">
+    <button class="zoom-btn" onclick={zoomIn} aria-label="Zoom in">+</button>
+    <input
+      type="range"
+      min="0"
+      max="100"
+      value={sliderValue}
+      oninput={handleSlider}
+      class="zoom-slider"
+      orient="vertical"
+      aria-label="Zoom level"
+    />
+    <button class="zoom-btn" onclick={zoomOut} aria-label="Zoom out">−</button>
+  </div>
+
   <svg viewBox="0 0 {width} {height}" class="world-map" bind:this={svgEl}>
     <rect {width} {height} fill="#D6E6F3" />
 
@@ -89,9 +130,8 @@
         <path
           d={provincePath}
           fill="none"
-          stroke="#b8d4ca"
-          stroke-width={0.3 / currentScale}
-          opacity="0.6"
+          stroke="#8aac9a"
+          stroke-width={0.4 / currentScale}
         />
       {/if}
 
@@ -120,6 +160,7 @@
 
 <style>
   .map-container {
+    position: relative;
     width: 100%;
     max-width: 960px;
     margin: 0 auto;
@@ -143,5 +184,49 @@
 
   .pin-marker:hover {
     opacity: 0.7;
+  }
+
+  /* Zoom controls */
+  .zoom-controls {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    translate: 0 -50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    z-index: 5;
+  }
+
+  .zoom-btn {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #b8d4ca;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.85);
+    color: #4a6e5d;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    transition: background 0.15s ease;
+  }
+
+  .zoom-btn:hover {
+    background: rgba(255, 255, 255, 1);
+  }
+
+  .zoom-slider {
+    writing-mode: vertical-lr;
+    direction: rtl;
+    appearance: slider-vertical;
+    width: 28px;
+    height: 100px;
+    cursor: pointer;
+    accent-color: #8aac9a;
   }
 </style>
