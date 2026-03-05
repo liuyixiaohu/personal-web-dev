@@ -1,13 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import GlobeScene from '../components/globe/GlobeScene.svelte';
+import MapScene from '../components/globe/MapScene.svelte';
 ---
 
-<BaseLayout title="Life Journey — Kun Li" description="Explore Kun's life journey through an interactive 3D globe — cities, stories, and experiences from around the world.">
+<BaseLayout title="Life Journey — Kun Li" description="Explore Kun's life journey through an interactive map — cities, stories, and experiences from around the world.">
   <main class="journey-page">
     <h1 class="sr-only">Life Journey</h1>
     <a href="/" class="back-link" data-i18n="nav.back">&larr; Back</a>
-    <GlobeScene client:only="svelte" />
+    <MapScene client:only="svelte" />
   </main>
 </BaseLayout>
 
@@ -15,7 +15,11 @@ import GlobeScene from '../components/globe/GlobeScene.svelte';
   .journey-page {
     position: relative;
     min-height: 100dvh;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
   }
 
   .back-link {
