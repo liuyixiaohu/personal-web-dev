@@ -111,13 +111,11 @@
   .modal-location {
     font-size: 1rem;
     color: #8a9199;
-    font-style: italic;
   }
 
   .modal-city {
     color: #1F2328;
     font-weight: 500;
-    font-style: normal;
   }
 
   .modal-close {

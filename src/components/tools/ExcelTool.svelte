@@ -973,7 +973,6 @@
   .tool-subtitle {
     font-size: var(--fs-sm);
     color: var(--text-light);
-    font-style: italic;
     margin-bottom: 1.8rem;
     opacity: 0.5;
     line-height: 1.8;
@@ -1069,7 +1068,6 @@
     font-size: var(--fs-sm);
     color: var(--text-light);
     margin-top: 0.8rem;
-    font-style: italic;
   }
 
   .status--error {
