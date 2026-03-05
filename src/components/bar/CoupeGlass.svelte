@@ -59,7 +59,7 @@
   }
 
   .glass-btn:focus-visible {
-    outline: 2px solid #5A636B;
+    outline: 2px solid #1F2328;
     outline-offset: 6px;
     border-radius: 8px;
   }

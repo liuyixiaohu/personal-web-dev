@@ -93,7 +93,7 @@
   }
 
   .rack-cell:focus-visible {
-    outline: 2px solid #5A636B;
+    outline: 2px solid #1F2328;
     outline-offset: -2px;
     border-radius: 2px;
   }

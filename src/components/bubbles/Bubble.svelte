@@ -87,7 +87,7 @@
   }
 
   .bubble:focus-visible {
-    outline: 2px solid #5A636B;
+    outline: 2px solid #1F2328;
     outline-offset: 4px;
   }
 
@@ -95,7 +95,7 @@
     font-family: inherit;
     font-size: clamp(0.7rem, 0.6rem + 0.5vw, 0.95rem);
     font-weight: 500;
-    color: #5A636B;
+    color: #1F2328;
     text-align: center;
     line-height: 1.3;
     padding: 0.5em;
