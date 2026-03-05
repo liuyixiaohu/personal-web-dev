@@ -3,16 +3,20 @@
   import { geoNaturalEarth1, geoPath } from 'd3-geo';
   import { zoom } from 'd3-zoom';
   import { select } from 'd3-selection';
-  import { feature } from 'topojson-client';
+  import { feature, mesh } from 'topojson-client';
   import { pins, type PinData } from './pins';
   import StoryModal from './StoryModal.svelte';
 
   let selectedPin = $state<PinData | null>(null);
   let countryPaths = $state<string[]>([]);
+  let provincePath = $state('');
+  let provincesLoaded = $state(false);
+  let provincesLoading = false;
   let transform = $state('');
   let currentScale = $state(1);
   let svgEl: SVGSVGElement;
 
+  const PROVINCE_ZOOM_THRESHOLD = 3;
   const width = 960;
   const height = 500;
 
@@ -25,6 +29,30 @@
   const pinPositions = pins.map((p) => {
     const coords = projection([p.lng, p.lat]);
     return { ...p, x: coords?.[0] ?? 0, y: coords?.[1] ?? 0 };
+  });
+
+  let showProvinces = $derived(currentScale >= PROVINCE_ZOOM_THRESHOLD);
+
+  async function loadProvinces() {
+    if (provincesLoaded || provincesLoading) return;
+    provincesLoading = true;
+    try {
+      const res = await fetch('/data/provinces-50m.json');
+      const topo = await res.json();
+      const boundaries = mesh(topo, topo.objects.provinces);
+      provincePath = pathGenerator(boundaries) ?? '';
+      provincesLoaded = true;
+    } catch (err) {
+      console.error('Failed to load provinces:', err);
+    }
+    provincesLoading = false;
+  }
+
+  // Lazy-load provinces when zoom crosses threshold
+  $effect(() => {
+    if (showProvinces && !provincesLoaded) {
+      loadProvinces();
+    }
   });
 
   onMount(async () => {
@@ -56,6 +84,16 @@
       {#each countryPaths as d}
         <path {d} fill="#DDEEE7" stroke="#b8d4ca" stroke-width="0.5" />
       {/each}
+
+      {#if showProvinces && provincePath}
+        <path
+          d={provincePath}
+          fill="none"
+          stroke="#b8d4ca"
+          stroke-width={0.3 / currentScale}
+          opacity="0.6"
+        />
+      {/if}
 
       {#each pinPositions as pin}
         <!-- svelte-ignore a11y_click_events_have_key_events -->
