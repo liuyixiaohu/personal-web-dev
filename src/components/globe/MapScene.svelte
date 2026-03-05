@@ -135,7 +135,19 @@
         />
       {/if}
 
-      {#each pinPositions as pin}
+      {#each pinPositions as pin, i}
+        <!-- Ripple ring -->
+        <circle
+          cx={pin.x}
+          cy={pin.y}
+          r={5 / currentScale}
+          fill="none"
+          stroke={pin.color}
+          stroke-width={1.5 / currentScale}
+          class="pin-ripple"
+          style="animation-delay: {(i * 0.4) % 2.5}s"
+        />
+
         <!-- svelte-ignore a11y_click_events_have_key_events -->
         <circle
           cx={pin.x}
@@ -175,6 +187,24 @@
 
   .world-map:active {
     cursor: grabbing;
+  }
+
+  .pin-ripple {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ripple 2.5s ease-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes ripple {
+    0% {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    100% {
+      transform: scale(3);
+      opacity: 0;
+    }
   }
 
   .pin-marker {
