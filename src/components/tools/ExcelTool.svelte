@@ -964,14 +964,14 @@
 
   /* --- Tool --- */
   .tool-title {
-    font-size: clamp(1.1rem, 1rem + 0.4vw, 1.3rem);
+    font-size: var(--fs-md);
     font-weight: 500;
     color: var(--text);
     margin-bottom: 0.3rem;
   }
 
   .tool-subtitle {
-    font-size: clamp(0.8rem, 0.75rem + 0.3vw, 0.9rem);
+    font-size: var(--fs-sm);
     color: var(--text-light);
     font-style: italic;
     margin-bottom: 1.8rem;
@@ -1089,7 +1089,7 @@
   }
 
   .section-label {
-    font-size: 0.7rem;
+    font-size: var(--fs-xs);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.12em;
@@ -1101,7 +1101,7 @@
   .clear-all {
     background: none;
     border: none;
-    font-size: 0.72rem;
+    font-size: var(--fs-xs);
     font-family: inherit;
     color: var(--text-light);
     cursor: pointer;
@@ -1132,7 +1132,7 @@
 
   .file-role {
     display: inline-block;
-    font-size: 0.68rem;
+    font-size: var(--fs-xs);
     color: var(--text-light);
     background: rgba(0, 0, 0, 0.04);
     padding: 0.1rem 0.4rem;

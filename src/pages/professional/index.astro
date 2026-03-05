@@ -121,7 +121,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   .section-label {
-    font-size: 0.7rem;
+    font-size: var(--fs-xs);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.12em;
@@ -149,7 +149,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   .item-title {
     display: block;
-    font-size: clamp(1rem, 0.9rem + 0.4vw, 1.15rem);
+    font-size: var(--fs-md);
     font-weight: 500;
     color: var(--text);
     line-height: 1.4;
@@ -165,7 +165,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   .item-desc {
     display: block;
-    font-size: clamp(0.78rem, 0.72rem + 0.25vw, 0.88rem);
+    font-size: var(--fs-sm);
     font-style: italic;
     color: var(--text-light);
     line-height: 1.5;
@@ -192,19 +192,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   .skill-name {
-    font-size: clamp(0.85rem, 0.8rem + 0.2vw, 0.95rem);
+    font-size: 1rem;
     font-weight: 500;
     color: var(--text);
   }
 
   .skill-desc {
-    font-size: 0.75rem;
+    font-size: var(--fs-sm);
     color: var(--text-light);
     line-height: 1.4;
   }
 
   .skill-tools {
-    font-size: 0.72rem;
+    font-size: var(--fs-xs);
     color: var(--text-light);
     opacity: 0.55;
     letter-spacing: 0.01em;
@@ -227,7 +227,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   .notes li {
-    font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.82rem);
+    font-size: var(--fs-sm);
     font-style: italic;
     color: var(--text-light);
     line-height: 1.55;
