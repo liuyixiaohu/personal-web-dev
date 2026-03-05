@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { geoNaturalEarth1, geoPath } from 'd3-geo';
-  import { zoom, type ZoomBehavior } from 'd3-zoom';
+  import { zoom, zoomIdentity, type ZoomBehavior } from 'd3-zoom';
   import { select } from 'd3-selection';
   import { feature, mesh } from 'topojson-client';
   import { pins, type PinData } from './pins';
@@ -102,6 +102,19 @@
       });
 
     select(svgEl).call(zoomBehavior);
+
+    // Initial view: centered on Kansas, zoomed to 80% of slider range
+    const initialScale = Math.pow(MAX_ZOOM, 0.8);
+    const kansasCoords = projection([-98.5, 38.5]);
+    if (kansasCoords) {
+      const [px, py] = kansasCoords;
+      const tx = width / 2 - px * initialScale;
+      const ty = height / 2 - py * initialScale;
+      select(svgEl).call(
+        zoomBehavior.transform,
+        zoomIdentity.translate(tx, ty).scale(initialScale),
+      );
+    }
   });
 </script>
 
