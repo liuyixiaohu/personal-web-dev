@@ -32,7 +32,7 @@
     font-family: inherit;
     font-size: 0.85rem;
     font-weight: 500;
-    color: var(--text, #5A636B);
+    color: var(--text, #1F2328);
     cursor: pointer;
     display: flex;
     align-items: center;

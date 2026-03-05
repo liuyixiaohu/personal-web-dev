@@ -274,7 +274,7 @@
   .speech-text {
     font-family: inherit;
     font-size: clamp(0.72rem, 0.62rem + 0.45vw, 0.95rem);
-    color: #5A636B;
+    color: #1F2328;
     text-align: center;
     line-height: 1.45;
     margin: 0;

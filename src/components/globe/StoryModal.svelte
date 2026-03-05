@@ -115,7 +115,7 @@
   }
 
   .modal-city {
-    color: #5A636B;
+    color: #1F2328;
     font-weight: 500;
     font-style: normal;
   }
@@ -133,7 +133,7 @@
   }
 
   .modal-close:hover {
-    color: #5A636B;
+    color: #1F2328;
     background: rgba(0, 0, 0, 0.04);
   }
 
@@ -146,7 +146,7 @@
   .modal-title {
     font-size: clamp(1.3rem, 1.1rem + 1vw, 1.8rem);
     font-weight: 500;
-    color: #5A636B;
+    color: #1F2328;
     margin-bottom: 1rem;
     line-height: 1.3;
   }
