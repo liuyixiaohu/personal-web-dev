@@ -11,30 +11,13 @@ export const translations: Record<string, Record<Lang, string>> = {
   'home.professional': { en: 'Enter Chaguan', zh: '进入茶馆' },
   'home.lifeJourney': { en: 'Life Journey', zh: '人生旅途' },
 
-  // --- Greeting (time-aware) ---
-  'greeting.morning': { en: 'Good morning,', zh: '早上好哇,' },
-  'greeting.afternoon': { en: 'Good afternoon,', zh: '下午好哇,' },
-  'greeting.evening': { en: 'Good evening,', zh: '晚上好哇,' },
+  // --- Greeting ---
+  'greeting.lead': { en: 'Good morning,', zh: '早上好哇,' },
   'greeting.body': {
     en: 'and in case I don\u2019t see you, good afternoon, good evening, and good night!',
     zh: '假如很难再次遇见你，祝你早安、午安、晚安。',
   },
   'greeting.source': { en: '\u2014 The Truman Show', zh: '\u2014\u2014《楚门的世界》' },
-
-  // --- Late night message (0:00–3:59) ---
-  // Lead rendered with innerHTML to include cat images; body uses \n\n as paragraph separator
-  'lateNight.lead': {
-    en: 'Late Night Message from',
-    zh: '来自',
-  },
-  'lateNight.leadSuffix': {
-    en: '',
-    zh: ' 的深夜消息',
-  },
-  'lateNight.body': {
-    en: 'Lucky <em>(cat food quality inspector)</em> and Happy <em>(curtain\u2011to\u2011mop\u2011cloth magician)</em> here.\n\nStill awake? Anything bothering you?\n\nKun <em>(our poop\u2011scooper)</em> often gets yelled at by his mom for staying up late <em>(just worries about him)</em>.\n\nWishing you happiness every day, and FALL INTO SLEEP soon!',
-    zh: 'Lucky<em>（猫罐头质检员）</em>和 Happy<em>（窗帘变拖把布魔术大师）</em>在此。\n\n还没睡？有什么烦心事吗？\n\nKun<em>（我们的铲屎官）</em>经常因为熬夜被妈妈凶<em>（其实她只是担心他）</em>。\n\n祝你每天快乐，赶快入睡！',
-  },
 
   // --- Navigation ---
   'nav.back': { en: '\u2190 Back', zh: '\u2190 返回' },
@@ -64,11 +47,6 @@ export const translations: Record<string, Record<Lang, string>> = {
 
   // --- Common ---
   'common.comingSoon': { en: 'Content coming soon...', zh: '内容即将上线…' },
-
-  // --- Bubble labels ---
-  'bubble.pm': { en: 'Product Marketing', zh: '产品营销' },
-  'bubble.ds': { en: 'Data Science', zh: '数据科学' },
-  'bubble.visual': { en: 'Visual Design', zh: '视觉设计' },
 
   // --- Bartender dialog ---
   'bar.greeting': { en: 'Let me know where you are — I might have something different to say.', zh: '让我知道你在哪，也许我会告诉你一些不一样的。' },

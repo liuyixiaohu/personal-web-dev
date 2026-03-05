@@ -12,13 +12,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="home-content">
       <p class="home-intro" id="home-intro"></p>
 
-      <div class="home-tagline" id="home-tagline">
+      <div class="home-tagline">
         <div class="greeting-line">
-          <p class="greeting-lead" id="greeting-lead"></p>
+          <p class="greeting-lead" data-i18n="greeting.lead">Good morning,</p>
           <span class="secret-heart" id="secret-heart">♥</span>
         </div>
-        <p class="greeting-body" id="greeting-body"></p>
-        <p class="greeting-source" id="greeting-source"></p>
+        <p class="greeting-body" data-i18n="greeting.body">and in case I don't see you, good afternoon, good evening, and good night!</p>
+        <p class="greeting-source" data-i18n="greeting.source">— The Truman Show</p>
       </div>
     </div>
 
@@ -98,35 +98,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     color: var(--text-light);
     opacity: 0.5;
     margin-top: var(--space-xs);
-    font-style: italic;
-  }
-
-  /* Late-night mode: longer text, adjust styling */
-  .home-tagline[data-late-night] .greeting-lead {
-    font-size: var(--fs-md);
-    font-style: normal;
-    font-weight: 500;
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4em;
-    flex-wrap: wrap;
-  }
-
-  .home-tagline[data-late-night] .greeting-body {
-    font-size: var(--fs-sm);
-    font-style: normal;
-    line-height: 3;
-    max-width: 38rem;
-    margin-inline: auto;
-  }
-
-  .home-tagline[data-late-night] .greeting-body p {
-    margin: 0;
-  }
-
-  .home-tagline[data-late-night] .greeting-body em {
     font-style: italic;
   }
 

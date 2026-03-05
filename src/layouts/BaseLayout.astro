@@ -85,7 +85,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <script>
       import { initLang, getLang, t } from '../i18n/langStore';
-      import { getTimePeriod } from '../utils/greeting';
 
       function applyTranslations() {
         const isToolPage = window.location.pathname.startsWith('/tools/');
@@ -109,45 +108,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           if (key) el.textContent = t(key);
         });
 
-        // Homepage dynamic elements
-        const taglineEl = document.getElementById('home-tagline');
-        const leadEl = document.getElementById('greeting-lead');
-        const bodyEl = document.getElementById('greeting-body');
-        const sourceEl = document.getElementById('greeting-source');
+        // Homepage dynamic elements (static greeting, no time logic)
         const introEl = document.getElementById('home-intro');
-
-        if (taglineEl && leadEl && bodyEl && sourceEl) {
-          const period = getTimePeriod(new Date().getHours());
-
-          // Hide/show navigation based on time period
-          const choicesEl = document.querySelector('.home-choices') as HTMLElement | null;
-
-          if (period === 'lateNight') {
-            const leadText = t('lateNight.lead');
-            const leadSuffix = t('lateNight.leadSuffix');
-            leadEl.innerHTML = `${leadText} <img src="/images/lucky.png" alt="Lucky" class="cat-avatar"> &amp; <img src="/images/happy.png" alt="Happy" class="cat-avatar">${leadSuffix}`;
-            bodyEl.innerHTML = t('lateNight.body').split('\n\n').map(p => `<p>${p}</p>`).join('');
-            sourceEl.textContent = '';
-            sourceEl.style.display = 'none';
-            taglineEl.setAttribute('data-late-night', '');
-            if (introEl) {
-              introEl.textContent = '';
-              introEl.style.display = 'none';
-            }
-            if (choicesEl) choicesEl.style.display = 'none';
-          } else {
-            leadEl.textContent = t(`greeting.${period}`);
-            bodyEl.textContent = t('greeting.body');
-            sourceEl.textContent = t('greeting.source');
-            sourceEl.style.display = '';
-            taglineEl.removeAttribute('data-late-night');
-            if (introEl) {
-              introEl.textContent = t('home.intro');
-              introEl.style.display = '';
-            }
-            if (choicesEl) choicesEl.style.display = '';
-          }
-        }
+        if (introEl) introEl.textContent = t('home.intro');
       }
 
       function setupSecretHeart() {
