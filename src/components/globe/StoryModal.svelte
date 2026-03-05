@@ -109,7 +109,6 @@
   }
 
   .modal-location {
-    font-size: 1rem;
     color: #8a9199;
   }
 
@@ -154,7 +153,6 @@
   }
 
   .modal-body {
-    font-size: 1rem;
     color: #6b737b;
     line-height: 1.7;
   }
