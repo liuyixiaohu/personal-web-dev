@@ -116,7 +116,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .home-tagline[data-late-night] .greeting-body {
     font-size: var(--fs-sm);
-    font-style: italic;
+    font-style: normal;
     line-height: 3;
     max-width: 38rem;
     margin-inline: auto;
@@ -124,6 +124,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .home-tagline[data-late-night] .greeting-body p {
     margin: 0;
+  }
+
+  .home-tagline[data-late-night] .greeting-body em {
+    font-style: italic;
   }
 
   .home-choices {
