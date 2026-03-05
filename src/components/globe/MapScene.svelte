@@ -103,8 +103,8 @@
 
     select(svgEl).call(zoomBehavior);
 
-    // Initial view: centered on Kansas, zoomed to 80% of slider range
-    const initialScale = Math.pow(MAX_ZOOM, 0.8);
+    // Initial view: centered on Kansas, zoomed to 50% of slider range
+    const initialScale = Math.pow(MAX_ZOOM, 0.5);
     const kansasCoords = projection([-98.5, 38.5]);
     if (kansasCoords) {
       const [px, py] = kansasCoords;
