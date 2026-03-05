@@ -13,6 +13,7 @@
     "@astrojs/svelte": "^7.2.5",
     "astro": "^5.17.1",
     "d3-geo": "^3.1.1",
+    "d3-selection": "^3.0.0",
     "d3-zoom": "^3.0.0",
     "exceljs": "^4.4.0",
     "svelte": "^5.50.0",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@types/d3-geo": "^3.1.0",
+    "@types/d3-selection": "^3.0.11",
     "@types/d3-zoom": "^3.0.8",
     "@types/topojson-client": "^3.1.5",
     "topojson-server": "^3.0.1",
