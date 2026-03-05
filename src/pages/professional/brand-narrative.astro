@@ -3,20 +3,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Brand & Narrative Design — Kun Li" description="Kun Li's brand and narrative design — the intersection of Product Marketing and Visual Design.">
-  <main class="page">
-    <div class="container">
-      <a href="/professional" class="back-link" data-i18n="nav.backToProfessional">&larr; Back to Professional</a>
-      <h1 data-i18n="professional.brandNarrative">Brand & Narrative Design</h1>
-      <p class="subtitle" data-i18n="professional.brandSubtitle">Product Marketing &times; Visual Design</p>
-      <p class="placeholder" data-i18n="common.comingSoon">Content coming soon...</p>
-    </div>
+  <main class="page grid-page">
+    <a href="/professional" class="back-link" data-i18n="nav.backToProfessional">&larr; Back to Professional</a>
+    <h1 data-i18n="professional.brandNarrative">Brand & Narrative Design</h1>
+    <p class="subtitle" data-i18n="professional.brandSubtitle">Product Marketing &times; Visual Design</p>
+    <p class="placeholder" data-i18n="common.comingSoon">Content coming soon...</p>
   </main>
 </BaseLayout>
 
 <style>
   .page {
-    min-height: 100dvh;
-    padding: var(--space-xl) 0;
+    padding-block: var(--space-xl) 4rem;
   }
 
   .back-link {

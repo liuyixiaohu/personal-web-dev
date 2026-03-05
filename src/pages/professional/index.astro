@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Professional — Kun Li" description="Kun Li's professional expertise — Product Marketing, Data Science, and Visual Design.">
-  <main class="pro-page">
+  <main class="pro-page grid-page">
     <h1 class="sr-only">Professional Portfolio — Kun Li</h1>
     <a href="/" class="back-link" data-i18n="nav.back">&larr; Back</a>
 
@@ -101,10 +101,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 <style>
   .pro-page {
-    max-width: 36rem;
-    margin: 0 auto;
-    padding: clamp(4rem, 8vh, 6rem) var(--content-padding) 4rem;
-    min-height: 100dvh;
+    /* Layout handled by .grid-page (content track = 36rem) */
   }
 
   .back-link {
@@ -256,10 +253,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   /* --- Mobile --- */
   @media (max-width: 480px) {
-    .pro-page {
-      padding-top: 3rem;
-    }
-
     .skills-grid {
       grid-template-columns: 1fr;
       gap: 0.8rem;

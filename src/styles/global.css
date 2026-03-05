@@ -34,6 +34,11 @@
   /* Layout */
   --max-width: 72rem;
   --content-padding: clamp(1rem, 4vw, 3rem);
+
+  /* Grid tracks */
+  --grid-content: 36rem;
+  --grid-wide: 44rem;
+  --grid-gutter: var(--content-padding);
 }
 
 /* Reset */
@@ -105,6 +110,54 @@ a:hover {
 ::view-transition-new(root) {
   animation-duration: 0.4s;
   animation-timing-function: ease-in-out;
+}
+
+/* ============================================
+   Content Grid System
+   ============================================
+   Named-line grid for editorial layout.
+
+   Usage:
+     <main class="grid-page">        — activates the grid
+       <h1>Title</h1>                — defaults to content width (36rem)
+       <div class="wide">...</div>   — wider track (44rem)
+       <div class="full">...</div>   — full-bleed (100%)
+     </main>
+   ============================================ */
+.grid-page {
+  display: grid;
+  grid-template-columns:
+    [full-start]
+      minmax(0, 1fr)
+    [wide-start]
+      minmax(0, calc((var(--grid-wide) - var(--grid-content)) / 2))
+    [content-start]
+      min(var(--grid-content), 100% - var(--grid-gutter) * 2)
+    [content-end]
+      minmax(0, calc((var(--grid-wide) - var(--grid-content)) / 2))
+    [wide-end]
+      minmax(0, 1fr)
+    [full-end];
+  min-height: 100dvh;
+  padding-block: clamp(4rem, 8vh, 6rem) 4rem;
+}
+
+.grid-page > * {
+  grid-column: content;
+}
+
+.grid-page > .wide {
+  grid-column: wide;
+}
+
+.grid-page > .full {
+  grid-column: full;
+}
+
+@media (max-width: 480px) {
+  .grid-page {
+    padding-block-start: 3rem;
+  }
 }
 
 /* ============================================

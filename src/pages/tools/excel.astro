@@ -4,19 +4,18 @@ import ExcelTool from '../../components/tools/ExcelTool.svelte';
 ---
 
 <BaseLayout title="笑笑的摸鱼工作台 — Kun Li" description="Browser-based Excel processing tool.">
-  <main class="tool-page">
+  <main class="tool-page grid-page">
     <a href="/" class="back-link">&larr; 返回</a>
-    <ExcelTool client:only="svelte" />
+    <div class="wide">
+      <ExcelTool client:only="svelte" />
+    </div>
   </main>
 
 </BaseLayout>
 
 <style>
   .tool-page {
-    max-width: 44rem;
-    margin: 0 auto;
-    padding: clamp(4rem, 8vh, 6rem) var(--content-padding) 4rem;
-    min-height: 100dvh;
+    /* Layout handled by .grid-page (back-link = content 36rem, tool = wide 44rem) */
   }
 
   .back-link {
@@ -30,9 +29,5 @@ import ExcelTool from '../../components/tools/ExcelTool.svelte';
     color: var(--text);
   }
 
-  @media (max-width: 480px) {
-    .tool-page {
-      padding-top: 3rem;
-    }
-  }
+  /* Mobile padding handled by .grid-page */
 </style>
