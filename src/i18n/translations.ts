@@ -10,10 +10,9 @@ export const translations: Record<string, Record<Lang, string>> = {
   'home.lifeJourney': { en: 'Life Journey', zh: '人生旅途' },
 
   // --- Greeting ---
-  'greeting.lead': { en: 'In case I don\u2019t see ya...', zh: '假如很难再次遇见你……' },
-  'greeting.body': {
-    en: 'good afternoon, good evening, and good night.',
-    zh: '祝你早安、午安、晚安。',
+  'greeting.quote': {
+    en: 'In case I don\u2019t see ya... good afternoon, good evening, and good night.',
+    zh: '假如很难再次遇见你……祝你早安、午安、晚安。',
   },
   'greeting.source': { en: '\u2014 The Truman Show', zh: '\u2014\u2014《楚门的世界》' },
 
@@ -32,9 +31,9 @@ export const translations: Record<string, Record<Lang, string>> = {
   'bar.drink.pm': { en: 'Product Marketing', zh: '产品营销' },
   'bar.drink.ds': { en: 'Data Science', zh: '数据科学' },
   'bar.drink.visual': { en: 'Visual Design', zh: '视觉设计' },
-  'bar.drink.pm.desc': { en: 'Product Marketing — smooth, persuasive, and dangerously drinkable.', zh: '产品营销 — 丝滑、有说服力、让人一杯接一杯停不下来。' },
-  'bar.drink.ds.desc': { en: 'Data Science — 95% confidence this one slaps.', zh: '数据科学 — 有 95% 的置信度认为这杯超好喝。' },
-  'bar.drink.visual.desc': { en: 'Visual Design — looks so good you almost forget to drink it.', zh: '视觉设计 — 好看到让你差点忘了喝。' },
+  'bar.drink.pm.desc': { en: 'Nailed the positioning. Then the product pivoted.', zh: '找到一个完美的产品定位！然后产品转型了！' },
+  'bar.drink.ds.desc': { en: 'Presented findings to leadership. They went with their gut.', zh: '给上司汇报了分析结果。完事儿他们相信他们的"第六感"。' },
+  'bar.drink.visual.desc': { en: 'After spending 3 hours adjusting a gradient. The client said, "looks the same." It was not.', zh: '花三小时调了个渐变。客户说"看起来一样。"那能一样吗？' },
 
   // --- Globe pin titles ---
   'pin.jiaozhou.title': { en: 'Where it all began', zh: '一切开始的地方' },
