@@ -82,7 +82,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   .item-desc {
     display: block;
     font-size: var(--fs-sm);
-    font-style: italic;
     color: var(--text-light);
     line-height: 1.5;
     margin-top: 0.15rem;
@@ -93,10 +92,5 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   .item--ds .item-title { color: #5a7a94; }
   .item--visual .item-title { color: #5a8a6e; }
   .item--journey .item-title { color: #7FB6DD; }
-
-  :global(html[data-lang="zh"]) .item-desc {
-    font-family: var(--font-zh-body);
-    font-style: normal;
-  }
 
 </style>
