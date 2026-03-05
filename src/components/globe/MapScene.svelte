@@ -36,6 +36,9 @@
 
   let showProvinces = $derived(currentScale >= PROVINCE_ZOOM_THRESHOLD);
 
+  // Pin radius: small (3px) at zoom 1, grows to 5px at zoom 3+
+  let pinRadius = $derived((2 + Math.min(currentScale, 3)) / currentScale);
+
   // Slider value mapped logarithmically for smoother feel
   let sliderValue = $derived(Math.log(currentScale) / Math.log(MAX_ZOOM) * 100);
 
@@ -140,10 +143,10 @@
         <circle
           cx={pin.x}
           cy={pin.y}
-          r={5 / currentScale}
+          r={pinRadius}
           fill="none"
           stroke={pin.color}
-          stroke-width={1.5 / currentScale}
+          stroke-width={0.8 / currentScale}
           class="pin-ripple"
           style="animation-delay: {(i * 0.4) % 2.5}s"
         />
@@ -152,7 +155,7 @@
         <circle
           cx={pin.x}
           cy={pin.y}
-          r={5 / currentScale}
+          r={pinRadius}
           fill={pin.color}
           class="pin-marker"
           onclick={() => (selectedPin = pin)}
