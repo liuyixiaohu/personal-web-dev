@@ -1088,7 +1088,6 @@
 
   .section-label {
     font-size: var(--fs-xs);
-    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: var(--text-light);
