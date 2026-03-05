@@ -38,22 +38,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'bar.drink.visual.desc': { en: 'Visual Design — looks so good you almost forget to drink it.', zh: '视觉设计 — 好看到让你差点忘了喝。' },
 
   // --- Section headers ---
-  'bar.section.skills': { en: 'Skills & Tools', zh: '技能与工具' },
   'bar.section.notes': { en: 'Notes from the bar', zh: '吧台便条' },
-
-  // --- Skill categories ---
-  'bar.bottle.strategy':      { en: 'Strategy',     zh: '策略' },
-  'bar.bottle.strategy.desc': { en: 'CRM platforms and go-to-market tools', zh: 'CRM平台与市场推广工具' },
-  'bar.bottle.analytics':     { en: 'Analytics',    zh: '分析' },
-  'bar.bottle.analytics.desc':{ en: 'Measurement, tracking, and experimentation', zh: '数据度量、追踪与实验' },
-  'bar.bottle.coding':        { en: 'Coding',       zh: '编程' },
-  'bar.bottle.coding.desc':   { en: 'Languages and frameworks for data work', zh: '数据工作的语言和框架' },
-  'bar.bottle.ml':            { en: 'ML & Viz',     zh: '机器学习' },
-  'bar.bottle.ml.desc':       { en: 'Machine learning and data visualization', zh: '机器学习与数据可视化' },
-  'bar.bottle.design':        { en: 'Design',       zh: '设计' },
-  'bar.bottle.design.desc':   { en: 'UI/UX design and creative tools', zh: 'UI/UX设计与创意工具' },
-  'bar.bottle.3d':            { en: '3D & Web',     zh: '3D & 网页' },
-  'bar.bottle.3d.desc':       { en: '3D modeling and interactive web graphics', zh: '3D建模与交互式网页图形' },
 
   // --- Bartender notes (random, one per visit) ---
   'bar.note.1': {
