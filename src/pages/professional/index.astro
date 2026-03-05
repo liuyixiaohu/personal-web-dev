@@ -30,43 +30,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </a>
     </section>
 
-    <!-- Skills & Tools -->
-    <section class="section">
-      <h2 class="section-label" data-i18n="bar.section.skills">Skills &amp; Tools</h2>
-      <div class="skills-grid">
-        <div class="skill">
-          <span class="skill-name" data-i18n="bar.bottle.strategy">Strategy</span>
-          <span class="skill-desc" data-i18n="bar.bottle.strategy.desc">CRM platforms and go-to-market tools</span>
-          <span class="skill-tools">Salesforce · HubSpot</span>
-        </div>
-        <div class="skill">
-          <span class="skill-name" data-i18n="bar.bottle.analytics">Analytics</span>
-          <span class="skill-desc" data-i18n="bar.bottle.analytics.desc">Measurement, tracking, and experimentation</span>
-          <span class="skill-tools">GA4 · Optimizely</span>
-        </div>
-        <div class="skill">
-          <span class="skill-name" data-i18n="bar.bottle.coding">Coding</span>
-          <span class="skill-desc" data-i18n="bar.bottle.coding.desc">Languages and frameworks for data work</span>
-          <span class="skill-tools">Python · SQL</span>
-        </div>
-        <div class="skill">
-          <span class="skill-name" data-i18n="bar.bottle.ml">ML &amp; Viz</span>
-          <span class="skill-desc" data-i18n="bar.bottle.ml.desc">Machine learning and data visualization</span>
-          <span class="skill-tools">Tableau · Jupyter</span>
-        </div>
-        <div class="skill">
-          <span class="skill-name" data-i18n="bar.bottle.design">Design</span>
-          <span class="skill-desc" data-i18n="bar.bottle.design.desc">UI/UX design and creative tools</span>
-          <span class="skill-tools">Figma · Adobe CC</span>
-        </div>
-        <div class="skill">
-          <span class="skill-name" data-i18n="bar.bottle.3d">3D &amp; Web</span>
-          <span class="skill-desc" data-i18n="bar.bottle.3d.desc">3D modeling and interactive web graphics</span>
-          <span class="skill-tools">Blender · Three.js</span>
-        </div>
-      </div>
-    </section>
-
     <!-- Notes -->
     <section class="section section--notes">
       <h2 class="section-label" data-i18n="bar.section.notes">Notes from the bar</h2>
@@ -153,38 +116,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   .item--visual .item-title { color: #5a8a6e; }
   .item--journey .item-title { color: #7FB6DD; }
 
-  /* --- Skills grid --- */
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem 1.5rem;
-  }
-
-  .skill {
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
-  }
-
-  .skill-name {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text);
-  }
-
-  .skill-desc {
-    font-size: var(--fs-sm);
-    color: var(--text-light);
-    line-height: 1.4;
-  }
-
-  .skill-tools {
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    opacity: 0.55;
-    letter-spacing: 0.01em;
-  }
-
   /* --- Notes --- */
   .section--notes {
     margin-top: 3rem;
@@ -226,11 +157,4 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     font-style: normal;
   }
 
-  /* --- Mobile --- */
-  @media (max-width: 480px) {
-    .skills-grid {
-      grid-template-columns: 1fr;
-      gap: 0.8rem;
-    }
-  }
 </style>
