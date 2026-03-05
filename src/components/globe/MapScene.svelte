@@ -174,8 +174,6 @@
   .map-container {
     position: relative;
     width: 100%;
-    max-width: 960px;
-    margin: 0 auto;
   }
 
   .world-map {
