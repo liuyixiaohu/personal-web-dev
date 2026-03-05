@@ -36,8 +36,8 @@
 
   let showProvinces = $derived(currentScale >= PROVINCE_ZOOM_THRESHOLD);
 
-  // Pin radius: small (3px) at zoom 1, grows to 5px at zoom 3+
-  let pinRadius = $derived((2 + Math.min(currentScale, 3)) / currentScale);
+  // Pin radius: small (1.5px) at zoom 1, grows to 2.5px at zoom 3+
+  let pinRadius = $derived((1 + Math.min(currentScale, 3) * 0.5) / currentScale);
 
   // Slider value mapped logarithmically for smoother feel
   let sliderValue = $derived(Math.log(currentScale) / Math.log(MAX_ZOOM) * 100);

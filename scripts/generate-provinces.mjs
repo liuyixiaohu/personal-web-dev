@@ -21,16 +21,23 @@ async function main() {
 
   console.log(`Features: ${geojson.features.length}`);
 
-  // Strip heavy properties — keep only what we need
+  // Only keep US and China provinces/states
+  const COUNTRIES = ['US', 'CN'];
+  const filtered = geojson.features.filter((f) => {
+    const code = f.properties.iso_a2 || f.properties.adm0_a3?.slice(0, 2);
+    return COUNTRIES.includes(code);
+  });
+
+  console.log(`Filtered to US + CN: ${filtered.length} features`);
+
   const stripped = {
     type: 'FeatureCollection',
-    features: geojson.features.map((f) => ({
+    features: filtered.map((f) => ({
       type: 'Feature',
       geometry: f.geometry,
       properties: {
         name: f.properties.name,
-        admin: f.properties.admin, // country name
-        iso_a2: f.properties.iso_a2, // country code
+        iso_a2: f.properties.iso_a2,
       },
     })),
   };
