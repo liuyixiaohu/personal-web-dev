@@ -6,16 +6,15 @@ export type Lang = 'en' | 'zh';
 
 export const translations: Record<string, Record<Lang, string>> = {
   // --- Homepage ---
-  'home.intro': { en: 'This is Kun. Before knowing more about me, I wanna say:', zh: '我是昆。在了解更多之前，我想说：' },
   'home.lastUpdated': { en: 'Last updated', zh: '最近更新' },
   'home.professional': { en: 'Enter Chaguan', zh: '进入茶馆' },
   'home.lifeJourney': { en: 'Life Journey', zh: '人生旅途' },
 
   // --- Greeting ---
-  'greeting.lead': { en: 'Good morning,', zh: '早上好哇,' },
+  'greeting.lead': { en: 'In case I don\u2019t see ya...', zh: '假如很难再次遇见你……' },
   'greeting.body': {
-    en: 'and in case I don\u2019t see you, good afternoon, good evening, and good night!',
-    zh: '假如很难再次遇见你，祝你早安、午安、晚安。',
+    en: 'good afternoon, good evening, and good night.',
+    zh: '祝你早安、午安、晚安。',
   },
   'greeting.source': { en: '\u2014 The Truman Show', zh: '\u2014\u2014《楚门的世界》' },
 
@@ -27,29 +26,10 @@ export const translations: Record<string, Record<Lang, string>> = {
   'professional.productMarketing': { en: 'Product Marketing', zh: '产品营销' },
   'professional.dataScience': { en: 'Data Science', zh: '数据科学' },
   'professional.visualDesign': { en: 'Visual Design', zh: '视觉设计' },
-  'professional.quantInsights': { en: 'Quant Insights & Measurement', zh: '量化洞察与评估' },
-  'professional.brandNarrative': { en: 'Brand & Narrative Design', zh: '品牌与叙事设计' },
-  'professional.informationDesign': { en: 'Information Design', zh: '信息设计' },
-
-  // --- Professional page subtitles ---
-  'professional.quantSubtitle': {
-    en: 'Product Marketing \u00D7 Data Science',
-    zh: '产品营销 \u00D7 数据科学',
-  },
-  'professional.brandSubtitle': {
-    en: 'Product Marketing \u00D7 Visual Design',
-    zh: '产品营销 \u00D7 视觉设计',
-  },
-  'professional.infoSubtitle': {
-    en: 'Data Science \u00D7 Visual Design',
-    zh: '数据科学 \u00D7 视觉设计',
-  },
-
   // --- Common ---
   'common.comingSoon': { en: 'Content coming soon...', zh: '内容即将上线…' },
 
-  // --- Bartender dialog ---
-  'bar.greeting': { en: 'Let me know where you are — I might have something different to say.', zh: '让我知道你在哪，也许我会告诉你一些不一样的。' },
+  // --- Professional page items ---
   'bar.drink.pm': { en: 'Product Marketing', zh: '产品营销' },
   'bar.drink.ds': { en: 'Data Science', zh: '数据科学' },
   'bar.drink.visual': { en: 'Visual Design', zh: '视觉设计' },
@@ -57,31 +37,11 @@ export const translations: Record<string, Record<Lang, string>> = {
   'bar.drink.ds.desc': { en: 'Data Science — 95% confidence this one slaps.', zh: '数据科学 — 有 95% 的置信度认为这杯超好喝。' },
   'bar.drink.visual.desc': { en: 'Visual Design — looks so good you almost forget to drink it.', zh: '视觉设计 — 好看到让你差点忘了喝。' },
 
-  // --- Bartender mixing dialog ---
-  'bar.select.prompt': { en: 'Pick another drink to mix! Or click again for this one.', zh: '再选一杯来调配吧！或者再次点击同一杯。' },
-  'bar.mix.pm_ds': { en: 'Quant Insights', zh: '量化洞察' },
-  'bar.mix.pm_ds.sub': { en: 'PM × DS', zh: 'PM × DS' },
-  'bar.mix.pm_ds.desc': { en: 'PM + DS — a cocktail of strategy and numbers!', zh: 'PM + DS — 一杯策略与数据的鸡尾酒！' },
-  'bar.mix.pm_visual': { en: 'Brand Narrative', zh: '品牌叙事' },
-  'bar.mix.pm_visual.sub': { en: 'PM × Visual', zh: 'PM × Visual' },
-  'bar.mix.pm_visual.desc': { en: 'PM + Visual — where stories meet aesthetics!', zh: 'PM + Visual — 故事与美学的邂逅！' },
-  'bar.mix.ds_visual': { en: 'Information Design', zh: '信息设计' },
-  'bar.mix.ds_visual.sub': { en: 'DS × Visual', zh: 'DS × Visual' },
-  'bar.mix.ds_visual.desc': { en: 'DS + Visual — data, but make it beautiful!', zh: 'DS + Visual — 让数据变得好看！' },
-
   // --- Section headers ---
-  'bar.section.blends': { en: 'Blends', zh: '混合调配' },
   'bar.section.skills': { en: 'Skills & Tools', zh: '技能与工具' },
   'bar.section.notes': { en: 'Notes from the bar', zh: '吧台便条' },
 
-  // --- Bar mix card ---
-  'bar.card.cta': { en: 'Taste this blend \u2192', zh: '品尝这杯特调 \u2192' },
-  'bar.card.dismiss': { en: 'Maybe later', zh: '下次再说' },
-
-  // --- Bar shelf ---
-  'bar.shelf.title': { en: 'Behind the bar', zh: '吧台后面' },
-
-  // --- Bottle skill categories (shelf labels + popup descriptions) ---
+  // --- Skill categories ---
   'bar.bottle.strategy':      { en: 'Strategy',     zh: '策略' },
   'bar.bottle.strategy.desc': { en: 'CRM platforms and go-to-market tools', zh: 'CRM平台与市场推广工具' },
   'bar.bottle.analytics':     { en: 'Analytics',    zh: '分析' },
