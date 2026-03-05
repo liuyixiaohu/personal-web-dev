@@ -7,7 +7,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <h1 class="sr-only">Kun Li — Product Marketing, Data Science &amp; Design</h1>
     <div class="home-content">
       <div class="home-tagline">
-        <p class="greeting-quote" data-i18n="greeting.quote">In case I don't see ya... good afternoon, good evening, and good night.</p>
+        <p class="greeting-quote">
+          <span class="greeting-lead" data-i18n="greeting.lead">In case I don't see ya...</span>
+          <span class="greeting-body" data-i18n="greeting.body">good afternoon, good evening, and good night.</span>
+        </p>
         <div class="greeting-source-line">
           <p class="greeting-source" data-i18n="greeting.source">— The Truman Show</p>
           <span class="secret-heart" id="secret-heart">♥</span>
@@ -49,6 +52,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     font-weight: 500;
     color: var(--text);
     line-height: 1.7;
+  }
+
+  .greeting-lead,
+  .greeting-body {
+    display: block;
   }
 
   .greeting-source-line {

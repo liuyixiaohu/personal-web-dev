@@ -10,9 +10,13 @@ export const translations: Record<string, Record<Lang, string>> = {
   'home.lifeJourney': { en: 'Life Journey', zh: '人生旅途' },
 
   // --- Greeting ---
-  'greeting.quote': {
-    en: 'In case I don\u2019t see ya... good afternoon, good evening, and good night.',
-    zh: '假如很难再次遇见你……祝你早安、午安、晚安。',
+  'greeting.lead': {
+    en: 'In case I don\u2019t see ya...',
+    zh: '假如很难再次遇见你……',
+  },
+  'greeting.body': {
+    en: 'good afternoon, good evening, and good night.',
+    zh: '祝你早安、午安、晚安。',
   },
   'greeting.source': { en: '\u2014 The Truman Show', zh: '\u2014\u2014《楚门的世界》' },
 
