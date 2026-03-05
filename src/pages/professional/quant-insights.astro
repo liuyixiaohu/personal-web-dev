@@ -3,20 +3,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Quant Insights & Measurement — Kun Li" description="Kun Li's quantitative insights — the intersection of Product Marketing and Data Science.">
-  <main class="page">
-    <div class="container">
-      <a href="/professional" class="back-link" data-i18n="nav.backToProfessional">&larr; Back to Professional</a>
-      <h1 data-i18n="professional.quantInsights">Quant Insights & Measurement</h1>
-      <p class="subtitle" data-i18n="professional.quantSubtitle">Product Marketing &times; Data Science</p>
-      <p class="placeholder" data-i18n="common.comingSoon">Content coming soon...</p>
-    </div>
+  <main class="page grid-page">
+    <a href="/professional" class="back-link" data-i18n="nav.backToProfessional">&larr; Back to Professional</a>
+    <h1 data-i18n="professional.quantInsights">Quant Insights & Measurement</h1>
+    <p class="subtitle" data-i18n="professional.quantSubtitle">Product Marketing &times; Data Science</p>
+    <p class="placeholder" data-i18n="common.comingSoon">Content coming soon...</p>
   </main>
 </BaseLayout>
 
 <style>
   .page {
-    min-height: 100dvh;
-    padding: var(--space-xl) 0;
+    padding-block: var(--space-xl) 4rem;
   }
 
   .back-link {

@@ -3,19 +3,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Product Marketing — Kun Li" description="Kun Li's product marketing work — strategy, go-to-market, and growth.">
-  <main class="page">
-    <div class="container">
-      <a href="/professional" class="back-link" data-i18n="nav.backToProfessional">&larr; Back to Professional</a>
-      <h1 data-i18n="professional.productMarketing">Product Marketing</h1>
-      <p class="placeholder" data-i18n="common.comingSoon">Content coming soon...</p>
-    </div>
+  <main class="page grid-page">
+    <a href="/professional" class="back-link" data-i18n="nav.backToProfessional">&larr; Back to Professional</a>
+    <h1 data-i18n="professional.productMarketing">Product Marketing</h1>
+    <p class="placeholder" data-i18n="common.comingSoon">Content coming soon...</p>
   </main>
 </BaseLayout>
 
 <style>
   .page {
-    min-height: 100dvh;
-    padding: var(--space-xl) 0;
+    padding-block: var(--space-xl) 4rem;
   }
 
   .back-link {
