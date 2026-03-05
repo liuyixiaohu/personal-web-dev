@@ -7,12 +7,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <h1 class="sr-only">Kun Li — Product Marketing, Data Science &amp; Design</h1>
     <div class="home-content">
       <div class="home-tagline">
-        <div class="greeting-line">
-          <p class="greeting-lead" data-i18n="greeting.lead">In case I don't see ya...</p>
+        <p class="greeting-quote" data-i18n="greeting.quote">In case I don't see ya... good afternoon, good evening, and good night.</p>
+        <div class="greeting-source-line">
+          <p class="greeting-source" data-i18n="greeting.source">— The Truman Show</p>
           <span class="secret-heart" id="secret-heart">♥</span>
         </div>
-        <p class="greeting-body" data-i18n="greeting.body">good afternoon, good evening, and good night.</p>
-        <p class="greeting-source" data-i18n="greeting.source">— The Truman Show</p>
       </div>
     </div>
 
@@ -45,32 +44,25 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     margin-bottom: clamp(1rem, 2vw, 2rem);
   }
 
-  .greeting-line {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 0.35em;
-    margin-bottom: var(--space-sm);
-  }
-
-  .greeting-lead {
-    font-size: var(--fs-lg);
-    font-weight: 500;
-    color: var(--text);
-  }
-
-  .greeting-body {
+  .greeting-quote {
     font-size: var(--fs-lg);
     font-weight: 500;
     color: var(--text);
     line-height: 1.7;
   }
 
+  .greeting-source-line {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.35em;
+    margin-top: var(--space-xs);
+  }
+
   .greeting-source {
     font-size: var(--fs-sm);
     color: var(--text-light);
     opacity: 0.5;
-    margin-top: var(--space-xs);
   }
 
   .home-choices {
