@@ -6,7 +6,6 @@ export type Lang = 'en' | 'zh';
 
 export const translations: Record<string, Record<Lang, string>> = {
   // --- Homepage ---
-  'home.lastUpdated': { en: 'Last updated', zh: '最近更新' },
   'home.professional': { en: 'Enter Chaguan', zh: '进入茶馆' },
   'home.lifeJourney': { en: 'Life Journey', zh: '人生旅途' },
 
