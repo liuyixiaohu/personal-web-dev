@@ -30,7 +30,9 @@ export function setLang(lang: Lang): void {
 
 /** Toggle between 'en' and 'zh' */
 export function toggleLang(): void {
-  setLang(currentLang === 'en' ? 'zh' : 'en');
+  const newLang = currentLang === 'en' ? 'zh' : 'en';
+  setLang(newLang);
+  (window as any).dataLayer?.push({ event: 'language_toggle', language: newLang });
 }
 
 /** Initialize language from localStorage (call once on mount) */

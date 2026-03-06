@@ -168,8 +168,8 @@
           r={pinRadius}
           fill={pin.color}
           class="pin-marker"
-          onclick={() => (selectedPin = pin)}
-          onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') selectedPin = pin; }}
+          onclick={() => { selectedPin = pin; (window as any).dataLayer?.push({ event: 'map_pin_click', pin_city: pin.city, pin_id: pin.id }); }}
+          onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { selectedPin = pin; (window as any).dataLayer?.push({ event: 'map_pin_click', pin_city: pin.city, pin_id: pin.id }); } }}
           role="button"
           tabindex="0"
           aria-label={pin.city}

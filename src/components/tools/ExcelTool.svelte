@@ -102,8 +102,10 @@
     if (hash === PASSWORD_HASH) {
       authenticated = true;
       sessionStorage.setItem('excel-tool-auth', 'true');
+      (window as any).dataLayer?.push({ event: 'excel_tool_auth', success: true });
     } else {
       passwordError = '密码不对哦';
+      (window as any).dataLayer?.push({ event: 'excel_tool_auth', success: false });
     }
   }
 
@@ -757,6 +759,7 @@
       URL.revokeObjectURL(url);
 
       statusMessage = `✓ 已更新 ${result.month}月数据，下载中…`;
+      (window as any).dataLayer?.push({ event: 'excel_tool_process', task: selectedTask, month: result.month, year: result.year });
     } catch (err) {
       statusMessage = `处理失败: ${err instanceof Error ? err.message : '未知错误'}`;
     }
