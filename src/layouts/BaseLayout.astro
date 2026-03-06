@@ -119,6 +119,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         const freshHeart = document.getElementById('secret-heart')!;
         freshHeart.addEventListener('click', () => {
           freshHeart.classList.add('revealed');
+          window.dataLayer?.push({ event: 'easter_egg_click' });
           setTimeout(() => {
             window.location.href = '/tools/excel';
           }, 600);
