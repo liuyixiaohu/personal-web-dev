@@ -85,9 +85,7 @@
   });
 
   onMount(async () => {
-    const res = await fetch(
-      'https://unpkg.com/world-atlas@2/countries-110m.json',
-    );
+    const res = await fetch('/data/countries-110m.json');
     const world = await res.json();
     const countries = (feature(world, world.objects.countries) as any).features;
     countryPaths = countries
@@ -164,7 +162,6 @@
           style="animation-delay: {(i * 0.4) % 2.5}s"
         />
 
-        <!-- svelte-ignore a11y_click_events_have_key_events -->
         <circle
           cx={pin.x}
           cy={pin.y}
@@ -172,8 +169,10 @@
           fill={pin.color}
           class="pin-marker"
           onclick={() => (selectedPin = pin)}
+          onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') selectedPin = pin; }}
           role="button"
           tabindex="0"
+          aria-label={pin.city}
         >
           <title>{pin.city}</title>
         </circle>
