@@ -43,6 +43,16 @@
   // force re-render on language change
   let _tick = $state(0);
 
+  // --- Filter & Sort State ---
+  let selectedLocations = $state<Set<string>>(new Set());
+  let selectedHosts = $state<Set<string>>(new Set());
+  let selectedPrice = $state<string>('all');
+  let sortBy = $state<string>('time-asc');
+
+  // Track which filter sections are expanded
+  let locationOpen = $state(false);
+  let hostOpen = $state(false);
+
   // --- Language ---
   initLang();
   lang = getLang();
@@ -123,13 +133,78 @@
     if (event.location_type === 'online') return t('events.online');
     return event.location || '';
   }
+
+  // --- Derived filter options ---
+  let allLocations = $derived(
+    [...new Set(events.map(e => e.location).filter(l => l && l.trim()))].sort()
+  );
+
+  let allHosts = $derived(
+    [...new Set(events.flatMap(e => e.host_names).filter(h => h && h.trim()))].sort()
+  );
+
+  // --- Filtering & Sorting ---
+  function matchesPrice(event: LumaEvent): boolean {
+    if (selectedPrice === 'all') return true;
+    if (selectedPrice === 'free') return event.is_free;
+    if (selectedPrice === 'approval') return !event.is_free && event.price_cents == null;
+    if (selectedPrice === 'paid') return !event.is_free && event.price_cents != null;
+    return true;
+  }
+
+  let filteredEvents = $derived.by(() => {
+    // access _tick so we re-derive on language change
+    void _tick;
+
+    let result = events.filter(e => {
+      if (selectedLocations.size > 0 && !selectedLocations.has(e.location)) return false;
+      if (selectedHosts.size > 0 && !e.host_names.some(h => selectedHosts.has(h))) return false;
+      if (!matchesPrice(e)) return false;
+      return true;
+    });
+
+    result.sort((a, b) => {
+      switch (sortBy) {
+        case 'alpha-asc': return a.name.localeCompare(b.name);
+        case 'alpha-desc': return b.name.localeCompare(a.name);
+        case 'time-asc': return new Date(a.start_at).getTime() - new Date(b.start_at).getTime();
+        case 'time-desc': return new Date(b.start_at).getTime() - new Date(a.start_at).getTime();
+        case 'guests-asc': return a.guest_count - b.guest_count;
+        case 'guests-desc': return b.guest_count - a.guest_count;
+        default: return 0;
+      }
+    });
+
+    return result;
+  });
+
+  let hasActiveFilters = $derived(
+    selectedLocations.size > 0 || selectedHosts.size > 0 || selectedPrice !== 'all'
+  );
+
+  function toggleLocation(loc: string) {
+    const next = new Set(selectedLocations);
+    if (next.has(loc)) next.delete(loc); else next.add(loc);
+    selectedLocations = next;
+  }
+
+  function toggleHost(host: string) {
+    const next = new Set(selectedHosts);
+    if (next.has(host)) next.delete(host); else next.add(host);
+    selectedHosts = next;
+  }
+
+  function clearFilters() {
+    selectedLocations = new Set();
+    selectedHosts = new Set();
+    selectedPrice = 'all';
+  }
 </script>
 
 {#key _tick}
 <div class="event-list">
   <header class="event-header">
     <h2 class="event-title">{t('events.title')}</h2>
-    <p class="event-subtitle">{t('events.subtitle')}</p>
   </header>
 
   {#if loading}
@@ -148,9 +223,97 @@
 
   {:else}
     <div class="event-meta-bar">
-      <span class="event-count">{events.length} {t('events.eventCount')}</span>
+      <span class="event-count">{filteredEvents.length} {t('events.eventCount')}</span>
       {#if updatedAt}
         <span class="event-updated">{t('events.lastUpdated')}: {formatUpdatedAt(updatedAt)}</span>
+      {/if}
+    </div>
+
+    <!-- Filter & Sort Controls -->
+    <div class="filter-controls">
+      <!-- Price filter (single-select pills) -->
+      <div class="filter-row">
+        <span class="filter-label">{t('events.filterPrice')}</span>
+        <div class="filter-pills">
+          {#each ['all', 'free', 'approval', 'paid'] as priceOpt}
+            <button
+              class="pill"
+              class:pill--active={selectedPrice === priceOpt}
+              onclick={() => selectedPrice = priceOpt}
+            >
+              {priceOpt === 'all' ? t('events.filterAll') :
+               priceOpt === 'free' ? t('events.free') :
+               priceOpt === 'approval' ? t('events.approval') :
+               t('events.filterPaid')}
+            </button>
+          {/each}
+        </div>
+      </div>
+
+      <!-- Location filter (multi-select collapsible) -->
+      {#if allLocations.length > 0}
+        <div class="filter-row">
+          <button class="filter-label filter-label--toggle" onclick={() => locationOpen = !locationOpen}>
+            {t('events.filterLocation')}
+            <span class="filter-chevron" class:filter-chevron--open={locationOpen}>▸</span>
+            {#if selectedLocations.size > 0}
+              <span class="filter-badge">{selectedLocations.size}</span>
+            {/if}
+          </button>
+          {#if locationOpen}
+            <div class="filter-pills filter-pills--wrap">
+              {#each allLocations as loc}
+                <button
+                  class="pill"
+                  class:pill--active={selectedLocations.has(loc)}
+                  onclick={() => toggleLocation(loc)}
+                >{loc}</button>
+              {/each}
+            </div>
+          {/if}
+        </div>
+      {/if}
+
+      <!-- Host filter (multi-select collapsible) -->
+      {#if allHosts.length > 0}
+        <div class="filter-row">
+          <button class="filter-label filter-label--toggle" onclick={() => hostOpen = !hostOpen}>
+            {t('events.filterHost')}
+            <span class="filter-chevron" class:filter-chevron--open={hostOpen}>▸</span>
+            {#if selectedHosts.size > 0}
+              <span class="filter-badge">{selectedHosts.size}</span>
+            {/if}
+          </button>
+          {#if hostOpen}
+            <div class="filter-pills filter-pills--wrap">
+              {#each allHosts as host}
+                <button
+                  class="pill"
+                  class:pill--active={selectedHosts.has(host)}
+                  onclick={() => toggleHost(host)}
+                >{host}</button>
+              {/each}
+            </div>
+          {/if}
+        </div>
+      {/if}
+
+      <!-- Sort -->
+      <div class="filter-row">
+        <span class="filter-label">{t('events.sortBy')}</span>
+        <select class="sort-select" bind:value={sortBy}>
+          <option value="time-asc">{t('events.sortTimeAsc')}</option>
+          <option value="time-desc">{t('events.sortTimeDesc')}</option>
+          <option value="alpha-asc">{t('events.sortAlphaAsc')}</option>
+          <option value="alpha-desc">{t('events.sortAlphaDesc')}</option>
+          <option value="guests-desc">{t('events.sortGuestsDesc')}</option>
+          <option value="guests-asc">{t('events.sortGuestsAsc')}</option>
+        </select>
+      </div>
+
+      <!-- Clear filters -->
+      {#if hasActiveFilters}
+        <button class="clear-filters" onclick={clearFilters}>{t('events.clearFilters')}</button>
       {/if}
     </div>
 
@@ -158,8 +321,12 @@
       <p class="event-stale">{t('events.staleWarning')}</p>
     {/if}
 
+    {#if filteredEvents.length === 0}
+      <p class="event-status">{t('events.noMatch')}</p>
+    {/if}
+
     <ul class="event-cards">
-      {#each events as event (event.api_id)}
+      {#each filteredEvents as event (event.api_id)}
         <li class="event-card">
           <div class="event-card-header">
             <a href={event.url} target="_blank" rel="noopener noreferrer" class="event-name">
@@ -208,12 +375,6 @@
     margin-bottom: var(--space-xs);
   }
 
-  .event-subtitle {
-    font-size: var(--fs-sm);
-    color: var(--text-light);
-    font-style: italic;
-  }
-
   .event-meta-bar {
     display: flex;
     justify-content: space-between;
@@ -252,6 +413,122 @@
     color: var(--text-light);
     opacity: 0.5;
     margin-top: var(--space-xs);
+  }
+
+  /* --- Filter & Sort Controls --- */
+  .filter-controls {
+    margin-bottom: var(--space-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+  }
+
+  .filter-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-label {
+    color: var(--text-light);
+    font-size: 0.75rem;
+    min-width: 3rem;
+    flex-shrink: 0;
+  }
+
+  .filter-label--toggle {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: inherit;
+  }
+
+  .filter-label--toggle:hover {
+    opacity: 0.7;
+  }
+
+  .filter-chevron {
+    font-size: 0.65rem;
+    transition: transform 0.15s ease;
+    display: inline-block;
+  }
+
+  .filter-chevron--open {
+    transform: rotate(90deg);
+  }
+
+  .filter-badge {
+    font-size: 0.65rem;
+    background: rgba(0, 0, 0, 0.06);
+    color: var(--text-light);
+    padding: 0.05em 0.4em;
+    border-radius: 8px;
+    min-width: 1em;
+    text-align: center;
+  }
+
+  .filter-pills {
+    display: flex;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+  }
+
+  .pill {
+    font-family: inherit;
+    font-size: 0.72rem;
+    padding: 0.2em 0.55em;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    background: transparent;
+    color: var(--text-light);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+    line-height: 1.4;
+  }
+
+  .pill:hover {
+    border-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .pill--active {
+    background: rgba(0, 0, 0, 0.06);
+    color: var(--text);
+    border-color: rgba(0, 0, 0, 0.18);
+  }
+
+  .sort-select {
+    font-family: inherit;
+    font-size: 0.75rem;
+    padding: 0.2em 0.4em;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    background: transparent;
+    color: var(--text-light);
+    cursor: pointer;
+  }
+
+  .clear-filters {
+    font-family: inherit;
+    font-size: 0.7rem;
+    color: var(--text-light);
+    opacity: 0.6;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
+    align-self: flex-start;
+  }
+
+  .clear-filters:hover {
+    opacity: 1;
   }
 
   .event-stale {
@@ -333,9 +610,9 @@
     font-family: var(--font-zh);
   }
 
-  :global(html[data-lang="zh"]) .event-subtitle,
   :global(html[data-lang="zh"]) .event-name,
-  :global(html[data-lang="zh"]) .event-card-details {
+  :global(html[data-lang="zh"]) .event-card-details,
+  :global(html[data-lang="zh"]) .filter-controls {
     font-family: var(--font-zh);
     font-style: normal;
   }
