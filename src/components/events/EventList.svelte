@@ -55,6 +55,11 @@
   let sortBy = $state<string>(loadPref('events.sort', 'time-asc'));
   let searchQuery = $state<string>('');
 
+  // --- Location collapse ---
+  let locationExpanded = $state(false);
+  let locationOverflows = $state(false);
+  let locationPillsEl: HTMLElement | undefined = $state(undefined);
+
   // --- Calendar (read-only) ---
   let filterHeight = $state(0);
 
@@ -74,6 +79,13 @@
   $effect(() => { localStorage.setItem('events.price', JSON.stringify(selectedPrice)); });
   $effect(() => { localStorage.setItem('events.sort', JSON.stringify(sortBy)); });
   $effect(() => { localStorage.setItem('events.locations', JSON.stringify([...selectedLocations])); });
+
+  // Detect if collapsed location pills overflow
+  $effect(() => {
+    if (locationPillsEl && !locationExpanded) {
+      locationOverflows = locationPillsEl.scrollHeight > locationPillsEl.clientHeight;
+    }
+  });
 
 
   // --- Data fetching ---
@@ -143,7 +155,8 @@
   }
 
   let allLocations = $derived(
-    [...new Set(events.map(e => stripState(e.location)).filter(l => l && l.trim()))].sort()
+    [...new Set(events.map(e => stripState(e.location)).filter(l => l && l.trim()))]
+      .sort((a, b) => locationCount(b) - locationCount(a))
   );
 
   // --- Calendar grid data ---
@@ -403,18 +416,28 @@
           </div>
         </div>
 
-        <!-- Location filter (multi-select, always visible) -->
+        <!-- Location filter (multi-select, collapsible) -->
         {#if allLocations.length > 0}
           <div class="filter-row">
             <span class="filter-label">{t('events.filterLocation')}</span>
-            <div class="filter-pills filter-pills--wrap">
-              {#each allLocations as loc}
-                <button
-                  class="pill"
-                  class:pill--active={selectedLocations.has(loc)}
-                  onclick={() => toggleLocation(loc)}
-                >{loc} <span class="pill-count">({locationCount(loc)})</span></button>
-              {/each}
+            <div class="location-pills-wrap">
+              <div class="filter-pills filter-pills--wrap"
+                   class:filter-pills--collapsed={!locationExpanded}
+                   bind:this={locationPillsEl}>
+                {#each allLocations as loc}
+                  <button
+                    class="pill"
+                    class:pill--active={selectedLocations.has(loc)}
+                    onclick={() => toggleLocation(loc)}
+                  >{loc} <span class="pill-count">({locationCount(loc)})</span></button>
+                {/each}
+              </div>
+              {#if locationOverflows || locationExpanded}
+                <button class="show-more-btn"
+                        onclick={() => locationExpanded = !locationExpanded}>
+                  {locationExpanded ? t('events.showLess') : t('events.showMore')}
+                </button>
+              {/if}
             </div>
           </div>
         {/if}
@@ -727,6 +750,32 @@
 
   .pill-count {
     font-size: var(--fs-xs);
+  }
+
+  .location-pills-wrap {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .filter-pills--collapsed {
+    max-height: 3.6rem;
+    overflow: hidden;
+  }
+
+  .show-more-btn {
+    font-family: inherit;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-top: 0.2rem;
+  }
+
+  .show-more-btn:hover {
+    color: var(--text);
   }
 
   /* --- Calendar grid --- */
