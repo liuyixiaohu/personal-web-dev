@@ -126,12 +126,16 @@
 
   function locationDisplay(event: LumaEvent): string {
     if (event.location_type === 'online') return t('events.online');
-    return event.location || '';
+    return stripState(event.location || '');
   }
 
   // --- Derived filter options ---
+  function stripState(loc: string): string {
+    return loc.replace(/, California$/, '');
+  }
+
   let allLocations = $derived(
-    [...new Set(events.map(e => e.location).filter(l => l && l.trim()))].sort()
+    [...new Set(events.map(e => stripState(e.location)).filter(l => l && l.trim()))].sort()
   );
 
   // --- Filtering & Sorting ---
@@ -146,7 +150,7 @@
     void _tick;
 
     let result = events.filter(e => {
-      if (selectedLocations.size > 0 && !selectedLocations.has(e.location)) return false;
+      if (selectedLocations.size > 0 && !selectedLocations.has(stripState(e.location))) return false;
       if (!matchesPrice(e)) return false;
       return true;
     });
@@ -211,17 +215,16 @@
     </div>
 
   {:else}
-    <div class="event-meta-bar">
-      <span class="event-count">{filteredEvents.length} {t('events.eventCount')}</span>
-      {#if updatedAt}
+    {#if updatedAt}
+      <div class="event-meta-bar">
         <span class="event-updated">{t('events.lastUpdated')}: {formatUpdatedAt(updatedAt)}</span>
-      {/if}
-    </div>
+      </div>
+    {/if}
 
     <!-- Filter & Sort Controls -->
     <div class="filter-controls">
       <!-- Price filter (single-select pills) -->
-      <div class="filter-row">
+      <div class="filter-row filter-row--stacked">
         <span class="filter-label">{t('events.filterPrice')}</span>
         <div class="filter-pills">
           {#each ['all', 'free-approval', 'paid'] as priceOpt}
@@ -255,7 +258,7 @@
       {/if}
 
       <!-- Sort (pills) -->
-      <div class="filter-row">
+      <div class="filter-row filter-row--stacked">
         <span class="filter-label">{t('events.sortBy')}</span>
         <div class="filter-pills">
           {#each [
@@ -273,6 +276,7 @@
             >{label}</button>
           {/each}
         </div>
+        <span class="sort-note">{t('events.sortNote')}</span>
       </div>
 
       <!-- Clear filters -->
@@ -280,6 +284,8 @@
         <button class="clear-filters" onclick={clearFilters}>{t('events.clearFilters')}</button>
       {/if}
     </div>
+
+    <div class="event-count">{filteredEvents.length} {t('events.eventCount')}</div>
 
     {#if isStale}
       <p class="event-stale">{t('events.staleWarning')}</p>
@@ -344,9 +350,13 @@
   }
 
   .event-meta-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    opacity: 0.6;
+    margin-bottom: var(--space-sm);
+  }
+
+  .event-count {
     font-size: 0.75rem;
     color: var(--text-light);
     opacity: 0.6;
@@ -399,6 +409,11 @@
     flex-wrap: wrap;
   }
 
+  .filter-row--stacked {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .filter-label {
     color: var(--text-light);
     font-size: 0.75rem;
@@ -434,6 +449,13 @@
     background: rgba(0, 0, 0, 0.06);
     color: var(--text);
     border-color: rgba(0, 0, 0, 0.18);
+  }
+
+  .sort-note {
+    font-size: 0.68rem;
+    color: var(--text-light);
+    opacity: 0.5;
+    font-style: italic;
   }
 
   .clear-filters {
@@ -522,10 +544,16 @@
     line-height: 1.5;
   }
 
-  .event-date::before   { content: '\01F4C5 '; }
-  .event-location::before { content: '\01F4CD '; }
-  .event-host::before   { content: '\01F464 '; }
-  .event-guests::before { content: '\01F465 '; }
+  .event-date::before,
+  .event-location::before,
+  .event-host::before,
+  .event-guests::before {
+    margin-right: 0.3em;
+  }
+  .event-date::before   { content: '\01F4C5'; }
+  .event-location::before { content: '\01F4CD'; }
+  .event-host::before   { content: '\01F464'; }
+  .event-guests::before { content: '\01F465'; }
 
   /* Chinese font overrides */
   :global(html[data-lang="zh"]) .event-title {

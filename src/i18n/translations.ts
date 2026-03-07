@@ -129,9 +129,10 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.sortTimeDesc': { en: 'Latest first', zh: '时间最近' },
   'events.sortGuestsAsc': { en: 'Fewest guests', zh: '参与最少' },
   'events.sortGuestsDesc': { en: 'Most guests', zh: '参与最多' },
+  'events.sortNote': { en: '(Note: "Not Disclosed" counts as fewest)', zh: '（注：「未公开」视为最少）' },
   'events.clearFilters': { en: 'Clear filters', zh: '清除筛选' },
   'events.noMatch': { en: 'No events match filters', zh: '没有匹配的活动' },
-  'events.guestsNotDisclosed': { en: 'Not disclosed', zh: '未公开' },
+  'events.guestsNotDisclosed': { en: 'Not Disclosed', zh: '未公开' },
 
   // --- Language toggle button ---
   'lang.toggle': { en: '中', zh: 'EN' },
