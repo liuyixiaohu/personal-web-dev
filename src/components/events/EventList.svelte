@@ -57,6 +57,7 @@
   let searchQuery = $state<string>('');
 
   // --- Calendar (read-only) ---
+  let filterHeight = $state(0);
 
   // --- Language ---
   initLang();
@@ -384,7 +385,7 @@
 
     <!-- Filter & Sort Controls + Calendar -->
     <div class="filter-layout">
-      <div class="filter-controls">
+      <div class="filter-controls" bind:clientHeight={filterHeight}>
         <!-- Price filter (single-select pills) -->
         <div class="filter-row filter-row--stacked">
           <span class="filter-label">{t('events.filterPrice')}</span>
@@ -459,7 +460,7 @@
 
       <!-- Read-only calendar (side panel) -->
       {#if calendarDays.length > 0 && timeSlots.length > 0}
-        <div class="cal-panel">
+        <div class="cal-panel" style="max-height: {filterHeight}px;">
           <span class="filter-label">{t('events.calendar')} <span class="cal-pan-hint">(↔ ↕ Pan to view)</span></span>
           <div class="cal-wrapper">
             <div
@@ -655,7 +656,7 @@
   .filter-layout {
     display: flex;
     gap: 1rem;
-    align-items: stretch;
+    align-items: flex-start;
     margin-bottom: var(--space-sm);
   }
 
