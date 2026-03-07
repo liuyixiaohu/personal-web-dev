@@ -45,13 +45,8 @@
 
   // --- Filter & Sort State ---
   let selectedLocations = $state<Set<string>>(new Set());
-  let selectedHosts = $state<Set<string>>(new Set());
-  let selectedPrice = $state<string>('all');
+  let selectedPrice = $state<string>('all'); // 'all' | 'free-approval' | 'paid'
   let sortBy = $state<string>('time-asc');
-
-  // Track which filter sections are expanded
-  let locationOpen = $state(false);
-  let hostOpen = $state(false);
 
   // --- Language ---
   initLang();
@@ -139,26 +134,19 @@
     [...new Set(events.map(e => e.location).filter(l => l && l.trim()))].sort()
   );
 
-  let allHosts = $derived(
-    [...new Set(events.flatMap(e => e.host_names).filter(h => h && h.trim()))].sort()
-  );
-
   // --- Filtering & Sorting ---
   function matchesPrice(event: LumaEvent): boolean {
     if (selectedPrice === 'all') return true;
-    if (selectedPrice === 'free') return event.is_free;
-    if (selectedPrice === 'approval') return !event.is_free && event.price_cents == null;
+    if (selectedPrice === 'free-approval') return event.is_free || event.price_cents == null;
     if (selectedPrice === 'paid') return !event.is_free && event.price_cents != null;
     return true;
   }
 
   let filteredEvents = $derived.by(() => {
-    // access _tick so we re-derive on language change
     void _tick;
 
     let result = events.filter(e => {
       if (selectedLocations.size > 0 && !selectedLocations.has(e.location)) return false;
-      if (selectedHosts.size > 0 && !e.host_names.some(h => selectedHosts.has(h))) return false;
       if (!matchesPrice(e)) return false;
       return true;
     });
@@ -179,7 +167,7 @@
   });
 
   let hasActiveFilters = $derived(
-    selectedLocations.size > 0 || selectedHosts.size > 0 || selectedPrice !== 'all'
+    selectedLocations.size > 0 || selectedPrice !== 'all'
   );
 
   function toggleLocation(loc: string) {
@@ -188,15 +176,8 @@
     selectedLocations = next;
   }
 
-  function toggleHost(host: string) {
-    const next = new Set(selectedHosts);
-    if (next.has(host)) next.delete(host); else next.add(host);
-    selectedHosts = next;
-  }
-
   function clearFilters() {
     selectedLocations = new Set();
-    selectedHosts = new Set();
     selectedPrice = 'all';
   }
 </script>
@@ -235,66 +216,33 @@
       <div class="filter-row">
         <span class="filter-label">{t('events.filterPrice')}</span>
         <div class="filter-pills">
-          {#each ['all', 'free', 'approval', 'paid'] as priceOpt}
+          {#each ['all', 'free-approval', 'paid'] as priceOpt}
             <button
               class="pill"
               class:pill--active={selectedPrice === priceOpt}
               onclick={() => selectedPrice = priceOpt}
             >
               {priceOpt === 'all' ? t('events.filterAll') :
-               priceOpt === 'free' ? t('events.free') :
-               priceOpt === 'approval' ? t('events.approval') :
+               priceOpt === 'free-approval' ? t('events.filterFreeApproval') :
                t('events.filterPaid')}
             </button>
           {/each}
         </div>
       </div>
 
-      <!-- Location filter (multi-select collapsible) -->
+      <!-- Location filter (multi-select, always visible) -->
       {#if allLocations.length > 0}
         <div class="filter-row">
-          <button class="filter-label filter-label--toggle" onclick={() => locationOpen = !locationOpen}>
-            {t('events.filterLocation')}
-            <span class="filter-chevron" class:filter-chevron--open={locationOpen}>▸</span>
-            {#if selectedLocations.size > 0}
-              <span class="filter-badge">{selectedLocations.size}</span>
-            {/if}
-          </button>
-          {#if locationOpen}
-            <div class="filter-pills filter-pills--wrap">
-              {#each allLocations as loc}
-                <button
-                  class="pill"
-                  class:pill--active={selectedLocations.has(loc)}
-                  onclick={() => toggleLocation(loc)}
-                >{loc}</button>
-              {/each}
-            </div>
-          {/if}
-        </div>
-      {/if}
-
-      <!-- Host filter (multi-select collapsible) -->
-      {#if allHosts.length > 0}
-        <div class="filter-row">
-          <button class="filter-label filter-label--toggle" onclick={() => hostOpen = !hostOpen}>
-            {t('events.filterHost')}
-            <span class="filter-chevron" class:filter-chevron--open={hostOpen}>▸</span>
-            {#if selectedHosts.size > 0}
-              <span class="filter-badge">{selectedHosts.size}</span>
-            {/if}
-          </button>
-          {#if hostOpen}
-            <div class="filter-pills filter-pills--wrap">
-              {#each allHosts as host}
-                <button
-                  class="pill"
-                  class:pill--active={selectedHosts.has(host)}
-                  onclick={() => toggleHost(host)}
-                >{host}</button>
-              {/each}
-            </div>
-          {/if}
+          <span class="filter-label">{t('events.filterLocation')}</span>
+          <div class="filter-pills filter-pills--wrap">
+            {#each allLocations as loc}
+              <button
+                class="pill"
+                class:pill--active={selectedLocations.has(loc)}
+                onclick={() => toggleLocation(loc)}
+              >{loc}</button>
+            {/each}
+          </div>
         </div>
       {/if}
 
@@ -436,41 +384,6 @@
     font-size: 0.75rem;
     min-width: 3rem;
     flex-shrink: 0;
-  }
-
-  .filter-label--toggle {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    font-family: inherit;
-  }
-
-  .filter-label--toggle:hover {
-    opacity: 0.7;
-  }
-
-  .filter-chevron {
-    font-size: 0.65rem;
-    transition: transform 0.15s ease;
-    display: inline-block;
-  }
-
-  .filter-chevron--open {
-    transform: rotate(90deg);
-  }
-
-  .filter-badge {
-    font-size: 0.65rem;
-    background: rgba(0, 0, 0, 0.06);
-    color: var(--text-light);
-    padding: 0.05em 0.4em;
-    border-radius: 8px;
-    min-width: 1em;
-    text-align: center;
   }
 
   .filter-pills {
