@@ -1,5 +1,5 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Special Thanks | Kun Li" description="To everyone who made this journey possible.">
@@ -11,18 +11,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <h2 data-i18n="home.specialThanks">Special Thanks</h2>
     </header>
 
-    <!-- Placeholder items — content to be replaced -->
     <section class="section">
-      <a href="#" class="item item--first">
-        <span class="item-title">Placeholder Name</span>
+      <a href="/special-thanks/joanne-goldberg" class="item item--first">
+        <span class="item-title">JoAnne Goldberg</span>
         <span class="item-desc">A brief note of gratitude. Content coming soon.</span>
       </a>
-      <a href="#" class="item item--second">
-        <span class="item-title">Placeholder Name</span>
+      <a href="/special-thanks/zach-beasley" class="item item--second">
+        <span class="item-title">Zach Beasley</span>
         <span class="item-desc">A brief note of gratitude. Content coming soon.</span>
       </a>
-      <a href="#" class="item item--third">
-        <span class="item-title">Placeholder Name</span>
+      <a href="/special-thanks/yan-zhang" class="item item--third">
+        <span class="item-title">Yan Zhang</span>
         <span class="item-desc">A brief note of gratitude. Content coming soon.</span>
       </a>
     </section>
@@ -90,7 +89,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   /* Accent colors */
-  .item--first .item-title { color: #9a6868; }
-  .item--second .item-title { color: #5a7a94; }
-  .item--third .item-title { color: #5a8a6e; }
+  .item--first .item-title { color: #5a7a94; }
+  .item--second .item-title { color: #5a8a6e; }
+  .item--third .item-title { color: #9a6868; }
 </style>
