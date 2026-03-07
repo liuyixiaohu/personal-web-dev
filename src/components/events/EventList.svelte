@@ -212,8 +212,8 @@
       minH = Math.min(minH, sH);
       maxH = Math.max(maxH, eMin > 0 ? eH + 1 : eH);
     }
-    minH = Math.max(0, minH - 1);
-    maxH = Math.min(24, maxH + 1);
+    minH = Math.max(8, minH);
+    maxH = Math.min(23, maxH);
     const slots: string[] = [];
     for (let h = minH; h < maxH; h++) {
       slots.push(`${String(h).padStart(2, '0')}:00`);
@@ -255,15 +255,15 @@
     const date = new Date(y, m - 1, d);
     const wk = date.toLocaleDateString(locale(), { weekday: 'short' });
     const mon = date.toLocaleDateString(locale(), { month: 'short' });
-    return `${wk} ${mon} ${d}`;
+    return `${wk}, ${mon} ${d}`;
   }
 
   function formatTimeLabel(time: string): string {
-    const [h, m] = time.split(':').map(Number);
-    if (lang === 'zh') return `${h}:${m === 0 ? '00' : '30'}`;
+    const h = parseInt(time.split(':')[0], 10);
+    if (lang === 'zh') return `${h}`;
     const ampm = h >= 12 ? 'PM' : 'AM';
     const h12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
-    return `${h12}:${m === 0 ? '00' : '30'} ${ampm}`;
+    return `${h12}\n${ampm}`;
   }
 
   // --- Filtering & Sorting ---
@@ -418,7 +418,7 @@
 
         <!-- Location filter (multi-select, collapsible) -->
         {#if allLocations.length > 0}
-          <div class="filter-row">
+          <div class="filter-row filter-row--stacked">
             <span class="filter-label">{t('events.filterLocation')}</span>
             <div class="location-pills-wrap">
               <div class="filter-pills filter-pills--wrap"
@@ -434,6 +434,7 @@
               </div>
               {#if locationOverflows || locationExpanded}
                 <button class="show-more-btn"
+                        class:show-more-btn--collapsed={!locationExpanded}
                         onclick={() => locationExpanded = !locationExpanded}>
                   {locationExpanded ? t('events.showLess') : t('events.showMore')}
                 </button>
@@ -755,6 +756,7 @@
   .location-pills-wrap {
     flex: 1;
     min-width: 0;
+    position: relative;
   }
 
   .filter-pills--collapsed {
@@ -766,16 +768,23 @@
     font-family: inherit;
     font-size: var(--fs-xs);
     color: var(--text-light);
-    background: none;
+    background: var(--bg);
     border: none;
-    padding: 0;
+    padding: 0.2em 0 0.2em 0.4em;
     cursor: pointer;
     text-decoration: underline;
-    margin-top: 0.2rem;
+    white-space: nowrap;
+    line-height: 1.4;
   }
 
   .show-more-btn:hover {
     color: var(--text);
+  }
+
+  .show-more-btn--collapsed {
+    position: absolute;
+    right: 0;
+    bottom: 0;
   }
 
   /* --- Calendar grid --- */
