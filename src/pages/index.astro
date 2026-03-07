@@ -23,13 +23,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <svg class="choice-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/><path d="M6 2v2"/></svg>
         <span class="choice-label" data-i18n="home.professional">Enter Chaguan</span>
       </a>
-      <a href="/events" class="choice-link choice-link--events">
-        <svg class="choice-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16.247 7.761a6 6 0 0 1 0 8.478"/><path d="M19.075 4.933a10 10 0 0 1 0 14.134"/><path d="M4.925 19.067a10 10 0 0 1 0-14.134"/><path d="M7.753 16.239a6 6 0 0 1 0-8.478"/><circle cx="12" cy="12" r="2"/></svg>
-        <span class="choice-label" data-i18n="home.events">Bay Area Events</span>
-      </a>
-      <a href="/brand" class="choice-link choice-link--brand">
-        <svg class="choice-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></svg>
-        <span class="choice-label" data-i18n="home.brand">Brand Guidelines</span>
+      <a href="/special-thanks" class="choice-link choice-link--thanks">
+        <svg class="choice-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+        <span class="choice-label" data-i18n="home.specialThanks">Special Thanks</span>
       </a>
     </nav>
   </main>
@@ -110,8 +106,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   .choice-link--professional { color: #7FB6DD; }
-  .choice-link--events { color: #D9797B; }
-  .choice-link--brand { color: #8BAF9A; }
+  .choice-link--thanks { color: #D9797B; }
 
   .choice-label {
     font-size: var(--fs-lg);
