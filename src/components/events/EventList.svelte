@@ -236,8 +236,9 @@
   function formatDayHeader(dayStr: string): string {
     const [y, m, d] = dayStr.split('-').map(Number);
     const date = new Date(y, m - 1, d);
-    const wk = date.toLocaleDateString(locale(), { weekday: 'narrow' });
-    return `${wk} ${m}/${d}`;
+    const wk = date.toLocaleDateString(locale(), { weekday: 'short' });
+    const mon = date.toLocaleDateString(locale(), { month: 'short' });
+    return `${wk} ${mon} ${d}`;
   }
 
   function formatTimeLabel(time: string): string {
@@ -428,11 +429,11 @@
       <!-- Read-only calendar (side panel) -->
       {#if calendarDays.length > 0 && timeSlots.length > 0}
         <div class="cal-panel">
-          <span class="filter-label">{t('events.calendar')}</span>
+          <span class="filter-label">{t('events.calendar')} <span class="cal-pan-hint">(↔ ↕ Pan to view)</span></span>
           <div class="cal-wrapper">
             <div
               class="cal-grid"
-              style="grid-template-columns: 48px repeat({calendarDays.length}, 1fr); width: {48 + calendarDays.length * 54}px;"
+              style="grid-template-columns: 48px repeat({calendarDays.length}, 1fr); width: {48 + calendarDays.length * 72}px;"
             >
               <!-- Header row -->
               <div class="cal-corner"></div>
@@ -462,13 +463,7 @@
                 {/each}
               {/each}
             </div>
-            {#if calendarDays.length > 5}
-              <span class="cal-hint cal-hint--h">← →</span>
-            {/if}
           </div>
-          {#if timeSlots.length > 24}
-            <span class="cal-hint cal-hint--v">↕ scroll</span>
-          {/if}
         </div>
       {/if}
     </div>
@@ -698,22 +693,10 @@
     overflow: hidden;
   }
 
-  .cal-hint {
-    font-size: 0.6rem;
-    color: var(--text-light);
-    opacity: 0.4;
-    text-align: center;
-  }
-
-  .cal-hint--h {
-    display: block;
-    margin-top: 0.2rem;
-    letter-spacing: 0.15em;
-  }
-
-  .cal-hint--v {
-    display: block;
-    margin-top: 0.15rem;
+  .cal-pan-hint {
+    font-size: 0.65rem;
+    opacity: 0.45;
+    font-style: italic;
   }
 
   .cal-corner {
