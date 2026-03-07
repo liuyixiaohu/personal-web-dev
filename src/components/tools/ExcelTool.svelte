@@ -926,7 +926,7 @@
   }
 
   .error {
-    color: #b55;
+    color: #9a6868;
     font-size: var(--fs-sm);
     margin-top: 0.6rem;
   }
@@ -1063,7 +1063,7 @@
 
   .drop-error {
     font-size: var(--fs-sm);
-    color: #b55;
+    color: #9a6868;
     margin-top: 0.5rem;
   }
 
@@ -1074,7 +1074,7 @@
   }
 
   .status--error {
-    color: #b55;
+    color: #9a6868;
   }
 
   /* --- File list --- */
@@ -1112,7 +1112,7 @@
 
   .clear-all:hover {
     opacity: 1;
-    color: #b55;
+    color: #9a6868;
   }
 
   .file-item {
@@ -1154,7 +1154,7 @@
 
   .file-remove:hover {
     opacity: 1;
-    color: #b55;
+    color: #9a6868;
   }
 
   /* --- Actions --- */
