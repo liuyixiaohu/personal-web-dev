@@ -531,10 +531,6 @@
                 <span class="event-location">{locationDisplay(event)}</span>
               {/if}
 
-              {#if event.host_names.length > 0}
-                <span class="event-host">{t('events.hostedBy')} {event.host_names.join(', ')}</span>
-              {/if}
-
               {#if event.guest_count > 0}
                 <span class="event-guests">{event.guest_count} {t('events.guests')}</span>
               {/if}
@@ -911,13 +907,11 @@
 
   .event-date::before,
   .event-location::before,
-  .event-host::before,
   .event-guests::before {
     margin-right: 0.3em;
   }
   .event-date::before   { content: '\01F4C5'; }
   .event-location::before { content: '\01F4CD'; }
-  .event-host::before   { content: '\01F464'; }
   .event-guests::before { content: '\01F465'; }
 
   /* Chinese font overrides */
