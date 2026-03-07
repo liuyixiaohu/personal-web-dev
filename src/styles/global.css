@@ -20,8 +20,7 @@
   --font-zh-body: var(--font-zh);
   --font-zh-heading: var(--font-zh);
   --fs-base: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);  /* root font-size */
-  --fs-xs: 0.75rem;    /* minimum readable — labels, tags */
-  --fs-sm: 0.8rem;     /* 1.25⁻¹ — secondary text, captions */
+  --fs-xs: 0.75rem;    /* small — labels, tags, captions, secondary text */
   --fs-md: 1.25rem;    /* 1.25¹  — subheadings, nav titles */
   --fs-lg: 1.563rem;   /* 1.25²  — page headings */
   --fs-xl: 1.953rem;   /* 1.25³  — hero / display */

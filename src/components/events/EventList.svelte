@@ -51,13 +51,21 @@
   }
 
   let selectedLocations = $state<Set<string>>(new Set(loadPref<string[]>('events.locations', [])));
-  let selectedPrice = $state<string>(loadPref('events.price', 'all'));
+  let selectedPrice = $state<string | null>(loadPref('events.price', null));
   let sortBy = $state<string>(loadPref('events.sort', 'time-asc'));
   let searchQuery = $state<string>('');
 
   // --- Changelog ---
-  const VERSION = 'v0.7';
+  const VERSION = 'v0.8';
   const CHANGELOG = [
+    { version: 'v0.8', date: '2026-03-07',
+      why: 'Font audit found --fs-xs and --fs-sm were only 0.8px apart (visually identical), plus 3 hardcoded sizes bypassing the design token scale.',
+      changes: [
+        'Merged --fs-sm (0.8rem) into --fs-xs (0.75rem) — single small-text token',
+        'Eliminated 3 hardcoded font sizes: 0.85rem, 1.1rem, and a custom clamp()',
+        'Type scale consolidated to 5 clean tokens: xs → base → md → lg → xl',
+        'Price filter simplified: removed redundant "All" option, toggle-to-deselect behavior',
+      ]},
     { version: 'v0.7', date: '2026-03-07',
       why: '25+ location pills cluttered the filter area; calendar time labels were hard to scan quickly.',
       changes: [
@@ -333,7 +341,7 @@
 
   // --- Filtering & Sorting ---
   function matchesPrice(event: LumaEvent): boolean {
-    if (selectedPrice === 'all') return true;
+    if (selectedPrice === null) return true;
     if (selectedPrice === 'free-approval') return event.is_free || event.price_cents == null;
     if (selectedPrice === 'paid') return !event.is_free && event.price_cents != null;
     return true;
@@ -386,14 +394,13 @@
 
   function clearFilters() {
     selectedLocations = new Set();
-    selectedPrice = 'all';
+    selectedPrice = null;
     searchQuery = '';
   }
 
   // --- Event counts per filter option ---
   function priceCount(opt: string): number {
     return events.filter(e => {
-      if (opt === 'all') return true;
       if (opt === 'free-approval') return e.is_free || e.price_cents == null;
       if (opt === 'paid') return !e.is_free && e.price_cents != null;
       return true;
@@ -491,17 +498,16 @@
     <div class="filter-layout">
       <div class="filter-controls" bind:clientHeight={filterHeight}>
         <!-- Price filter (single-select pills) -->
-        <div class="filter-row filter-row--stacked">
+        <div class="filter-row">
           <span class="filter-label">{t('events.filterPrice')}</span>
           <div class="filter-pills">
-            {#each ['all', 'free-approval', 'paid'] as priceOpt}
+            {#each ['free-approval', 'paid'] as priceOpt}
               <button
                 class="pill"
                 class:pill--active={selectedPrice === priceOpt}
-                onclick={() => selectedPrice = priceOpt}
+                onclick={() => selectedPrice = selectedPrice === priceOpt ? null : priceOpt}
               >
-                {priceOpt === 'all' ? t('events.filterAll') :
-                 priceOpt === 'free-approval' ? t('events.filterFreeApproval') :
+                {priceOpt === 'free-approval' ? t('events.filterFreeApproval') :
                  t('events.filterPaid')} <span class="pill-count">({priceCount(priceOpt)})</span>
               </button>
             {/each}
@@ -737,7 +743,7 @@
   }
 
   .changelog-title {
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     font-weight: 600;
     color: var(--text);
   }
@@ -804,13 +810,13 @@
   }
 
   .event-meta-bar {
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     color: var(--text-light);
     margin-bottom: var(--space-sm);
   }
 
   .event-count {
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     color: var(--text);
     font-weight: 500;
     margin-top: var(--space-sm);
@@ -820,7 +826,7 @@
   }
 
   .date-group-header {
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     font-weight: 500;
     color: var(--text-light);
     margin: var(--space-sm) 0 0.2rem;
@@ -839,7 +845,7 @@
 
   .search-input {
     font-family: inherit;
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     padding: 0.35em 0.6em;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 3px;
@@ -862,7 +868,7 @@
   }
 
   .event-status {
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     color: var(--text-light);
     font-style: italic;
     text-align: center;
@@ -879,13 +885,13 @@
   }
 
   .event-empty p {
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     color: var(--text-light);
     font-style: italic;
   }
 
   .event-meta {
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     color: var(--text-light);
     margin-top: var(--space-xs);
   }
@@ -904,7 +910,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
   }
 
   .cal-panel {
@@ -935,7 +941,7 @@
 
   .filter-label {
     color: var(--text-light);
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     min-width: 3rem;
     flex-shrink: 0;
   }
@@ -1100,7 +1106,7 @@
   }
 
   .event-stale {
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     color: #9a6868;
     font-style: italic;
     margin-bottom: var(--space-sm);
@@ -1133,7 +1139,7 @@
   }
 
   .event-name {
-    font-size: clamp(0.95rem, 0.88rem + 0.3vw, 1.08rem);
+    font-size: var(--fs-base);
     font-weight: 500;
     color: var(--text);
     text-decoration: none;
@@ -1145,7 +1151,7 @@
   }
 
   .event-price {
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     color: var(--text-light);
     white-space: nowrap;
     flex-shrink: 0;
@@ -1173,7 +1179,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.2rem 1rem;
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     color: var(--text-light);
     line-height: 1.5;
   }

@@ -927,7 +927,7 @@
 
   .error {
     color: #9a6868;
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     margin-top: 0.6rem;
   }
 
@@ -938,7 +938,7 @@
     border-radius: 4px;
     background: transparent;
     color: var(--text);
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     font-family: inherit;
     cursor: pointer;
     transition: background 0.15s, border-color 0.15s;
@@ -974,7 +974,7 @@
   }
 
   .tool-subtitle {
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     color: var(--text-light);
     margin-bottom: 1.8rem;
     line-height: 1.8;
@@ -1002,7 +1002,7 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background 0.15s;
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     color: var(--text-light);
   }
 
@@ -1061,13 +1061,13 @@
   }
 
   .drop-error {
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     color: #9a6868;
     margin-top: 0.5rem;
   }
 
   .status {
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     color: var(--text-light);
     margin-top: 0.8rem;
   }
@@ -1122,7 +1122,7 @@
   .file-name {
     flex: 1;
     text-align: left;
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     color: var(--text);
   }
 
@@ -1140,7 +1140,7 @@
   .file-remove {
     background: none;
     border: none;
-    font-size: 1.1rem;
+    font-size: var(--fs-base);
     color: var(--text-light);
     cursor: pointer;
     padding: 0 0.3rem;
