@@ -602,7 +602,7 @@
   /* --- Filter Layout (side-by-side) --- */
   .filter-layout {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem;
     align-items: flex-start;
     margin-bottom: var(--space-sm);
   }
@@ -617,9 +617,7 @@
   }
 
   .cal-wrapper {
-    flex: 0 0 45%;
-    max-width: 28rem;
-    min-width: 16rem;
+    flex: 0 0 48%;
   }
 
   .filter-row {
