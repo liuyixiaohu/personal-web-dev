@@ -136,6 +136,67 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.noMatch': { en: 'No events match filters', zh: '没有匹配的活动' },
   'events.guestsNotDisclosed': { en: 'Not Disclosed', zh: '未公开' },
 
+  // --- Brand Guidelines page ---
+  'brand.title': { en: 'Brand Guidelines', zh: '品牌规范' },
+  'brand.subtitle': {
+    en: 'The visual language of kunli.co — warm, minimal, bilingual.',
+    zh: 'kunli.co 的视觉语言——温暖、极简、双语。',
+  },
+  'brand.principles': { en: 'Design Principles', zh: '设计原则' },
+  'brand.principleMinimal': { en: 'Minimal', zh: '极简' },
+  'brand.principleMinimalDesc': {
+    en: 'Less is more. No decoration for decoration\'s sake.',
+    zh: '少即是多。不为装饰而装饰。',
+  },
+  'brand.principleFast': { en: 'Fast', zh: '轻快' },
+  'brand.principleFastDesc': {
+    en: 'Static HTML, zero unnecessary JS, CDN fonts.',
+    zh: '静态 HTML，零多余 JS，CDN 字体。',
+  },
+  'brand.principleWarm': { en: 'Warm', zh: '温暖' },
+  'brand.principleWarmDesc': {
+    en: 'Cream tones, serif fonts, literary voice.',
+    zh: '奶油色调、衬线字体、文学气质。',
+  },
+  'brand.principleBilingual': { en: 'Bilingual', zh: '双语' },
+  'brand.principleBilingualDesc': {
+    en: 'Every visible text has English and Chinese.',
+    zh: '每段可见文字均有中英双语。',
+  },
+  'brand.colors': { en: 'Color Palette', zh: '配色方案' },
+  'brand.colorsCore': { en: 'Core Palette', zh: '核心色板' },
+  'brand.colorsAccents': { en: 'Professional Accents', zh: '职业配色' },
+  'brand.typography': { en: 'Typography', zh: '字体排印' },
+  'brand.typeFonts': { en: 'Font Pairing', zh: '字体搭配' },
+  'brand.typeScale': { en: 'Type Scale', zh: '字号阶梯' },
+  'brand.typeScaleNote': {
+    en: 'Major Third ratio (1.25×). Root font-size is fluid.',
+    zh: '大三度比例（1.25×）。根字号流式缩放。',
+  },
+  'brand.spacing': { en: 'Spacing', zh: '间距' },
+  'brand.spacingNote': {
+    en: 'Fluid scale using clamp() — adapts to viewport width.',
+    zh: '使用 clamp() 的流式间距——随视口宽度自适应。',
+  },
+  'brand.grid': { en: 'Grid System', zh: '网格系统' },
+  'brand.gridNote': {
+    en: 'Named-line CSS Grid with three content tracks.',
+    zh: '具有三条内容轨道的命名线 CSS 网格。',
+  },
+  'brand.components': { en: 'Components', zh: '组件样式' },
+  'brand.usage.bg': { en: 'Page background', zh: '页面背景' },
+  'brand.usage.subtleBg': { en: 'Subtle variation', zh: '细微变化' },
+  'brand.usage.warmBorder': { en: 'Warm border', zh: '暖色边框' },
+  'brand.usage.greenLight': { en: 'Green background', zh: '绿色背景' },
+  'brand.usage.greenMid': { en: 'Green accent', zh: '绿色强调' },
+  'brand.usage.blueLight': { en: 'Blue background', zh: '蓝色背景' },
+  'brand.usage.blueAccent': { en: 'Blue accent', zh: '蓝色强调' },
+  'brand.usage.pinkLight': { en: 'Pink background', zh: '粉色背景' },
+  'brand.usage.pinkStrong': { en: 'Pink accent', zh: '粉色强调' },
+  'brand.usage.textLight': { en: 'Secondary text', zh: '次要文字' },
+  'brand.usage.textMid': { en: 'Mid-tone text', zh: '中间色文字' },
+  'brand.usage.textPrimary': { en: 'Primary text', zh: '主要文字' },
+
   // --- Language toggle button ---
   'lang.toggle': { en: '中', zh: 'EN' },
 };
