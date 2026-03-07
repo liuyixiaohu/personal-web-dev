@@ -224,7 +224,11 @@
 
   function scrollToEvent(eventId: string) {
     const el = document.getElementById(`event-${eventId}`);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      el.classList.add('event-card--highlight');
+      setTimeout(() => el.classList.remove('event-card--highlight'), 1500);
+    }
   }
 
   function slotTitle(key: string): string {
@@ -321,6 +325,34 @@
   function locationCount(loc: string): number {
     return events.filter(e => stripState(e.location) === loc).length;
   }
+
+  // --- Date grouping ---
+  function eventDateKey(event: LumaEvent): string {
+    const d = new Date(event.start_at);
+    const local = new Date(d.toLocaleString('en-US', { timeZone: TZ }));
+    return `${local.getFullYear()}-${String(local.getMonth() + 1).padStart(2, '0')}-${String(local.getDate()).padStart(2, '0')}`;
+  }
+
+  function formatDateGroup(dateKey: string): string {
+    const [y, m, d] = dateKey.split('-').map(Number);
+    const date = new Date(y, m - 1, d);
+    return date.toLocaleDateString(locale(), { weekday: 'long', month: 'short', day: 'numeric' });
+  }
+
+  let groupedEvents = $derived.by(() => {
+    const groups: { date: string; events: LumaEvent[] }[] = [];
+    let currentDate = '';
+    for (const e of filteredEvents) {
+      const dk = eventDateKey(e);
+      if (dk !== currentDate) {
+        currentDate = dk;
+        groups.push({ date: dk, events: [e] });
+      } else {
+        groups[groups.length - 1].events.push(e);
+      }
+    }
+    return groups;
+  });
 </script>
 
 {#key _tick}
@@ -423,7 +455,6 @@
           />
         </div>
 
-        <div class="event-count">{filteredEvents.length} {t('events.eventCount')}</div>
       </div>
 
       <!-- Read-only calendar (side panel) -->
@@ -472,44 +503,45 @@
       <p class="event-stale">{t('events.staleWarning')}</p>
     {/if}
 
+    <div class="event-count">{filteredEvents.length} {t('events.eventCount')}</div>
+
     {#if filteredEvents.length === 0}
       <p class="event-status">{t('events.noMatch')}</p>
     {/if}
 
-    <ul class="event-cards">
-      {#each filteredEvents as event (event.api_id)}
-        <li class="event-card" id="event-{event.api_id}">
-          <div class="event-card-header">
-            <a href={event.url} target="_blank" rel="noopener noreferrer" class="event-name">
-              {event.name}
-            </a>
-            <span class="event-price" class:event-price--free={event.is_free} class:event-price--approval={!event.is_free && event.price_cents == null} class:event-price--paid={!event.is_free && event.price_cents != null}>
-              {formatPrice(event)}
-            </span>
-          </div>
+    {#each groupedEvents as group}
+      <h3 class="date-group-header">{formatDateGroup(group.date)}</h3>
+      <ul class="event-cards">
+        {#each group.events as event (event.api_id)}
+          <li class="event-card" id="event-{event.api_id}">
+            <div class="event-card-header">
+              <a href={event.url} target="_blank" rel="noopener noreferrer" class="event-name">
+                {event.name}
+              </a>
+              <span class="event-price" class:event-price--free={event.is_free} class:event-price--approval={!event.is_free && event.price_cents == null} class:event-price--paid={!event.is_free && event.price_cents != null}>
+                {formatPrice(event)}
+              </span>
+            </div>
 
-          <div class="event-card-details">
-            <span class="event-date">{formatEventRange(event.start_at, event.end_at, event.timezone)}</span>
+            <div class="event-card-details">
+              <span class="event-date">{formatEventRange(event.start_at, event.end_at, event.timezone)}</span>
 
-            {#if locationDisplay(event)}
-              <span class="event-location">{locationDisplay(event)}</span>
-            {/if}
-
-            {#if event.host_names.length > 0}
-              <span class="event-host">{t('events.hostedBy')} {event.host_names.join(', ')}</span>
-            {/if}
-
-            <span class="event-guests">
-              {#if event.guest_count > 0}
-                {event.guest_count} {t('events.guests')}
-              {:else}
-                {t('events.guestsNotDisclosed')}
+              {#if locationDisplay(event)}
+                <span class="event-location">{locationDisplay(event)}</span>
               {/if}
-            </span>
-          </div>
-        </li>
-      {/each}
-    </ul>
+
+              {#if event.host_names.length > 0}
+                <span class="event-host">{t('events.hostedBy')} {event.host_names.join(', ')}</span>
+              {/if}
+
+              {#if event.guest_count > 0}
+                <span class="event-guests">{event.guest_count} {t('events.guests')}</span>
+              {/if}
+            </div>
+          </li>
+        {/each}
+      </ul>
+    {/each}
   {/if}
 </div>
 {/key}
@@ -538,10 +570,31 @@
   }
 
   .event-count {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text);
+    font-weight: 500;
+    margin-top: var(--space-sm);
+    margin-bottom: var(--space-xs);
+    padding-bottom: var(--space-xs);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .date-group-header {
+    font-size: 0.78rem;
+    font-weight: 500;
     color: var(--text-light);
-    opacity: 0.6;
-    margin-bottom: var(--space-sm);
+    margin: var(--space-sm) 0 0.2rem;
+    padding-bottom: 0.2rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .event-card--highlight {
+    animation: highlight-fade 1.5s ease-out;
+  }
+
+  @keyframes highlight-fade {
+    0% { background: rgba(90, 160, 120, 0.15); }
+    100% { background: transparent; }
   }
 
   .search-input {
@@ -602,7 +655,7 @@
   .filter-layout {
     display: flex;
     gap: 1rem;
-    align-items: flex-start;
+    align-items: stretch;
     margin-bottom: var(--space-sm);
   }
 
@@ -624,7 +677,7 @@
   }
 
   .cal-wrapper {
-    max-height: calc(16px * 24 + 1.6rem);
+    flex: 1;
     overflow: auto;
     max-width: 100%;
   }
