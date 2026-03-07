@@ -65,6 +65,11 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Heading line-heights: tighter for larger text */
+h1 { line-height: 1.2; }
+h2 { line-height: 1.3; }
+h3 { line-height: 1.4; }
+
 /* Flowed layout: images and media adapt */
 img, video, svg {
   max-width: 100%;
