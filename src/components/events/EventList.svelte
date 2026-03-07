@@ -29,7 +29,7 @@
 
   // --- Constants ---
   const DATA_URL =
-    'https://raw.githubusercontent.com/liuyixiaohu/luma-event-monitor/main/data/new_events.json';
+    'https://raw.githubusercontent.com/liuyixiaohu/personal-web-dev/main/data/events.json';
   const STALE_THRESHOLD_MS = 48 * 60 * 60 * 1000; // 48 hours
 
   // --- State ---
