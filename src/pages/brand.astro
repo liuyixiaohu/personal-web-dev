@@ -8,8 +8,46 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     <!-- Header -->
     <header class="brand-header">
-      <h1 data-i18n="brand.title">Brand Guidelines</h1>
-      <p class="subtitle" data-i18n="brand.subtitle">The visual language of kunli.co: warm, minimal, bilingual.</p>
+      <div class="brand-title-row">
+        <h1 data-i18n="brand.title">Brand Guidelines</h1>
+        <div class="version-wrap">
+          <button class="version-btn" id="brand-version-btn">v0.3</button>
+          <div class="changelog-backdrop" id="brand-changelog-backdrop" hidden></div>
+          <div class="changelog-popup" id="brand-changelog-popup" hidden>
+            <div class="changelog-header">
+              <span class="changelog-title">Changelog</span>
+              <button class="changelog-close" id="brand-changelog-close">&times;</button>
+            </div>
+            <div class="changelog-release">
+              <div class="changelog-version">v0.3</div>
+              <p class="changelog-why">Documenting exactly how text looks across the site.</p>
+              <ul class="changelog-list">
+                <li>Added Type Styles section with live-rendered examples</li>
+                <li>Replaced emojis with inline SVG icons site-wide</li>
+              </ul>
+            </div>
+            <div class="changelog-release">
+              <div class="changelog-version">v0.2</div>
+              <p class="changelog-why">Font sizes were too close together. Simplified.</p>
+              <ul class="changelog-list">
+                <li>Merged --fs-sm into --fs-xs (5 sizes instead of 6)</li>
+                <li>Fixed 3 hardcoded font sizes to use design tokens</li>
+              </ul>
+            </div>
+            <div class="changelog-release">
+              <div class="changelog-version">v0.1</div>
+              <p class="changelog-why">Starting point: putting the visual language on paper.</p>
+              <ul class="changelog-list">
+                <li>Color palette with core and accent swatches</li>
+                <li>Typography: font pairing and type scale</li>
+                <li>Spacing scale and grid system</li>
+                <li>Component examples: buttons, pills, cards</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="subtitle" data-i18n="brand.subtitle">Design Philosophy: Minimal & Warm</p>
     </header>
 
     <!-- Principles -->
@@ -700,6 +738,106 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     margin-top: 0.15rem;
   }
 
+  /* --- Brand title row --- */
+  .brand-title-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+  }
+
+  /* --- Version / Changelog --- */
+  .version-wrap {
+    position: relative;
+  }
+  .version-btn {
+    font-family: inherit;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.1em 0.4em;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+  .version-btn:hover {
+    border-color: rgba(0, 0, 0, 0.25);
+    color: var(--text);
+  }
+  .changelog-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+  }
+  .changelog-popup {
+    position: absolute;
+    top: calc(100% + 0.4rem);
+    left: 0;
+    z-index: 100;
+    width: min(22rem, calc(100vw - 2rem));
+    max-height: 28rem;
+    overflow-y: auto;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    padding: 0.75rem;
+  }
+  .changelog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  .changelog-title {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--text);
+  }
+  .changelog-close {
+    font-family: inherit;
+    font-size: 1.1rem;
+    color: var(--text-light);
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 0.15rem;
+  }
+  .changelog-close:hover {
+    color: var(--text);
+  }
+  .changelog-release {
+    margin-bottom: 0.6rem;
+  }
+  .changelog-release:last-child {
+    margin-bottom: 0;
+  }
+  .changelog-version {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--text);
+  }
+  .changelog-why {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    font-style: italic;
+    margin: 0.15rem 0 0.2rem;
+    line-height: 1.4;
+  }
+  .changelog-list {
+    margin: 0.2rem 0 0 1rem;
+    padding: 0;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+  .changelog-list li {
+    margin-bottom: 0.1rem;
+  }
+
   /* --- Responsive --- */
   @media (max-width: 480px) {
     .principles {
@@ -715,5 +853,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     .spacing-track {
       display: none;
     }
+    .changelog-popup {
+      position: fixed;
+      top: auto;
+      right: 1rem;
+      bottom: 1rem;
+      left: 1rem;
+      width: auto;
+      max-height: 70vh;
+    }
   }
 </style>
+
+<script>
+  const btn = document.getElementById('brand-version-btn');
+  const popup = document.getElementById('brand-changelog-popup');
+  const backdrop = document.getElementById('brand-changelog-backdrop');
+  const close = document.getElementById('brand-changelog-close');
+  function toggle() {
+    const open = popup?.hidden === false;
+    popup && (popup.hidden = !popup.hidden);
+    backdrop && (backdrop.hidden = !backdrop.hidden);
+  }
+  btn?.addEventListener('click', toggle);
+  backdrop?.addEventListener('click', toggle);
+  close?.addEventListener('click', toggle);
+</script>

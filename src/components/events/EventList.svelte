@@ -58,7 +58,7 @@
   // --- Changelog ---
   const VERSION = 'v0.8';
   const CHANGELOG = [
-    { version: 'v0.8', date: '2026-03-07',
+    { version: 'v0.8',
       why: 'Too many font sizes doing the same job. Time for spring cleaning.',
       changes: [
         'Simplified font sizes from 6 levels to 5 (less is more)',
@@ -66,7 +66,7 @@
         'Calendar switched to 24-hour time across all languages',
         'Search placeholder now shows example keywords',
       ]},
-    { version: 'v0.7', date: '2026-03-07',
+    { version: 'v0.7',
       why: 'The location list was getting out of hand with 25+ cities showing at once.',
       changes: [
         'Location pills now collapse to 2 rows, click "More" to see the rest',
@@ -75,42 +75,42 @@
         'Calendar only shows 8 AM – 10 PM (nobody\'s going to events at 3 AM… right?)',
         'Added this version changelog popup',
       ]},
-    { version: 'v0.6', date: '2026-03-06',
+    { version: 'v0.6',
       why: 'Some text was too faint to read comfortably. Accessibility matters.',
       changes: [
         'Made all text easier to read with better contrast',
         'Set a minimum text size so nothing is too tiny',
         'Consistent text styling across the whole page',
       ]},
-    { version: 'v0.5', date: '2026-03-05',
+    { version: 'v0.5',
       why: 'Hard to tell which days are busiest just by scrolling through a list.',
       changes: [
         'Added a calendar heatmap (darker = more events)',
         'Scroll sideways to see the whole week',
         'Click a time slot to jump straight to those events',
       ]},
-    { version: 'v0.4', date: '2026-03-03',
+    { version: 'v0.4',
       why: '200+ events in a flat list was… a lot.',
       changes: [
         'Events grouped by day with date headers',
         'Shows total event count at the top',
         'Cleaned up location names (bye bye ", California")',
       ]},
-    { version: 'v0.3', date: '2026-03-01',
+    { version: 'v0.3',
       why: 'Scrolling through hundreds of events to find one? No thanks.',
       changes: [
         'Search bar to find events by name or host instantly',
         'Filter pills show how many events match each option',
         'Your filter preferences are remembered between visits',
       ]},
-    { version: 'v0.2', date: '2026-02-28',
+    { version: 'v0.2',
       why: 'A raw list of events isn\'t very useful without ways to filter and sort.',
       changes: [
         'Filter by price: Free or Paid',
         'Filter by location, pick one or several cities',
         'Sort by time, name, or guest count',
       ]},
-    { version: 'v0.1', date: '2026-02-27',
+    { version: 'v0.1',
       why: 'Bay Area tech events were scattered across the internet. Why not put them in one place?',
       changes: [
         'Event listing page pulling from Luma automatically',
@@ -448,7 +448,7 @@
             </div>
             {#each CHANGELOG as release}
               <div class="changelog-release">
-                <div class="changelog-version">{release.version} <span class="changelog-date">{release.date}</span></div>
+                <div class="changelog-version">{release.version}</div>
                 <p class="changelog-why">{release.why}</p>
                 <ul class="changelog-list">
                   {#each release.changes as change}
@@ -765,11 +765,6 @@
     font-size: var(--fs-xs);
     font-weight: 600;
     color: var(--text);
-  }
-
-  .changelog-date {
-    font-weight: 400;
-    color: var(--text-light);
   }
 
   .changelog-why {
