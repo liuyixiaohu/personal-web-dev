@@ -1,0 +1,15 @@
+---
+import JournalPage from '../../layouts/JournalPage.astro';
+import { people } from '../../data/people';
+
+export function getStaticPaths() {
+  return people.map((p) => ({
+    params: { slug: p.slug },
+    props: p,
+  }));
+}
+
+const { name, color } = Astro.props;
+---
+
+<JournalPage name={name} color={color} />

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { people } from '../../data/people';
 ---
 
 <BaseLayout title="Special Thanks | Kun Li" description="To everyone who made this journey possible.">
@@ -12,18 +13,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </header>
 
     <section class="section">
-      <a href="/special-thanks/joanne-goldberg" class="item item--first">
-        <span class="item-title">JoAnne Goldberg</span>
-        <span class="item-desc">A brief note of gratitude. Content coming soon.</span>
-      </a>
-      <a href="/special-thanks/zach-beasley" class="item item--second">
-        <span class="item-title">Zach Beasley</span>
-        <span class="item-desc">A brief note of gratitude. Content coming soon.</span>
-      </a>
-      <a href="/special-thanks/yan-zhang" class="item item--third">
-        <span class="item-title">Yan Zhang</span>
-        <span class="item-desc">A brief note of gratitude. Content coming soon.</span>
-      </a>
+      {people.map((person) => (
+        <a href={`/special-thanks/${person.slug}`} class="item">
+          <span class="item-title" style={`color: ${person.color}`}>{person.name}</span>
+          <span class="item-desc">A brief note of gratitude. Content coming soon.</span>
+        </a>
+      ))}
     </section>
 
   </main>
@@ -44,8 +39,5 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     margin-bottom: var(--space-lg);
   }
 
-  /* Accent colors */
-  .item--first .item-title { color: var(--color-ds); }
-  .item--second .item-title { color: var(--color-visual); }
-  .item--third .item-title { color: var(--color-pm); }
+  /* Accent colors applied via inline style from data */
 </style>

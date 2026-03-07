@@ -1,5 +1,12 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { professionalAreas } from '../../data/professionalAreas';
+
+const areaI18n: Record<string, { titleKey: string; descKey: string; defaultTitle: string; defaultDesc: string }> = {
+  'product-marketing': { titleKey: 'bar.drink.pm', descKey: 'bar.drink.pm.desc', defaultTitle: 'Product Marketing', defaultDesc: 'Nailed the positioning. Then the product pivoted.' },
+  'data-science': { titleKey: 'bar.drink.ds', descKey: 'bar.drink.ds.desc', defaultTitle: 'Data Science', defaultDesc: 'Presented findings to leadership. They went with their gut.' },
+  'visual-design': { titleKey: 'bar.drink.visual', descKey: 'bar.drink.visual.desc', defaultTitle: 'Visual Design', defaultDesc: 'After spending 3 hours adjusting a gradient. The client said, "looks the same." It was not.' },
+};
 ---
 
 <BaseLayout title="Professional | Kun Li" description="Kun Li's professional expertise: Product Marketing, Data Science, and Visual Design.">
@@ -9,18 +16,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     <!-- Core areas -->
     <section class="section">
-      <a href="/professional/product-marketing" class="item item--pm">
-        <span class="item-title" data-i18n="bar.drink.pm">Product Marketing</span>
-        <span class="item-desc" data-i18n="bar.drink.pm.desc">Nailed the positioning. Then the product pivoted.</span>
-      </a>
-      <a href="/professional/data-science" class="item item--ds">
-        <span class="item-title" data-i18n="bar.drink.ds">Data Science</span>
-        <span class="item-desc" data-i18n="bar.drink.ds.desc">Presented findings to leadership. They went with their gut.</span>
-      </a>
-      <a href="/professional/visual-design" class="item item--visual">
-        <span class="item-title" data-i18n="bar.drink.visual">Visual Design</span>
-        <span class="item-desc" data-i18n="bar.drink.visual.desc">After spending 3 hours adjusting a gradient. The client said, "looks the same." It was not.</span>
-      </a>
+      {professionalAreas.map((area) => {
+        const i18n = areaI18n[area.slug];
+        return (
+          <a href={`/professional/${area.slug}`} class="item">
+            <span class="item-title" style={`color: ${area.color}`} data-i18n={i18n?.titleKey}>{i18n?.defaultTitle ?? area.title}</span>
+            <span class="item-desc" data-i18n={i18n?.descKey}>{i18n?.defaultDesc ?? ''}</span>
+          </a>
+        );
+      })}
     </section>
 
     <!-- Life Journey -->
@@ -53,10 +57,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     margin-bottom: var(--space-lg);
   }
 
-  /* Accent colors on title */
-  .item--pm .item-title { color: var(--color-pm); }
-  .item--ds .item-title { color: var(--color-ds); }
-  .item--visual .item-title { color: var(--color-visual); }
+  /* Core area accent colors applied via inline style from data */
   .item--journey .item-title { color: var(--color-journey); }
   .item--events .item-title { color: var(--color-rose); }
   .item--brand .item-title { color: #8BAF9A; }
