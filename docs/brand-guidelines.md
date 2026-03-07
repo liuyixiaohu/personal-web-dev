@@ -1,4 +1,4 @@
-# Brand Guidelines — kunli.co
+# Brand Guidelines: kunli.co
 
 > Developer reference for the visual design system.
 > Live showcase: [kunli.co/brand](https://kunli.co/brand)
@@ -7,10 +7,10 @@
 
 ## Design Principles
 
-1. **Minimal** — Less is more. No decoration for decoration's sake.
-2. **Fast** — Static HTML, zero unnecessary JS, CDN fonts.
-3. **Warm** — Cream tones, serif fonts, literary voice.
-4. **Bilingual** — Every visible text has English and Chinese via `data-i18n`.
+1. **Minimal**: Less is more. No decoration for decoration's sake.
+2. **Fast**: Static HTML, zero unnecessary JS, CDN fonts.
+3. **Warm**: Cream tones, serif fonts, literary voice.
+4. **Bilingual**: Every visible text has English and Chinese via `data-i18n`.
 
 ---
 
@@ -25,16 +25,16 @@
 | Hex | CSS Variable | Category | Usage |
 |---|---|---|---|
 | `#FAF7F2` | `--bg` | Warm Neutral | Page background |
-| `#F3EFE7` | — | Warm Neutral | Subtle background variation |
-| `#E4DDD2` | — | Warm Neutral | Warm border / card background |
+| `#F3EFE7` | - | Warm Neutral | Subtle background variation |
+| `#E4DDD2` | - | Warm Neutral | Warm border / card background |
 | `#DDEEE7` | `--bubble-visual` | Green | Light green background |
-| `#A8D7C6` | — | Green | Mid green accent |
+| `#A8D7C6` | - | Green | Mid green accent |
 | `#D6E6F3` | `--bubble-ds` | Blue | Light blue background |
-| `#7FB6DD` | — | Blue | Blue accent (Life Journey) |
+| `#7FB6DD` | - | Blue | Blue accent (Life Journey) |
 | `#F0D7D7` | `--bubble-pm` | Pink | Light pink background |
-| `#D9797B` | — | Pink | Strong pink/rose accent |
+| `#D9797B` | - | Pink | Strong pink/rose accent |
 | `#8A939B` | `--text-light` | Text | Secondary/muted text |
-| `#5A636B` | — | Text | Mid-tone text |
+| `#5A636B` | - | Text | Mid-tone text |
 | `#1F2328` | `--text` | Text | Primary text |
 
 ### Professional Area Accents
@@ -52,12 +52,12 @@
 
 ### Fonts
 
-**English — EB Garamond**
+**English: EB Garamond**
 - Source: Google Fonts CDN
 - Weights: 400, 500, 600, 700 (+ italic 400i, 500i)
 - Character: Humanist serif, elegant, warm, literary
 
-**Chinese — LXGW WenKai (霞鹜文楷)**
+**Chinese: LXGW WenKai (霞鹜文楷)**
 - Source: cdnjs CDN (`lxgw-wenkai-web`)
 - Character: Kai (楷书) style, handwritten warmth
 
@@ -68,11 +68,11 @@
 --font-zh: 'LXGW WenKai', 'PingFang SC', 'Microsoft YaHei', sans-serif;
 ```
 
-### Type Scale — Major Third (1.25×)
+### Type Scale: Major Third (1.25×)
 
 | Variable | Ratio | Value | Usage |
 |---|---|---|---|
-| `--fs-xs` | — | `0.75rem` | Labels, tags, captions, secondary text |
+| `--fs-xs` | - | `0.75rem` | Labels, tags, captions, secondary text |
 | (base) | 1.25⁰ | `1rem` | Body text |
 | `--fs-md` | 1.25¹ | `1.25rem` | Subheadings, nav titles |
 | `--fs-lg` | 1.25² | `1.563rem` | Page headings |
@@ -82,7 +82,7 @@ Root font-size is fluid: `--fs-base: clamp(1rem, 0.9rem + 0.5vw, 1.25rem)`
 
 ### Rules
 
-- No hardcoded font sizes — always use scale variables.
+- No hardcoded font sizes, always use scale variables.
 - Chinese text: never italicize. Use `font-style: normal` override.
 - Use weight 500 or 600 for emphasis (keeps elegance over bold 700).
 
@@ -90,7 +90,7 @@ Root font-size is fluid: `--fs-base: clamp(1rem, 0.9rem + 0.5vw, 1.25rem)`
 
 ## Spacing
 
-Fluid scale using `clamp()` — adapts to viewport width.
+Fluid scale using `clamp()`, adapts to viewport width.
 
 | Variable | Value |
 |---|---|
@@ -183,7 +183,7 @@ transition: opacity 0.2s ease;
 
 ## Responsive Strategy
 
-- **Primary approach**: Fluid scaling via `clamp()` — no breakpoints for most things.
+- **Primary approach**: Fluid scaling via `clamp()`, no breakpoints for most things.
 - **Single breakpoint**: `@media (max-width: 480px)` for layout-level changes only.
 - Grid system handles responsive content width automatically via `min()` function.
 

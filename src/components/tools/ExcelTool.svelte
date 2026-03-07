@@ -289,7 +289,7 @@
         const amountCol = findColumnIndex(headers, '费用（元）');
         const dateCol = findColumnIndex(headers, '保险起期');
         if (companyCol < 0 || amountCol < 0) {
-          console.warn(`[${fileName}] Sheet "${sheetName}": 优米列缺失 — 被派遣单位=${companyCol >= 0 ? '✓' : '✗'}, 费用（元）=${amountCol >= 0 ? '✓' : '✗'}`);
+          console.warn(`[${fileName}] Sheet "${sheetName}": 优米列缺失: 被派遣单位=${companyCol >= 0 ? '✓' : '✗'}, 费用（元）=${amountCol >= 0 ? '✓' : '✗'}`);
           continue;
         }
 
@@ -309,7 +309,7 @@
         // renBao
         const amountCol = findColumnIndex(headers, '保费（分）');
         if (amountCol < 0) {
-          console.warn(`[${fileName}] Sheet "${sheetName}": 人保列缺失 — 保费（分）未找到`);
+          console.warn(`[${fileName}] Sheet "${sheetName}": 人保列缺失: 保费（分）未找到`);
           continue;
         }
 
@@ -375,7 +375,7 @@
         const [y, m] = p.split('-');
         return `${y}年${m}月`;
       }).join('、');
-      return `检测到 ${monthList} —— 一次只能处理一个月份的`;
+      return `检测到 ${monthList}，一次只能处理一个月份的`;
     }
 
     // Map insuranceType to output column name
@@ -648,7 +648,7 @@
     // Sort months in descending order
     const sortedMonths = [...existingBlocks.keys()].sort((a, b) => b - a);
 
-    // Clear the sheet content — iterate all columns explicitly
+    // Clear the sheet content: iterate all columns explicitly
     // (eachCell skips cells with formatting but no value)
     const rowCount = ws.rowCount;
     for (let r = rowCount; r >= 1; r--) {
@@ -727,7 +727,7 @@
       for (const f of rawFiles) {
         const parsed = parseRawFile(f.buffer, f.name, f.role as InsuranceType, XLSX);
         if (parsed.records.length === 0) {
-          statusMessage = `${f.name} 中没有找到有效数据 — 请确认表头列名正确`;
+          statusMessage = `${f.name} 中没有找到有效数据: 请确认表头列名正确`;
           processing = false;
           return;
         }

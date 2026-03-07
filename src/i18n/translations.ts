@@ -1,5 +1,5 @@
 // ============================================
-// Translation Dictionary — EN / ZH
+// Translation Dictionary: EN / ZH
 // ============================================
 
 export type Lang = 'en' | 'zh';
@@ -109,7 +109,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.title': { en: 'Today\'s New Luma Events at SF Bay Area', zh: '今日新增 Luma 活动（旧金山湾区）' },
   'events.lastUpdated': { en: 'Last checked', zh: '最近检查' },
   'events.noEvents': { en: 'No new events discovered today. Check back tomorrow!', zh: '今天没有发现新活动，明天再来看看吧！' },
-  'events.staleWarning': { en: 'Data may be stale — last update was over 48 hours ago.', zh: '数据可能已过时——上次更新超过48小时前。' },
+  'events.staleWarning': { en: 'Data may be stale. Last update was over 48 hours ago.', zh: '数据可能已过时，上次更新超过48小时前。' },
   'events.fetchError': { en: 'Unable to load events right now. Please try again later.', zh: '暂时无法加载活动信息，请稍后再试。' },
   'events.loading': { en: 'Loading events...', zh: '正在加载活动...' },
   'events.free': { en: 'Free', zh: '免费' },
@@ -142,8 +142,8 @@ export const translations: Record<string, Record<Lang, string>> = {
   // --- Brand Guidelines page ---
   'brand.title': { en: 'Brand Guidelines', zh: '品牌规范' },
   'brand.subtitle': {
-    en: 'The visual language of kunli.co — warm, minimal, bilingual.',
-    zh: 'kunli.co 的视觉语言——温暖、极简、双语。',
+    en: 'The visual language of kunli.co: warm, minimal, bilingual.',
+    zh: 'kunli.co 的视觉语言：温暖、极简、双语。',
   },
   'brand.principles': { en: 'Design Principles', zh: '设计原则' },
   'brand.principleMinimal': { en: 'Minimal', zh: '极简' },
@@ -178,8 +178,8 @@ export const translations: Record<string, Record<Lang, string>> = {
   },
   'brand.spacing': { en: 'Spacing', zh: '间距' },
   'brand.spacingNote': {
-    en: 'Fluid scale using clamp() — adapts to viewport width.',
-    zh: '使用 clamp() 的流式间距——随视口宽度自适应。',
+    en: 'Fluid scale using clamp(), adapts to viewport width.',
+    zh: '使用 clamp() 的流式间距，随视口宽度自适应。',
   },
   'brand.grid': { en: 'Grid System', zh: '网格系统' },
   'brand.gridNote': {
