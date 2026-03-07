@@ -56,20 +56,67 @@
   let searchQuery = $state<string>('');
 
   // --- Changelog ---
-  const VERSION = 'v1.2';
+  const VERSION = 'v0.7';
   const CHANGELOG = [
-    { version: 'v1.2', date: '2026-03-07', changes: [
-      'Location filter: collapsible pills sorted by event count',
-      'Calendar: 8 AM–10 PM range, cleaner time labels',
-      'Font & contrast: enforced 12px minimum, removed opacity hacks',
-    ]},
-    { version: 'v1.1', date: '2026-03-06', changes: [
-      'Color audit: unified palette, WCAG AA contrast compliance',
-      'Brand guidelines page with full color & type reference',
-    ]},
-    { version: 'v1.0', date: '2026-03-05', changes: [
-      'Initial release: event listing with filters, calendar heatmap, search',
-    ]},
+    { version: 'v0.7', date: '2026-03-07',
+      why: '25+ location pills cluttered the filter area; calendar time labels were hard to scan quickly.',
+      changes: [
+        'Location pills collapse to 2 rows by default, with inline More/Less toggle',
+        'Locations sorted by event count descending (most events first)',
+        'Calendar time labels simplified: "3 AM" format, removed ":00" suffix',
+        'Calendar range clamped to 8 AM–10 PM',
+        'Day headers with comma separator: "Fri, Mar 7"',
+        'Added version changelog popup',
+      ]},
+    { version: 'v0.6', date: '2026-03-06',
+      why: 'Color audit found WCAG contrast failures — text with opacity fell below 4.5:1 ratio.',
+      changes: [
+        'Enforced 12px minimum font size (--fs-xs raised from 0.64rem to 0.75rem)',
+        'Removed opacity hacks on 10+ text elements; replaced with solid color',
+        'Standardized 13 hardcoded font sizes to --fs-xs / --fs-sm design tokens',
+        'All text now meets WCAG AA contrast ratio (4.5:1 minimum)',
+      ]},
+    { version: 'v0.5', date: '2026-03-05',
+      why: 'Needed a visual overview to spot busy time slots across the week at a glance.',
+      changes: [
+        'Interactive calendar heatmap with 30-min time slots',
+        'Scrollable 5-day view with pan hints',
+        'Click calendar cells to jump to matching events',
+        'Calendar height auto-matched to filter panel',
+      ]},
+    { version: 'v0.4', date: '2026-03-03',
+      why: 'Event cards needed better organization — a flat list of 200+ events was overwhelming.',
+      changes: [
+        'Date-grouped event cards with daily section headers',
+        'Event count summary header',
+        'Stripped state suffix from locations (e.g., ", California")',
+        'Removed host display for cleaner card layout',
+        'Moved event data to static serving (public/)',
+      ]},
+    { version: 'v0.3', date: '2026-03-01',
+      why: 'Users wanted to narrow down events by keyword without scrolling through the full list.',
+      changes: [
+        'Real-time search by event name or host',
+        'Pill counts showing matching events per filter option',
+        'Approval badge styling for gated events',
+        'Filter and sort preferences persisted in localStorage',
+      ]},
+    { version: 'v0.2', date: '2026-02-28',
+      why: 'The raw event list needed filtering and sorting to be useful for discovery.',
+      changes: [
+        'Price filter: All / Free (May Require Approval) / Paid',
+        'Location multi-select filter with pill toggles',
+        'Sort options: time, alphabetical, guest count (asc/desc)',
+        'Clear filters button to reset all selections',
+      ]},
+    { version: 'v0.1', date: '2026-02-27',
+      why: 'Wanted to surface Bay Area tech events in one place, auto-updated daily from Luma.',
+      changes: [
+        'Event listing page with Luma API integration',
+        'Event cards with title, date, location, price, and guest count',
+        'Automated data pipeline fetching new events daily',
+        'Bilingual page title and labels (EN/ZH)',
+      ]},
   ];
   let changelogOpen = $state(false);
 
@@ -392,7 +439,9 @@
     <div class="event-title-row">
       <h2 class="event-title">{t('events.title')}</h2>
       <div class="version-wrap">
-        <button class="version-btn" onclick={() => changelogOpen = !changelogOpen}>{VERSION}</button>
+        <button class="version-btn" onclick={() => changelogOpen = !changelogOpen}>
+          {VERSION}
+        </button>
         {#if changelogOpen}
           <div class="changelog-backdrop" onclick={() => changelogOpen = false} role="presentation"></div>
           <div class="changelog-popup">
@@ -403,6 +452,7 @@
             {#each CHANGELOG as release}
               <div class="changelog-release">
                 <div class="changelog-version">{release.version} <span class="changelog-date">{release.date}</span></div>
+                <p class="changelog-why">{release.why}</p>
                 <ul class="changelog-list">
                   {#each release.changes as change}
                     <li>{change}</li>
@@ -655,16 +705,28 @@
   .changelog-popup {
     position: absolute;
     top: calc(100% + 0.4rem);
-    left: 0;
+    right: 0;
     z-index: 100;
-    width: min(20rem, calc(100vw - 2 * var(--content-padding)));
-    max-height: 24rem;
+    width: min(22rem, calc(100vw - 2rem));
+    max-height: 28rem;
     overflow-y: auto;
     background: var(--bg);
     border: 1px solid var(--border);
     border-radius: 6px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
     padding: 0.75rem;
+  }
+
+  @media (max-width: 480px) {
+    .changelog-popup {
+      position: fixed;
+      top: auto;
+      right: 1rem;
+      bottom: 1rem;
+      left: 1rem;
+      width: auto;
+      max-height: 70vh;
+    }
   }
 
   .changelog-header {
@@ -712,6 +774,14 @@
   .changelog-date {
     font-weight: 400;
     color: var(--text-light);
+  }
+
+  .changelog-why {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    font-style: italic;
+    margin: 0.15rem 0 0.2rem;
+    line-height: 1.4;
   }
 
   .changelog-list {
