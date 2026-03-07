@@ -132,7 +132,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.sortGuestsDesc': { en: 'Most guests', zh: '参与最多' },
   'events.calendar': { en: 'Event Distribution', zh: '活动分布' },
   'events.searchLabel': { en: 'Search Events or Hosts', zh: '搜索活动或主办方' },
-  'events.searchPlaceholder': { en: 'Search events or hosts...', zh: '搜索活动或主办方...' },
+  'events.searchPlaceholder': { en: 'e.g. hackathon, google, etc', zh: '如：hackathon、google' },
   'events.clearFilters': { en: 'Clear filters', zh: '清除筛选' },
   'events.noMatch': { en: 'No events match filters', zh: '没有匹配的活动' },
   'events.showMore': { en: 'More', zh: '更多' },

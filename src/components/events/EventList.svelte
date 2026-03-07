@@ -59,71 +59,64 @@
   const VERSION = 'v0.8';
   const CHANGELOG = [
     { version: 'v0.8', date: '2026-03-07',
-      why: 'Font audit found --fs-xs and --fs-sm were only 0.8px apart (visually identical), plus 3 hardcoded sizes bypassing the design token scale.',
+      why: 'Too many font sizes doing the same job — time for spring cleaning.',
       changes: [
-        'Merged --fs-sm (0.8rem) into --fs-xs (0.75rem) — single small-text token',
-        'Eliminated 3 hardcoded font sizes: 0.85rem, 1.1rem, and a custom clamp()',
-        'Type scale consolidated to 5 clean tokens: xs → base → md → lg → xl',
-        'Price filter simplified: removed redundant "All" option, toggle-to-deselect behavior',
+        'Simplified font sizes from 6 levels to 5 (less is more)',
+        'Price filter: removed "All" button — just click again to deselect',
+        'Calendar switched to 24-hour time across all languages',
+        'Search placeholder now shows example keywords',
       ]},
     { version: 'v0.7', date: '2026-03-07',
-      why: '25+ location pills cluttered the filter area; calendar time labels were hard to scan quickly.',
+      why: 'The location list was getting out of hand with 25+ cities showing at once.',
       changes: [
-        'Location pills collapse to 2 rows by default, with inline More/Less toggle',
-        'Locations sorted by event count descending (most events first)',
-        'Calendar time labels simplified: "3 AM" format, removed ":00" suffix',
-        'Calendar range clamped to 8 AM–10 PM',
-        'Day headers with comma separator: "Fri, Mar 7"',
-        'Added version changelog popup',
+        'Location pills now collapse to 2 rows — click "More" to see the rest',
+        'Most popular cities show first',
+        'Cleaner calendar time labels (just the number, no ":00")',
+        'Calendar only shows 8 AM – 10 PM (nobody\'s going to events at 3 AM… right?)',
+        'Added this version changelog popup',
       ]},
     { version: 'v0.6', date: '2026-03-06',
-      why: 'Color audit found WCAG contrast failures — text with opacity fell below 4.5:1 ratio.',
+      why: 'Some text was too faint to read comfortably — accessibility matters.',
       changes: [
-        'Enforced 12px minimum font size (--fs-xs raised from 0.64rem to 0.75rem)',
-        'Removed opacity hacks on 10+ text elements; replaced with solid color',
-        'Standardized 13 hardcoded font sizes to --fs-xs / --fs-sm design tokens',
-        'All text now meets WCAG AA contrast ratio (4.5:1 minimum)',
+        'Made all text easier to read with better contrast',
+        'Set a minimum text size so nothing is too tiny',
+        'Consistent text styling across the whole page',
       ]},
     { version: 'v0.5', date: '2026-03-05',
-      why: 'Needed a visual overview to spot busy time slots across the week at a glance.',
+      why: 'Hard to tell which days are busiest just by scrolling through a list.',
       changes: [
-        'Interactive calendar heatmap with 30-min time slots',
-        'Scrollable 5-day view with pan hints',
-        'Click calendar cells to jump to matching events',
-        'Calendar height auto-matched to filter panel',
+        'Added a calendar heatmap — darker = more events',
+        'Scroll sideways to see the whole week',
+        'Click a time slot to jump straight to those events',
       ]},
     { version: 'v0.4', date: '2026-03-03',
-      why: 'Event cards needed better organization — a flat list of 200+ events was overwhelming.',
+      why: '200+ events in a flat list was… a lot.',
       changes: [
-        'Date-grouped event cards with daily section headers',
-        'Event count summary header',
-        'Stripped state suffix from locations (e.g., ", California")',
-        'Removed host display for cleaner card layout',
-        'Moved event data to static serving (public/)',
+        'Events grouped by day with date headers',
+        'Shows total event count at the top',
+        'Cleaned up location names (bye bye ", California")',
       ]},
     { version: 'v0.3', date: '2026-03-01',
-      why: 'Users wanted to narrow down events by keyword without scrolling through the full list.',
+      why: 'Scrolling through hundreds of events to find one? No thanks.',
       changes: [
-        'Real-time search by event name or host',
-        'Pill counts showing matching events per filter option',
-        'Approval badge styling for gated events',
-        'Filter and sort preferences persisted in localStorage',
+        'Search bar — find events by name or host instantly',
+        'Filter pills show how many events match each option',
+        'Your filter preferences are remembered between visits',
       ]},
     { version: 'v0.2', date: '2026-02-28',
-      why: 'The raw event list needed filtering and sorting to be useful for discovery.',
+      why: 'A raw list of events isn\'t very useful without ways to filter and sort.',
       changes: [
-        'Price filter: All / Free (May Require Approval) / Paid',
-        'Location multi-select filter with pill toggles',
-        'Sort options: time, alphabetical, guest count (asc/desc)',
-        'Clear filters button to reset all selections',
+        'Filter by price: Free or Paid',
+        'Filter by location — pick one or several cities',
+        'Sort by time, name, or guest count',
       ]},
     { version: 'v0.1', date: '2026-02-27',
-      why: 'Wanted to surface Bay Area tech events in one place, auto-updated daily from Luma.',
+      why: 'Bay Area tech events were scattered across the internet. Why not put them in one place?',
       changes: [
-        'Event listing page with Luma API integration',
-        'Event cards with title, date, location, price, and guest count',
-        'Automated data pipeline fetching new events daily',
-        'Bilingual page title and labels (EN/ZH)',
+        'Event listing page pulling from Luma automatically',
+        'Each event shows title, date, location, price, and guest count',
+        'New events fetched daily',
+        'Available in English and Chinese',
       ]},
   ];
   let changelogOpen = $state(false);
@@ -333,10 +326,7 @@
 
   function formatTimeLabel(time: string): string {
     const h = parseInt(time.split(':')[0], 10);
-    if (lang === 'zh') return `${h}`;
-    const ampm = h >= 12 ? 'PM' : 'AM';
-    const h12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
-    return `${h12}\n${ampm}`;
+    return `${h}`;
   }
 
   // --- Filtering & Sorting ---
