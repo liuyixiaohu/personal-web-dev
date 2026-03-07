@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Zach Beasley | Special Thanks" description="A note of gratitude for Zach Beasley.">
+  <main class="journal-page grid-page">
+    <h1 class="sr-only">Zach Beasley</h1>
+    <a href="/special-thanks" class="back-link" data-i18n="nav.back">&larr; Back</a>
+
+    <header class="journal-header">
+      <h2 class="journal-name">Zach Beasley</h2>
+    </header>
+
+    <article class="journal-body">
+      <p class="journal-placeholder" data-i18n="common.comingSoon">Content coming soon...</p>
+    </article>
+  </main>
+</BaseLayout>
+
+<style>
+  .back-link {
+    display: inline-block;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    margin-bottom: 2.5rem;
+  }
+
+  .back-link:hover {
+    color: var(--text);
+  }
+
+  .journal-header {
+    margin-bottom: var(--space-lg);
+  }
+
+  .journal-name {
+    font-size: var(--fs-xl);
+    font-weight: 500;
+    color: #5a8a6e;
+  }
+
+  .journal-body {
+    font-size: var(--fs-base, 1rem);
+    color: var(--text);
+    line-height: 1.8;
+  }
+
+  .journal-placeholder {
+    color: var(--text-light);
+    font-size: var(--fs-xs);
+  }
+</style>
