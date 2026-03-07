@@ -204,20 +204,28 @@
     const slots: string[] = [];
     for (let h = minH; h < maxH; h++) {
       slots.push(`${String(h).padStart(2, '0')}:00`);
-      slots.push(`${String(h).padStart(2, '0')}:30`);
     }
     return slots;
   });
 
-  // Slot density map: slot key → { count, firstId } (from filtered events)
+  // Slot density map: hour slot key → { count, firstId } (from filtered events)
+  // Aggregates both :00 and :30 sub-slots into the :00 hour key
   let slotDensity = $derived.by(() => {
     const map = new Map<string, { count: number; firstId: string }>();
+    // Count unique events per hour slot
+    const seen = new Map<string, Set<string>>();
     for (const e of filteredEvents) {
       for (const s of getEventSlots(e)) {
-        const cur = map.get(s);
-        if (cur) cur.count++;
-        else map.set(s, { count: 1, firstId: e.api_id });
+        // Convert :30 sub-slot to its :00 hour key
+        const hourKey = s.replace(/:30$/, ':00');
+        let eventSet = seen.get(hourKey);
+        if (!eventSet) { eventSet = new Set(); seen.set(hourKey, eventSet); }
+        eventSet.add(e.api_id);
       }
+    }
+    for (const [key, eventSet] of seen) {
+      const firstId = [...eventSet][0];
+      map.set(key, { count: eventSet.size, firstId });
     }
     return map;
   });
@@ -236,7 +244,8 @@
   function formatDayHeader(dayStr: string): string {
     const [y, m, d] = dayStr.split('-').map(Number);
     const date = new Date(y, m - 1, d);
-    return date.toLocaleDateString(locale(), { weekday: 'short', month: 'short', day: 'numeric' });
+    const wk = date.toLocaleDateString(locale(), { weekday: 'short' });
+    return `${m}/${d} ${wk}`;
   }
 
   function formatTimeLabel(time: string): string {
@@ -348,49 +357,86 @@
       </div>
     {/if}
 
-    <!-- Filter & Sort Controls -->
-    <div class="filter-controls">
-      <!-- Price filter (single-select pills) -->
-      <div class="filter-row filter-row--stacked">
-        <span class="filter-label">{t('events.filterPrice')}</span>
-        <div class="filter-pills">
-          {#each ['all', 'free-approval', 'paid'] as priceOpt}
-            <button
-              class="pill"
-              class:pill--active={selectedPrice === priceOpt}
-              onclick={() => selectedPrice = priceOpt}
-            >
-              {priceOpt === 'all' ? t('events.filterAll') :
-               priceOpt === 'free-approval' ? t('events.filterFreeApproval') :
-               t('events.filterPaid')} <span class="pill-count">({priceCount(priceOpt)})</span>
-            </button>
-          {/each}
-        </div>
-      </div>
-
-      <!-- Location filter (multi-select, always visible) -->
-      {#if allLocations.length > 0}
-        <div class="filter-row">
-          <span class="filter-label">{t('events.filterLocation')}</span>
-          <div class="filter-pills filter-pills--wrap">
-            {#each allLocations as loc}
+    <!-- Filter & Sort Controls + Calendar -->
+    <div class="filter-layout">
+      <div class="filter-controls">
+        <!-- Price filter (single-select pills) -->
+        <div class="filter-row filter-row--stacked">
+          <span class="filter-label">{t('events.filterPrice')}</span>
+          <div class="filter-pills">
+            {#each ['all', 'free-approval', 'paid'] as priceOpt}
               <button
                 class="pill"
-                class:pill--active={selectedLocations.has(loc)}
-                onclick={() => toggleLocation(loc)}
-              >{loc} <span class="pill-count">({locationCount(loc)})</span></button>
+                class:pill--active={selectedPrice === priceOpt}
+                onclick={() => selectedPrice = priceOpt}
+              >
+                {priceOpt === 'all' ? t('events.filterAll') :
+                 priceOpt === 'free-approval' ? t('events.filterFreeApproval') :
+                 t('events.filterPaid')} <span class="pill-count">({priceCount(priceOpt)})</span>
+              </button>
             {/each}
           </div>
         </div>
-      {/if}
 
-      <!-- Read-only calendar -->
-      {#if calendarDays.length > 0 && timeSlots.length > 0}
+        <!-- Location filter (multi-select, always visible) -->
+        {#if allLocations.length > 0}
+          <div class="filter-row">
+            <span class="filter-label">{t('events.filterLocation')}</span>
+            <div class="filter-pills filter-pills--wrap">
+              {#each allLocations as loc}
+                <button
+                  class="pill"
+                  class:pill--active={selectedLocations.has(loc)}
+                  onclick={() => toggleLocation(loc)}
+                >{loc} <span class="pill-count">({locationCount(loc)})</span></button>
+              {/each}
+            </div>
+          </div>
+        {/if}
+
+        <!-- Sort (pills) -->
         <div class="filter-row filter-row--stacked">
+          <span class="filter-label">{t('events.sortBy')} <span class="sort-note">{t('events.sortNote')}</span></span>
+          <div class="filter-pills">
+            {#each [
+              ['time-asc', t('events.sortTimeAsc')],
+              ['time-desc', t('events.sortTimeDesc')],
+              ['alpha-asc', t('events.sortAlphaAsc')],
+              ['alpha-desc', t('events.sortAlphaDesc')],
+              ['guests-desc', t('events.sortGuestsDesc')],
+              ['guests-asc', t('events.sortGuestsAsc')],
+            ] as [val, label]}
+              <button
+                class="pill"
+                class:pill--active={sortBy === val}
+                onclick={() => sortBy = val}
+              >{label}</button>
+            {/each}
+          </div>
+        </div>
+
+        <!-- Clear filters -->
+        {#if hasActiveFilters}
+          <button class="clear-filters" onclick={clearFilters}>{t('events.clearFilters')}</button>
+        {/if}
+
+        <input
+          class="search-input"
+          type="text"
+          placeholder={t('events.searchPlaceholder')}
+          bind:value={searchQuery}
+        />
+
+        <div class="event-count">{filteredEvents.length} {t('events.eventCount')}</div>
+      </div>
+
+      <!-- Read-only calendar (side panel) -->
+      {#if calendarDays.length > 0 && timeSlots.length > 0}
+        <div class="cal-wrapper">
           <span class="filter-label">{t('events.calendar')}</span>
           <div
             class="cal-grid"
-            style="grid-template-columns: 4.5rem repeat({calendarDays.length}, 1fr);"
+            style="grid-template-columns: 3.5rem repeat({calendarDays.length}, 1fr);"
           >
             <!-- Header row -->
             <div class="cal-corner"></div>
@@ -399,7 +445,7 @@
             {/each}
             <!-- Time rows -->
             {#each timeSlots as time}
-              <div class="cal-time-label" class:cal-time-label--hour={time.endsWith(':00')}>{time.endsWith(':00') ? formatTimeLabel(time) : ''}</div>
+              <div class="cal-time-label">{formatTimeLabel(time)}</div>
               {#each calendarDays as day}
                 {@const key = `${day}T${time}`}
                 {@const info = slotDensity.get(key)}
@@ -409,7 +455,6 @@
                   class:cal-cell--d1={count === 1}
                   class:cal-cell--d2={count === 2}
                   class:cal-cell--d3={count >= 3}
-                  class:cal-cell--hour={time.endsWith(':00')}
                   class:cal-cell--clickable={count > 0}
                   title={slotTitle(key)}
                   role={count > 0 ? 'button' : undefined}
@@ -422,42 +467,7 @@
           </div>
         </div>
       {/if}
-
-      <!-- Sort (pills) -->
-      <div class="filter-row filter-row--stacked">
-        <span class="filter-label">{t('events.sortBy')} <span class="sort-note">{t('events.sortNote')}</span></span>
-        <div class="filter-pills">
-          {#each [
-            ['time-asc', t('events.sortTimeAsc')],
-            ['time-desc', t('events.sortTimeDesc')],
-            ['alpha-asc', t('events.sortAlphaAsc')],
-            ['alpha-desc', t('events.sortAlphaDesc')],
-            ['guests-desc', t('events.sortGuestsDesc')],
-            ['guests-asc', t('events.sortGuestsAsc')],
-          ] as [val, label]}
-            <button
-              class="pill"
-              class:pill--active={sortBy === val}
-              onclick={() => sortBy = val}
-            >{label}</button>
-          {/each}
-        </div>
-      </div>
-
-      <!-- Clear filters -->
-      {#if hasActiveFilters}
-        <button class="clear-filters" onclick={clearFilters}>{t('events.clearFilters')}</button>
-      {/if}
     </div>
-
-    <input
-      class="search-input"
-      type="text"
-      placeholder={t('events.searchPlaceholder')}
-      bind:value={searchQuery}
-    />
-
-    <div class="event-count">{filteredEvents.length} {t('events.eventCount')}</div>
 
     {#if isStale}
       <p class="event-stale">{t('events.staleWarning')}</p>
@@ -589,13 +599,27 @@
     margin-top: var(--space-xs);
   }
 
-  /* --- Filter & Sort Controls --- */
-  .filter-controls {
+  /* --- Filter Layout (side-by-side) --- */
+  .filter-layout {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
     margin-bottom: var(--space-sm);
+  }
+
+  .filter-controls {
+    flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     font-size: 0.78rem;
+  }
+
+  .cal-wrapper {
+    flex: 0 0 45%;
+    max-width: 28rem;
+    min-width: 16rem;
   }
 
   .filter-row {
@@ -660,8 +684,7 @@
     border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 4px;
     overflow: hidden;
-    max-width: 100%;
-    width: 100%;
+    margin-top: 0.3rem;
   }
 
   .cal-corner {
@@ -669,39 +692,32 @@
   }
 
   .cal-day-header {
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     color: var(--text-light);
     text-align: center;
-    padding: 0.3em 0.2em;
+    padding: 0.25em 0.15em;
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     white-space: nowrap;
   }
 
   .cal-time-label {
-    font-size: 0.6rem;
+    font-size: 0.55rem;
     color: var(--text-light);
     opacity: 0.6;
     text-align: right;
-    padding-right: 0.4em;
-    height: 18px;
+    padding-right: 0.3em;
+    height: 20px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-  }
-
-  .cal-time-label--hour {
     border-top: 1px solid rgba(0, 0, 0, 0.04);
   }
 
   .cal-cell {
-    height: 18px;
+    height: 20px;
     border-right: 1px solid rgba(0, 0, 0, 0.03);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
     transition: background 0.1s;
-  }
-
-  .cal-cell--hour {
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
   }
 
   .cal-cell--clickable {
@@ -840,6 +856,19 @@
   :global(html[data-lang="zh"]) .filter-controls {
     font-family: var(--font-zh);
     font-style: normal;
+  }
+
+  /* Tablet: stack layout */
+  @media (max-width: 768px) {
+    .filter-layout {
+      flex-direction: column;
+    }
+
+    .cal-wrapper {
+      width: 100%;
+      max-width: none;
+      min-width: 0;
+    }
   }
 
   /* Mobile */
