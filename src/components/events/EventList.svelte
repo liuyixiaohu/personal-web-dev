@@ -59,24 +59,24 @@
   const VERSION = 'v0.8';
   const CHANGELOG = [
     { version: 'v0.8', date: '2026-03-07',
-      why: 'Too many font sizes doing the same job — time for spring cleaning.',
+      why: 'Too many font sizes doing the same job. Time for spring cleaning.',
       changes: [
         'Simplified font sizes from 6 levels to 5 (less is more)',
-        'Price filter: removed "All" button — just click again to deselect',
+        'Price filter: removed "All" button, just click again to deselect',
         'Calendar switched to 24-hour time across all languages',
         'Search placeholder now shows example keywords',
       ]},
     { version: 'v0.7', date: '2026-03-07',
       why: 'The location list was getting out of hand with 25+ cities showing at once.',
       changes: [
-        'Location pills now collapse to 2 rows — click "More" to see the rest',
+        'Location pills now collapse to 2 rows, click "More" to see the rest',
         'Most popular cities show first',
         'Cleaner calendar time labels (just the number, no ":00")',
         'Calendar only shows 8 AM – 10 PM (nobody\'s going to events at 3 AM… right?)',
         'Added this version changelog popup',
       ]},
     { version: 'v0.6', date: '2026-03-06',
-      why: 'Some text was too faint to read comfortably — accessibility matters.',
+      why: 'Some text was too faint to read comfortably. Accessibility matters.',
       changes: [
         'Made all text easier to read with better contrast',
         'Set a minimum text size so nothing is too tiny',
@@ -85,7 +85,7 @@
     { version: 'v0.5', date: '2026-03-05',
       why: 'Hard to tell which days are busiest just by scrolling through a list.',
       changes: [
-        'Added a calendar heatmap — darker = more events',
+        'Added a calendar heatmap (darker = more events)',
         'Scroll sideways to see the whole week',
         'Click a time slot to jump straight to those events',
       ]},
@@ -99,7 +99,7 @@
     { version: 'v0.3', date: '2026-03-01',
       why: 'Scrolling through hundreds of events to find one? No thanks.',
       changes: [
-        'Search bar — find events by name or host instantly',
+        'Search bar to find events by name or host instantly',
         'Filter pills show how many events match each option',
         'Your filter preferences are remembered between visits',
       ]},
@@ -107,7 +107,7 @@
       why: 'A raw list of events isn\'t very useful without ways to filter and sort.',
       changes: [
         'Filter by price: Free or Paid',
-        'Filter by location — pick one or several cities',
+        'Filter by location, pick one or several cities',
         'Sort by time, name, or guest count',
       ]},
     { version: 'v0.1', date: '2026-02-27',
