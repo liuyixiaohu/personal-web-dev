@@ -9,7 +9,14 @@
   --text-light: #5A636B;
   --border: #e2ded8;
 
-  /* Bubble colors */
+  /* Accent colors (deep) */
+  --color-pm: #9a6868;
+  --color-ds: #5a7a94;
+  --color-visual: #5a8a6e;
+  --color-journey: #7FB6DD;
+  --color-rose: #D9797B;
+
+  /* Bubble colors (light backgrounds) */
   --bubble-pm: #F0D7D7;
   --bubble-ds: #D6E6F3;
   --bubble-visual: #DDEEE7;
@@ -98,6 +105,56 @@ a:hover {
 ::view-transition-new(root) {
   animation-duration: 0.4s;
   animation-timing-function: ease-in-out;
+}
+
+/* ============================================
+   Shared Components
+   ============================================ */
+.back-link {
+  display: inline-block;
+  font-size: var(--fs-xs);
+  color: var(--text-light);
+  text-decoration: none;
+  margin-bottom: var(--space-lg);
+  transition: color 0.15s ease;
+}
+
+.back-link:hover {
+  color: var(--text);
+  opacity: 1;
+}
+
+/* Item list : used in professional + special-thanks index pages */
+.item {
+  display: block;
+  text-decoration: none;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  transition: opacity 0.15s ease;
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.item:hover {
+  opacity: 0.6;
+}
+
+.item-title {
+  display: block;
+  font-size: var(--fs-md);
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.item-desc {
+  display: block;
+  font-size: var(--fs-xs);
+  color: var(--text-light);
+  line-height: 1.5;
+  margin-top: 0.15rem;
 }
 
 /* ============================================

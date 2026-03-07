@@ -868,7 +868,7 @@
   }
 
   .event-status--error {
-    color: #9a6868;
+    color: var(--color-pm);
   }
 
   .event-empty {
@@ -1101,7 +1101,7 @@
 
   .event-stale {
     font-size: var(--fs-xs);
-    color: #9a6868;
+    color: var(--color-pm);
     font-style: italic;
     margin-bottom: var(--space-sm);
     padding: var(--space-xs) var(--space-sm);
@@ -1155,17 +1155,17 @@
   }
 
   .event-price--free {
-    color: #5a8a6e;
+    color: var(--color-visual);
     background: rgba(221, 238, 231, 0.3);
   }
 
   .event-price--approval {
-    color: #7FB6DD;
+    color: var(--color-journey);
     background: rgba(127, 182, 221, 0.1);
   }
 
   .event-price--paid {
-    color: #9a6868;
+    color: var(--color-pm);
     background: rgba(154, 104, 104, 0.08);
   }
 

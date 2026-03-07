@@ -249,7 +249,7 @@
     border-radius: 4px;
     background: rgba(255, 255, 255, 0.85);
     color: #4a6e5d;
-    font-size: 16px;
+    font-size: 1rem;
     line-height: 1;
     cursor: pointer;
     display: flex;
