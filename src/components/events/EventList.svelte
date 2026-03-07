@@ -55,6 +55,24 @@
   let sortBy = $state<string>(loadPref('events.sort', 'time-asc'));
   let searchQuery = $state<string>('');
 
+  // --- Changelog ---
+  const VERSION = 'v1.2';
+  const CHANGELOG = [
+    { version: 'v1.2', date: '2026-03-07', changes: [
+      'Location filter: collapsible pills sorted by event count',
+      'Calendar: 8 AM–10 PM range, cleaner time labels',
+      'Font & contrast: enforced 12px minimum, removed opacity hacks',
+    ]},
+    { version: 'v1.1', date: '2026-03-06', changes: [
+      'Color audit: unified palette, WCAG AA contrast compliance',
+      'Brand guidelines page with full color & type reference',
+    ]},
+    { version: 'v1.0', date: '2026-03-05', changes: [
+      'Initial release: event listing with filters, calendar heatmap, search',
+    ]},
+  ];
+  let changelogOpen = $state(false);
+
   // --- Location collapse ---
   let locationExpanded = $state(false);
   let locationOverflows = $state(false);
@@ -371,7 +389,31 @@
 {#key _tick}
 <div class="event-list">
   <header class="event-header">
-    <h2 class="event-title">{t('events.title')}</h2>
+    <div class="event-title-row">
+      <h2 class="event-title">{t('events.title')}</h2>
+      <div class="version-wrap">
+        <button class="version-btn" onclick={() => changelogOpen = !changelogOpen}>{VERSION}</button>
+        {#if changelogOpen}
+          <div class="changelog-backdrop" onclick={() => changelogOpen = false} role="presentation"></div>
+          <div class="changelog-popup">
+            <div class="changelog-header">
+              <span class="changelog-title">Changelog</span>
+              <button class="changelog-close" onclick={() => changelogOpen = false}>&times;</button>
+            </div>
+            {#each CHANGELOG as release}
+              <div class="changelog-release">
+                <div class="changelog-version">{release.version} <span class="changelog-date">{release.date}</span></div>
+                <ul class="changelog-list">
+                  {#each release.changes as change}
+                    <li>{change}</li>
+                  {/each}
+                </ul>
+              </div>
+            {/each}
+          </div>
+        {/if}
+      </div>
+    </div>
   </header>
 
   {#if loading}
@@ -573,6 +615,115 @@
 
   .event-header {
     margin-bottom: var(--space-lg);
+  }
+
+  .event-title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .version-wrap {
+    position: relative;
+  }
+
+  .version-btn {
+    font-family: inherit;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.1em 0.4em;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+
+  .version-btn:hover {
+    border-color: rgba(0, 0, 0, 0.25);
+    color: var(--text);
+  }
+
+  .changelog-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+  }
+
+  .changelog-popup {
+    position: absolute;
+    top: calc(100% + 0.4rem);
+    left: 0;
+    z-index: 100;
+    width: min(20rem, calc(100vw - 2 * var(--content-padding)));
+    max-height: 24rem;
+    overflow-y: auto;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    padding: 0.75rem;
+  }
+
+  .changelog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .changelog-title {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .changelog-close {
+    font-family: inherit;
+    font-size: 1.1rem;
+    color: var(--text-light);
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 0.15rem;
+  }
+
+  .changelog-close:hover {
+    color: var(--text);
+  }
+
+  .changelog-release {
+    margin-bottom: 0.6rem;
+  }
+
+  .changelog-release:last-child {
+    margin-bottom: 0;
+  }
+
+  .changelog-version {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .changelog-date {
+    font-weight: 400;
+    color: var(--text-light);
+  }
+
+  .changelog-list {
+    margin: 0.2rem 0 0 1rem;
+    padding: 0;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  .changelog-list li {
+    margin-bottom: 0.1rem;
   }
 
   .event-title {
