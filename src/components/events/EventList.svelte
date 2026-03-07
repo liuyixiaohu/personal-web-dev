@@ -236,8 +236,8 @@
   function formatDayHeader(dayStr: string): string {
     const [y, m, d] = dayStr.split('-').map(Number);
     const date = new Date(y, m - 1, d);
-    const wk = date.toLocaleDateString(locale(), { weekday: 'short' });
-    return `${m}/${d} ${wk}`;
+    const wk = date.toLocaleDateString(locale(), { weekday: 'narrow' });
+    return `${wk} ${m}/${d}`;
   }
 
   function formatTimeLabel(time: string): string {
@@ -427,40 +427,48 @@
 
       <!-- Read-only calendar (side panel) -->
       {#if calendarDays.length > 0 && timeSlots.length > 0}
-        <div class="cal-wrapper">
+        <div class="cal-panel">
           <span class="filter-label">{t('events.calendar')}</span>
-          <div
-            class="cal-grid"
-            style="grid-template-columns: 3.5rem repeat({calendarDays.length}, 1fr);"
-          >
-            <!-- Header row -->
-            <div class="cal-corner"></div>
-            {#each calendarDays as day}
-              <div class="cal-day-header">{formatDayHeader(day)}</div>
-            {/each}
-            <!-- Time rows -->
-            {#each timeSlots as time}
-              <div class="cal-time-label" class:cal-time-label--hour={time.endsWith(':00')}>{time.endsWith(':00') ? formatTimeLabel(time) : ''}</div>
+          <div class="cal-wrapper">
+            <div
+              class="cal-grid"
+              style="grid-template-columns: 48px repeat({calendarDays.length}, 1fr); width: {48 + calendarDays.length * 54}px;"
+            >
+              <!-- Header row -->
+              <div class="cal-corner"></div>
               {#each calendarDays as day}
-                {@const key = `${day}T${time}`}
-                {@const info = slotDensity.get(key)}
-                {@const count = info?.count ?? 0}
-                <div
-                  class="cal-cell"
-                  class:cal-cell--d1={count === 1}
-                  class:cal-cell--d2={count === 2}
-                  class:cal-cell--d3={count >= 3}
-                  class:cal-cell--hour={time.endsWith(':00')}
-                  class:cal-cell--clickable={count > 0}
-                  title={slotTitle(key)}
-                  role={count > 0 ? 'button' : undefined}
-                  tabindex={count > 0 ? 0 : undefined}
-                  onclick={() => { if (info) scrollToEvent(info.firstId); }}
-                  onkeydown={(ev) => { if (info && (ev.key === 'Enter' || ev.key === ' ')) scrollToEvent(info.firstId); }}
-                ></div>
+                <div class="cal-day-header">{formatDayHeader(day)}</div>
               {/each}
-            {/each}
+              <!-- Time rows -->
+              {#each timeSlots as time}
+                <div class="cal-time-label" class:cal-time-label--hour={time.endsWith(':00')}>{time.endsWith(':00') ? formatTimeLabel(time) : ''}</div>
+                {#each calendarDays as day}
+                  {@const key = `${day}T${time}`}
+                  {@const info = slotDensity.get(key)}
+                  {@const count = info?.count ?? 0}
+                  <div
+                    class="cal-cell"
+                    class:cal-cell--d1={count === 1}
+                    class:cal-cell--d2={count === 2}
+                    class:cal-cell--d3={count >= 3}
+                    class:cal-cell--hour={time.endsWith(':00')}
+                    class:cal-cell--clickable={count > 0}
+                    title={slotTitle(key)}
+                    role={count > 0 ? 'button' : undefined}
+                    tabindex={count > 0 ? 0 : undefined}
+                    onclick={() => { if (info) scrollToEvent(info.firstId); }}
+                    onkeydown={(ev) => { if (info && (ev.key === 'Enter' || ev.key === ' ')) scrollToEvent(info.firstId); }}
+                  ></div>
+                {/each}
+              {/each}
+            </div>
+            {#if calendarDays.length > 5}
+              <span class="cal-hint cal-hint--h">← →</span>
+            {/if}
           </div>
+          {#if timeSlots.length > 24}
+            <span class="cal-hint cal-hint--v">↕ scroll</span>
+          {/if}
         </div>
       {/if}
     </div>
@@ -612,10 +620,18 @@
     font-size: 0.78rem;
   }
 
-  .cal-wrapper {
+  .cal-panel {
     flex: 0 0 48%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .cal-wrapper {
     max-height: calc(16px * 24 + 1.6rem);
-    overflow-y: auto;
+    overflow: auto;
+    max-width: 100%;
   }
 
   .filter-row {
@@ -680,7 +696,24 @@
     border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 4px;
     overflow: hidden;
-    margin-top: 0.3rem;
+  }
+
+  .cal-hint {
+    font-size: 0.6rem;
+    color: var(--text-light);
+    opacity: 0.4;
+    text-align: center;
+  }
+
+  .cal-hint--h {
+    display: block;
+    margin-top: 0.2rem;
+    letter-spacing: 0.15em;
+  }
+
+  .cal-hint--v {
+    display: block;
+    margin-top: 0.15rem;
   }
 
   .cal-corner {
@@ -868,7 +901,7 @@
       flex-direction: column;
     }
 
-    .cal-wrapper {
+    .cal-panel {
       width: 100%;
       max-width: none;
       min-width: 0;
