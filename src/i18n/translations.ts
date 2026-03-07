@@ -105,7 +105,7 @@ export const translations: Record<string, Record<Lang, string>> = {
 
   // --- Events page ---
   'home.events': { en: 'Bay Area Events', zh: '湾区活动' },
-  'events.title': { en: 'Today\'s New Bay Area Events from Luma', zh: '今日新增 Bay Area Events from Luma' },
+  'events.title': { en: 'Today\'s New Luma Events at SF Bay Area', zh: '今日新增 Luma 活动（旧金山湾区）' },
   'events.lastUpdated': { en: 'Last checked', zh: '最近检查' },
   'events.noEvents': { en: 'No new events discovered today. Check back tomorrow!', zh: '今天没有发现新活动，明天再来看看吧！' },
   'events.staleWarning': { en: 'Data may be stale — last update was over 48 hours ago.', zh: '数据可能已过时——上次更新超过48小时前。' },
@@ -120,7 +120,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.filterLocation': { en: 'Location', zh: '地点' },
   'events.filterPrice': { en: 'Price', zh: '费用' },
   'events.filterAll': { en: 'All', zh: '全部' },
-  'events.filterFreeApproval': { en: 'Free / Requires Approval', zh: '免费 / 需要审批' },
+  'events.filterFreeApproval': { en: 'Free (May Require Approval)', zh: '免费（可能需要审批）' },
   'events.filterPaid': { en: 'Paid', zh: '付费' },
   'events.sortBy': { en: 'Sort', zh: '排序' },
   'events.sortAlphaAsc': { en: 'A → Z', zh: 'A → Z' },
@@ -131,6 +131,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.sortGuestsDesc': { en: 'Most guests', zh: '参与最多' },
   'events.clearFilters': { en: 'Clear filters', zh: '清除筛选' },
   'events.noMatch': { en: 'No events match filters', zh: '没有匹配的活动' },
+  'events.guestsNotDisclosed': { en: 'Not disclosed', zh: '未公开' },
 
   // --- Language toggle button ---
   'lang.toggle': { en: '中', zh: 'EN' },

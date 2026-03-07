@@ -157,8 +157,16 @@
         case 'alpha-desc': return b.name.localeCompare(a.name);
         case 'time-asc': return new Date(a.start_at).getTime() - new Date(b.start_at).getTime();
         case 'time-desc': return new Date(b.start_at).getTime() - new Date(a.start_at).getTime();
-        case 'guests-asc': return a.guest_count - b.guest_count;
-        case 'guests-desc': return b.guest_count - a.guest_count;
+        case 'guests-asc': {
+          if (a.guest_count === 0 && b.guest_count !== 0) return 1;
+          if (b.guest_count === 0 && a.guest_count !== 0) return -1;
+          return a.guest_count - b.guest_count;
+        }
+        case 'guests-desc': {
+          if (a.guest_count === 0 && b.guest_count !== 0) return 1;
+          if (b.guest_count === 0 && a.guest_count !== 0) return -1;
+          return b.guest_count - a.guest_count;
+        }
         default: return 0;
       }
     });
@@ -246,17 +254,25 @@
         </div>
       {/if}
 
-      <!-- Sort -->
+      <!-- Sort (pills) -->
       <div class="filter-row">
         <span class="filter-label">{t('events.sortBy')}</span>
-        <select class="sort-select" bind:value={sortBy}>
-          <option value="time-asc">{t('events.sortTimeAsc')}</option>
-          <option value="time-desc">{t('events.sortTimeDesc')}</option>
-          <option value="alpha-asc">{t('events.sortAlphaAsc')}</option>
-          <option value="alpha-desc">{t('events.sortAlphaDesc')}</option>
-          <option value="guests-desc">{t('events.sortGuestsDesc')}</option>
-          <option value="guests-asc">{t('events.sortGuestsAsc')}</option>
-        </select>
+        <div class="filter-pills">
+          {#each [
+            ['time-asc', t('events.sortTimeAsc')],
+            ['time-desc', t('events.sortTimeDesc')],
+            ['alpha-asc', t('events.sortAlphaAsc')],
+            ['alpha-desc', t('events.sortAlphaDesc')],
+            ['guests-desc', t('events.sortGuestsDesc')],
+            ['guests-asc', t('events.sortGuestsAsc')],
+          ] as [val, label]}
+            <button
+              class="pill"
+              class:pill--active={sortBy === val}
+              onclick={() => sortBy = val}
+            >{label}</button>
+          {/each}
+        </div>
       </div>
 
       <!-- Clear filters -->
@@ -296,9 +312,13 @@
               <span class="event-host">{t('events.hostedBy')} {event.host_names.join(', ')}</span>
             {/if}
 
-            {#if event.guest_count > 0}
-              <span class="event-guests">{event.guest_count} {t('events.guests')}</span>
-            {/if}
+            <span class="event-guests">
+              {#if event.guest_count > 0}
+                {event.guest_count} {t('events.guests')}
+              {:else}
+                {t('events.guestsNotDisclosed')}
+              {/if}
+            </span>
           </div>
         </li>
       {/each}
@@ -414,17 +434,6 @@
     background: rgba(0, 0, 0, 0.06);
     color: var(--text);
     border-color: rgba(0, 0, 0, 0.18);
-  }
-
-  .sort-select {
-    font-family: inherit;
-    font-size: 0.75rem;
-    padding: 0.2em 0.4em;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 3px;
-    background: transparent;
-    color: var(--text-light);
-    cursor: pointer;
   }
 
   .clear-filters {
