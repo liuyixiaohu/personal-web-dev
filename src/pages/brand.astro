@@ -40,78 +40,106 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <h2 data-i18n="brand.colors">Color Palette</h2>
 
       <h3 data-i18n="brand.colorsCore">Core Palette</h3>
-      <div class="swatch-grid">
-        <div class="swatch">
-          <div class="swatch-color" style="background:#FAF7F2"></div>
-          <span class="swatch-hex">#FAF7F2</span>
-          <span class="swatch-var">--bg</span>
-          <span class="swatch-usage" data-i18n="brand.usage.bg">Page background</span>
+
+      <div class="color-group">
+        <span class="color-group-label">米白 / Cream</span>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch-color" style="background:#FAF7F2"></div>
+            <span class="swatch-hex">#FAF7F2</span>
+            <span class="swatch-var">--bg</span>
+            <span class="swatch-usage" data-i18n="brand.usage.bg">Page background</span>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background:#F3EFE7"></div>
+            <span class="swatch-hex">#F3EFE7</span>
+            <span class="swatch-var"></span>
+            <span class="swatch-usage" data-i18n="brand.usage.subtleBg">Subtle variation</span>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background:#E4DDD2"></div>
+            <span class="swatch-hex">#E4DDD2</span>
+            <span class="swatch-var"></span>
+            <span class="swatch-usage" data-i18n="brand.usage.warmBorder">Warm border</span>
+          </div>
         </div>
-        <div class="swatch">
-          <div class="swatch-color" style="background:#F3EFE7"></div>
-          <span class="swatch-hex">#F3EFE7</span>
-          <span class="swatch-var"></span>
-          <span class="swatch-usage" data-i18n="brand.usage.subtleBg">Subtle variation</span>
+      </div>
+
+      <div class="color-group">
+        <span class="color-group-label">绿色 / Green</span>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch-color" style="background:#DDEEE7"></div>
+            <span class="swatch-hex">#DDEEE7</span>
+            <span class="swatch-var">--bubble-visual</span>
+            <span class="swatch-usage" data-i18n="brand.usage.greenLight">Green background</span>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background:#A8D7C6"></div>
+            <span class="swatch-hex">#A8D7C6</span>
+            <span class="swatch-var"></span>
+            <span class="swatch-usage" data-i18n="brand.usage.greenMid">Green accent</span>
+          </div>
         </div>
-        <div class="swatch">
-          <div class="swatch-color" style="background:#E4DDD2"></div>
-          <span class="swatch-hex">#E4DDD2</span>
-          <span class="swatch-var"></span>
-          <span class="swatch-usage" data-i18n="brand.usage.warmBorder">Warm border</span>
+      </div>
+
+      <div class="color-group">
+        <span class="color-group-label">蓝色 / Blue</span>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch-color" style="background:#D6E6F3"></div>
+            <span class="swatch-hex">#D6E6F3</span>
+            <span class="swatch-var">--bubble-ds</span>
+            <span class="swatch-usage" data-i18n="brand.usage.blueLight">Blue background</span>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background:#7FB6DD"></div>
+            <span class="swatch-hex">#7FB6DD</span>
+            <span class="swatch-var"></span>
+            <span class="swatch-usage" data-i18n="brand.usage.blueAccent">Blue accent</span>
+          </div>
         </div>
-        <div class="swatch">
-          <div class="swatch-color" style="background:#DDEEE7"></div>
-          <span class="swatch-hex">#DDEEE7</span>
-          <span class="swatch-var">--bubble-visual</span>
-          <span class="swatch-usage" data-i18n="brand.usage.greenLight">Green background</span>
+      </div>
+
+      <div class="color-group">
+        <span class="color-group-label">粉色 / Pink</span>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch-color" style="background:#F0D7D7"></div>
+            <span class="swatch-hex">#F0D7D7</span>
+            <span class="swatch-var">--bubble-pm</span>
+            <span class="swatch-usage" data-i18n="brand.usage.pinkLight">Pink background</span>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background:#D9797B"></div>
+            <span class="swatch-hex">#D9797B</span>
+            <span class="swatch-var"></span>
+            <span class="swatch-usage" data-i18n="brand.usage.pinkStrong">Pink accent</span>
+          </div>
         </div>
-        <div class="swatch">
-          <div class="swatch-color" style="background:#A8D7C6"></div>
-          <span class="swatch-hex">#A8D7C6</span>
-          <span class="swatch-var"></span>
-          <span class="swatch-usage" data-i18n="brand.usage.greenMid">Green accent</span>
-        </div>
-        <div class="swatch">
-          <div class="swatch-color" style="background:#D6E6F3"></div>
-          <span class="swatch-hex">#D6E6F3</span>
-          <span class="swatch-var">--bubble-ds</span>
-          <span class="swatch-usage" data-i18n="brand.usage.blueLight">Blue background</span>
-        </div>
-        <div class="swatch">
-          <div class="swatch-color" style="background:#7FB6DD"></div>
-          <span class="swatch-hex">#7FB6DD</span>
-          <span class="swatch-var"></span>
-          <span class="swatch-usage" data-i18n="brand.usage.blueAccent">Blue accent</span>
-        </div>
-        <div class="swatch">
-          <div class="swatch-color" style="background:#F0D7D7"></div>
-          <span class="swatch-hex">#F0D7D7</span>
-          <span class="swatch-var">--bubble-pm</span>
-          <span class="swatch-usage" data-i18n="brand.usage.pinkLight">Pink background</span>
-        </div>
-        <div class="swatch">
-          <div class="swatch-color" style="background:#D9797B"></div>
-          <span class="swatch-hex">#D9797B</span>
-          <span class="swatch-var"></span>
-          <span class="swatch-usage" data-i18n="brand.usage.pinkStrong">Pink accent</span>
-        </div>
-        <div class="swatch">
-          <div class="swatch-color" style="background:#8A939B"></div>
-          <span class="swatch-hex">#8A939B</span>
-          <span class="swatch-var">--text-light</span>
-          <span class="swatch-usage" data-i18n="brand.usage.textLight">Secondary text</span>
-        </div>
-        <div class="swatch">
-          <div class="swatch-color" style="background:#5A636B"></div>
-          <span class="swatch-hex">#5A636B</span>
-          <span class="swatch-var"></span>
-          <span class="swatch-usage" data-i18n="brand.usage.textMid">Mid-tone text</span>
-        </div>
-        <div class="swatch">
-          <div class="swatch-color swatch-color--dark" style="background:#1F2328"></div>
-          <span class="swatch-hex">#1F2328</span>
-          <span class="swatch-var">--text</span>
-          <span class="swatch-usage" data-i18n="brand.usage.textPrimary">Primary text</span>
+      </div>
+
+      <div class="color-group">
+        <span class="color-group-label">灰黑 / Gray–Black</span>
+        <div class="swatch-grid">
+          <div class="swatch">
+            <div class="swatch-color" style="background:#8A939B"></div>
+            <span class="swatch-hex">#8A939B</span>
+            <span class="swatch-var">--text-light</span>
+            <span class="swatch-usage" data-i18n="brand.usage.textLight">Secondary text</span>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color" style="background:#5A636B"></div>
+            <span class="swatch-hex">#5A636B</span>
+            <span class="swatch-var"></span>
+            <span class="swatch-usage" data-i18n="brand.usage.textMid">Mid-tone text</span>
+          </div>
+          <div class="swatch">
+            <div class="swatch-color swatch-color--dark" style="background:#1F2328"></div>
+            <span class="swatch-hex">#1F2328</span>
+            <span class="swatch-var">--text</span>
+            <span class="swatch-usage" data-i18n="brand.usage.textPrimary">Primary text</span>
+          </div>
         </div>
       </div>
 
@@ -338,6 +366,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     font-size: var(--fs-sm);
     color: var(--text-light);
     line-height: 1.5;
+  }
+
+  /* --- Color Groups --- */
+  .color-group {
+    margin-bottom: var(--space-sm);
+  }
+  .color-group-label {
+    display: block;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    margin-bottom: 0.4rem;
   }
 
   /* --- Color Swatches --- */
