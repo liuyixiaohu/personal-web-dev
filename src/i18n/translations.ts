@@ -172,6 +172,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'brand.typography': { en: 'Typography', zh: '字体排印' },
   'brand.typeFonts': { en: 'Font Pairing', zh: '字体搭配' },
   'brand.typeScale': { en: 'Type Scale', zh: '字号阶梯' },
+  'brand.typeStyles': { en: 'Type Styles', zh: '字体样式' },
   'brand.typeScaleNote': {
     en: 'Major Third ratio (1.25×), 0.75rem floor. Root font-size is fluid.',
     zh: '大三度比例（1.25×），最小 0.75rem。根字号流式缩放。',
