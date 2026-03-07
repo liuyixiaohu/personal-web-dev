@@ -105,8 +105,7 @@ export const translations: Record<string, Record<Lang, string>> = {
 
   // --- Events page ---
   'home.events': { en: 'Bay Area Events', zh: '湾区活动' },
-  'events.title': { en: 'Bay Area Events', zh: '湾区活动' },
-  'events.subtitle': { en: 'Newly discovered tech & AI events', zh: '新发现的科技与AI活动' },
+  'events.title': { en: 'Today\'s New Bay Area Events from Luma', zh: '今日新增 Bay Area Events from Luma' },
   'events.lastUpdated': { en: 'Last checked', zh: '最近检查' },
   'events.noEvents': { en: 'No new events discovered today. Check back tomorrow!', zh: '今天没有发现新活动，明天再来看看吧！' },
   'events.staleWarning': { en: 'Data may be stale — last update was over 48 hours ago.', zh: '数据可能已过时——上次更新超过48小时前。' },
@@ -118,6 +117,20 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.online': { en: 'Online', zh: '线上' },
   'events.hostedBy': { en: 'Hosted by', zh: '主办方' },
   'events.eventCount': { en: 'events found', zh: '个活动' },
+  'events.filterLocation': { en: 'Location', zh: '地点' },
+  'events.filterHost': { en: 'Host', zh: '主办方' },
+  'events.filterPrice': { en: 'Price', zh: '费用' },
+  'events.filterAll': { en: 'All', zh: '全部' },
+  'events.filterPaid': { en: 'Paid', zh: '付费' },
+  'events.sortBy': { en: 'Sort', zh: '排序' },
+  'events.sortAlphaAsc': { en: 'A → Z', zh: 'A → Z' },
+  'events.sortAlphaDesc': { en: 'Z → A', zh: 'Z → A' },
+  'events.sortTimeAsc': { en: 'Earliest first', zh: '时间最早' },
+  'events.sortTimeDesc': { en: 'Latest first', zh: '时间最近' },
+  'events.sortGuestsAsc': { en: 'Fewest guests', zh: '参与最少' },
+  'events.sortGuestsDesc': { en: 'Most guests', zh: '参与最多' },
+  'events.clearFilters': { en: 'Clear filters', zh: '清除筛选' },
+  'events.noMatch': { en: 'No events match filters', zh: '没有匹配的活动' },
 
   // --- Language toggle button ---
   'lang.toggle': { en: '中', zh: 'EN' },
