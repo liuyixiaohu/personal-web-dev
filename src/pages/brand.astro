@@ -1,0 +1,638 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Brand Guidelines — Kun Li" description="Visual design system for kunli.co — colors, typography, spacing, and grid.">
+  <main class="brand-page grid-page">
+    <a href="/" class="back-link" data-i18n="nav.back">&larr; Back</a>
+
+    <!-- Header -->
+    <header class="brand-header">
+      <h1 data-i18n="brand.title">Brand Guidelines</h1>
+      <p class="subtitle" data-i18n="brand.subtitle">The visual language of kunli.co — warm, minimal, bilingual.</p>
+    </header>
+
+    <!-- Principles -->
+    <section class="section">
+      <h2 data-i18n="brand.principles">Design Principles</h2>
+      <dl class="principles">
+        <div class="principle">
+          <dt data-i18n="brand.principleMinimal">Minimal</dt>
+          <dd data-i18n="brand.principleMinimalDesc">Less is more. No decoration for decoration's sake.</dd>
+        </div>
+        <div class="principle">
+          <dt data-i18n="brand.principleFast">Fast</dt>
+          <dd data-i18n="brand.principleFastDesc">Static HTML, zero unnecessary JS, CDN fonts.</dd>
+        </div>
+        <div class="principle">
+          <dt data-i18n="brand.principleWarm">Warm</dt>
+          <dd data-i18n="brand.principleWarmDesc">Cream tones, serif fonts, literary voice.</dd>
+        </div>
+        <div class="principle">
+          <dt data-i18n="brand.principleBilingual">Bilingual</dt>
+          <dd data-i18n="brand.principleBilingualDesc">Every visible text has English and Chinese.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- Colors -->
+    <section class="section wide">
+      <h2 data-i18n="brand.colors">Color Palette</h2>
+
+      <h3 data-i18n="brand.colorsCore">Core Palette</h3>
+      <div class="swatch-grid">
+        <div class="swatch">
+          <div class="swatch-color" style="background:#FAF7F2"></div>
+          <span class="swatch-hex">#FAF7F2</span>
+          <span class="swatch-var">--bg</span>
+          <span class="swatch-usage" data-i18n="brand.usage.bg">Page background</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#F3EFE7"></div>
+          <span class="swatch-hex">#F3EFE7</span>
+          <span class="swatch-var"></span>
+          <span class="swatch-usage" data-i18n="brand.usage.subtleBg">Subtle variation</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#E4DDD2"></div>
+          <span class="swatch-hex">#E4DDD2</span>
+          <span class="swatch-var"></span>
+          <span class="swatch-usage" data-i18n="brand.usage.warmBorder">Warm border</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#DDEEE7"></div>
+          <span class="swatch-hex">#DDEEE7</span>
+          <span class="swatch-var">--bubble-visual</span>
+          <span class="swatch-usage" data-i18n="brand.usage.greenLight">Green background</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#A8D7C6"></div>
+          <span class="swatch-hex">#A8D7C6</span>
+          <span class="swatch-var"></span>
+          <span class="swatch-usage" data-i18n="brand.usage.greenMid">Green accent</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#D6E6F3"></div>
+          <span class="swatch-hex">#D6E6F3</span>
+          <span class="swatch-var">--bubble-ds</span>
+          <span class="swatch-usage" data-i18n="brand.usage.blueLight">Blue background</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#7FB6DD"></div>
+          <span class="swatch-hex">#7FB6DD</span>
+          <span class="swatch-var"></span>
+          <span class="swatch-usage" data-i18n="brand.usage.blueAccent">Blue accent</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#F0D7D7"></div>
+          <span class="swatch-hex">#F0D7D7</span>
+          <span class="swatch-var">--bubble-pm</span>
+          <span class="swatch-usage" data-i18n="brand.usage.pinkLight">Pink background</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#D9797B"></div>
+          <span class="swatch-hex">#D9797B</span>
+          <span class="swatch-var"></span>
+          <span class="swatch-usage" data-i18n="brand.usage.pinkStrong">Pink accent</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#8A939B"></div>
+          <span class="swatch-hex">#8A939B</span>
+          <span class="swatch-var">--text-light</span>
+          <span class="swatch-usage" data-i18n="brand.usage.textLight">Secondary text</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#5A636B"></div>
+          <span class="swatch-hex">#5A636B</span>
+          <span class="swatch-var"></span>
+          <span class="swatch-usage" data-i18n="brand.usage.textMid">Mid-tone text</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color swatch-color--dark" style="background:#1F2328"></div>
+          <span class="swatch-hex">#1F2328</span>
+          <span class="swatch-var">--text</span>
+          <span class="swatch-usage" data-i18n="brand.usage.textPrimary">Primary text</span>
+        </div>
+      </div>
+
+      <h3 data-i18n="brand.colorsAccents">Professional Accents</h3>
+      <div class="accent-row">
+        <div class="accent">
+          <div class="accent-dot" style="background:#9a6868"></div>
+          <span class="accent-label">Product Marketing</span>
+          <span class="accent-hex">#9a6868</span>
+        </div>
+        <div class="accent">
+          <div class="accent-dot" style="background:#5a7a94"></div>
+          <span class="accent-label">Data Science</span>
+          <span class="accent-hex">#5a7a94</span>
+        </div>
+        <div class="accent">
+          <div class="accent-dot" style="background:#5a8a6e"></div>
+          <span class="accent-label">Visual Design</span>
+          <span class="accent-hex">#5a8a6e</span>
+        </div>
+        <div class="accent">
+          <div class="accent-dot" style="background:#7FB6DD"></div>
+          <span class="accent-label">Life Journey</span>
+          <span class="accent-hex">#7FB6DD</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography -->
+    <section class="section">
+      <h2 data-i18n="brand.typography">Typography</h2>
+
+      <h3 data-i18n="brand.typeFonts">Font Pairing</h3>
+      <div class="font-showcase">
+        <div class="font-card">
+          <span class="font-label">EB Garamond</span>
+          <p class="font-sample font-sample--en">The quick brown fox jumps over the lazy dog. Warmth, elegance, and a touch of literary flair.</p>
+        </div>
+        <div class="font-card">
+          <span class="font-label">LXGW WenKai · 霞鹜文楷</span>
+          <p class="font-sample font-sample--zh">天地玄黄，宇宙洪荒。温暖的楷书笔触，文学的气息跃然纸上。</p>
+        </div>
+      </div>
+
+      <h3 data-i18n="brand.typeScale">Type Scale</h3>
+      <p class="section-note" data-i18n="brand.typeScaleNote">Major Third ratio (1.25×). Root font-size is fluid.</p>
+      <div class="scale-ladder">
+        <div class="scale-step">
+          <span class="scale-sample" style="font-size:var(--fs-xl)">The quick brown fox</span>
+          <span class="scale-meta">--fs-xl · 1.953rem</span>
+        </div>
+        <div class="scale-step">
+          <span class="scale-sample" style="font-size:var(--fs-lg)">The quick brown fox</span>
+          <span class="scale-meta">--fs-lg · 1.563rem</span>
+        </div>
+        <div class="scale-step">
+          <span class="scale-sample" style="font-size:var(--fs-md)">The quick brown fox</span>
+          <span class="scale-meta">--fs-md · 1.25rem</span>
+        </div>
+        <div class="scale-step">
+          <span class="scale-sample" style="font-size:1rem">The quick brown fox</span>
+          <span class="scale-meta">base · 1rem</span>
+        </div>
+        <div class="scale-step">
+          <span class="scale-sample" style="font-size:var(--fs-sm)">The quick brown fox</span>
+          <span class="scale-meta">--fs-sm · 0.8rem</span>
+        </div>
+        <div class="scale-step">
+          <span class="scale-sample" style="font-size:var(--fs-xs)">The quick brown fox</span>
+          <span class="scale-meta">--fs-xs · 0.64rem</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Spacing -->
+    <section class="section wide">
+      <h2 data-i18n="brand.spacing">Spacing</h2>
+      <p class="section-note" data-i18n="brand.spacingNote">Fluid scale using clamp() — adapts to viewport width.</p>
+      <div class="spacing-scale">
+        <div class="spacing-row">
+          <span class="spacing-label">--space-xs</span>
+          <div class="spacing-track"><div class="spacing-bar" style="width:var(--space-xs)"></div></div>
+          <span class="spacing-value">clamp(0.5rem, 1vw, 0.75rem)</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-sm</span>
+          <div class="spacing-track"><div class="spacing-bar" style="width:var(--space-sm)"></div></div>
+          <span class="spacing-value">clamp(0.75rem, 1.5vw, 1.25rem)</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-md</span>
+          <div class="spacing-track"><div class="spacing-bar" style="width:var(--space-md)"></div></div>
+          <span class="spacing-value">clamp(1rem, 2vw, 2rem)</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-lg</span>
+          <div class="spacing-track"><div class="spacing-bar" style="width:var(--space-lg)"></div></div>
+          <span class="spacing-value">clamp(1.5rem, 3vw, 3rem)</span>
+        </div>
+        <div class="spacing-row">
+          <span class="spacing-label">--space-xl</span>
+          <div class="spacing-track"><div class="spacing-bar" style="width:var(--space-xl)"></div></div>
+          <span class="spacing-value">clamp(2rem, 5vw, 5rem)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Grid System -->
+    <section class="section full">
+      <div class="grid-section-inner">
+        <h2 data-i18n="brand.grid">Grid System</h2>
+        <p class="section-note" data-i18n="brand.gridNote">Named-line CSS Grid with three content tracks.</p>
+        <div class="grid-demo">
+          <div class="grid-demo-track grid-demo-track--full">
+            <span class="grid-demo-label">full · 100%</span>
+            <div class="grid-demo-track grid-demo-track--wide">
+              <span class="grid-demo-label">wide · 44rem</span>
+              <div class="grid-demo-track grid-demo-track--content">
+                <span class="grid-demo-label">content · 36rem</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Components -->
+    <section class="section">
+      <h2 data-i18n="brand.components">Components</h2>
+
+      <h3>Buttons</h3>
+      <div class="component-row">
+        <button class="btn">Default</button>
+        <button class="btn btn--primary">Primary</button>
+      </div>
+
+      <h3>Filters / Pills</h3>
+      <div class="component-row">
+        <span class="pill pill--active">All</span>
+        <span class="pill">Free</span>
+        <span class="pill">Paid</span>
+        <span class="pill">Online</span>
+      </div>
+
+      <h3>Card / List Item</h3>
+      <div class="card-demo">
+        <div class="card-item">
+          <span class="card-title">Sample Item Title</span>
+          <span class="card-desc">A description in secondary text, using --text-light.</span>
+        </div>
+        <div class="card-item">
+          <span class="card-title">Another Item</span>
+          <span class="card-desc">Separated by a subtle 1px border-bottom.</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</BaseLayout>
+
+<style>
+  /* --- Page --- */
+  .back-link {
+    display: inline-block;
+    font-size: var(--fs-sm);
+    color: var(--text-light);
+    margin-bottom: var(--space-md);
+  }
+  .back-link:hover { color: var(--text); }
+
+  .brand-header {
+    margin-bottom: var(--space-xl);
+  }
+  .brand-header h1 {
+    font-size: var(--fs-xl);
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: var(--space-xs);
+  }
+  .subtitle {
+    font-size: var(--fs-md);
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  /* --- Sections --- */
+  .section {
+    border-top: 1px solid var(--border);
+    padding-top: var(--space-lg);
+    margin-bottom: var(--space-xl);
+  }
+  .section h2 {
+    font-size: var(--fs-lg);
+    font-weight: 500;
+    margin-bottom: var(--space-sm);
+  }
+  .section h3 {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: var(--space-md);
+    margin-bottom: var(--space-sm);
+  }
+  .section-note {
+    font-size: var(--fs-sm);
+    color: var(--text-light);
+    margin-bottom: var(--space-md);
+  }
+
+  /* --- Principles --- */
+  .principles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm) var(--space-md);
+  }
+  .principle dt {
+    font-size: var(--fs-md);
+    font-weight: 500;
+    margin-bottom: 0.15rem;
+  }
+  .principle dd {
+    font-size: var(--fs-sm);
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  /* --- Color Swatches --- */
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-sm);
+  }
+  .swatch {
+    display: flex;
+    flex-direction: column;
+  }
+  .swatch-color {
+    height: 72px;
+    border-radius: 6px 6px 0 0;
+    border: 1px solid var(--border);
+    border-bottom: none;
+  }
+  .swatch-color--dark {
+    border-color: transparent;
+  }
+  .swatch-hex,
+  .swatch-var,
+  .swatch-usage {
+    display: block;
+    padding: 0 0.5rem;
+    line-height: 1.4;
+  }
+  .swatch-hex {
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    padding-top: 0.4rem;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+  .swatch-var {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    font-family: monospace;
+    min-height: 1.2em;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+  .swatch-usage {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    padding-bottom: 0.4rem;
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+  }
+
+  /* --- Accent row --- */
+  .accent-row {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+  .accent {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .accent-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .accent-label {
+    font-size: var(--fs-sm);
+    font-weight: 500;
+  }
+  .accent-hex {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    font-family: monospace;
+  }
+
+  /* --- Typography --- */
+  .font-showcase {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+  .font-card {
+    padding: var(--space-sm);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  .font-label {
+    display: block;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
+  }
+  .font-sample {
+    font-size: var(--fs-md);
+    line-height: 1.6;
+  }
+  .font-sample--en {
+    font-family: var(--font-body);
+  }
+  .font-sample--zh {
+    font-family: var(--font-zh);
+  }
+
+  /* --- Type Scale --- */
+  .scale-ladder {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  .scale-step {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    padding: 0.3rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  }
+  .scale-sample {
+    flex-shrink: 0;
+    font-weight: 400;
+    color: var(--text);
+  }
+  .scale-meta {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    font-family: monospace;
+    white-space: nowrap;
+  }
+
+  /* --- Spacing --- */
+  .spacing-scale {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  .spacing-row {
+    display: grid;
+    grid-template-columns: 7rem 1fr auto;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+  .spacing-label {
+    font-size: var(--fs-xs);
+    font-family: monospace;
+    color: var(--text);
+  }
+  .spacing-track {
+    height: 20px;
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 4px;
+    border: 1px dashed var(--border);
+  }
+  .spacing-bar {
+    height: 100%;
+    background: #DDEEE7;
+    border-radius: 3px;
+    min-width: 4px;
+  }
+  .spacing-value {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    font-family: monospace;
+    white-space: nowrap;
+  }
+
+  /* --- Grid Demo --- */
+  .grid-section-inner {
+    max-width: var(--grid-wide);
+    margin: 0 auto;
+    padding: 0 var(--content-padding);
+  }
+  .grid-demo {
+    margin-top: var(--space-sm);
+  }
+  .grid-demo-track {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-sm);
+    border-radius: 6px;
+  }
+  .grid-demo-track--full {
+    background: rgba(240, 215, 215, 0.25);
+    border: 1px dashed #D9797B;
+  }
+  .grid-demo-track--wide {
+    width: 100%;
+    max-width: 44rem;
+    background: rgba(214, 230, 243, 0.35);
+    border: 1px dashed #7FB6DD;
+  }
+  .grid-demo-track--content {
+    width: 100%;
+    max-width: 36rem;
+    background: rgba(221, 238, 231, 0.4);
+    border: 1px dashed #5a8a6e;
+    min-height: 2.5rem;
+    justify-content: center;
+  }
+  .grid-demo-label {
+    font-size: var(--fs-xs);
+    font-family: monospace;
+    color: var(--text-light);
+    margin-bottom: 0.3rem;
+  }
+
+  /* --- Components --- */
+  .component-row {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: var(--space-md);
+  }
+  .btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: var(--fs-sm);
+    color: var(--text);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .btn:hover {
+    border-color: var(--text-light);
+  }
+  .btn--primary {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+  .btn--primary:hover {
+    opacity: 0.85;
+  }
+
+  .pill {
+    display: inline-block;
+    font-size: 0.72rem;
+    padding: 0.2em 0.55em;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    color: var(--text-light);
+    cursor: default;
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+  }
+  .pill--active {
+    background: rgba(0, 0, 0, 0.06);
+    color: var(--text);
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+
+  .card-demo {
+    margin-bottom: var(--space-md);
+  }
+  .card-item {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  }
+  .card-item:last-child { border-bottom: none; }
+  .card-title {
+    display: block;
+    font-size: var(--fs-md);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .card-desc {
+    display: block;
+    font-size: var(--fs-sm);
+    color: var(--text-light);
+    line-height: 1.5;
+    margin-top: 0.15rem;
+  }
+
+  /* --- Responsive --- */
+  @media (max-width: 480px) {
+    .principles {
+      grid-template-columns: 1fr;
+    }
+    .swatch-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .spacing-row {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+    }
+    .spacing-track {
+      display: none;
+    }
+  }
+</style>
