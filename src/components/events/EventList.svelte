@@ -43,10 +43,18 @@
   // force re-render on language change
   let _tick = $state(0);
 
-  // --- Filter & Sort State ---
-  let selectedLocations = $state<Set<string>>(new Set());
-  let selectedPrice = $state<string>('all'); // 'all' | 'free-approval' | 'paid'
-  let sortBy = $state<string>('time-asc');
+  // --- Filter & Sort State (persisted via localStorage) ---
+  function loadPref<T>(key: string, fallback: T): T {
+    try {
+      const v = localStorage.getItem(key);
+      return v != null ? JSON.parse(v) : fallback;
+    } catch { return fallback; }
+  }
+
+  let selectedLocations = $state<Set<string>>(new Set(loadPref<string[]>('events.locations', [])));
+  let selectedPrice = $state<string>(loadPref('events.price', 'all'));
+  let sortBy = $state<string>(loadPref('events.sort', 'time-asc'));
+  let searchQuery = $state<string>('');
 
   // --- Language ---
   initLang();
@@ -59,6 +67,11 @@
     });
     return unsub;
   });
+
+  // --- Persist filter/sort to localStorage ---
+  $effect(() => { localStorage.setItem('events.price', JSON.stringify(selectedPrice)); });
+  $effect(() => { localStorage.setItem('events.sort', JSON.stringify(sortBy)); });
+  $effect(() => { localStorage.setItem('events.locations', JSON.stringify([...selectedLocations])); });
 
   // --- Data fetching ---
   onMount(async () => {
@@ -149,9 +162,12 @@
   let filteredEvents = $derived.by(() => {
     void _tick;
 
+    const q = searchQuery.toLowerCase().trim();
+
     let result = events.filter(e => {
       if (selectedLocations.size > 0 && !selectedLocations.has(stripState(e.location))) return false;
       if (!matchesPrice(e)) return false;
+      if (q && !e.name.toLowerCase().includes(q) && !e.host_names.some(h => h.toLowerCase().includes(q))) return false;
       return true;
     });
 
@@ -179,7 +195,7 @@
   });
 
   let hasActiveFilters = $derived(
-    selectedLocations.size > 0 || selectedPrice !== 'all'
+    selectedLocations.size > 0 || selectedPrice !== 'all' || searchQuery.trim() !== ''
   );
 
   function toggleLocation(loc: string) {
@@ -191,6 +207,21 @@
   function clearFilters() {
     selectedLocations = new Set();
     selectedPrice = 'all';
+    searchQuery = '';
+  }
+
+  // --- Event counts per filter option ---
+  function priceCount(opt: string): number {
+    return events.filter(e => {
+      if (opt === 'all') return true;
+      if (opt === 'free-approval') return e.is_free || e.price_cents == null;
+      if (opt === 'paid') return !e.is_free && e.price_cents != null;
+      return true;
+    }).length;
+  }
+
+  function locationCount(loc: string): number {
+    return events.filter(e => stripState(e.location) === loc).length;
   }
 </script>
 
@@ -235,7 +266,7 @@
             >
               {priceOpt === 'all' ? t('events.filterAll') :
                priceOpt === 'free-approval' ? t('events.filterFreeApproval') :
-               t('events.filterPaid')}
+               t('events.filterPaid')} <span class="pill-count">({priceCount(priceOpt)})</span>
             </button>
           {/each}
         </div>
@@ -251,7 +282,7 @@
                 class="pill"
                 class:pill--active={selectedLocations.has(loc)}
                 onclick={() => toggleLocation(loc)}
-              >{loc}</button>
+              >{loc} <span class="pill-count">({locationCount(loc)})</span></button>
             {/each}
           </div>
         </div>
@@ -259,7 +290,7 @@
 
       <!-- Sort (pills) -->
       <div class="filter-row filter-row--stacked">
-        <span class="filter-label">{t('events.sortBy')}</span>
+        <span class="filter-label">{t('events.sortBy')} <span class="sort-note">{t('events.sortNote')}</span></span>
         <div class="filter-pills">
           {#each [
             ['time-asc', t('events.sortTimeAsc')],
@@ -276,7 +307,6 @@
             >{label}</button>
           {/each}
         </div>
-        <span class="sort-note">{t('events.sortNote')}</span>
       </div>
 
       <!-- Clear filters -->
@@ -284,6 +314,13 @@
         <button class="clear-filters" onclick={clearFilters}>{t('events.clearFilters')}</button>
       {/if}
     </div>
+
+    <input
+      class="search-input"
+      type="text"
+      placeholder={t('events.searchPlaceholder')}
+      bind:value={searchQuery}
+    />
 
     <div class="event-count">{filteredEvents.length} {t('events.eventCount')}</div>
 
@@ -302,7 +339,7 @@
             <a href={event.url} target="_blank" rel="noopener noreferrer" class="event-name">
               {event.name}
             </a>
-            <span class="event-price" class:event-price--free={event.is_free}>
+            <span class="event-price" class:event-price--free={event.is_free} class:event-price--approval={!event.is_free && event.price_cents == null} class:event-price--paid={!event.is_free && event.price_cents != null}>
               {formatPrice(event)}
             </span>
           </div>
@@ -361,6 +398,30 @@
     color: var(--text-light);
     opacity: 0.6;
     margin-bottom: var(--space-sm);
+  }
+
+  .search-input {
+    font-family: inherit;
+    font-size: 0.78rem;
+    padding: 0.35em 0.6em;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    background: transparent;
+    color: var(--text);
+    width: 100%;
+    max-width: 20rem;
+    margin-bottom: var(--space-xs);
+    outline: none;
+    transition: border-color 0.12s;
+  }
+
+  .search-input:focus {
+    border-color: rgba(0, 0, 0, 0.25);
+  }
+
+  .search-input::placeholder {
+    color: var(--text-light);
+    opacity: 0.5;
   }
 
   .event-status {
@@ -451,6 +512,11 @@
     border-color: rgba(0, 0, 0, 0.18);
   }
 
+  .pill-count {
+    opacity: 0.5;
+    font-size: 0.65rem;
+  }
+
   .sort-note {
     font-size: 0.68rem;
     color: var(--text-light);
@@ -533,6 +599,16 @@
   .event-price--free {
     color: #5a8a6e;
     background: rgba(221, 238, 231, 0.3);
+  }
+
+  .event-price--approval {
+    color: #7FB6DD;
+    background: rgba(127, 182, 221, 0.1);
+  }
+
+  .event-price--paid {
+    color: #09797B;
+    background: rgba(9, 121, 123, 0.08);
   }
 
   .event-card-details {
