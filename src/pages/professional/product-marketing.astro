@@ -1,40 +1,10 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProfessionalDetail from '../../layouts/ProfessionalDetail.astro';
 ---
 
-<BaseLayout title="Product Marketing | Kun Li" description="Kun Li's product marketing work: strategy, go-to-market, and growth.">
-  <main class="page grid-page">
-    <a href="/professional" class="back-link" data-i18n="nav.backToProfessional">&larr; Back to Professional</a>
-    <h1 data-i18n="professional.productMarketing">Product Marketing</h1>
-    <p class="placeholder" data-i18n="common.comingSoon">Content coming soon...</p>
-  </main>
-</BaseLayout>
-
-<style>
-  .page {
-    padding-block: var(--space-xl) 4rem;
-  }
-
-  .back-link {
-    display: inline-block;
-    font-size: var(--fs-xs);
-    margin-bottom: var(--space-lg);
-    color: var(--text-light);
-  }
-
-  .back-link:hover {
-    color: var(--text);
-    opacity: 1;
-  }
-
-  h1 {
-    font-size: var(--fs-xl);
-    font-weight: 500;
-    margin-bottom: var(--space-md);
-    color: #9a6868;
-  }
-
-  .placeholder {
-    color: var(--text-light);
-  }
-</style>
+<ProfessionalDetail
+  title="Product Marketing"
+  description="Kun Li's product marketing work: strategy, go-to-market, and growth."
+  color="var(--color-pm)"
+  i18nKey="professional.productMarketing"
+/>

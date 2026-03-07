@@ -1,40 +1,10 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProfessionalDetail from '../../layouts/ProfessionalDetail.astro';
 ---
 
-<BaseLayout title="Visual Design | Kun Li" description="Kun Li's visual design work: branding, UI, and creative direction.">
-  <main class="page grid-page">
-    <a href="/professional" class="back-link" data-i18n="nav.backToProfessional">&larr; Back to Professional</a>
-    <h1 data-i18n="professional.visualDesign">Visual Design</h1>
-    <p class="placeholder" data-i18n="common.comingSoon">Content coming soon...</p>
-  </main>
-</BaseLayout>
-
-<style>
-  .page {
-    padding-block: var(--space-xl) 4rem;
-  }
-
-  .back-link {
-    display: inline-block;
-    font-size: var(--fs-xs);
-    margin-bottom: var(--space-lg);
-    color: var(--text-light);
-  }
-
-  .back-link:hover {
-    color: var(--text);
-    opacity: 1;
-  }
-
-  h1 {
-    font-size: var(--fs-xl);
-    font-weight: 500;
-    margin-bottom: var(--space-md);
-    color: #5a8a6e;
-  }
-
-  .placeholder {
-    color: var(--text-light);
-  }
-</style>
+<ProfessionalDetail
+  title="Visual Design"
+  description="Kun Li's visual design work: branding, UI, and creative direction."
+  color="var(--color-visual)"
+  i18nKey="professional.visualDesign"
+/>

@@ -926,7 +926,7 @@
   }
 
   .error {
-    color: #9a6868;
+    color: var(--color-pm);
     font-size: var(--fs-xs);
     margin-top: 0.6rem;
   }
@@ -1062,7 +1062,7 @@
 
   .drop-error {
     font-size: var(--fs-xs);
-    color: #9a6868;
+    color: var(--color-pm);
     margin-top: 0.5rem;
   }
 
@@ -1073,7 +1073,7 @@
   }
 
   .status--error {
-    color: #9a6868;
+    color: var(--color-pm);
   }
 
   /* --- File list --- */
@@ -1108,7 +1108,7 @@
   }
 
   .clear-all:hover {
-    color: #9a6868;
+    color: var(--color-pm);
   }
 
   .file-item {
@@ -1148,7 +1148,7 @@
   }
 
   .file-remove:hover {
-    color: #9a6868;
+    color: var(--color-pm);
   }
 
   /* --- Actions --- */

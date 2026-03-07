@@ -30,17 +30,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
-  .back-link {
-    display: inline-block;
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    margin-bottom: 2.5rem;
-  }
-
-  .back-link:hover {
-    color: var(--text);
-  }
-
   .thanks-header {
     margin-bottom: var(--space-lg);
   }
@@ -52,44 +41,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   /* --- Sections --- */
   .section {
-    margin-bottom: 2.5rem;
-  }
-
-  /* --- Items (links) --- */
-  .item {
-    display: block;
-    text-decoration: none;
-    padding: 0.6rem 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-    transition: opacity 0.15s ease;
-  }
-
-  .item:last-child {
-    border-bottom: none;
-  }
-
-  .item:hover {
-    opacity: 0.6;
-  }
-
-  .item-title {
-    display: block;
-    font-size: var(--fs-md);
-    font-weight: 500;
-    color: var(--text);
-    line-height: 1.4;
-  }
-
-  .item-desc {
-    display: block;
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    line-height: 1.5;
-    margin-top: 0.15rem;
+    margin-bottom: var(--space-lg);
   }
 
   /* Accent colors */
-  .item--first .item-title { color: #5a7a94; }
-  .item--second .item-title { color: #5a8a6e; }
-  .item--third .item-title { color: #9a6868; }
+  .item--first .item-title { color: var(--color-ds); }
+  .item--second .item-title { color: var(--color-visual); }
+  .item--third .item-title { color: var(--color-pm); }
 </style>
