@@ -103,6 +103,22 @@ export const translations: Record<string, Record<Lang, string>> = {
     zh: '关于科勒的故事。一座拥有卓越工艺与设计传承的小镇。',
   },
 
+  // --- Events page ---
+  'home.events': { en: 'Bay Area Events', zh: '湾区活动' },
+  'events.title': { en: 'Bay Area Events', zh: '湾区活动' },
+  'events.subtitle': { en: 'Newly discovered tech & AI events', zh: '新发现的科技与AI活动' },
+  'events.lastUpdated': { en: 'Last checked', zh: '最近检查' },
+  'events.noEvents': { en: 'No new events discovered today. Check back tomorrow!', zh: '今天没有发现新活动，明天再来看看吧！' },
+  'events.staleWarning': { en: 'Data may be stale — last update was over 48 hours ago.', zh: '数据可能已过时——上次更新超过48小时前。' },
+  'events.fetchError': { en: 'Unable to load events right now. Please try again later.', zh: '暂时无法加载活动信息，请稍后再试。' },
+  'events.loading': { en: 'Loading events...', zh: '正在加载活动...' },
+  'events.free': { en: 'Free', zh: '免费' },
+  'events.approval': { en: 'Requires Approval', zh: '需要审批' },
+  'events.guests': { en: 'guests', zh: '位参与者' },
+  'events.online': { en: 'Online', zh: '线上' },
+  'events.hostedBy': { en: 'Hosted by', zh: '主办方' },
+  'events.eventCount': { en: 'events found', zh: '个活动' },
+
   // --- Language toggle button ---
   'lang.toggle': { en: '中', zh: 'EN' },
 };

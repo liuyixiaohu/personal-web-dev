@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EventList from '../components/events/EventList.svelte';
+---
+
+<BaseLayout title="Bay Area Events — Kun Li" description="Newly discovered Bay Area tech and AI events, updated daily.">
+  <main class="events-page">
+    <h1 class="sr-only">Bay Area Tech & AI Events</h1>
+    <a href="/" class="back-link" data-i18n="nav.back">&larr; Back</a>
+    <EventList client:only="svelte" />
+  </main>
+</BaseLayout>
+
+<style>
+  .events-page {
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: clamp(4rem, 8vh, 6rem) var(--content-padding) 4rem;
+    min-height: 100dvh;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: var(--fs-sm);
+    color: var(--text-light);
+    text-decoration: none;
+    margin-bottom: 2rem;
+    transition: color 0.2s ease;
+  }
+
+  .back-link:hover {
+    color: var(--text);
+  }
+
+  @media (max-width: 480px) {
+    .events-page {
+      padding-top: 3rem;
+    }
+  }
+</style>
