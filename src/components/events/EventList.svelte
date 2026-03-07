@@ -326,7 +326,7 @@
 
   function formatTimeLabel(time: string): string {
     const h = parseInt(time.split(':')[0], 10);
-    return `${h}`;
+    return h === 12 ? 'Noon' : `${h}`;
   }
 
   // --- Filtering & Sorting ---
