@@ -28,8 +28,7 @@
   }
 
   // --- Constants ---
-  const DATA_URL =
-    'https://raw.githubusercontent.com/liuyixiaohu/personal-web-dev/main/data/events.json';
+  const DATA_URL = '/data/events.json';
   const STALE_THRESHOLD_MS = 48 * 60 * 60 * 1000; // 48 hours
 
   // --- State ---
