@@ -614,7 +614,7 @@
 
   .cal-wrapper {
     flex: 0 0 48%;
-    max-height: calc(16px * 12 + 1.6rem);
+    max-height: calc(16px * 24 + 1.6rem);
     overflow-y: auto;
   }
 
