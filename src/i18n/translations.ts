@@ -105,6 +105,7 @@ export const translations: Record<string, Record<Lang, string>> = {
 
   // --- Events page ---
   'home.events': { en: 'Bay Area Events', zh: '湾区活动' },
+  'home.brand': { en: 'Brand Guidelines', zh: '品牌指南' },
   'events.title': { en: 'Today\'s New Luma Events at SF Bay Area', zh: '今日新增 Luma 活动（旧金山湾区）' },
   'events.lastUpdated': { en: 'Last checked', zh: '最近检查' },
   'events.noEvents': { en: 'No new events discovered today. Check back tomorrow!', zh: '今天没有发现新活动，明天再来看看吧！' },
