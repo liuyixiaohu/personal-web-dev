@@ -1,0 +1,38 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  color: string;
+  i18nKey: string;
+}
+
+const { title, description, color, i18nKey } = Astro.props;
+---
+
+<BaseLayout title={`${title} | Kun Li`} description={description}>
+  <main class="page grid-page">
+    <a href="/professional" class="back-link" data-i18n="nav.backToProfessional">&larr; Back to Professional</a>
+    <h1 data-i18n={i18nKey} style={`color: ${color}`}>{title}</h1>
+    <slot>
+      <p class="placeholder" data-i18n="common.comingSoon">Content coming soon...</p>
+    </slot>
+  </main>
+</BaseLayout>
+
+<style>
+  .page {
+    padding-block: var(--space-xl) 4rem;
+  }
+
+  h1 {
+    font-size: var(--fs-xl);
+    font-weight: 500;
+    margin-bottom: var(--space-md);
+  }
+
+  .placeholder {
+    color: var(--text-light);
+  }
+</style>

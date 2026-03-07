@@ -48,61 +48,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     /* Layout handled by .grid-page (content track = 36rem) */
   }
 
-  .back-link {
-    display: inline-block;
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    margin-bottom: 2.5rem;
-  }
-
-  .back-link:hover {
-    color: var(--text);
-  }
-
   /* --- Sections --- */
   .section {
-    margin-bottom: 2.5rem;
+    margin-bottom: var(--space-lg);
   }
 
-  /* --- Items (links) --- */
-  .item {
-    display: block;
-    text-decoration: none;
-    padding: 0.6rem 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-    transition: opacity 0.15s ease;
-  }
-
-  .item:last-child {
-    border-bottom: none;
-  }
-
-  .item:hover {
-    opacity: 0.6;
-  }
-
-  .item-title {
-    display: block;
-    font-size: var(--fs-md);
-    font-weight: 500;
-    color: var(--text);
-    line-height: 1.4;
-  }
-
-  .item-desc {
-    display: block;
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    line-height: 1.5;
-    margin-top: 0.15rem;
-  }
-
-  /* Drink accent colors on title */
-  .item--pm .item-title { color: #9a6868; }
-  .item--ds .item-title { color: #5a7a94; }
-  .item--visual .item-title { color: #5a8a6e; }
-  .item--journey .item-title { color: #7FB6DD; }
-  .item--events .item-title { color: #D9797B; }
+  /* Accent colors on title */
+  .item--pm .item-title { color: var(--color-pm); }
+  .item--ds .item-title { color: var(--color-ds); }
+  .item--visual .item-title { color: var(--color-visual); }
+  .item--journey .item-title { color: var(--color-journey); }
+  .item--events .item-title { color: var(--color-rose); }
   .item--brand .item-title { color: #8BAF9A; }
 
 </style>
