@@ -130,6 +130,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.sortGuestsAsc': { en: 'Fewest guests', zh: '参与最少' },
   'events.sortGuestsDesc': { en: 'Most guests', zh: '参与最多' },
   'events.sortNote': { en: '(Note: "Not Disclosed" counts as fewest)', zh: '（注：「未公开」视为最少）' },
+  'events.calendar': { en: 'Schedule Overview', zh: '日程概览' },
   'events.searchPlaceholder': { en: 'Search events or hosts...', zh: '搜索活动或主办方...' },
   'events.clearFilters': { en: 'Clear filters', zh: '清除筛选' },
   'events.noMatch': { en: 'No events match filters', zh: '没有匹配的活动' },

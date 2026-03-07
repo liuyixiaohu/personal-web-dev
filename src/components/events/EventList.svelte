@@ -56,6 +56,8 @@
   let sortBy = $state<string>(loadPref('events.sort', 'time-asc'));
   let searchQuery = $state<string>('');
 
+  // --- Calendar (read-only) ---
+
   // --- Language ---
   initLang();
   lang = getLang();
@@ -72,6 +74,7 @@
   $effect(() => { localStorage.setItem('events.price', JSON.stringify(selectedPrice)); });
   $effect(() => { localStorage.setItem('events.sort', JSON.stringify(sortBy)); });
   $effect(() => { localStorage.setItem('events.locations', JSON.stringify([...selectedLocations])); });
+
 
   // --- Data fetching ---
   onMount(async () => {
@@ -94,36 +97,28 @@
   });
 
   // --- Formatting helpers ---
-  function formatEventDate(isoStr: string, tz: string): string {
+  const TZ = 'America/Los_Angeles';
+  const locale = () => lang === 'zh' ? 'zh-CN' : 'en-US';
+
+  function formatEventRange(startIso: string, endIso: string, tz: string): string {
     try {
-      const d = new Date(isoStr);
-      return d.toLocaleDateString(lang === 'zh' ? 'zh-CN' : 'en-US', {
-        weekday: 'short',
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-        hour: 'numeric',
-        minute: '2-digit',
-        timeZone: tz || 'America/Los_Angeles',
-      });
-    } catch {
-      return isoStr;
-    }
+      const t = tz || TZ;
+      const s = new Date(startIso);
+      const e = new Date(endIso);
+      const sDate = s.toLocaleDateString(locale(), { weekday: 'short', month: 'short', day: 'numeric', timeZone: t });
+      const eDate = e.toLocaleDateString(locale(), { weekday: 'short', month: 'short', day: 'numeric', timeZone: t });
+      const sTime = s.toLocaleTimeString(locale(), { hour: 'numeric', minute: '2-digit', timeZone: t });
+      const eTime = e.toLocaleTimeString(locale(), { hour: 'numeric', minute: '2-digit', timeZone: t });
+      if (sDate === eDate) return `${sDate}, ${sTime} – ${eTime}`;
+      return `${sDate}, ${sTime} – ${eDate}, ${eTime}`;
+    } catch { return startIso; }
   }
 
   function formatUpdatedAt(isoStr: string): string {
     try {
       const d = new Date(isoStr);
-      return d.toLocaleDateString(lang === 'zh' ? 'zh-CN' : 'en-US', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-        hour: 'numeric',
-        minute: '2-digit',
-      });
-    } catch {
-      return isoStr;
-    }
+      return d.toLocaleDateString(locale(), { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
+    } catch { return isoStr; }
   }
 
   function formatPrice(event: LumaEvent): string {
@@ -150,6 +145,107 @@
   let allLocations = $derived(
     [...new Set(events.map(e => stripState(e.location)).filter(l => l && l.trim()))].sort()
   );
+
+  // --- Calendar grid data ---
+  function toLocalSlotKey(iso: string): string {
+    const d = new Date(iso);
+    const local = new Date(d.toLocaleString('en-US', { timeZone: TZ }));
+    const y = local.getFullYear();
+    const m = String(local.getMonth() + 1).padStart(2, '0');
+    const day = String(local.getDate()).padStart(2, '0');
+    const h = String(local.getHours()).padStart(2, '0');
+    const min = local.getMinutes() < 30 ? '00' : '30';
+    return `${y}-${m}-${day}T${h}:${min}`;
+  }
+
+  function getEventSlots(event: LumaEvent): string[] {
+    const slots: string[] = [];
+    const start = new Date(new Date(event.start_at).toLocaleString('en-US', { timeZone: TZ }));
+    const end = new Date(new Date(event.end_at).toLocaleString('en-US', { timeZone: TZ }));
+    const cursor = new Date(start);
+    cursor.setMinutes(cursor.getMinutes() < 30 ? 0 : 30, 0, 0);
+    while (cursor < end) {
+      const y = cursor.getFullYear();
+      const m = String(cursor.getMonth() + 1).padStart(2, '0');
+      const d = String(cursor.getDate()).padStart(2, '0');
+      const h = String(cursor.getHours()).padStart(2, '0');
+      const min = String(cursor.getMinutes()).padStart(2, '0');
+      slots.push(`${y}-${m}-${d}T${h}:${min}`);
+      cursor.setMinutes(cursor.getMinutes() + 30);
+    }
+    return slots;
+  }
+
+  let calendarDays = $derived.by(() => {
+    const days = new Set<string>();
+    for (const e of events) {
+      const key = toLocalSlotKey(e.start_at);
+      days.add(key.split('T')[0]);
+      const endKey = toLocalSlotKey(e.end_at);
+      days.add(endKey.split('T')[0]);
+    }
+    return [...days].sort();
+  });
+
+  let timeSlots = $derived.by(() => {
+    if (events.length === 0) return [];
+    let minH = 24, maxH = 0;
+    for (const e of events) {
+      const sKey = toLocalSlotKey(e.start_at);
+      const eKey = toLocalSlotKey(e.end_at);
+      const sH = parseInt(sKey.split('T')[1].split(':')[0]);
+      const eH = parseInt(eKey.split('T')[1].split(':')[0]);
+      const eMin = parseInt(eKey.split('T')[1].split(':')[1]);
+      minH = Math.min(minH, sH);
+      maxH = Math.max(maxH, eMin > 0 ? eH + 1 : eH);
+    }
+    minH = Math.max(0, minH - 1);
+    maxH = Math.min(24, maxH + 1);
+    const slots: string[] = [];
+    for (let h = minH; h < maxH; h++) {
+      slots.push(`${String(h).padStart(2, '0')}:00`);
+      slots.push(`${String(h).padStart(2, '0')}:30`);
+    }
+    return slots;
+  });
+
+  // Slot density map: slot key → { count, firstId } (from filtered events)
+  let slotDensity = $derived.by(() => {
+    const map = new Map<string, { count: number; firstId: string }>();
+    for (const e of filteredEvents) {
+      for (const s of getEventSlots(e)) {
+        const cur = map.get(s);
+        if (cur) cur.count++;
+        else map.set(s, { count: 1, firstId: e.api_id });
+      }
+    }
+    return map;
+  });
+
+  function scrollToEvent(eventId: string) {
+    const el = document.getElementById(`event-${eventId}`);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function slotTitle(key: string): string {
+    const info = slotDensity.get(key);
+    if (!info) return '';
+    return lang === 'zh' ? `${info.count} 个活动` : `${info.count} event${info.count > 1 ? 's' : ''}`;
+  }
+
+  function formatDayHeader(dayStr: string): string {
+    const [y, m, d] = dayStr.split('-').map(Number);
+    const date = new Date(y, m - 1, d);
+    return date.toLocaleDateString(locale(), { weekday: 'short', month: 'short', day: 'numeric' });
+  }
+
+  function formatTimeLabel(time: string): string {
+    const [h, m] = time.split(':').map(Number);
+    if (lang === 'zh') return `${h}:${m === 0 ? '00' : '30'}`;
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    const h12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+    return `${h12}:${m === 0 ? '00' : '30'} ${ampm}`;
+  }
 
   // --- Filtering & Sorting ---
   function matchesPrice(event: LumaEvent): boolean {
@@ -288,6 +384,45 @@
         </div>
       {/if}
 
+      <!-- Read-only calendar -->
+      {#if calendarDays.length > 0 && timeSlots.length > 0}
+        <div class="filter-row filter-row--stacked">
+          <span class="filter-label">{t('events.calendar')}</span>
+          <div
+            class="cal-grid"
+            style="grid-template-columns: 4.5rem repeat({calendarDays.length}, 1fr);"
+          >
+            <!-- Header row -->
+            <div class="cal-corner"></div>
+            {#each calendarDays as day}
+              <div class="cal-day-header">{formatDayHeader(day)}</div>
+            {/each}
+            <!-- Time rows -->
+            {#each timeSlots as time}
+              <div class="cal-time-label" class:cal-time-label--hour={time.endsWith(':00')}>{time.endsWith(':00') ? formatTimeLabel(time) : ''}</div>
+              {#each calendarDays as day}
+                {@const key = `${day}T${time}`}
+                {@const info = slotDensity.get(key)}
+                {@const count = info?.count ?? 0}
+                <div
+                  class="cal-cell"
+                  class:cal-cell--d1={count === 1}
+                  class:cal-cell--d2={count === 2}
+                  class:cal-cell--d3={count >= 3}
+                  class:cal-cell--hour={time.endsWith(':00')}
+                  class:cal-cell--clickable={count > 0}
+                  title={slotTitle(key)}
+                  role={count > 0 ? 'button' : undefined}
+                  tabindex={count > 0 ? 0 : undefined}
+                  onclick={() => { if (info) scrollToEvent(info.firstId); }}
+                  onkeydown={(ev) => { if (info && (ev.key === 'Enter' || ev.key === ' ')) scrollToEvent(info.firstId); }}
+                ></div>
+              {/each}
+            {/each}
+          </div>
+        </div>
+      {/if}
+
       <!-- Sort (pills) -->
       <div class="filter-row filter-row--stacked">
         <span class="filter-label">{t('events.sortBy')} <span class="sort-note">{t('events.sortNote')}</span></span>
@@ -334,7 +469,7 @@
 
     <ul class="event-cards">
       {#each filteredEvents as event (event.api_id)}
-        <li class="event-card">
+        <li class="event-card" id="event-{event.api_id}">
           <div class="event-card-header">
             <a href={event.url} target="_blank" rel="noopener noreferrer" class="event-name">
               {event.name}
@@ -345,7 +480,7 @@
           </div>
 
           <div class="event-card-details">
-            <span class="event-date">{formatEventDate(event.start_at, event.timezone)}</span>
+            <span class="event-date">{formatEventRange(event.start_at, event.end_at, event.timezone)}</span>
 
             {#if locationDisplay(event)}
               <span class="event-location">{locationDisplay(event)}</span>
@@ -516,6 +651,70 @@
     opacity: 0.5;
     font-size: 0.65rem;
   }
+
+  /* --- Calendar grid --- */
+  .cal-grid {
+    display: grid;
+    gap: 0;
+    user-select: none;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    overflow: hidden;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .cal-corner {
+    background: transparent;
+  }
+
+  .cal-day-header {
+    font-size: 0.65rem;
+    color: var(--text-light);
+    text-align: center;
+    padding: 0.3em 0.2em;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    white-space: nowrap;
+  }
+
+  .cal-time-label {
+    font-size: 0.6rem;
+    color: var(--text-light);
+    opacity: 0.6;
+    text-align: right;
+    padding-right: 0.4em;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .cal-time-label--hour {
+    border-top: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  .cal-cell {
+    height: 18px;
+    border-right: 1px solid rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    transition: background 0.1s;
+  }
+
+  .cal-cell--hour {
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .cal-cell--clickable {
+    cursor: pointer;
+  }
+
+  .cal-cell--clickable:hover {
+    opacity: 0.7;
+  }
+
+  .cal-cell--d1 { background: rgba(90, 160, 120, 0.18); }
+  .cal-cell--d2 { background: rgba(90, 160, 120, 0.35); }
+  .cal-cell--d3 { background: rgba(90, 160, 120, 0.55); }
 
   .sort-note {
     font-size: 0.68rem;
