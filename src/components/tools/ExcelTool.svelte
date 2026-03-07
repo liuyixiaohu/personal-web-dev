@@ -977,7 +977,6 @@
     font-size: var(--fs-sm);
     color: var(--text-light);
     margin-bottom: 1.8rem;
-    opacity: 0.5;
     line-height: 1.8;
   }
 
@@ -1094,7 +1093,6 @@
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: var(--text-light);
-    opacity: 0.5;
     margin-bottom: 0;
   }
 
@@ -1105,13 +1103,11 @@
     font-family: inherit;
     color: var(--text-light);
     cursor: pointer;
-    opacity: 0.5;
-    transition: opacity 0.15s;
+    transition: color 0.15s;
     padding: 0;
   }
 
   .clear-all:hover {
-    opacity: 1;
     color: #9a6868;
   }
 
@@ -1148,12 +1144,10 @@
     color: var(--text-light);
     cursor: pointer;
     padding: 0 0.3rem;
-    opacity: 0.4;
     line-height: 1;
   }
 
   .file-remove:hover {
-    opacity: 1;
     color: #9a6868;
   }
 

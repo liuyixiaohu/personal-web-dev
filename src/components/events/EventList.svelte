@@ -559,14 +559,13 @@
   }
 
   .event-meta-bar {
-    font-size: 0.75rem;
+    font-size: var(--fs-sm);
     color: var(--text-light);
-    opacity: 0.6;
     margin-bottom: var(--space-sm);
   }
 
   .event-count {
-    font-size: 0.85rem;
+    font-size: var(--fs-sm);
     color: var(--text);
     font-weight: 500;
     margin-top: var(--space-sm);
@@ -576,7 +575,7 @@
   }
 
   .date-group-header {
-    font-size: 0.78rem;
+    font-size: var(--fs-sm);
     font-weight: 500;
     color: var(--text-light);
     margin: var(--space-sm) 0 0.2rem;
@@ -595,7 +594,7 @@
 
   .search-input {
     font-family: inherit;
-    font-size: 0.78rem;
+    font-size: var(--fs-sm);
     padding: 0.35em 0.6em;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 3px;
@@ -641,9 +640,8 @@
   }
 
   .event-meta {
-    font-size: 0.75rem;
+    font-size: var(--fs-sm);
     color: var(--text-light);
-    opacity: 0.5;
     margin-top: var(--space-xs);
   }
 
@@ -661,7 +659,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    font-size: 0.78rem;
+    font-size: var(--fs-sm);
   }
 
   .cal-panel {
@@ -692,7 +690,7 @@
 
   .filter-label {
     color: var(--text-light);
-    font-size: 0.75rem;
+    font-size: var(--fs-sm);
     min-width: 3rem;
     flex-shrink: 0;
   }
@@ -705,7 +703,7 @@
 
   .pill {
     font-family: inherit;
-    font-size: 0.72rem;
+    font-size: var(--fs-xs);
     padding: 0.2em 0.55em;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 3px;
@@ -728,8 +726,7 @@
   }
 
   .pill-count {
-    opacity: 0.5;
-    font-size: 0.65rem;
+    font-size: var(--fs-xs);
   }
 
   /* --- Calendar grid --- */
@@ -743,8 +740,8 @@
   }
 
   .cal-pan-hint {
-    font-size: 0.65rem;
-    opacity: 0.45;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
     font-style: italic;
   }
 
@@ -756,7 +753,7 @@
   }
 
   .cal-day-header {
-    font-size: 0.6rem;
+    font-size: var(--fs-xs);
     color: var(--text-light);
     text-align: center;
     padding: 0.25em 0.15em;
@@ -769,9 +766,8 @@
   }
 
   .cal-time-label {
-    font-size: 0.55rem;
+    font-size: var(--fs-xs);
     color: var(--text-light);
-    opacity: 0.6;
     text-align: right;
     padding-right: 0.3em;
     height: 16px;
@@ -810,9 +806,8 @@
 
   .clear-filters {
     font-family: inherit;
-    font-size: 0.7rem;
+    font-size: var(--fs-xs);
     color: var(--text-light);
-    opacity: 0.6;
     background: none;
     border: none;
     padding: 0;
@@ -822,11 +817,11 @@
   }
 
   .clear-filters:hover {
-    opacity: 1;
+    color: var(--text);
   }
 
   .event-stale {
-    font-size: 0.78rem;
+    font-size: var(--fs-sm);
     color: #9a6868;
     font-style: italic;
     margin-bottom: var(--space-sm);
@@ -871,7 +866,7 @@
   }
 
   .event-price {
-    font-size: 0.75rem;
+    font-size: var(--fs-sm);
     color: var(--text-light);
     white-space: nowrap;
     flex-shrink: 0;
@@ -899,7 +894,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.2rem 1rem;
-    font-size: clamp(0.75rem, 0.7rem + 0.2vw, 0.82rem);
+    font-size: var(--fs-sm);
     color: var(--text-light);
     line-height: 1.5;
   }
