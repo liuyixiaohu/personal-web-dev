@@ -58,7 +58,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <ClientRouter />
     <title>{title}</title>
 
-    {/* JSON-LD structured data — homepage only */}
+    {/* JSON-LD structured data (homepage only) */}
     {Astro.url.pathname === '/' && (
       <script type="application/ld+json" set:html={JSON.stringify({
         "@context": "https://schema.org",

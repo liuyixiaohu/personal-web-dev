@@ -1,5 +1,5 @@
 /* ============================================
-   Global Styles — Likun's Personal Brand Site
+   Global Styles : Likun's Personal Brand Site
    ============================================ */
 
 :root {
@@ -14,18 +14,18 @@
   --bubble-ds: #D6E6F3;
   --bubble-visual: #DDEEE7;
 
-  /* Typography — Major Third modular scale (1.25×) */
+  /* Typography : Major Third modular scale (1.25×) */
   --font-body: 'EB Garamond', Garamond, 'Times New Roman', serif;
   --font-zh: 'LXGW WenKai', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --font-zh-body: var(--font-zh);
   --font-zh-heading: var(--font-zh);
   --fs-base: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);  /* root font-size */
-  --fs-xs: 0.75rem;    /* small — labels, tags, captions, secondary text */
-  --fs-md: 1.25rem;    /* 1.25¹  — subheadings, nav titles */
-  --fs-lg: 1.563rem;   /* 1.25²  — page headings */
-  --fs-xl: 1.953rem;   /* 1.25³  — hero / display */
+  --fs-xs: 0.75rem;    /* small : labels, tags, captions, secondary text */
+  --fs-md: 1.25rem;    /* 1.25¹  : subheadings, nav titles */
+  --fs-lg: 1.563rem;   /* 1.25²  : page headings */
+  --fs-xl: 1.953rem;   /* 1.25³  : hero / display */
 
-  /* Spacing — Fluid */
+  /* Spacing : Fluid */
   --space-xs: clamp(0.5rem, 1vw, 0.75rem);
   --space-sm: clamp(0.75rem, 1.5vw, 1.25rem);
   --space-md: clamp(1rem, 2vw, 2rem);
@@ -88,7 +88,7 @@ a:hover {
   background: rgba(90, 99, 107, 0.15);
 }
 
-/* View Transitions — ensure consistent background during fade */
+/* View Transitions : ensure consistent background during fade */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation-duration: 0.4s;
@@ -101,10 +101,10 @@ a:hover {
    Named-line grid for editorial layout.
 
    Usage:
-     <main class="grid-page">        — activates the grid
-       <h1>Title</h1>                — defaults to content width (36rem)
-       <div class="wide">...</div>   — wider track (44rem)
-       <div class="full">...</div>   — full-bleed (100%)
+     <main class="grid-page">        : activates the grid
+       <h1>Title</h1>                : defaults to content width (36rem)
+       <div class="wide">...</div>   : wider track (44rem)
+       <div class="full">...</div>   : full-bleed (100%)
      </main>
    ============================================ */
 .grid-page {

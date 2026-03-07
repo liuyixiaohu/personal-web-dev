@@ -1,6 +1,6 @@
 # kunli.co
 
-Personal portfolio website — [kunli.co](https://kunli.co)
+Personal portfolio website: [kunli.co](https://kunli.co)
 
 ## Tech Stack
 
