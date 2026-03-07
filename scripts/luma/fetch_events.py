@@ -26,7 +26,7 @@ SOURCES = [
 ]
 MAX_PAGES = 5
 REQUEST_DELAY = 1.0
-DATA_FILE = Path(__file__).resolve().parent.parent.parent / "data" / "events.json"
+DATA_FILE = Path(__file__).resolve().parent.parent.parent / "public" / "data" / "events.json"
 
 BASE_URL = "https://api.lu.ma"
 MAX_RETRIES = 1
