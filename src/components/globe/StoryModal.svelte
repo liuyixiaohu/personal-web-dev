@@ -153,7 +153,7 @@
   }
 
   .modal-body {
-    color: #6b737b;
+    color: var(--text-light);
     line-height: 1.7;
   }
 </style>

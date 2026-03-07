@@ -891,8 +891,8 @@
   }
 
   .event-price--paid {
-    color: #09797B;
-    background: rgba(9, 121, 123, 0.08);
+    color: #9a6868;
+    background: rgba(154, 104, 104, 0.08);
   }
 
   .event-card-details {
