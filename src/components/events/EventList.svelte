@@ -636,14 +636,14 @@
             </div>
 
             <div class="event-card-details">
-              <span class="event-date">{formatEventRange(event.start_at, event.end_at, event.timezone)}</span>
+              <span class="event-date"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>{formatEventRange(event.start_at, event.end_at, event.timezone)}</span>
 
               {#if locationDisplay(event)}
-                <span class="event-location">{locationDisplay(event)}</span>
+                <span class="event-location"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>{locationDisplay(event)}</span>
               {/if}
 
               {#if event.guest_count > 0}
-                <span class="event-guests">{event.guest_count} {t('events.guests')}</span>
+                <span class="event-guests"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>{event.guest_count} {t('events.guests')}</span>
               {/if}
             </div>
           </li>
@@ -1033,6 +1033,7 @@
     text-align: center;
     padding: 0.25em 0.15em;
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    border-left: 1px solid rgba(0, 0, 0, 0.08);
     white-space: nowrap;
     position: sticky;
     top: 0;
@@ -1059,6 +1060,7 @@
   .cal-cell {
     height: 16px;
     border-right: 1px solid rgba(0, 0, 0, 0.03);
+    border-left: 1px solid rgba(0, 0, 0, 0.08);
     border-top: 1px solid rgba(0, 0, 0, 0.02);
     transition: background 0.1s;
   }
@@ -1174,14 +1176,13 @@
     line-height: 1.5;
   }
 
-  .event-date::before,
-  .event-location::before,
-  .event-guests::before {
-    margin-right: 0.3em;
+  .icon {
+    width: 0.9em;
+    height: 0.9em;
+    vertical-align: -0.1em;
+    margin-right: 0.25em;
+    flex-shrink: 0;
   }
-  .event-date::before   { content: '\01F4C5'; }
-  .event-location::before { content: '\01F4CD'; }
-  .event-guests::before { content: '\01F465'; }
 
   /* Chinese font overrides */
   :global(html[data-lang="zh"]) .event-title {
