@@ -1171,10 +1171,16 @@
     line-height: 1.5;
   }
 
+  .event-date,
+  .event-location,
+  .event-guests {
+    display: inline-flex;
+    align-items: center;
+  }
+
   .icon {
     width: 0.9em;
     height: 0.9em;
-    vertical-align: -0.1em;
     margin-right: 0.25em;
     flex-shrink: 0;
   }
