@@ -30,7 +30,7 @@
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     font-family: inherit;
-    font-size: 0.85rem;
+    font-size: var(--fs-xs);
     font-weight: 500;
     color: var(--text, #1F2328);
     cursor: pointer;

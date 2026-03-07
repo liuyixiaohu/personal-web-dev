@@ -72,8 +72,7 @@
 
 | Variable | Ratio | Value | Usage |
 |---|---|---|---|
-| `--fs-xs` | 1.25⁻² | `0.64rem` | Labels, tags, decorative small text |
-| `--fs-sm` | 1.25⁻¹ | `0.8rem` | Secondary text, captions |
+| `--fs-xs` | — | `0.75rem` | Labels, tags, captions, secondary text |
 | (base) | 1.25⁰ | `1rem` | Body text |
 | `--fs-md` | 1.25¹ | `1.25rem` | Subheadings, nav titles |
 | `--fs-lg` | 1.25² | `1.563rem` | Page headings |
@@ -138,7 +137,7 @@ Named-line CSS Grid with three content tracks:
 padding: 0.5rem 1rem;
 border: 1px solid var(--border);
 border-radius: 4px;
-font-size: var(--fs-sm);
+font-size: var(--fs-xs);
 transition: background 0.15s, border-color 0.15s;
 
 /* Primary (inverted) */
@@ -152,7 +151,7 @@ color: var(--bg);
 padding: 0.6rem 0;
 border-bottom: 1px solid rgba(0, 0, 0, 0.04);
 /* Title: --fs-md, weight 500 */
-/* Description: --fs-sm, color --text-light */
+/* Description: --fs-xs, color --text-light */
 ```
 
 ### Pills / Filters
