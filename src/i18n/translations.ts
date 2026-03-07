@@ -134,6 +134,8 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.searchPlaceholder': { en: 'Search events or hosts...', zh: '搜索活动或主办方...' },
   'events.clearFilters': { en: 'Clear filters', zh: '清除筛选' },
   'events.noMatch': { en: 'No events match filters', zh: '没有匹配的活动' },
+  'events.showMore': { en: 'More', zh: '更多' },
+  'events.showLess': { en: 'Less', zh: '收起' },
   'events.guestsNotDisclosed': { en: 'Not Disclosed', zh: '未公开' },
 
   // --- Brand Guidelines page ---
