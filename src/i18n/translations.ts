@@ -142,8 +142,8 @@ export const translations: Record<string, Record<Lang, string>> = {
   // --- Brand Guidelines page ---
   'brand.title': { en: 'Brand Guidelines', zh: '品牌规范' },
   'brand.subtitle': {
-    en: 'The visual language of kunli.co: warm, minimal, bilingual.',
-    zh: 'kunli.co 的视觉语言：温暖、极简、双语。',
+    en: 'Design Philosophy: Minimal & Warm',
+    zh: '设计理念：极简与温暖',
   },
   'brand.principles': { en: 'Design Principles', zh: '设计原则' },
   'brand.principleMinimal': { en: 'Minimal', zh: '极简' },
