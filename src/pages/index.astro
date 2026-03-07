@@ -1,8 +1,71 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ChangelogPopup from '../components/ChangelogPopup.astro';
+
+const siteChangelog = [
+  { version: 'v0.7',
+    why: 'People deserve their own pages.',
+    changes: [
+      'Homepage now shows Enter Chaguan + Special Thanks',
+      'Added Special Thanks section with individual journal pages',
+      'Moved Events and Brand links into the professional page',
+      'Inline SVG icons replacing emojis site-wide',
+      'Per-heading line-heights for tighter typography',
+      'Events page updated to v0.9, Brand Guidelines to v0.4',
+    ]},
+  { version: 'v0.6',
+    why: 'A website without a design system is just vibes.',
+    changes: [
+      'Named-line CSS Grid for consistent page layouts',
+      'Major Third (1.25x) modular type scale',
+      'Unified text colors and WCAG AA contrast',
+      'Brand Guidelines page (Brand v0.1)',
+      'Simplified fonts from 7 to 5 combinations',
+    ]},
+  { version: 'v0.5',
+    why: 'Bay Area tech events were scattered everywhere. Fixed that.',
+    changes: [
+      'Bay Area Events page with Luma integration (Events v0.1)',
+      'Daily auto-fetch of new events',
+      'Bilingual event listing in English and Chinese',
+    ]},
+  { version: 'v0.4',
+    why: 'Every pin on the map is a story waiting to be told.',
+    changes: [
+      'Interactive D3 world map replacing the Three.js globe',
+      'Province and state boundaries appear on zoom',
+      'Animated pins with ripple effects',
+      'Full-screen map experience with zoom slider',
+    ]},
+  { version: 'v0.3',
+    why: 'Tried a 3D robot bartender. It was fun. Then it wasn\'t.',
+    changes: [
+      'Removed robot bartender, drink mixing, and bottle shelf experiments',
+      'Clean, text-based professional page with witty descriptions',
+      'Simplified homepage to greeting + two choices',
+    ]},
+  { version: 'v0.2',
+    why: 'A website should greet you like an old friend.',
+    changes: [
+      'Truman Show greeting as the homepage centerpiece',
+      'Time-aware messages and late-night cat visitors',
+      'Enter Chaguan as the main navigation concept',
+    ]},
+  { version: 'v0.1',
+    why: 'Everyone needs a corner of the internet to call home.',
+    changes: [
+      'Personal website with interactive globe and city pins',
+      'Bilingual support: English and Chinese',
+      'Google Analytics tracking',
+    ]},
+];
 ---
 
 <BaseLayout title="Kun Li - Product Marketing × Data Science × Design" description="I wasn't great at math or English, yet somehow I ended up a data scientist in the U.S., and eventually found my way back to expression.">
+  <div class="site-version">
+    <ChangelogPopup version="v0.7" id="site" entries={siteChangelog} align="right" />
+  </div>
+
   <main class="home">
     <h1 class="sr-only">Kun Li | Product Marketing, Data Science &amp; Design</h1>
     <div class="home-content">
@@ -14,85 +77,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="greeting-source-line">
           <p class="greeting-source" data-i18n="greeting.source">The Truman Show</p>
           <span class="secret-heart" id="secret-heart">♥</span>
-          <div class="version-wrap">
-            <button class="version-btn" id="site-version-btn">v0.7</button>
-            <div class="changelog-backdrop" id="site-changelog-backdrop" hidden></div>
-            <div class="changelog-popup" id="site-changelog-popup" hidden>
-          <div class="changelog-header">
-            <span class="changelog-title">Changelog</span>
-            <button class="changelog-close" id="site-changelog-close">&times;</button>
-          </div>
-          <div class="changelog-release">
-            <div class="changelog-version">v0.7</div>
-            <p class="changelog-why">People deserve their own pages.</p>
-            <ul class="changelog-list">
-              <li>Homepage now shows Enter Chaguan + Special Thanks</li>
-              <li>Added Special Thanks section with individual journal pages</li>
-              <li>Moved Events and Brand links into the professional page</li>
-              <li>Inline SVG icons replacing emojis site-wide</li>
-              <li>Per-heading line-heights for tighter typography</li>
-              <li>Events page updated to v0.9, Brand Guidelines to v0.4</li>
-            </ul>
-          </div>
-          <div class="changelog-release">
-            <div class="changelog-version">v0.6</div>
-            <p class="changelog-why">A website without a design system is just vibes.</p>
-            <ul class="changelog-list">
-              <li>Named-line CSS Grid for consistent page layouts</li>
-              <li>Major Third (1.25x) modular type scale</li>
-              <li>Unified text colors and WCAG AA contrast</li>
-              <li>Brand Guidelines page (Brand v0.1)</li>
-              <li>Simplified fonts from 7 to 5 combinations</li>
-            </ul>
-          </div>
-          <div class="changelog-release">
-            <div class="changelog-version">v0.5</div>
-            <p class="changelog-why">Bay Area tech events were scattered everywhere. Fixed that.</p>
-            <ul class="changelog-list">
-              <li>Bay Area Events page with Luma integration (Events v0.1)</li>
-              <li>Daily auto-fetch of new events</li>
-              <li>Bilingual event listing in English and Chinese</li>
-            </ul>
-          </div>
-          <div class="changelog-release">
-            <div class="changelog-version">v0.4</div>
-            <p class="changelog-why">Every pin on the map is a story waiting to be told.</p>
-            <ul class="changelog-list">
-              <li>Interactive D3 world map replacing the Three.js globe</li>
-              <li>Province and state boundaries appear on zoom</li>
-              <li>Animated pins with ripple effects</li>
-              <li>Full-screen map experience with zoom slider</li>
-            </ul>
-          </div>
-          <div class="changelog-release">
-            <div class="changelog-version">v0.3</div>
-            <p class="changelog-why">Tried a 3D robot bartender. It was fun. Then it wasn't.</p>
-            <ul class="changelog-list">
-              <li>Removed robot bartender, drink mixing, and bottle shelf experiments</li>
-              <li>Clean, text-based professional page with witty descriptions</li>
-              <li>Simplified homepage to greeting + two choices</li>
-            </ul>
-          </div>
-          <div class="changelog-release">
-            <div class="changelog-version">v0.2</div>
-            <p class="changelog-why">A website should greet you like an old friend.</p>
-            <ul class="changelog-list">
-              <li>Truman Show greeting as the homepage centerpiece</li>
-              <li>Time-aware messages and late-night cat visitors</li>
-              <li>Enter Chaguan as the main navigation concept</li>
-            </ul>
-          </div>
-          <div class="changelog-release">
-            <div class="changelog-version">v0.1</div>
-            <p class="changelog-why">Everyone needs a corner of the internet to call home.</p>
-            <ul class="changelog-list">
-              <li>Personal website with interactive globe and city pins</li>
-              <li>Bilingual support: English and Chinese</li>
-              <li>Google Analytics tracking</li>
-            </ul>
-          </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -111,6 +95,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
+  /* Version button: fixed top-right, left of language toggle */
+  .site-version {
+    position: fixed;
+    top: 1.25rem;
+    right: calc(1.25rem + 2.4rem + 0.5rem);
+    z-index: 900;
+    height: 2.4rem;
+    display: flex;
+    align-items: center;
+  }
+
   .home {
     position: relative;
     display: flex;
@@ -213,144 +208,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     opacity: 1;
   }
 
-  /* --- Version / Changelog --- */
-  .version-wrap {
-    position: relative;
-    display: inline-block;
-  }
-
-  .version-btn {
-    font-family: inherit;
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    padding: 0.1em 0.4em;
-    cursor: pointer;
-    transition: border-color 0.15s, color 0.15s;
-    white-space: nowrap;
-  }
-
-  .version-btn:hover {
-    border-color: rgba(0, 0, 0, 0.25);
-    color: var(--text);
-  }
-
-  .changelog-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 99;
-  }
-
-  .changelog-popup {
-    position: absolute;
-    top: calc(100% + 0.4rem);
-    right: 0;
-    z-index: 100;
-    width: min(22rem, calc(100vw - 2rem));
-    max-height: 28rem;
-    overflow-y: auto;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    padding: 0.75rem;
-    text-align: left;
-  }
-
-  .changelog-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-  }
-
-  .changelog-title {
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    color: var(--text);
-  }
-
-  .changelog-close {
-    font-family: inherit;
-    font-size: 1.1rem;
-    color: var(--text-light);
-    background: none;
-    border: none;
-    cursor: pointer;
-    line-height: 1;
-    padding: 0 0.15rem;
-  }
-
-  .changelog-close:hover {
-    color: var(--text);
-  }
-
-  .changelog-release {
-    margin-bottom: 0.6rem;
-  }
-
-  .changelog-release:last-child {
-    margin-bottom: 0;
-  }
-
-  .changelog-version {
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    color: var(--text);
-  }
-
-  .changelog-why {
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    font-style: italic;
-    margin: 0.15rem 0 0.2rem;
-    line-height: 1.4;
-  }
-
-  .changelog-list {
-    margin: 0.2rem 0 0 1rem;
-    padding: 0;
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    line-height: 1.5;
-  }
-
-  .changelog-list li {
-    margin-bottom: 0.1rem;
-  }
-
   /* Mobile: stack vertically */
   @media (max-width: 480px) {
     .home-choices {
       flex-direction: column;
       align-items: center;
     }
-    .changelog-popup {
-      position: fixed;
-      top: auto;
-      right: 1rem;
-      bottom: 1rem;
-      left: 1rem;
-      width: auto;
-      max-height: 70vh;
-      transform: none;
-    }
   }
 </style>
-
-<script>
-  const btn = document.getElementById('site-version-btn');
-  const popup = document.getElementById('site-changelog-popup');
-  const backdrop = document.getElementById('site-changelog-backdrop');
-  const close = document.getElementById('site-changelog-close');
-  function toggle() {
-    const open = popup?.hidden === false;
-    popup && (popup.hidden = !popup.hidden);
-    backdrop && (backdrop.hidden = !backdrop.hidden);
-  }
-  btn?.addEventListener('click', toggle);
-  backdrop?.addEventListener('click', toggle);
-  close?.addEventListener('click', toggle);
-</script>
