@@ -208,6 +208,34 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <span class="scale-meta">--fs-xs · 0.75rem</span>
         </div>
       </div>
+
+      <h3 data-i18n="brand.typeStyles">Type Styles</h3>
+      <div class="type-styles">
+        <div class="type-style-row">
+          <span class="type-style-sample" style="font-size:var(--fs-xl); font-weight:500">Page Title</span>
+          <span class="scale-meta">--fs-xl · 1.953rem · weight 500</span>
+        </div>
+        <div class="type-style-row">
+          <span class="type-style-sample" style="font-size:var(--fs-lg); font-weight:500">Section Heading</span>
+          <span class="scale-meta">--fs-lg · 1.563rem · weight 500</span>
+        </div>
+        <div class="type-style-row">
+          <span class="type-style-sample" style="font-size:var(--fs-md); font-weight:500">Subheading</span>
+          <span class="scale-meta">--fs-md · 1.25rem · weight 500</span>
+        </div>
+        <div class="type-style-row">
+          <span class="type-style-sample" style="font-size:1rem; font-weight:400">Body text reads like this.</span>
+          <span class="scale-meta">base · 1rem · weight 400</span>
+        </div>
+        <div class="type-style-row">
+          <span class="type-style-sample" style="font-size:var(--fs-xs); font-weight:400">Caption or label</span>
+          <span class="scale-meta">--fs-xs · 0.75rem · weight 400</span>
+        </div>
+        <div class="type-style-row">
+          <span class="type-style-sample" style="font-size:var(--fs-xs); font-weight:600; text-transform:uppercase; letter-spacing:0.05em">Section Label</span>
+          <span class="scale-meta">--fs-xs · 0.75rem · weight 600 · uppercase</span>
+        </div>
+      </div>
     </section>
 
     <!-- Spacing -->
@@ -506,6 +534,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     color: var(--text-light);
     font-family: monospace;
     white-space: nowrap;
+  }
+
+  /* --- Type Styles --- */
+  .type-styles {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  .type-style-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    padding: 0.3rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  }
+  .type-style-sample {
+    flex-shrink: 0;
+    color: var(--text);
   }
 
   /* --- Spacing --- */
