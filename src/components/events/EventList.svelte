@@ -204,28 +204,20 @@
     const slots: string[] = [];
     for (let h = minH; h < maxH; h++) {
       slots.push(`${String(h).padStart(2, '0')}:00`);
+      slots.push(`${String(h).padStart(2, '0')}:30`);
     }
     return slots;
   });
 
-  // Slot density map: hour slot key → { count, firstId } (from filtered events)
-  // Aggregates both :00 and :30 sub-slots into the :00 hour key
+  // Slot density map: slot key → { count, firstId } (from filtered events)
   let slotDensity = $derived.by(() => {
     const map = new Map<string, { count: number; firstId: string }>();
-    // Count unique events per hour slot
-    const seen = new Map<string, Set<string>>();
     for (const e of filteredEvents) {
       for (const s of getEventSlots(e)) {
-        // Convert :30 sub-slot to its :00 hour key
-        const hourKey = s.replace(/:30$/, ':00');
-        let eventSet = seen.get(hourKey);
-        if (!eventSet) { eventSet = new Set(); seen.set(hourKey, eventSet); }
-        eventSet.add(e.api_id);
+        const cur = map.get(s);
+        if (cur) cur.count++;
+        else map.set(s, { count: 1, firstId: e.api_id });
       }
-    }
-    for (const [key, eventSet] of seen) {
-      const firstId = [...eventSet][0];
-      map.set(key, { count: eventSet.size, firstId });
     }
     return map;
   });
@@ -396,7 +388,7 @@
 
         <!-- Sort (pills) -->
         <div class="filter-row filter-row--stacked">
-          <span class="filter-label">{t('events.sortBy')} <span class="sort-note">{t('events.sortNote')}</span></span>
+          <span class="filter-label">{t('events.sortBy')}</span>
           <div class="filter-pills">
             {#each [
               ['time-asc', t('events.sortTimeAsc')],
@@ -420,12 +412,15 @@
           <button class="clear-filters" onclick={clearFilters}>{t('events.clearFilters')}</button>
         {/if}
 
-        <input
-          class="search-input"
-          type="text"
-          placeholder={t('events.searchPlaceholder')}
-          bind:value={searchQuery}
-        />
+        <div class="filter-row filter-row--stacked">
+          <span class="filter-label">{t('events.searchLabel')}</span>
+          <input
+            class="search-input"
+            type="text"
+            placeholder={t('events.searchPlaceholder')}
+            bind:value={searchQuery}
+          />
+        </div>
 
         <div class="event-count">{filteredEvents.length} {t('events.eventCount')}</div>
       </div>
@@ -445,7 +440,7 @@
             {/each}
             <!-- Time rows -->
             {#each timeSlots as time}
-              <div class="cal-time-label">{formatTimeLabel(time)}</div>
+              <div class="cal-time-label" class:cal-time-label--hour={time.endsWith(':00')}>{time.endsWith(':00') ? formatTimeLabel(time) : ''}</div>
               {#each calendarDays as day}
                 {@const key = `${day}T${time}`}
                 {@const info = slotDensity.get(key)}
@@ -455,6 +450,7 @@
                   class:cal-cell--d1={count === 1}
                   class:cal-cell--d2={count === 2}
                   class:cal-cell--d3={count >= 3}
+                  class:cal-cell--hour={time.endsWith(':00')}
                   class:cal-cell--clickable={count > 0}
                   title={slotTitle(key)}
                   role={count > 0 ? 'button' : undefined}
@@ -618,6 +614,8 @@
 
   .cal-wrapper {
     flex: 0 0 48%;
+    max-height: calc(16px * 12 + 1.6rem);
+    overflow-y: auto;
   }
 
   .filter-row {
@@ -686,7 +684,10 @@
   }
 
   .cal-corner {
-    background: transparent;
+    position: sticky;
+    top: 0;
+    background: var(--bg, #fff);
+    z-index: 1;
   }
 
   .cal-day-header {
@@ -696,6 +697,10 @@
     padding: 0.25em 0.15em;
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     white-space: nowrap;
+    position: sticky;
+    top: 0;
+    background: var(--bg, #fff);
+    z-index: 1;
   }
 
   .cal-time-label {
@@ -704,18 +709,26 @@
     opacity: 0.6;
     text-align: right;
     padding-right: 0.3em;
-    height: 20px;
+    height: 16px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    border-top: 1px solid rgba(0, 0, 0, 0.04);
+    border-top: 1px solid rgba(0, 0, 0, 0.02);
+  }
+
+  .cal-time-label--hour {
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
   }
 
   .cal-cell {
-    height: 20px;
+    height: 16px;
     border-right: 1px solid rgba(0, 0, 0, 0.03);
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-top: 1px solid rgba(0, 0, 0, 0.02);
     transition: background 0.1s;
+  }
+
+  .cal-cell--hour {
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
   }
 
   .cal-cell--clickable {
@@ -729,13 +742,6 @@
   .cal-cell--d1 { background: rgba(90, 160, 120, 0.18); }
   .cal-cell--d2 { background: rgba(90, 160, 120, 0.35); }
   .cal-cell--d3 { background: rgba(90, 160, 120, 0.55); }
-
-  .sort-note {
-    font-size: 0.68rem;
-    color: var(--text-light);
-    opacity: 0.5;
-    font-style: italic;
-  }
 
   .clear-filters {
     font-family: inherit;
