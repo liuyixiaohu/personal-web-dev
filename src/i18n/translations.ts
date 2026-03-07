@@ -193,8 +193,8 @@ export const translations: Record<string, Record<Lang, string>> = {
   'brand.usage.blueAccent': { en: 'Blue accent', zh: '蓝色强调' },
   'brand.usage.pinkLight': { en: 'Pink background', zh: '粉色背景' },
   'brand.usage.pinkStrong': { en: 'Pink accent', zh: '粉色强调' },
-  'brand.usage.textLight': { en: 'Secondary text', zh: '次要文字' },
-  'brand.usage.textMid': { en: 'Mid-tone text', zh: '中间色文字' },
+  'brand.usage.textLight': { en: 'Subtle / decorative', zh: '装饰性文字' },
+  'brand.usage.textMid': { en: 'Secondary text', zh: '次要文字' },
   'brand.usage.textPrimary': { en: 'Primary text', zh: '主要文字' },
 
   // --- Language toggle button ---
