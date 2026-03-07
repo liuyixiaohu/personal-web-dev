@@ -3,9 +3,15 @@
   "configurations": [
     {
       "name": "dev",
-      "runtimeExecutable": "/opt/homebrew/bin/node",
-      "runtimeArgs": [".claude/dev-server.mjs"],
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
       "port": 4321
+    },
+    {
+      "name": "excel-tool",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["astro", "dev", "--port", "4322"],
+      "port": 4322
     }
   ]
 }
