@@ -56,8 +56,15 @@
   let searchQuery = $state<string>('');
 
   // --- Changelog ---
-  const VERSION = 'v0.8';
+  const VERSION = 'v0.9';
   const CHANGELOG = [
+    { version: 'v0.9',
+      why: 'Visual polish: better icons, tighter headings, cleaner layout.',
+      changes: [
+        'Replaced emoji icons with crisp inline SVGs (calendar, pin, users)',
+        'Calendar columns now have visible day separators',
+        'Tighter line-height on headings for better visual hierarchy',
+      ]},
     { version: 'v0.8',
       why: 'Too many font sizes doing the same job. Time for spring cleaning.',
       changes: [
