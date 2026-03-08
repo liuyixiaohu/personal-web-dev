@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { subscribe, initLang, getLang } from '../../i18n/langStore';
+  import type { Lang } from '../../i18n/translations';
+
   // ExcelJS and XLSX are dynamically imported when needed (saves ~1.2 MB on initial load)
   type ExcelJSModule = typeof import('exceljs');
   type XLSXModule = typeof import('xlsx');
@@ -63,6 +66,14 @@
   // State
   // ============================================
 
+  let lang: Lang = $state('en');
+
+  $effect(() => {
+    initLang();
+    lang = getLang();
+    return subscribe((l) => { lang = l; });
+  });
+
   let authenticated = $state(false);
   let passwordInput = $state('');
   let passwordError = $state('');
@@ -89,6 +100,7 @@
       authenticated = true;
     }
   });
+
 
   async function sha256(text: string): Promise<string> {
     const data = new TextEncoder().encode(text);
@@ -782,6 +794,14 @@
 {#if !authenticated}
   <!-- Password gate -->
   <div class="password-gate">
+    <div class="password-intro">
+      <p>{lang === 'zh'
+        ? 'Hey，你发现了这个彩蛋（尽管我已经努力在隐藏它了）！'
+        : 'Hey, you found this easter egg (despite my best efforts to hide it)!'}</p>
+      <p>{lang === 'zh'
+        ? '这个页面的后面是为我女友和伙伴们制做的一些便利他们生活或工作的小工具。'
+        : 'Behind this page are some little tools I made for my girlfriend and buddies to make their lives or work a bit easier.'}</p>
+    </div>
     <div class="password-row">
       <input
         type="password"
@@ -896,7 +916,19 @@
   /* --- Password gate --- */
   .password-gate {
     text-align: center;
-    padding: 4rem 0;
+    padding: 4rem 1.5rem;
+  }
+
+  .password-intro {
+    max-width: 24rem;
+    margin: 0 auto 2rem;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    line-height: 1.7;
+  }
+
+  .password-intro p + p {
+    margin-top: 0.6rem;
   }
 
   .password-row {
