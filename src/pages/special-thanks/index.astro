@@ -16,7 +16,7 @@ import { people } from '../../data/people';
       {people.map((person) => (
         <a href={`/special-thanks/${person.slug}`} class="item">
           <span class="item-title" style={`color: ${person.color}`}>{person.name}</span>
-          <span class="item-desc">A brief note of gratitude. Content coming soon.</span>
+          <span class="item-desc">{person.subtitle}</span>
         </a>
       ))}
     </section>
