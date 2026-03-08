@@ -1,4 +1,10 @@
-"""Fetch Bay Area tech/AI events from Luma API and save for the website."""
+"""Fetch Bay Area tech/AI events from Luma API and save for the website.
+
+Tracks which events are new since the last fetch by reading the existing
+events.json before overwriting it. Each event gets a `first_seen_at`
+timestamp, and the output includes a `new_event_ids` array listing events
+that did not exist in the previous run.
+"""
 
 import json
 import time
@@ -122,7 +128,34 @@ def normalize_event(raw_entry: dict) -> dict:
 # --- Pipeline ---
 
 
+def _load_old_events() -> tuple[dict[str, dict], str]:
+    """Read existing events.json and return (old_map, old_updated_at).
+
+    old_map is keyed by api_id so we can preserve first_seen_at timestamps.
+    Returns empty dict and empty string if the file doesn't exist or is invalid.
+    """
+    if not DATA_FILE.exists():
+        return {}, ""
+    try:
+        with open(DATA_FILE) as f:
+            data = json.load(f)
+        old_updated_at = data.get("updated_at", "")
+        old_map = {e["api_id"]: e for e in data.get("events", []) if e.get("api_id")}
+        return old_map, old_updated_at
+    except (json.JSONDecodeError, KeyError) as e:
+        print(f"  Warning: could not read old events.json: {e}")
+        return {}, ""
+
+
 def main() -> None:
+    now_iso = datetime.now(timezone.utc).isoformat()
+
+    # --- Load previous data for diff ---
+    old_map, old_updated_at = _load_old_events()
+    old_ids = set(old_map.keys())
+    print(f"Previous run: {len(old_ids)} events (updated {old_updated_at or 'never'})")
+
+    # --- Fetch current events ---
     merged: dict[str, dict] = {}
 
     for source in SOURCES:
@@ -148,11 +181,24 @@ def main() -> None:
             print(f"  ERROR: {e}")
             continue
 
+    # --- Stamp first_seen_at & compute diff ---
+    for aid, event in merged.items():
+        old_entry = old_map.get(aid)
+        if old_entry and old_entry.get("first_seen_at"):
+            event["first_seen_at"] = old_entry["first_seen_at"]
+        else:
+            event["first_seen_at"] = now_iso
+
+    current_ids = set(merged.keys())
+    new_ids = sorted(current_ids - old_ids)
+
     all_events = sorted(merged.values(), key=lambda e: e.get("start_at", ""))
-    print(f"Total: {len(all_events)} unique events")
+    print(f"Total: {len(all_events)} unique events ({len(new_ids)} new)")
 
     output = {
-        "updated_at": datetime.now(timezone.utc).isoformat(),
+        "updated_at": now_iso,
+        "previous_updated_at": old_updated_at,
+        "new_event_ids": new_ids,
         "events": all_events,
     }
 
@@ -161,6 +207,8 @@ def main() -> None:
         json.dump(output, f, indent=2, ensure_ascii=False)
 
     print(f"Saved {len(all_events)} events to {DATA_FILE}")
+    if new_ids:
+        print(f"New events: {', '.join(new_ids[:10])}{'...' if len(new_ids) > 10 else ''}")
 
 
 if __name__ == "__main__":

@@ -6,16 +6,20 @@
   interface Props {
     event: LumaEvent;
     lang: Lang;
+    isNew?: boolean;
   }
 
-  let { event, lang }: Props = $props();
+  let { event, lang, isNew = false }: Props = $props();
 </script>
 
 <li class="event-card" id="event-{event.api_id}">
   <div class="event-card-header">
-    <a href={event.url} target="_blank" rel="noopener noreferrer" class="event-name">
-      {event.name}
-    </a>
+    <span class="event-name-wrap">
+      <a href={event.url} target="_blank" rel="noopener noreferrer" class="event-name">
+        {event.name}
+      </a>
+      {#if isNew}<span class="event-new-badge">NEW</span>{/if}
+    </span>
     <span class="event-price" class:event-price--free={event.is_free} class:event-price--approval={!event.is_free && event.price_cents == null} class:event-price--paid={!event.is_free && event.price_cents != null}>
       {formatPrice(event)}
     </span>
@@ -52,6 +56,13 @@
     margin-bottom: 0.3rem;
   }
 
+  .event-name-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4em;
+    min-width: 0;
+  }
+
   .event-name {
     font-size: var(--fs-base);
     font-weight: 500;
@@ -62,6 +73,18 @@
 
   .event-name:hover {
     opacity: 0.6;
+  }
+
+  .event-new-badge {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--color-visual);
+    background: rgba(90, 160, 120, 0.15);
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    line-height: 1.4;
   }
 
   .event-price {
