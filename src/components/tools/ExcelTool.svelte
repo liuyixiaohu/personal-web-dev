@@ -1123,7 +1123,7 @@
   .section-label {
     font-size: var(--fs-xs);
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.05em;
     color: var(--text-light);
     margin-bottom: 0;
   }
