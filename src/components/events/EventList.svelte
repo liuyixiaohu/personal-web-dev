@@ -16,6 +16,7 @@
   let lang = $state<Lang>('en');
   let events = $state<LumaEvent[]>([]);
   let updatedAt = $state('');
+  let newEventIds = $state<Set<string>>(new Set());
   let loading = $state(true);
   let error = $state(false);
   let isStale = $state(false);
@@ -131,6 +132,7 @@
 
       events = data.events;
       updatedAt = data.updated_at;
+      newEventIds = new Set(data.new_event_ids ?? []);
 
       const updatedTime = new Date(data.updated_at).getTime();
       isStale = Date.now() - updatedTime > STALE_THRESHOLD_MS;
@@ -348,7 +350,7 @@
       <h3 class="date-group-header">{formatDateGroup(group.date, lang)}</h3>
       <ul class="event-cards">
         {#each group.events as event (event.api_id)}
-          <EventCard {event} {lang} />
+          <EventCard {event} {lang} isNew={newEventIds.has(event.api_id)} />
         {/each}
       </ul>
     {/each}

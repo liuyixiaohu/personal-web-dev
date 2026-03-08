@@ -1,61 +1,8 @@
 {
-  "updated_at": "2026-03-08T05:11:19.191517+00:00",
+  "updated_at": "2026-03-08T07:33:09.128633+00:00",
+  "previous_updated_at": "2026-03-08T07:32:39.185402+00:00",
+  "new_event_ids": [],
   "events": [
-    {
-      "api_id": "evt-8LCidK242V0zmt8",
-      "name": "Voice & Video AI Hackathon",
-      "url": "https://lu.ma/4cvz0tzf",
-      "start_at": "2026-03-07T16:30:00.000Z",
-      "end_at": "2026-03-08T06:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, California",
-      "location_type": "offline",
-      "calendar_name": "Delve",
-      "host_names": [
-        "Mustafa Bal",
-        "Jocelyn Kang",
-        "Varun Krishnan",
-        "Emily Liu",
-        "Robin Lopes",
-        "Andrea",
-        "Caroline Zhang"
-      ],
-      "guest_count": 0,
-      "is_free": false,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)",
-        "AI Events (Bay Area)"
-      ]
-    },
-    {
-      "api_id": "evt-qxwpMyOpdfrPWH8",
-      "name": "Open Metaverse Hackathon @ The Immersive Commons (GDC Weekend)",
-      "url": "https://lu.ma/rp1-hackathon-the-immersive-commons-day-",
-      "start_at": "2026-03-07T17:00:00.000Z",
-      "end_at": "2026-03-08T06:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "",
-      "location_type": "offline",
-      "calendar_name": "Frontier Tower SF",
-      "host_names": [
-        "Frontier Tower",
-        "Rayyan Zahid",
-        "David Nassau",
-        "RP1",
-        "Michalis Vasileiadis",
-        "Mike Rice"
-      ],
-      "guest_count": 479,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)",
-        "AI Events (Bay Area)"
-      ]
-    },
     {
       "api_id": "evt-hFOkhDLEfg7Dug8",
       "name": "The first annual Openmetaverse Hackathon: Build the spatial web - Open Registration",
@@ -78,7 +25,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-PYvUBlsMgj9evLN",
@@ -103,35 +51,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
-    },
-    {
-      "api_id": "evt-XW0ZqSbUCEBgSlI",
-      "name": "Skillathon - The First Agent Skills Hackathon",
-      "url": "https://lu.ma/1khurilu",
-      "start_at": "2026-03-07T18:00:00.000Z",
-      "end_at": "2026-03-08T06:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, California",
-      "location_type": "offline",
-      "calendar_name": "BenchFlow",
-      "host_names": [
-        "Xiangyi Li",
-        "Belinda",
-        "Roey Ben Chaim",
-        "Florent Tavernier",
-        "Christopher Settles",
-        "Ruslan",
-        "Stavan Patel"
       ],
-      "guest_count": 209,
-      "is_free": false,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)",
-        "AI Events (Bay Area)"
-      ]
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-2vqSfWHYBcwjZCL",
@@ -156,108 +77,15 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
-    },
-    {
-      "api_id": "evt-wqDeGdUgfnGj3sr",
-      "name": "Photon x Ditto Private Dev Dinner",
-      "url": "https://lu.ma/zjb38nfv",
-      "start_at": "2026-03-08T02:30:00.000Z",
-      "end_at": "2026-03-08T05:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, California",
-      "location_type": "offline",
-      "calendar_name": "Photon",
-      "host_names": [
-        "Julie Chen",
-        "Allen Wang",
-        "Sarah Fan",
-        "Daniel Tian"
       ],
-      "guest_count": 21,
-      "is_free": false,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)",
-        "AI Events (Bay Area)"
-      ]
-    },
-    {
-      "api_id": "evt-4wRSGG44YBYAgXy",
-      "name": "Ethereum House + Vibe Coding Nights - AMM Optimization Arena Night - Open Registration",
-      "url": "https://lu.ma/ethereum-house-vibe-coding-nights-amm-op",
-      "start_at": "2026-03-08T03:00:00.000Z",
-      "end_at": "2026-03-08T06:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "",
-      "location_type": "offline",
-      "calendar_name": "Frontier Tower SF",
-      "host_names": [
-        "Frontier Tower",
-        "Thomas",
-        "Michalis Vasileiadis",
-        "Michael J Nawrocki"
-      ],
-      "guest_count": 40,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)",
-        "AI Events (Bay Area)"
-      ]
-    },
-    {
-      "api_id": "evt-S4lp02w0sSNfWbg",
-      "name": "Gamedev Australian Grand Prix Watch Party",
-      "url": "https://lu.ma/ggnffoic",
-      "start_at": "2026-03-08T03:00:00.000Z",
-      "end_at": "2026-03-08T06:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, California",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "Caolan McKendry"
-      ],
-      "guest_count": 105,
-      "is_free": false,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)",
-        "AI Events (Bay Area)"
-      ]
-    },
-    {
-      "api_id": "evt-sWTy9nCHZKqNVg2",
-      "name": "Movement",
-      "url": "https://lu.ma/movement-f18a",
-      "start_at": "2026-03-08T03:00:00.000Z",
-      "end_at": "2026-03-08T06:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "",
-      "location_type": "offline",
-      "calendar_name": "Frontier Tower SF",
-      "host_names": [
-        "Frontier Tower"
-      ],
-      "guest_count": 150,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)",
-        "AI Events (Bay Area)"
-      ]
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-ET42VBHZ8zkMKTR",
       "name": "Night Hack",
       "url": "https://lu.ma/nighthack",
       "start_at": "2026-03-08T03:00:00.000Z",
-      "end_at": "2026-03-08T07:00:00.000Z",
+      "end_at": "2026-03-08T20:00:00.000Z",
       "timezone": "America/Los_Angeles",
       "location": "San Francisco, California",
       "location_type": "offline",
@@ -269,14 +97,15 @@
         "Gaspi Habif",
         "Dante"
       ],
-      "guest_count": 108,
+      "guest_count": 110,
       "is_free": false,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-4m0wlvpisptf5HE",
@@ -300,7 +129,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-yK1ZE3jo0vg2F6g",
@@ -316,62 +146,15 @@
         "Markiv",
         "Chance"
       ],
-      "guest_count": 9,
+      "guest_count": 11,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
-    },
-    {
-      "api_id": "evt-o9nqbLYiLC62SBZ",
-      "name": "Tipsy Co-Working",
-      "url": "https://lu.ma/xys9d349",
-      "start_at": "2026-03-08T04:00:00.000Z",
-      "end_at": "2026-03-08T07:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, California",
-      "location_type": "offline",
-      "calendar_name": "Smallest Events",
-      "host_names": [
-        "Lily Yang",
-        "Conor Brennan-Burke",
-        "Deb Mukherjee",
-        "Nishkarsh Srivastava",
-        "Aditya Bhat"
       ],
-      "guest_count": 283,
-      "is_free": false,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)",
-        "AI Events (Bay Area)"
-      ]
-    },
-    {
-      "api_id": "evt-QT7czI2uCu8XEoZ",
-      "name": "United States Premier weekend of IMAGINE film  Second Screening At  Solarpunkification 2026",
-      "url": "https://lu.ma/6kjh7iwx",
-      "start_at": "2026-03-08T06:00:00.000Z",
-      "end_at": "2026-03-08T07:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, California",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "Bobby Fishkin"
-      ],
-      "guest_count": 15,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)",
-        "AI Events (Bay Area)"
-      ]
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-c6eqX7eseuFqSs2",
@@ -388,14 +171,15 @@
         "Cal MSA",
         "Muslim Mental Health Initiative (MMHI)"
       ],
-      "guest_count": 55,
+      "guest_count": 53,
       "is_free": false,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-EqmKKmT8eVl3w37",
@@ -420,7 +204,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-yUwQsGNYK8n4NMZ",
@@ -445,7 +230,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-WRirAu4V3SFbyIQ",
@@ -467,7 +253,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-JY5FadB6vpDKHm8",
@@ -482,14 +269,15 @@
       "host_names": [
         "Adrianna Lakatos"
       ],
-      "guest_count": 32,
+      "guest_count": 37,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-SEmXa7SDm4pJ9BB",
@@ -505,14 +293,15 @@
         "Bobby Fishkin",
         "Rebecca Strull"
       ],
-      "guest_count": 35,
+      "guest_count": 34,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-xjcPIiRghEMETJs",
@@ -527,14 +316,15 @@
       "host_names": [
         "Apify"
       ],
-      "guest_count": 47,
+      "guest_count": 46,
       "is_free": false,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-ycnRrqzxl3jVMH0",
@@ -550,14 +340,15 @@
         "Connect Bay Area Transit",
         "Lian"
       ],
-      "guest_count": 18,
+      "guest_count": 19,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-NQQiddzSvZBZWRE",
@@ -579,7 +370,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-yFoHGBKUaCaNjBY",
@@ -605,7 +397,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-NCXV1EzYLZXMWHy",
@@ -627,7 +420,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-rdxuc8niQcVDzkS",
@@ -649,7 +443,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-AvXq7HHaqpT5RAo",
@@ -673,7 +468,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-AWq6wQIfTxLn7j9",
@@ -690,14 +486,15 @@
         "Kyle Valiton",
         "Amirah Raveneau-Bey"
       ],
-      "guest_count": 67,
+      "guest_count": 68,
       "is_free": false,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-LXqLzLTMD31FCMu",
@@ -722,7 +519,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-SepzBlbPXmUZCZk",
@@ -746,7 +544,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-FjCf9mukRCLFIhS",
@@ -765,14 +564,15 @@
         "Sarah Bernard",
         "Sarah Din"
       ],
-      "guest_count": 258,
+      "guest_count": 255,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-MPSzw2gRhNZW4yn",
@@ -794,7 +594,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-OdVjKxoRbtTn6x2",
@@ -816,7 +617,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-QMBz0Fsg9CZFCxu",
@@ -838,7 +640,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-pFdgWWdREPTFXPb",
@@ -861,7 +664,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-LVOHizusW7jGEyN",
@@ -883,7 +687,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-3mWt31jEY1VLtG9",
@@ -906,7 +711,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-lv9Em1sa8XFNvB2",
@@ -930,7 +736,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-6jcuivV4kRykc0E",
@@ -952,7 +759,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-1jlBdpImqasFPTn",
@@ -968,14 +776,15 @@
         "Bobby Fishkin",
         "Jess Groopman"
       ],
-      "guest_count": 49,
+      "guest_count": 50,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-9bwzyIZuqI6DhrB",
@@ -990,14 +799,15 @@
       "host_names": [
         "WhyNotFunClub"
       ],
-      "guest_count": 5,
+      "guest_count": 6,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-ejEXuvCrJdeZan3",
@@ -1020,7 +830,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-bTGrdQdHT5g11D4",
@@ -1044,7 +855,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-SIuofJ3UQ8gBS1V",
@@ -1067,7 +879,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-H8zUNe2AGPSxdIS",
@@ -1093,7 +906,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-B2h1tCoVY2rUquo",
@@ -1117,7 +931,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-YDAeFMG5JPlXaYx",
@@ -1139,29 +954,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
-    },
-    {
-      "api_id": "evt-602HbOZcTTAvvx4",
-      "name": "Notch Magazine x Specs",
-      "url": "https://lu.ma/ttk161vj",
-      "start_at": "2026-03-08T21:00:00.000Z",
-      "end_at": "2026-03-08T23:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, California",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "Notch Magazine"
       ],
-      "guest_count": 0,
-      "is_free": false,
-      "price_cents": 1000,
-      "price_currency": "usd",
-      "categories": [
-        "Tech Events (Bay Area)",
-        "AI Events (Bay Area)"
-      ]
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-UHXXEIhFP02RWiE",
@@ -1186,7 +980,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-w0RBdmdby5dXFxn",
@@ -1208,7 +1003,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-ZrhLXB0CZCezjhS",
@@ -1230,7 +1026,31 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
+    },
+    {
+      "api_id": "evt-602HbOZcTTAvvx4",
+      "name": "Notch Magazine x Specs",
+      "url": "https://lu.ma/ttk161vj",
+      "start_at": "2026-03-08T21:00:00.000Z",
+      "end_at": "2026-03-08T23:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, California",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Notch Magazine"
+      ],
+      "guest_count": 0,
+      "is_free": false,
+      "price_cents": 1000,
+      "price_currency": "usd",
+      "categories": [
+        "Tech Events (Bay Area)",
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-vuRM2ZfBjCYPUOP",
@@ -1245,14 +1065,15 @@
       "host_names": [
         "Lily Yang"
       ],
-      "guest_count": 279,
+      "guest_count": 282,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-DjSWrJR89rfsVE5",
@@ -1267,14 +1088,15 @@
       "host_names": [
         "Anya Parasher"
       ],
-      "guest_count": 6,
+      "guest_count": 7,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-tVKOcLEAibGRYNh",
@@ -1297,7 +1119,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-HKqGPrgrfHUHjn2",
@@ -1319,7 +1142,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-C0RpPQGIOeTXzdq",
@@ -1336,16 +1160,18 @@
         "Ashton Teng",
         "Quinn Leng",
         "Coco Chen",
-        "xiang"
+        "xiang",
+        "Neo Zhu"
       ],
-      "guest_count": 101,
+      "guest_count": 100,
       "is_free": false,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-VS2FWGmFa5mKbbx",
@@ -1367,7 +1193,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-52nagWfxolBSR2F",
@@ -1390,7 +1217,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-9DUEQJaCeJRgeeA",
@@ -1406,14 +1234,15 @@
         "Daytona",
         "Ivan Burazin"
       ],
-      "guest_count": 925,
+      "guest_count": 944,
       "is_free": false,
       "price_cents": 25000,
       "price_currency": "usd",
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-beuZ9u6S5lg4zqk",
@@ -1430,14 +1259,15 @@
         "David Nassau",
         "Rayyan Zahid"
       ],
-      "guest_count": 365,
+      "guest_count": 368,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-pt9mr7SKgt8BRCy",
@@ -1454,14 +1284,15 @@
         "James Win",
         "Olivia Habart"
       ],
-      "guest_count": 44,
+      "guest_count": 47,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-r5CAJQBW5i5vG67",
@@ -1484,7 +1315,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-sdB4zle93FphTOJ",
@@ -1506,7 +1338,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-C2RtTCYUcdFSEYN",
@@ -1529,7 +1362,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-x8obaGCylTxnRM3",
@@ -1545,14 +1379,15 @@
         "James Wilsterman",
         "Max Child"
       ],
-      "guest_count": 123,
+      "guest_count": 129,
       "is_free": false,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-y2CPoPRCu9Cqs5E",
@@ -1580,7 +1415,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-MSckkeVDp4AVNa3",
@@ -1606,7 +1442,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-HDRVOWvC7MqHpEK",
@@ -1628,7 +1465,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-U8mAssTYLD0wEJi",
@@ -1650,7 +1488,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-mTguVzT98hDB8c5",
@@ -1675,7 +1514,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-TgE2EVTnbMSKAqc",
@@ -1697,7 +1537,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-zYJCr7wiouJrrut",
@@ -1719,7 +1560,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-O4s8B5jHbbOviiV",
@@ -1741,7 +1583,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-1f74xSZxS3ivWSM",
@@ -1767,7 +1610,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-5CPi6H10Uu17N6p",
@@ -1782,14 +1626,15 @@
       "host_names": [
         "Ops @ EEF"
       ],
-      "guest_count": 54,
+      "guest_count": 58,
       "is_free": false,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-CVIfmVOqVJAFI6g",
@@ -1811,7 +1656,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-unfnnYsQ1zEFtGb",
@@ -1835,7 +1681,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-UdonmGemHsa0gkQ",
@@ -1850,14 +1697,15 @@
       "host_names": [
         "Frontier Tower"
       ],
-      "guest_count": 5,
+      "guest_count": 6,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-neIyr8hNJxhy5yl",
@@ -1883,7 +1731,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-vQg5Gbe7ZZsxXNH",
@@ -1901,14 +1750,15 @@
         "Weston Keller",
         "Ethan Song"
       ],
-      "guest_count": 45,
+      "guest_count": 46,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-Yst2ifiP644QhFj",
@@ -1923,14 +1773,15 @@
       "host_names": [
         "Jaden Ramsey"
       ],
-      "guest_count": 6,
+      "guest_count": 7,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-CmnntMBbs5vLFLM",
@@ -1952,7 +1803,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-hi0LrhwcBUPqNCU",
@@ -1975,7 +1827,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-mMdkDAfRksh4djn",
@@ -1997,7 +1850,31 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
+    },
+    {
+      "api_id": "evt-VqFTrmii0RIqDlF",
+      "name": "Bay Area post-Planet Nix Meetup at UC Berkeley’s OCF on Monday March 9th 6PM to 11PM 🕚",
+      "url": "https://lu.ma/1mhb831q",
+      "start_at": "2026-03-10T01:00:00.000Z",
+      "end_at": "2026-03-10T06:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "Berkeley, California",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Louis Opter"
+      ],
+      "guest_count": 14,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)",
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-KtNda5HMMmI5FsV",
@@ -2019,7 +1896,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-kITTagHFxfRj50B",
@@ -2034,14 +1912,15 @@
       "host_names": [
         "Aashna Mehta"
       ],
-      "guest_count": 5,
+      "guest_count": 6,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-4lFXQ4WTIxkp2H2",
@@ -2064,163 +1943,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
-    },
-    {
-      "api_id": "evt-AW7iKucl3Y6tNaQ",
-      "name": "Grace Gong x Lightfield x Sequoia dinner x SVB [Venture with Grace CEO Club]",
-      "url": "https://lu.ma/7ycszydd",
-      "start_at": "2026-03-10T01:00:00.000Z",
-      "end_at": "2026-03-10T04:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, California",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "ops",
-        "Grace Gong"
       ],
-      "guest_count": 0,
-      "is_free": false,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)",
-        "AI Events (Bay Area)"
-      ]
-    },
-    {
-      "api_id": "evt-GemnVPbLM4Azi9P",
-      "name": "Noe Valley Town Hall with Saikat Chakrabarti",
-      "url": "https://lu.ma/tmhe36mu",
-      "start_at": "2026-03-10T01:00:00.000Z",
-      "end_at": "2026-03-10T03:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, California",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "Saikat for Congress"
-      ],
-      "guest_count": 68,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)",
-        "AI Events (Bay Area)"
-      ]
-    },
-    {
-      "api_id": "evt-udiZK4cLUkDIPjd",
-      "name": "Playkit SF Dinner",
-      "url": "https://lu.ma/zux60167",
-      "start_at": "2026-03-10T01:00:00.000Z",
-      "end_at": "2026-03-10T04:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, California",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "Julia Pintar"
-      ],
-      "guest_count": 19,
-      "is_free": false,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)",
-        "AI Events (Bay Area)"
-      ]
-    },
-    {
-      "api_id": "evt-FFQ4dHBa9HtlPGA",
-      "name": "Portuguese Gaming Industry Circle",
-      "url": "https://lu.ma/r04hlrb7",
-      "start_at": "2026-03-10T01:00:00.000Z",
-      "end_at": "2026-03-10T03:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, California",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "eGames Lab"
-      ],
-      "guest_count": 0,
-      "is_free": false,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)",
-        "AI Events (Bay Area)"
-      ]
-    },
-    {
-      "api_id": "evt-FkuDbcfQtBBHdkl",
-      "name": "Theory AI Researcher Poker Night",
-      "url": "https://lu.ma/gzmggkwq",
-      "start_at": "2026-03-10T01:00:00.000Z",
-      "end_at": "2026-03-10T06:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "Berkeley, California",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "Taj Singh",
-        "Marcus Chua"
-      ],
-      "guest_count": 13,
-      "is_free": false,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)",
-        "AI Events (Bay Area)"
-      ]
-    },
-    {
-      "api_id": "evt-jjzQNIIJF6V2lmd",
-      "name": "UK Department for Business and Trade - GDC Reception",
-      "url": "https://lu.ma/eejdn4gx",
-      "start_at": "2026-03-10T01:00:00.000Z",
-      "end_at": "2026-03-10T03:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, California",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "Elliot Kim"
-      ],
-      "guest_count": 212,
-      "is_free": false,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)",
-        "AI Events (Bay Area)"
-      ]
-    },
-    {
-      "api_id": "evt-VqFTrmii0RIqDlF",
-      "name": "Bay Area post-Planet Nix Meetup at UC Berkeley’s OCF on Monday March 9th 6PM to 11PM 🕚",
-      "url": "https://lu.ma/1mhb831q",
-      "start_at": "2026-03-10T01:00:00.000Z",
-      "end_at": "2026-03-10T06:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "Berkeley, California",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "Louis Opter"
-      ],
-      "guest_count": 14,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)",
-        "AI Events (Bay Area)"
-      ]
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-VvrGkyUDdCLQMEe",
@@ -2245,7 +1969,101 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
+    },
+    {
+      "api_id": "evt-AW7iKucl3Y6tNaQ",
+      "name": "Grace Gong x Lightfield x Sequoia dinner x SVB [Venture with Grace CEO Club]",
+      "url": "https://lu.ma/7ycszydd",
+      "start_at": "2026-03-10T01:00:00.000Z",
+      "end_at": "2026-03-10T04:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, California",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "ops",
+        "Grace Gong"
+      ],
+      "guest_count": 0,
+      "is_free": false,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)",
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
+    },
+    {
+      "api_id": "evt-GemnVPbLM4Azi9P",
+      "name": "Noe Valley Town Hall with Saikat Chakrabarti",
+      "url": "https://lu.ma/tmhe36mu",
+      "start_at": "2026-03-10T01:00:00.000Z",
+      "end_at": "2026-03-10T03:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, California",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Saikat for Congress"
+      ],
+      "guest_count": 69,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)",
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
+    },
+    {
+      "api_id": "evt-udiZK4cLUkDIPjd",
+      "name": "Playkit SF Dinner",
+      "url": "https://lu.ma/zux60167",
+      "start_at": "2026-03-10T01:00:00.000Z",
+      "end_at": "2026-03-10T04:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, California",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Julia Pintar"
+      ],
+      "guest_count": 19,
+      "is_free": false,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)",
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
+    },
+    {
+      "api_id": "evt-FFQ4dHBa9HtlPGA",
+      "name": "Portuguese Gaming Industry Circle",
+      "url": "https://lu.ma/r04hlrb7",
+      "start_at": "2026-03-10T01:00:00.000Z",
+      "end_at": "2026-03-10T03:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, California",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "eGames Lab"
+      ],
+      "guest_count": 0,
+      "is_free": false,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)",
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-xwHLCfhF0hLHxDS",
@@ -2269,7 +2087,55 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
+    },
+    {
+      "api_id": "evt-FkuDbcfQtBBHdkl",
+      "name": "Theory AI Researcher Poker Night",
+      "url": "https://lu.ma/gzmggkwq",
+      "start_at": "2026-03-10T01:00:00.000Z",
+      "end_at": "2026-03-10T06:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "Berkeley, California",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Taj Singh",
+        "Marcus Chua"
+      ],
+      "guest_count": 15,
+      "is_free": false,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)",
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
+    },
+    {
+      "api_id": "evt-jjzQNIIJF6V2lmd",
+      "name": "UK Department for Business and Trade - GDC Reception",
+      "url": "https://lu.ma/eejdn4gx",
+      "start_at": "2026-03-10T01:00:00.000Z",
+      "end_at": "2026-03-10T03:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, California",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Elliot Kim"
+      ],
+      "guest_count": 212,
+      "is_free": false,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)",
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-FAfdB6BrHIT97JM",
@@ -2292,7 +2158,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-DnFBTTepRlVNuFP",
@@ -2315,7 +2182,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-WIBwATFmuannBqo",
@@ -2331,14 +2199,15 @@
         "Last Ones",
         "Jon Ruiz"
       ],
-      "guest_count": 154,
+      "guest_count": 156,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-SSIsuhq0ModMJGQ",
@@ -2360,7 +2229,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-AVKboRHbV17NBUp",
@@ -2384,7 +2254,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-RNI2cpSfFIhYsiN",
@@ -2403,14 +2274,15 @@
         "Gaelen Hendrickson",
         "Chelsie Cooper"
       ],
-      "guest_count": 44,
+      "guest_count": 46,
       "is_free": false,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-o0t9Oo7KiZe8FJw",
@@ -2434,7 +2306,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-CHd4aXQOqUJutGM",
@@ -2460,7 +2333,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-6z5qSm4Dkutzo6Z",
@@ -2479,14 +2353,15 @@
         "Ethereum House",
         "Ian"
       ],
-      "guest_count": 141,
+      "guest_count": 146,
       "is_free": false,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-h4vcrxvGlWErfX9",
@@ -2510,7 +2385,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-Bfmu2jOj1qqqklY",
@@ -2534,7 +2410,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-h8dlHCI0GU4NFM0",
@@ -2557,7 +2434,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-QGYRArJgXSKC1U9",
@@ -2582,7 +2460,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-4zHasVhpQBJstTd",
@@ -2605,7 +2484,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-B5isPjbGccellud",
@@ -2621,14 +2501,15 @@
         "PLAYTRACE",
         "Jackson Clayton"
       ],
-      "guest_count": 224,
+      "guest_count": 228,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-rIoKuNb6FNSjuUC",
@@ -2650,7 +2531,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-SH4fhi6Od32YzgQ",
@@ -2673,7 +2555,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-P5TC7DLFUAUF8X4",
@@ -2688,14 +2571,15 @@
       "host_names": [
         "Schera Infinite"
       ],
-      "guest_count": 338,
+      "guest_count": 340,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-MvqSJSaXJ79X1vL",
@@ -2712,14 +2596,15 @@
         "Leleka Foundation",
         "Consulate General of Ukraine"
       ],
-      "guest_count": 964,
+      "guest_count": 967,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-DpLuOBTE1g66ZCZ",
@@ -2735,14 +2620,15 @@
         "Dearbhla O'Neill",
         "Rebecca Romero"
       ],
-      "guest_count": 23,
+      "guest_count": 24,
       "is_free": false,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-JOHZAbr4JLbJYDw",
@@ -2765,7 +2651,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-4jftBNYcd0LHFzT",
@@ -2787,7 +2674,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-b7Nyn4sXXc2QQow",
@@ -2811,7 +2699,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-qWB9TZ04q15IhzP",
@@ -2833,7 +2722,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-HUH1v4T4Mzm2ZOV",
@@ -2848,14 +2738,15 @@
       "host_names": [
         "GamesBeat"
       ],
-      "guest_count": 664,
+      "guest_count": 663,
       "is_free": false,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-d3qJv661qLjpZS8",
@@ -2879,7 +2770,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-oiEebOcQdKcEdY7",
@@ -2907,7 +2799,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-sPnpJR4CuTX7l3K",
@@ -2930,7 +2823,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-DHr2WycmcZtKQxl",
@@ -2947,14 +2841,15 @@
         "James Perkins",
         "Ojus Save"
       ],
-      "guest_count": 268,
+      "guest_count": 270,
       "is_free": false,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-ELAaIdmS1vgYrKW",
@@ -2979,7 +2874,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-Wev99L4jtcT8wnS",
@@ -3003,7 +2899,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-cESc65mEOP8SegM",
@@ -3025,7 +2922,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-ZdKpReSjB2Gp9eQ",
@@ -3044,14 +2942,15 @@
         "Bay Angels",
         "Peter Salib"
       ],
-      "guest_count": 114,
+      "guest_count": 115,
       "is_free": false,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-b3igxIO5VvP8hEJ",
@@ -3073,7 +2972,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-EXSN2gttFnQThb9",
@@ -3097,7 +2997,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-jnU6wSlb7ZFIo2o",
@@ -3119,7 +3020,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-3dpdwSO1ifuvMVz",
@@ -3138,14 +3040,15 @@
         "Seve Menez",
         "Sebastien BORGET"
       ],
-      "guest_count": 63,
+      "guest_count": 70,
       "is_free": false,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-mxnl0CNB8JdPzkY",
@@ -3170,7 +3073,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-BPETY4hHgOX7KHb",
@@ -3197,7 +3101,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-dCNB1GaYKOrJVGu",
@@ -3221,7 +3126,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-G8AQFnsZgAGVozc",
@@ -3244,7 +3150,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-eoBQ5E46PNw1SGA",
@@ -3270,7 +3177,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-GULVROzPdzHhm9P",
@@ -3294,7 +3202,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-gb7RaCZ3dpyinUp",
@@ -3319,7 +3228,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-tKTnH9JlMwVkMpC",
@@ -3343,7 +3253,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-v1Omn1RwwDGVe1X",
@@ -3366,51 +3277,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
-    },
-    {
-      "api_id": "evt-TIrvX2zB2NnS8YM",
-      "name": "Building Healthcare AI: Founder Dinner with Sooah Cho (Partner, SignalFire)",
-      "url": "https://lu.ma/epy0bymd",
-      "start_at": "2026-03-11T01:00:00.000Z",
-      "end_at": "2026-03-11T03:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "Palo Alto, California",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "Laura Walk"
       ],
-      "guest_count": 8,
-      "is_free": false,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)",
-        "AI Events (Bay Area)"
-      ]
-    },
-    {
-      "api_id": "evt-TAu4zeMC4jUH09D",
-      "name": "Collective Authentic Relating: C-Group - Open Registration",
-      "url": "https://lu.ma/collective-authentic-relating-c-group",
-      "start_at": "2026-03-11T01:00:00.000Z",
-      "end_at": "2026-03-11T03:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "",
-      "location_type": "offline",
-      "calendar_name": "Frontier Tower SF",
-      "host_names": [
-        "Frontier Tower"
-      ],
-      "guest_count": 10,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)",
-        "AI Events (Bay Area)"
-      ]
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-dobQ3cn7VBL2XwD",
@@ -3432,7 +3300,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-8t6Wd9EYNQ051qZ",
@@ -3454,7 +3323,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-Fd30brppHvTJcp7",
@@ -3469,14 +3339,15 @@
       "host_names": [
         "Pacific Heights Residents Association"
       ],
-      "guest_count": 47,
+      "guest_count": 49,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-0hpzGPtz3mosceH",
@@ -3502,7 +3373,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-QN8H3CjuWcRfZ6k",
@@ -3527,7 +3399,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-SWlqze5WGtyNgEx",
@@ -3549,7 +3422,54 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
+    },
+    {
+      "api_id": "evt-TIrvX2zB2NnS8YM",
+      "name": "Building Healthcare AI: Founder Dinner with Sooah Cho (Partner, SignalFire)",
+      "url": "https://lu.ma/epy0bymd",
+      "start_at": "2026-03-11T01:00:00.000Z",
+      "end_at": "2026-03-11T03:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "Palo Alto, California",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Laura Walk"
+      ],
+      "guest_count": 8,
+      "is_free": false,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)",
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
+    },
+    {
+      "api_id": "evt-TAu4zeMC4jUH09D",
+      "name": "Collective Authentic Relating: C-Group - Open Registration",
+      "url": "https://lu.ma/collective-authentic-relating-c-group",
+      "start_at": "2026-03-11T01:00:00.000Z",
+      "end_at": "2026-03-11T03:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "",
+      "location_type": "offline",
+      "calendar_name": "Frontier Tower SF",
+      "host_names": [
+        "Frontier Tower"
+      ],
+      "guest_count": 11,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)",
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-BXBSgg3ZhSFzJB2",
@@ -3571,7 +3491,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-8eH1oUS8cvFVbQV",
@@ -3594,7 +3515,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-HwtlGGXNblP9hlH",
@@ -3616,7 +3538,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-PM8XwHBOJhuQNDZ",
@@ -3641,7 +3564,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-wqGpJofclmuZfYK",
@@ -3656,14 +3580,15 @@
       "host_names": [
         "Jordan"
       ],
-      "guest_count": 433,
+      "guest_count": 437,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-NaE0B0Jw7bsi2ml",
@@ -3687,7 +3612,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-473Ij8gURLqKfVV",
@@ -3703,14 +3629,15 @@
         "ash",
         "Rainbow"
       ],
-      "guest_count": 4,
+      "guest_count": 5,
       "is_free": false,
       "price_cents": 1500,
       "price_currency": "usd",
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-AGgrx8luxMHGnJH",
@@ -3732,7 +3659,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-G5mVsfCY10AaxcC",
@@ -3755,7 +3683,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-XNb13duqqhBMIcU",
@@ -3778,7 +3707,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-fbfzWSeGbGwADLg",
@@ -3802,7 +3732,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-HQmkbcd9GShaD96",
@@ -3824,7 +3755,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-KxzCUJbWwhozpso",
@@ -3847,7 +3779,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-CGPOgFwff8qJwAx",
@@ -3862,14 +3795,15 @@
       "host_names": [
         "Matt Jessen-Howard"
       ],
-      "guest_count": 32,
+      "guest_count": 34,
       "is_free": false,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-g4yKsMXkZYV2FWr",
@@ -3891,7 +3825,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-LlgcUGFcJI38G5Z",
@@ -3917,7 +3852,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-bgetlMANga6IUEF",
@@ -3941,7 +3877,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-JcwH68AGjoN4Xq9",
@@ -3963,7 +3900,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-ya2RPHFTbkBcC4p",
@@ -3986,7 +3924,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-p5mIGDUqyp693gl",
@@ -4001,14 +3940,15 @@
       "host_names": [
         "Game Devs of Color"
       ],
-      "guest_count": 100,
+      "guest_count": 101,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-siiePRV1zNuF3Cl",
@@ -4030,7 +3970,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-Xd2CctTZ4mFhSGL",
@@ -4052,7 +3993,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-8mYvYf3WBA5IGf6",
@@ -4075,7 +4017,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-ZUYHgZBBImqicoj",
@@ -4091,14 +4034,15 @@
         "Nordic Innovation House",
         "Rebecca Scheel"
       ],
-      "guest_count": 46,
+      "guest_count": 47,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-NjRFj6lZMOkbzwR",
@@ -4121,7 +4065,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-aB94o1goTL1R6bV",
@@ -4144,7 +4089,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-RNTRLR0OcTuKFHs",
@@ -4167,7 +4113,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-lfdVJ6X2Bv4NZbu",
@@ -4190,7 +4137,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-IEMJA0NEuCJGtr5",
@@ -4205,14 +4153,15 @@
       "host_names": [
         "KT Lucas"
       ],
-      "guest_count": 22,
+      "guest_count": 23,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-2B4CG4xfmOcX40J",
@@ -4235,7 +4184,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-CL6AW6mCb53wrlE",
@@ -4258,7 +4208,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-elmxLTWIF17hn6C",
@@ -4287,7 +4238,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-u0f31sWOdvbASHl",
@@ -4313,7 +4265,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-UFlqK6SMiiq78ZS",
@@ -4336,7 +4289,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-1UIXcJUeaCdQeVC",
@@ -4362,57 +4316,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
-    },
-    {
-      "api_id": "evt-15tzlcrGCoT1OOU",
-      "name": "Global Founder & Investor Summit",
-      "url": "https://lu.ma/zh5bl1me",
-      "start_at": "2026-03-12T00:00:00.000Z",
-      "end_at": "2026-03-12T03:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, California",
-      "location_type": "offline",
-      "calendar_name": "Founder Social Club",
-      "host_names": [
-        "Colton Kaplan",
-        "Adeep Chooramun",
-        "Tommaso Tonina",
-        "Venture Bridge Hub",
-        "Manifest Law"
       ],
-      "guest_count": 0,
-      "is_free": false,
-      "price_cents": 2500,
-      "price_currency": "usd",
-      "categories": [
-        "Tech Events (Bay Area)",
-        "AI Events (Bay Area)"
-      ]
-    },
-    {
-      "api_id": "evt-evtQB4fRGFOdhGc",
-      "name": "SF Marketing Supper Club",
-      "url": "https://lu.ma/7suyzjoj",
-      "start_at": "2026-03-12T00:00:00.000Z",
-      "end_at": "2026-03-12T02:45:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, California",
-      "location_type": "offline",
-      "calendar_name": "AirOps",
-      "host_names": [
-        "Alex Halliday",
-        "Matt Hammel",
-        "Ali McCarty"
-      ],
-      "guest_count": 13,
-      "is_free": false,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)",
-        "AI Events (Bay Area)"
-      ]
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-lB6sZJRiQsIJM9x",
@@ -4434,7 +4339,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-VN5CVnrliR8UrwH",
@@ -4458,7 +4364,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-suxmz3JZzi8fKZW",
@@ -4484,32 +4391,35 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
-      "api_id": "evt-xEDNFsKcbFeMBN7",
-      "name": "GDC After Hours 🍸",
-      "url": "https://lu.ma/5ufkduyk",
+      "api_id": "evt-15tzlcrGCoT1OOU",
+      "name": "Global Founder & Investor Summit",
+      "url": "https://lu.ma/zh5bl1me",
       "start_at": "2026-03-12T00:00:00.000Z",
-      "end_at": "2026-03-12T02:00:00.000Z",
+      "end_at": "2026-03-12T03:30:00.000Z",
       "timezone": "America/Los_Angeles",
       "location": "San Francisco, California",
       "location_type": "offline",
-      "calendar_name": "Personal",
+      "calendar_name": "Founder Social Club",
       "host_names": [
-        "Vibe.co",
-        "AppTweak",
-        "Susan Moran",
-        "Victoria Beliaeva"
+        "Colton Kaplan",
+        "Adeep Chooramun",
+        "Tommaso Tonina",
+        "Venture Bridge Hub",
+        "Manifest Law"
       ],
-      "guest_count": 92,
+      "guest_count": 0,
       "is_free": false,
-      "price_cents": null,
-      "price_currency": null,
+      "price_cents": 2500,
+      "price_currency": "usd",
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-qKaKF94p12DBDmh",
@@ -4534,7 +4444,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-o8EJsTjKlm4ogLB",
@@ -4560,30 +4471,33 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
-      "api_id": "evt-ZDo2qBk4pvijULe",
-      "name": "SF Demand Gen Happy Hour",
-      "url": "https://lu.ma/adcodpgm",
+      "api_id": "evt-evtQB4fRGFOdhGc",
+      "name": "SF Marketing Supper Club",
+      "url": "https://lu.ma/7suyzjoj",
       "start_at": "2026-03-12T00:00:00.000Z",
-      "end_at": "2026-03-12T02:30:00.000Z",
+      "end_at": "2026-03-12T02:45:00.000Z",
       "timezone": "America/Los_Angeles",
       "location": "San Francisco, California",
       "location_type": "offline",
-      "calendar_name": "Demand Collective",
+      "calendar_name": "AirOps",
       "host_names": [
-        "Eric",
-        "Eric MacColl"
+        "Alex Halliday",
+        "Matt Hammel",
+        "Ali McCarty"
       ],
-      "guest_count": 25,
-      "is_free": true,
+      "guest_count": 13,
+      "is_free": false,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-OjpBujbpMFfBsX0",
@@ -4608,7 +4522,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-PGOHmyh7LDBe6jw",
@@ -4634,7 +4549,58 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
+    },
+    {
+      "api_id": "evt-xEDNFsKcbFeMBN7",
+      "name": "GDC After Hours 🍸",
+      "url": "https://lu.ma/5ufkduyk",
+      "start_at": "2026-03-12T00:00:00.000Z",
+      "end_at": "2026-03-12T02:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, California",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Vibe.co",
+        "AppTweak",
+        "Susan Moran",
+        "Victoria Beliaeva"
+      ],
+      "guest_count": 92,
+      "is_free": false,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)",
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
+    },
+    {
+      "api_id": "evt-ZDo2qBk4pvijULe",
+      "name": "SF Demand Gen Happy Hour",
+      "url": "https://lu.ma/adcodpgm",
+      "start_at": "2026-03-12T00:00:00.000Z",
+      "end_at": "2026-03-12T02:30:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, California",
+      "location_type": "offline",
+      "calendar_name": "Demand Collective",
+      "host_names": [
+        "Eric",
+        "Eric MacColl"
+      ],
+      "guest_count": 25,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)",
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-qlkOzx65WxiVmms",
@@ -4650,14 +4616,15 @@
         "Swagata Ashwani",
         "Natasha"
       ],
-      "guest_count": 197,
+      "guest_count": 200,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-zkf3gJgTD5MCXXy",
@@ -4679,7 +4646,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-49nEtHHKNhbmIJc",
@@ -4695,14 +4663,15 @@
         "WeShine",
         "Bernie K"
       ],
-      "guest_count": 85,
+      "guest_count": 86,
       "is_free": false,
       "price_cents": 2000,
       "price_currency": "usd",
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-x4lZcOMXsFQYp8W",
@@ -4725,7 +4694,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-iYMromvRKPeMkN7",
@@ -4748,7 +4718,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-hEkmM0aQdtZnGzn",
@@ -4772,7 +4743,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-jOYt2am0vetqzEF",
@@ -4796,7 +4768,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-UoH5WQOS8Z5r1mK",
@@ -4819,7 +4792,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-gChlobIYBpU60HB",
@@ -4841,7 +4815,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-FKt0BpSG3rPFXyj",
@@ -4871,7 +4846,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-AdntXBjHw07lO5h",
@@ -4895,14 +4871,15 @@
         "Vanshith Bhandari",
         "Arnita Rut Murnandityas"
       ],
-      "guest_count": 440,
+      "guest_count": 439,
       "is_free": false,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-tVUg2kv1xUp2rxl",
@@ -4916,7 +4893,8 @@
       "calendar_name": "Diversion",
       "host_names": [
         "Omer Schapiro",
-        "Sher Delrahim"
+        "Sher Delrahim",
+        "Arturo Nunez"
       ],
       "guest_count": 0,
       "is_free": false,
@@ -4925,7 +4903,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-vtH8xf8rY9l4bIN",
@@ -4948,7 +4927,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-0WeMDp1bY9bXZxN",
@@ -4972,7 +4952,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-lfNQC7QpoLNSGfs",
@@ -4999,7 +4980,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-8A65tNYj5MW5Vsm",
@@ -5022,7 +5004,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-if6nyHEjgke9CQC",
@@ -5047,7 +5030,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-OPwMPqHf0q3CVl2",
@@ -5073,7 +5057,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-76HMtoZSwaH8Hks",
@@ -5095,7 +5080,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-LFqgS2ZNh9pqvzg",
@@ -5122,7 +5108,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-aJ6obRnE5AK1FKe",
@@ -5148,7 +5135,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-2KHAKq5DNJxJX09",
@@ -5170,7 +5158,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-xlpmbluEzuJMcHv",
@@ -5187,14 +5176,15 @@
         "Diana Choo",
         "Melany Pechora"
       ],
-      "guest_count": 39,
+      "guest_count": 41,
       "is_free": false,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-HpnlIJBgOU2Boui",
@@ -5216,7 +5206,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-iIAuKycfphFdBu9",
@@ -5239,7 +5230,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-6S2lJYjXkKtgTZn",
@@ -5261,7 +5253,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-7snmCB4vfYh4yl3",
@@ -5283,7 +5276,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-llHMiIBtkwLiBdI",
@@ -5309,7 +5303,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-DsOwKZXrZM5lWDW",
@@ -5332,7 +5327,33 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
+    },
+    {
+      "api_id": "evt-ZexJ7fagspjc3LH",
+      "name": "Health x AI Poker Night",
+      "url": "https://lu.ma/9pdfs8d9",
+      "start_at": "2026-03-12T01:30:00.000Z",
+      "end_at": "2026-03-12T04:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, California",
+      "location_type": "offline",
+      "calendar_name": "Adverb Ventures",
+      "host_names": [
+        "Adverb Ventures",
+        "Austin Walker",
+        "Gary Pesola"
+      ],
+      "guest_count": 0,
+      "is_free": false,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)",
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-wrptL5ta6F9EL5o",
@@ -5347,14 +5368,15 @@
       "host_names": [
         "fractional/ events"
       ],
-      "guest_count": 63,
+      "guest_count": 64,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-lesCrqCEtFnj6i6",
@@ -5381,7 +5403,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-KcDinPzMTd5pufx",
@@ -5406,7 +5429,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-BMQdSa612PVbHnw",
@@ -5429,7 +5453,8 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     },
     {
       "api_id": "evt-DBCQTCDgd8Sa59O",
@@ -5451,7 +5476,136 @@
       "categories": [
         "Tech Events (Bay Area)",
         "AI Events (Bay Area)"
-      ]
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
+    },
+    {
+      "api_id": "evt-9PjRL4pqGOEvXMO",
+      "name": "Anybrain Supper Club: In Collaboration with GDC",
+      "url": "https://lu.ma/b1qlbam2",
+      "start_at": "2026-03-12T02:00:00.000Z",
+      "end_at": "2026-03-12T05:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, California",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Anybrain GG",
+        "Jay uppal",
+        "Anh-Vu Nguyen",
+        "Florian Prades"
+      ],
+      "guest_count": 13,
+      "is_free": false,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)",
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
+    },
+    {
+      "api_id": "evt-6uHO2BdHJUwB3T1",
+      "name": "Artist Migration @ COVEN Presents: Diana Gameros Volver a la Luz",
+      "url": "https://lu.ma/2ttpudc4",
+      "start_at": "2026-03-12T02:00:00.000Z",
+      "end_at": "2026-03-12T04:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, California",
+      "location_type": "offline",
+      "calendar_name": "COVEN.art",
+      "host_names": [
+        "COVEN - 501(c)(3)",
+        "Artist Migration"
+      ],
+      "guest_count": 40,
+      "is_free": false,
+      "price_cents": 3500,
+      "price_currency": "usd",
+      "categories": [
+        "Tech Events (Bay Area)",
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
+    },
+    {
+      "api_id": "evt-OXOpv64wXeBrlV3",
+      "name": "GUMBO GAMES COLLECTIVE MIXER",
+      "url": "https://lu.ma/0vhpm5yq",
+      "start_at": "2026-03-12T02:00:00.000Z",
+      "end_at": "2026-03-12T04:30:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, California",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "GUMBO NYC",
+        "Cell to Singularity",
+        "kati nawrocki",
+        "Yiyi Zhang",
+        "Hamna Faisal ",
+        "George Li"
+      ],
+      "guest_count": 0,
+      "is_free": false,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)",
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
+    },
+    {
+      "api_id": "evt-Kma72cbsFPKVuat",
+      "name": "Introducing Observational Memory + How We Used It To Build A Coding Agent (w/ Mastra)",
+      "url": "https://lu.ma/nn4nxix8",
+      "start_at": "2026-03-12T02:00:00.000Z",
+      "end_at": "2026-03-12T04:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, California",
+      "location_type": "offline",
+      "calendar_name": "Bond AI - San Francisco and Bay Area",
+      "host_names": [
+        "Denise Teng",
+        "Sam Bhagwat",
+        "Gradient",
+        "Ashwin M",
+        "Sahar Mor"
+      ],
+      "guest_count": 93,
+      "is_free": false,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)",
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
+    },
+    {
+      "api_id": "evt-mSKAJ7TqZPuHe3Q",
+      "name": "Modern Star Wars: The Geopolitics of Space",
+      "url": "https://lu.ma/n4vqi8x3",
+      "start_at": "2026-03-12T02:00:00.000Z",
+      "end_at": "2026-03-12T04:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, California",
+      "location_type": "offline",
+      "calendar_name": "Big Brain Lectures - SF",
+      "host_names": [
+        "Big Brain SF"
+      ],
+      "guest_count": 135,
+      "is_free": false,
+      "price_cents": 2500,
+      "price_currency": "usd",
+      "categories": [
+        "Tech Events (Bay Area)",
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-03-08T07:32:39.185402+00:00"
     }
   ]
 }
