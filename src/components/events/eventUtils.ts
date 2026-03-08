@@ -18,10 +18,13 @@ export interface LumaEvent {
   price_cents: number | null;
   price_currency: string | null;
   categories: string[];
+  first_seen_at?: string;
 }
 
 export interface EventData {
   updated_at: string;
+  previous_updated_at?: string;
+  new_event_ids?: string[];
   events: LumaEvent[];
 }
 
