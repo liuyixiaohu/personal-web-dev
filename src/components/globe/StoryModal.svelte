@@ -113,7 +113,7 @@
   }
 
   .modal-city {
-    color: #1F2328;
+    color: var(--text);
     font-weight: 500;
   }
 
