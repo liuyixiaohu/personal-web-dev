@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-03-07 (Site v0.9)
+
+### Content & UX
+- Added unique subtitles for each person on Special Thanks index page
+- Added bilingual intro text to the easter egg password gate page
+- Language toggle now visible on the password gate page (hidden after authentication)
+
 ## 2026-03-07 (Site v0.8)
 
 ### Refactored (DRY & design tokens)

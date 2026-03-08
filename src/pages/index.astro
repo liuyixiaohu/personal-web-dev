@@ -3,6 +3,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ChangelogPopup from '../components/ChangelogPopup.astro';
 
 const siteChangelog = [
+  { version: 'v0.9',
+    why: 'Small touches that make it feel more personal.',
+    changes: [
+      'Added unique subtitles for each person on Special Thanks',
+      'Easter egg page now greets you with bilingual intro text',
+      'Language toggle works on the password gate page',
+    ]},
   { version: 'v0.8',
     why: 'Less code, same pixels. Refactored for maintainability.',
     changes: [
@@ -72,7 +79,7 @@ const siteChangelog = [
 
 <BaseLayout title="Kun Li - Product Marketing × Data Science × Design" description="I wasn't great at math or English, yet somehow I ended up a data scientist in the U.S., and eventually found my way back to expression.">
   <div class="site-version">
-    <ChangelogPopup version="v0.8" id="site" entries={siteChangelog} align="right" />
+    <ChangelogPopup version="v0.9" id="site" entries={siteChangelog} align="right" />
   </div>
 
   <main class="home">

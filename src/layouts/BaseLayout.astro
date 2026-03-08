@@ -90,10 +90,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
       function applyTranslations() {
         const isToolPage = window.location.pathname.startsWith('/tools/');
+        const isToolAuthenticated = isToolPage && typeof sessionStorage !== 'undefined' && sessionStorage.getItem('excel-tool-auth') === 'true';
         const langToggle = document.querySelector('.lang-toggle') as HTMLElement | null;
 
-        if (isToolPage) {
-          // Tool pages: force Chinese, hide language toggle
+        if (isToolAuthenticated) {
+          // Authenticated tool pages: force Chinese, hide language toggle
           document.documentElement.setAttribute('data-lang', 'zh');
           if (langToggle) langToggle.style.display = 'none';
         } else {
@@ -101,7 +102,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           if (langToggle) langToggle.style.display = '';
         }
 
-        const lang = (isToolPage ? 'zh' : getLang()) as 'en' | 'zh';
+        const lang = (isToolAuthenticated ? 'zh' : getLang()) as 'en' | 'zh';
         document.documentElement.setAttribute('data-lang', lang);
 
         // Apply static data-i18n translations
