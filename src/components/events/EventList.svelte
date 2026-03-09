@@ -101,6 +101,7 @@
       ]},
   ];
   let changelogOpen = $state(false);
+  let whyOpen = $state(false);
 
   // --- Calendar (read-only) ---
   let filterHeight = $state(0);
@@ -286,6 +287,24 @@
         {/if}
       </div>
     </div>
+
+    <p class="event-subtitle">
+      {t('events.subtitlePre')}<span class="newly-highlight">{t('events.subtitleHighlight')}</span>{t('events.subtitlePost')}
+      <span class="why-wrap">
+        <button class="why-btn" onclick={() => whyOpen = !whyOpen}>Why?</button>
+        {#if whyOpen}
+          <div class="why-backdrop" onclick={() => whyOpen = false} role="presentation"></div>
+          <div class="why-popup">
+            <div class="changelog-header">
+              <span class="changelog-title">{t('events.whyTitle')}</span>
+              <button class="changelog-close" onclick={() => whyOpen = false}>&times;</button>
+            </div>
+            <p class="why-point">{t('events.whyPoint1')}</p>
+            <p class="why-point">{t('events.whyPoint2')}</p>
+          </div>
+        {/if}
+      </span>
+    </p>
   </header>
 
   {#if loading}
@@ -497,6 +516,87 @@
     font-weight: 500;
     color: var(--text);
     margin-bottom: var(--space-xs);
+  }
+
+  .event-subtitle {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    margin: 0 0 var(--space-xs);
+    line-height: 1.5;
+  }
+
+  .newly-highlight {
+    color: var(--color-pm);
+    font-weight: 500;
+  }
+
+  .why-wrap {
+    position: relative;
+    display: inline-block;
+  }
+
+  .why-btn {
+    font-family: inherit;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.1em 0.4em;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+    white-space: nowrap;
+    margin-left: 0.3em;
+  }
+
+  .why-btn:hover {
+    border-color: rgba(0, 0, 0, 0.25);
+    color: var(--text);
+  }
+
+  .why-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+  }
+
+  .why-popup {
+    position: absolute;
+    top: calc(100% + 0.4rem);
+    left: 0;
+    z-index: 100;
+    width: min(22rem, calc(100vw - 2rem));
+    max-height: 28rem;
+    overflow-y: auto;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    padding: 0.75rem;
+    text-align: left;
+  }
+
+  .why-point {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    line-height: 1.5;
+    margin: 0 0 0.5rem;
+  }
+
+  .why-point:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 480px) {
+    .why-popup {
+      position: fixed;
+      top: auto;
+      right: 1rem;
+      bottom: 1rem;
+      left: 1rem;
+      width: auto;
+      max-height: 70vh;
+    }
   }
 
   .event-meta-bar {
