@@ -30,7 +30,7 @@ SOURCES = [
         "pagination_limit": 50,
     },
 ]
-MAX_PAGES = 5
+MAX_PAGES = 50  # effectively unlimited; stops when API returns has_more=false
 REQUEST_DELAY = 1.0
 DATA_FILE = Path(__file__).resolve().parent.parent.parent / "public" / "data" / "events.json"
 
