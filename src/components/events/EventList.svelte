@@ -130,7 +130,9 @@
       const data: EventData = await resp.json();
 
       const newSet = new Set(data.new_event_ids ?? []);
-      events = data.events.filter(e => newSet.has(e.api_id));
+      events = newSet.size > 0
+        ? data.events.filter(e => newSet.has(e.api_id))
+        : data.events;
       updatedAt = data.updated_at;
 
       const updatedTime = new Date(data.updated_at).getTime();
