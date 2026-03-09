@@ -13,7 +13,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   // --- Greeting ---
   'greeting.lead': {
     en: 'In case I don\u2019t see ya...',
-    zh: '假如很难再次遇见你……',
+    zh: '假如很难再次遇见你... ',
   },
   'greeting.body': {
     en: 'good afternoon, good evening, and good night.',
