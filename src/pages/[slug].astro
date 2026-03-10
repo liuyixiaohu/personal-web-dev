@@ -9,12 +9,12 @@ export function getStaticPaths() {
   }));
 }
 
-const { title, description, color, i18nKey } = Astro.props;
+const { title, description, color, i18n } = Astro.props;
 ---
 
 <ProfessionalDetail
   title={title}
   description={description}
   color={color}
-  i18nKey={i18nKey}
+  i18nKey={i18n.title}
 />

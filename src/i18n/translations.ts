@@ -23,20 +23,19 @@ export const translations: Record<string, Record<Lang, string>> = {
   // --- Navigation ---
   'nav.back': { en: '\u2190 Back', zh: '\u2190 返回' },
 
-  // --- Professional page titles ---
-  'professional.productMarketing': { en: 'Product Marketing', zh: '产品营销' },
-  'professional.dataScience': { en: 'Data Science', zh: '数据科学' },
-  'professional.visualDesign': { en: 'Visual Design', zh: '视觉设计' },
+  // --- Craft (professional areas) ---
+  'craft.pm': { en: 'Product Marketing', zh: '产品营销' },
+  'craft.pm.title': { en: 'Product Marketing', zh: '产品营销' },
+  'craft.pm.desc': { en: 'Nailed the positioning. Then the product pivoted.', zh: '找到一个完美的产品定位！然后产品转型了！' },
+  'craft.ds': { en: 'Data Science', zh: '数据科学' },
+  'craft.ds.title': { en: 'Data Science', zh: '数据科学' },
+  'craft.ds.desc': { en: 'Presented findings to leadership. They went with their gut.', zh: '给上司汇报了分析结果。完事儿他们相信他们的"第六感"。' },
+  'craft.visual': { en: 'Visual Design', zh: '视觉设计' },
+  'craft.visual.title': { en: 'Visual Design', zh: '视觉设计' },
+  'craft.visual.desc': { en: 'After spending 3 hours adjusting a gradient. The client said, "looks the same." It was not.', zh: '花三小时调了个渐变。客户说"看起来一样。"那能一样吗？' },
+
   // --- Common ---
   'common.comingSoon': { en: 'Content coming soon...', zh: '内容即将上线…' },
-
-  // --- Professional page items ---
-  'bar.drink.pm': { en: 'Product Marketing', zh: '产品营销' },
-  'bar.drink.ds': { en: 'Data Science', zh: '数据科学' },
-  'bar.drink.visual': { en: 'Visual Design', zh: '视觉设计' },
-  'bar.drink.pm.desc': { en: 'Nailed the positioning. Then the product pivoted.', zh: '找到一个完美的产品定位！然后产品转型了！' },
-  'bar.drink.ds.desc': { en: 'Presented findings to leadership. They went with their gut.', zh: '给上司汇报了分析结果。完事儿他们相信他们的"第六感"。' },
-  'bar.drink.visual.desc': { en: 'After spending 3 hours adjusting a gradient. The client said, "looks the same." It was not.', zh: '花三小时调了个渐变。客户说"看起来一样。"那能一样吗？' },
 
   // --- Globe pin titles ---
   'pin.jiaozhou.title': { en: 'Where it all began', zh: '一切开始的地方' },

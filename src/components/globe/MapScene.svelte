@@ -133,11 +133,11 @@
   </div>
 
   <svg viewBox="0 0 {width} {height}" class="world-map" bind:this={svgEl}>
-    <rect {width} {height} fill="#D6E6F3" />
+    <rect {width} {height} fill="var(--bubble-ds)" />
 
     <g {transform}>
       {#each countryPaths as d}
-        <path {d} fill="#DDEEE7" stroke="#b8d4ca" stroke-width="0.5" />
+        <path {d} fill="var(--bubble-visual)" stroke="#b8d4ca" stroke-width="0.5" />
       {/each}
 
       {#if showProvinces && provincePath}
