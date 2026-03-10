@@ -138,6 +138,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       document.addEventListener('astro:after-swap', () => {
         applyTranslations();
         setupSecretHeart();
+        window.dataLayer?.push({
+          event: 'virtual_page_view',
+          page_path: window.location.pathname,
+          page_title: document.title,
+        });
       });
     </script>
   </body>
