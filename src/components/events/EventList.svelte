@@ -5,12 +5,13 @@
   import {
     type LumaEvent, type EventData,
     DATA_URL, STALE_THRESHOLD_MS,
-    loadPref, stripState, matchesPrice,
+    loadPref, matchesPrice, enrichEvents,
+    buildLocationIndex, buildPriceCounts,
     eventDateKey, formatUpdatedAt, formatDateGroup,
   } from './eventUtils';
   import EventFilters from './EventFilters.svelte';
-
   import EventCard from './EventCard.svelte';
+  import { VERSION, CHANGELOG } from './changelog';
 
   // --- State ---
   let lang = $state<Lang>('en');
@@ -19,9 +20,6 @@
   let loading = $state(true);
   let error = $state(false);
   let isStale = $state(false);
-
-  // force re-render on language change
-  let _tick = $state(0);
 
   // --- Filter & Sort State (persisted via localStorage) ---
   let selectedLocations = $state<Set<string>>(new Set(loadPref<string[]>('events.locations', [])));
@@ -32,86 +30,6 @@
   let sortBy = $state<string>(loadPref('events.sort', 'time-asc'));
   let searchQuery = $state<string>('');
 
-  // --- Changelog ---
-  const VERSION = 'v1.0';
-  const CHANGELOG = [
-    { version: 'v1.0',
-      why: 'Switched from showing all events to only daily new additions — less noise, more signal.',
-      changes: [
-        'Now shows only newly added events since the last daily check',
-        'Added subtitle explaining the page scope, plus a "Why?" explainer',
-        'Shows refresh schedule next to the last-checked timestamp',
-        'Filters out events that already started (tomorrow onward only)',
-        'Expanded event range from 1 week to several months ahead',
-      ]},
-    { version: 'v0.9',
-      why: 'Visual polish: better icons, tighter headings, cleaner layout.',
-      changes: [
-        'Replaced emoji icons with crisp inline SVGs (calendar, pin, users)',
-        'Calendar columns now have visible day separators',
-        'Tighter line-height on headings for better visual hierarchy',
-      ]},
-    { version: 'v0.8',
-      why: 'Too many font sizes doing the same job. Time for spring cleaning.',
-      changes: [
-        'Simplified font sizes from 6 levels to 5 (less is more)',
-        'Price filter: removed "All" button, just click again to deselect',
-        'Calendar switched to 24-hour time across all languages',
-        'Search placeholder now shows example keywords',
-      ]},
-    { version: 'v0.7',
-      why: 'The location list was getting out of hand with 25+ cities showing at once.',
-      changes: [
-        'Location pills now collapse to 2 rows, click "More" to see the rest',
-        'Most popular cities show first',
-        'Cleaner calendar time labels (just the number, no ":00")',
-        'Calendar only shows 8 AM – 10 PM (nobody\'s going to events at 3 AM… right?)',
-        'Added this version changelog popup',
-      ]},
-    { version: 'v0.6',
-      why: 'Some text was too faint to read comfortably. Accessibility matters.',
-      changes: [
-        'Made all text easier to read with better contrast',
-        'Set a minimum text size so nothing is too tiny',
-        'Consistent text styling across the whole page',
-      ]},
-    { version: 'v0.5',
-      why: 'Hard to tell which days are busiest just by scrolling through a list.',
-      changes: [
-        'Added a calendar heatmap (darker = more events)',
-        'Scroll sideways to see the whole week',
-        'Click a time slot to jump straight to those events',
-      ]},
-    { version: 'v0.4',
-      why: '200+ events in a flat list was… a lot.',
-      changes: [
-        'Events grouped by day with date headers',
-        'Shows total event count at the top',
-        'Cleaned up location names (bye bye ", California")',
-      ]},
-    { version: 'v0.3',
-      why: 'Scrolling through hundreds of events to find one? No thanks.',
-      changes: [
-        'Search bar to find events by name or host instantly',
-        'Filter pills show how many events match each option',
-        'Your filter preferences are remembered between visits',
-      ]},
-    { version: 'v0.2',
-      why: 'A raw list of events isn\'t very useful without ways to filter and sort.',
-      changes: [
-        'Filter by price: Free or Paid',
-        'Filter by location, pick one or several cities',
-        'Sort by time, name, or guest count',
-      ]},
-    { version: 'v0.1',
-      why: 'Bay Area tech events were scattered across the internet. Why not put them in one place?',
-      changes: [
-        'Event listing page pulling from Luma automatically',
-        'Each event shows title, date, location, price, and guest count',
-        'New events fetched daily',
-        'Available in English and Chinese',
-      ]},
-  ];
   let changelogOpen = $state(false);
   let whyOpen = $state(false);
   let feedbackOpen = $state(false);
@@ -145,20 +63,19 @@
   lang = getLang();
 
   $effect(() => {
-    const unsub = subscribe((newLang) => {
-      lang = newLang;
-      _tick += 1;
-    });
+    const unsub = subscribe((newLang) => { lang = newLang; });
     return unsub;
   });
 
   // --- Persist filter/sort to localStorage ---
-  $effect(() => { localStorage.setItem('events.price', JSON.stringify(selectedPrice)); });
-  $effect(() => { localStorage.setItem('events.sort', JSON.stringify(sortBy)); });
-  $effect(() => { localStorage.setItem('events.locations', JSON.stringify([...selectedLocations])); });
-  $effect(() => { localStorage.setItem('events.days', JSON.stringify([...selectedDays])); });
-  $effect(() => { localStorage.setItem('events.timeStart', JSON.stringify(selectedTimeStart)); });
-  $effect(() => { localStorage.setItem('events.timeEnd', JSON.stringify(selectedTimeEnd)); });
+  $effect(() => {
+    localStorage.setItem('events.price', JSON.stringify(selectedPrice));
+    localStorage.setItem('events.sort', JSON.stringify(sortBy));
+    localStorage.setItem('events.locations', JSON.stringify([...selectedLocations]));
+    localStorage.setItem('events.days', JSON.stringify([...selectedDays]));
+    localStorage.setItem('events.timeStart', JSON.stringify(selectedTimeStart));
+    localStorage.setItem('events.timeEnd', JSON.stringify(selectedTimeEnd));
+  });
 
   // --- Data fetching ---
   onMount(async () => {
@@ -176,9 +93,11 @@
 
       const isFuture = (e: LumaEvent) => new Date(e.start_at).getTime() >= tomorrowMs;
 
-      events = newSet.size > 0
+      const filtered = newSet.size > 0
         ? data.events.filter(e => newSet.has(e.api_id) && isFuture(e))
         : data.events.filter(isFuture);
+      enrichEvents(filtered);
+      events = filtered;
       updatedAt = data.updated_at;
 
       const updatedTime = new Date(data.updated_at).getTime();
@@ -191,33 +110,22 @@
     }
   });
 
-  // --- Derived filter options ---
-  let allLocations = $derived(
-    [...new Set(events.map(e => stripState(e.location)).filter(l => l && l.trim()))]
-      .sort((a, b) => {
-        const countA = events.filter(e => stripState(e.location) === a).length;
-        const countB = events.filter(e => stripState(e.location) === b).length;
-        return countB - countA;
-      })
-  );
+  // --- Derived filter options (single-pass) ---
+  let locationIndex = $derived(buildLocationIndex(events));
+  let allLocations = $derived(locationIndex.sorted);
+  let locationCounts = $derived(locationIndex.counts);
+  let priceCounts = $derived(buildPriceCounts(events));
 
   // --- Filtering & Sorting ---
   let filteredEvents = $derived.by(() => {
-    void _tick;
-
     const q = searchQuery.toLowerCase().trim();
 
     let result = events.filter(e => {
-      if (selectedLocations.size > 0 && !selectedLocations.has(stripState(e.location))) return false;
+      if (selectedLocations.size > 0 && !selectedLocations.has(e._strippedLocation!)) return false;
       if (!matchesPrice(e, selectedPrice)) return false;
-      if (selectedDays.size > 0) {
-        const dow = new Date(e.start_at).getDay();
-        if (!selectedDays.has(dow)) return false;
-      }
+      if (selectedDays.size > 0 && !selectedDays.has(e._dayOfWeek!)) return false;
       if (selectedTimeStart || selectedTimeEnd) {
-        const h = new Date(e.start_at).getHours();
-        const m = new Date(e.start_at).getMinutes();
-        const mins = h * 60 + m;
+        const mins = e._timeMinutes!;
         if (selectedTimeStart) {
           const [sh, sm] = selectedTimeStart.split(':').map(Number);
           if (mins < sh * 60 + sm) return false;
@@ -235,8 +143,8 @@
       switch (sortBy) {
         case 'alpha-asc': return a.name.localeCompare(b.name);
         case 'alpha-desc': return b.name.localeCompare(a.name);
-        case 'time-asc': return new Date(a.start_at).getTime() - new Date(b.start_at).getTime();
-        case 'time-desc': return new Date(b.start_at).getTime() - new Date(a.start_at).getTime();
+        case 'time-asc': return a._startMs! - b._startMs!;
+        case 'time-desc': return b._startMs! - a._startMs!;
         case 'guests-asc': {
           if (a.guest_count === 0 && b.guest_count !== 0) return 1;
           if (b.guest_count === 0 && a.guest_count !== 0) return -1;
@@ -293,7 +201,7 @@
   }
 </script>
 
-{#key _tick}
+{#key lang}
 <div class="event-list">
   <header class="event-header">
     <div class="event-title-row">
@@ -395,8 +303,9 @@
 
     <!-- Filter & Sort Controls -->
     <EventFilters
-      {events}
       {allLocations}
+      {locationCounts}
+      {priceCounts}
       {selectedLocations}
       {selectedPrice}
       {selectedDays}
@@ -404,7 +313,6 @@
       {selectedTimeEnd}
       {sortBy}
       {searchQuery}
-      {lang}
       onLocationToggle={toggleLocation}
       onPriceChange={(p) => selectedPrice = p}
       onDayToggle={toggleDay}
