@@ -112,9 +112,9 @@ export const translations: Record<string, Record<Lang, string>> = {
   'home.dreamjob.desc': { en: 'Fork it. Tell the AI your dream companies. Never miss a posting.', zh: 'Fork 后让 AI 帮你配置。再也不怕错过心仪的岗位。' },
   'home.brand': { en: 'Brand Guidelines', zh: '品牌指南' },
   'events.title': { en: 'New Luma Events Today', zh: '今日新增 Luma 活动' },
-  'events.subtitlePre': { en: 'Tech & AI events ', zh: '每日' },
-  'events.subtitleHighlight': { en: 'added', zh: '新增' },
-  'events.subtitlePost': { en: ' since the last daily check.', zh: '的科技与 AI 相关活动。' },
+  'events.subtitlePre': { en: 'Tech & AI events added ', zh: '科技与 AI 活动，' },
+  'events.subtitleHighlight': { en: 'only since the last daily check', zh: '仅展示每日新增' },
+  'events.subtitlePost': { en: '.', zh: '。' },
   'events.whyTitle': { en: 'Why show only newly added events?', zh: '为什么设计为只显示新增活动？' },
   'events.whyPoint1': {
     en: 'This tool\u2019s primary purpose is to surface potentially high-value events as they appear \u2014 so you don\u2019t have to browse through the entire Luma catalog each day just to see what\u2019s new.',
