@@ -81,6 +81,56 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </section>
 
+    <!-- See It in Action -->
+    <section class="section">
+      <h2 data-i18n="djm.section.example">See It in Action</h2>
+      <p data-i18n="djm.example.intro">Here's my own setup — watching 18 companies for marketing intern positions in the US.</p>
+
+      <h3 data-i18n="djm.example.watching">Watching</h3>
+      <div class="djm-platforms">
+        <span class="djm-pill">Airbnb</span>
+        <span class="djm-pill">Waymo</span>
+        <span class="djm-pill">Amazon</span>
+        <span class="djm-pill">NVIDIA</span>
+        <span class="djm-pill">Adobe</span>
+        <span class="djm-pill">Tesla</span>
+        <span class="djm-pill">Figure AI</span>
+        <span class="djm-pill">Boston Dynamics</span>
+        <span class="djm-pill djm-pill-muted">+10 more</span>
+      </div>
+
+      <h3 data-i18n="djm.example.filtering">Filtering for</h3>
+      <div class="djm-platforms">
+        <span class="djm-pill">marketing</span>
+        <span class="djm-pill">PMM</span>
+        <span class="djm-pill">intern</span>
+        <span class="djm-pill">US-based</span>
+      </div>
+
+      <h3 data-i18n="djm.example.notification">Sample Notification</h3>
+      <div class="djm-example-card">
+        <div class="djm-example-header">
+          <span class="djm-example-icon">📬</span>
+          New Intern Product Marketing Positions — 2026-03-01
+        </div>
+        <table class="djm-example-table">
+          <thead>
+            <tr><th>Company</th><th>Title</th><th>Location</th><th></th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Adobe</td>
+              <td>2026 MBA Intern - Content Marketing Strategy</td>
+              <td>San Jose, CA</td>
+              <td><span class="djm-apply">Apply →</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <a href="https://github.com/liuyixiaohu/new-position-monitor" class="djm-example-link" target="_blank" rel="noopener" data-i18n="djm.example.link">View my setup →</a>
+    </section>
+
     <!-- CTA -->
     <div class="djm-cta">
       <a href="https://github.com/liuyixiaohu/dream-job-monitor" class="djm-github-link" target="_blank" rel="noopener">
@@ -202,6 +252,82 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 3px;
     color: var(--text-light);
+  }
+
+  /* Section h3 */
+  .section h3 {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-light);
+    margin-top: var(--space-md);
+    margin-bottom: var(--space-xs);
+  }
+
+  /* Muted pill for "+10 more" */
+  .djm-pill-muted {
+    border-style: dashed;
+    color: var(--text-light);
+    opacity: 0.6;
+  }
+
+  /* Example notification card */
+  .djm-example-card {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: var(--space-xs);
+  }
+
+  .djm-example-header {
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    padding: 0.6em 0.8em;
+    border-bottom: 1px solid var(--border);
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .djm-example-icon {
+    margin-right: 0.3em;
+  }
+
+  .djm-example-table {
+    width: 100%;
+    font-size: var(--fs-xs);
+    border-collapse: collapse;
+  }
+
+  .djm-example-table th {
+    text-align: left;
+    padding: 0.4em 0.8em;
+    font-weight: 600;
+    color: var(--text-light);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .djm-example-table td {
+    padding: 0.5em 0.8em;
+    color: var(--text);
+  }
+
+  .djm-apply {
+    color: var(--color-ds);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .djm-example-link {
+    display: inline-block;
+    margin-top: var(--space-sm);
+    font-size: var(--fs-sm);
+    color: var(--color-ds);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .djm-example-link:hover {
+    opacity: 0.7;
   }
 
   /* CTA */
