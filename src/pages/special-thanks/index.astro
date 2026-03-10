@@ -17,6 +17,7 @@ import { people } from '../../data/people';
         <a href={`/special-thanks/${person.slug}`} class="item">
           <span class="item-title" style={`color: ${person.color}`}>{person.name}</span>
           <span class="item-desc">{person.subtitle}</span>
+          {person.comingDate && <span class="coming-date">{person.comingDate}</span>}
         </a>
       ))}
     </section>
@@ -37,6 +38,16 @@ import { people } from '../../data/people';
   /* --- Sections --- */
   .section {
     margin-bottom: var(--space-lg);
+  }
+
+  /* Temporary release dates */
+  .coming-date {
+    display: block;
+    font-size: 0.65rem;
+    color: var(--text-light);
+    opacity: 0.6;
+    margin-top: 0.15rem;
+    font-style: italic;
   }
 
   /* Accent colors applied via inline style from data */
