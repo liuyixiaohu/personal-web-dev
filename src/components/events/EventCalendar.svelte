@@ -116,6 +116,7 @@
     user-select: none;
     border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 4px;
+    overflow: clip;
   }
 
   .cal-corner {
