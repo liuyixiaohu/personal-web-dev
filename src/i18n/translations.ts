@@ -8,7 +8,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   // --- Homepage ---
   'home.professional': { en: 'Enter Chaguan', zh: '进入茶馆' },
   'home.specialThanks': { en: 'Special Thanks', zh: '特别感谢' },
-  'home.lifeJourney': { en: 'Journey', zh: '旅途' },
+  'home.lifeJourney': { en: 'Journey', zh: '旅程' },
 
   // --- Greeting ---
   'greeting.lead': {
@@ -106,11 +106,12 @@ export const translations: Record<string, Record<Lang, string>> = {
   },
 
   // --- Professional section headings ---
-  'pro.section.craft': { en: 'Craft', zh: '吃饭的手艺活儿' },
+  'pro.section.craft': { en: 'Craft', zh: '吃饭的手艺' },
   'pro.section.lab': { en: 'Lab', zh: '一切都是为了摸鱼' },
 
   // --- Events page ---
-  'home.events': { en: 'Bay Area Events', zh: '湾区活动' },
+  'home.events': { en: 'Bay Area Tech Events Monitor', zh: '湾区科技活动监测' },
+  'home.events.desc': { en: 'No more scrolling Luma until you question your life choices.', zh: '再也不用刷 Luma 刷到怀疑人生了。' },
   'home.brand': { en: 'Brand Guidelines', zh: '品牌指南' },
   'events.title': { en: 'Today\'s Newly Added Luma Events in the Bay Area', zh: '今日新增 Luma 活动（旧金山湾区）' },
   'events.subtitlePre': { en: 'Only showing Tech & AI events ', zh: '仅展示每日' },
