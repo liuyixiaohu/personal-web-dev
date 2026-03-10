@@ -117,12 +117,12 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.subtitlePost': { en: '.', zh: '。' },
   'events.whyTitle': { en: 'Why show only newly added events?', zh: '为什么设计为只显示新增活动？' },
   'events.whyPoint1': {
-    en: 'This tool\u2019s primary purpose is to surface potentially high-value events as they appear \u2014 so you don\u2019t have to browse through the entire Luma catalog each day just to see what\u2019s new.',
-    zh: '该工具的主要目的是在新活动出现时及时呈现潜在的高价值选项，免去每天为了发现新增内容而反复浏览 Luma 完整列表的时间。',
+    en: 'This tool\u2019s primary purpose is to surface new events quickly \u2014 so you don\u2019t have to browse through the entire Luma catalog each day just to see what\u2019s new.',
+    zh: '该工具的主要目的是快速呈现新增活动，免去每天为了发现新内容而反复浏览 Luma 完整列表的时间。',
   },
   'events.whyPoint2': {
-    en: 'Balance between convenience and long-term availability. The data comes from an undisclosed endpoint. Keeping the feature restrained and differentiated, rather than building a full-featured alternative, helps reduce the risk of the data source being noticed and shut down.',
-    zh: '这也是对便利性与长期可用性的平衡。数据来自一个不便公开的接口。保持功能的克制与差异化，而非构建一个全面的替代方案，有助于降低数据源被关注并停用的风险——否则连这种仅查看每日新增的轻量功能也将无法使用。',
+    en: 'This page is intentionally designed to balance convenience and long-term availability. The data comes from an undisclosed endpoint. Keeping the feature restrained and differentiated, rather than building a full-featured alternative, helps reduce the risk of the data source being noticed and shut down.',
+    zh: '本页面在设计上刻意平衡了便利性与长期可用性。数据来自一个不便公开的接口。保持功能的克制与差异化，而非构建一个全面的替代方案，有助于降低数据源被关注并停用的风险。',
   },
   'events.lastUpdated': { en: 'Last checked', zh: '最近检查' },
   'events.refreshNote': { en: '(Refreshes daily ~7 PM PT)', zh: '（每日约晚 7 点太平洋时间刷新）' },
