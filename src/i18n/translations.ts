@@ -223,6 +223,20 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.feedbackSent': { en: 'Thanks! Feedback sent.', zh: '谢谢！反馈已发送。' },
   'events.feedbackError': { en: 'Failed to send. Try again?', zh: '发送失败，再试一次？' },
 
+  // --- Day & Time filters ---
+  'events.filterDay': { en: 'Day', zh: '星期' },
+  'events.daySun': { en: 'Sun', zh: '日' },
+  'events.dayMon': { en: 'Mon', zh: '一' },
+  'events.dayTue': { en: 'Tue', zh: '二' },
+  'events.dayWed': { en: 'Wed', zh: '三' },
+  'events.dayThu': { en: 'Thu', zh: '四' },
+  'events.dayFri': { en: 'Fri', zh: '五' },
+  'events.daySat': { en: 'Sat', zh: '六' },
+  'events.filterTime': { en: 'Time', zh: '时间' },
+  'events.timeFrom': { en: 'From', zh: '从' },
+  'events.timeTo': { en: 'To', zh: '到' },
+  'events.timeAny': { en: 'Any', zh: '不限' },
+
   // --- Language toggle button ---
   'lang.toggle': { en: '中', zh: 'EN' },
 };
