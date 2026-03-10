@@ -268,6 +268,15 @@ export const translations: Record<string, Record<Lang, string>> = {
   'djm.step3': { en: 'AI asks your companies, roles, and locations', zh: 'AI 会询问你的目标公司、职位和地点' },
   'djm.step4': { en: 'Push to GitHub — Actions runs daily at 8 PM PST', zh: '推送到 GitHub — Actions 每天太平洋时间晚 8 点自动运行' },
   'djm.section.platforms': { en: 'Supported Platforms', zh: '支持的平台' },
+  'djm.section.example': { en: 'See It in Action', zh: '实际用例' },
+  'djm.example.intro': {
+    en: 'Here\'s my own setup — watching 18 companies for marketing intern positions in the US.',
+    zh: '这是我自己的配置 — 监控 18 家公司的美国市场营销实习岗位。',
+  },
+  'djm.example.watching': { en: 'Watching', zh: '监控中' },
+  'djm.example.filtering': { en: 'Filtering for', zh: '筛选条件' },
+  'djm.example.notification': { en: 'Sample Notification', zh: '通知示例' },
+  'djm.example.link': { en: 'View my setup →', zh: '查看我的配置 →' },
   'djm.cta': { en: 'View on GitHub', zh: '在 GitHub 上查看' },
 
   // --- Language toggle button ---
