@@ -6,10 +6,10 @@
     type LumaEvent, type EventData,
     DATA_URL, STALE_THRESHOLD_MS,
     loadPref, stripState, matchesPrice,
-    toLocalSlotKey, eventDateKey, formatUpdatedAt, formatDateGroup,
+    eventDateKey, formatUpdatedAt, formatDateGroup,
   } from './eventUtils';
   import EventFilters from './EventFilters.svelte';
-  import EventCalendar from './EventCalendar.svelte';
+
   import EventCard from './EventCard.svelte';
 
   // --- State ---
@@ -26,6 +26,9 @@
   // --- Filter & Sort State (persisted via localStorage) ---
   let selectedLocations = $state<Set<string>>(new Set(loadPref<string[]>('events.locations', [])));
   let selectedPrice = $state<string | null>(loadPref('events.price', null));
+  let selectedDays = $state<Set<number>>(new Set(loadPref<number[]>('events.days', [])));
+  let selectedTimeStart = $state<string>(loadPref('events.timeStart', ''));
+  let selectedTimeEnd = $state<string>(loadPref('events.timeEnd', ''));
   let sortBy = $state<string>(loadPref('events.sort', 'time-asc'));
   let searchQuery = $state<string>('');
 
@@ -136,8 +139,6 @@
     }
   }
 
-  // --- Calendar (read-only) ---
-  let filterHeight = $state(0);
 
   // --- Language ---
   initLang();
@@ -155,6 +156,9 @@
   $effect(() => { localStorage.setItem('events.price', JSON.stringify(selectedPrice)); });
   $effect(() => { localStorage.setItem('events.sort', JSON.stringify(sortBy)); });
   $effect(() => { localStorage.setItem('events.locations', JSON.stringify([...selectedLocations])); });
+  $effect(() => { localStorage.setItem('events.days', JSON.stringify([...selectedDays])); });
+  $effect(() => { localStorage.setItem('events.timeStart', JSON.stringify(selectedTimeStart)); });
+  $effect(() => { localStorage.setItem('events.timeEnd', JSON.stringify(selectedTimeEnd)); });
 
   // --- Data fetching ---
   onMount(async () => {
@@ -197,40 +201,6 @@
       })
   );
 
-  // --- Calendar grid data ---
-  let calendarDays = $derived.by(() => {
-    const days = new Set<string>();
-    for (const e of events) {
-      const key = toLocalSlotKey(e.start_at);
-      days.add(key.split('T')[0]);
-      const endKey = toLocalSlotKey(e.end_at);
-      days.add(endKey.split('T')[0]);
-    }
-    return [...days].sort();
-  });
-
-  let timeSlots = $derived.by(() => {
-    if (events.length === 0) return [];
-    let minH = 24, maxH = 0;
-    for (const e of events) {
-      const sKey = toLocalSlotKey(e.start_at);
-      const eKey = toLocalSlotKey(e.end_at);
-      const sH = parseInt(sKey.split('T')[1].split(':')[0]);
-      const eH = parseInt(eKey.split('T')[1].split(':')[0]);
-      const eMin = parseInt(eKey.split('T')[1].split(':')[1]);
-      minH = Math.min(minH, sH);
-      maxH = Math.max(maxH, eMin > 0 ? eH + 1 : eH);
-    }
-    minH = Math.max(8, minH);
-    maxH = Math.min(23, maxH);
-    const slots: string[] = [];
-    for (let h = minH; h < maxH; h++) {
-      slots.push(`${String(h).padStart(2, '0')}:00`);
-      slots.push(`${String(h).padStart(2, '0')}:30`);
-    }
-    return slots;
-  });
-
   // --- Filtering & Sorting ---
   let filteredEvents = $derived.by(() => {
     void _tick;
@@ -240,6 +210,23 @@
     let result = events.filter(e => {
       if (selectedLocations.size > 0 && !selectedLocations.has(stripState(e.location))) return false;
       if (!matchesPrice(e, selectedPrice)) return false;
+      if (selectedDays.size > 0) {
+        const dow = new Date(e.start_at).getDay();
+        if (!selectedDays.has(dow)) return false;
+      }
+      if (selectedTimeStart || selectedTimeEnd) {
+        const h = new Date(e.start_at).getHours();
+        const m = new Date(e.start_at).getMinutes();
+        const mins = h * 60 + m;
+        if (selectedTimeStart) {
+          const [sh, sm] = selectedTimeStart.split(':').map(Number);
+          if (mins < sh * 60 + sm) return false;
+        }
+        if (selectedTimeEnd) {
+          const [eh, em] = selectedTimeEnd.split(':').map(Number);
+          if (mins > eh * 60 + em) return false;
+        }
+      }
       if (q && !e.name.toLowerCase().includes(q) && !e.host_names.some(h => h.toLowerCase().includes(q))) return false;
       return true;
     });
@@ -290,9 +277,18 @@
     selectedLocations = next;
   }
 
+  function toggleDay(day: number) {
+    const next = new Set(selectedDays);
+    if (next.has(day)) next.delete(day); else next.add(day);
+    selectedDays = next;
+  }
+
   function clearFilters() {
     selectedLocations = new Set();
     selectedPrice = null;
+    selectedDays = new Set();
+    selectedTimeStart = '';
+    selectedTimeEnd = '';
     searchQuery = '';
   }
 </script>
@@ -397,33 +393,27 @@
       </div>
     {/if}
 
-    <!-- Filter & Sort Controls + Calendar -->
-    <div class="filter-layout">
-      <div class="filter-controls-wrap" bind:clientHeight={filterHeight}>
-        <EventFilters
-          {events}
-          {allLocations}
-          {selectedLocations}
-          {selectedPrice}
-          {sortBy}
-          {searchQuery}
-          {lang}
-          onLocationToggle={toggleLocation}
-          onPriceChange={(p) => selectedPrice = p}
-          onSortChange={(s) => sortBy = s}
-          onSearchChange={(q) => searchQuery = q}
-          onClear={clearFilters}
-        />
-      </div>
-
-      <EventCalendar
-        {filteredEvents}
-        {calendarDays}
-        {timeSlots}
-        maxHeight={filterHeight}
-        {lang}
-      />
-    </div>
+    <!-- Filter & Sort Controls -->
+    <EventFilters
+      {events}
+      {allLocations}
+      {selectedLocations}
+      {selectedPrice}
+      {selectedDays}
+      {selectedTimeStart}
+      {selectedTimeEnd}
+      {sortBy}
+      {searchQuery}
+      {lang}
+      onLocationToggle={toggleLocation}
+      onPriceChange={(p) => selectedPrice = p}
+      onDayToggle={toggleDay}
+      onTimeStartChange={(v) => selectedTimeStart = v}
+      onTimeEndChange={(v) => selectedTimeEnd = v}
+      onSortChange={(s) => sortBy = s}
+      onSearchChange={(q) => searchQuery = q}
+      onClear={clearFilters}
+    />
 
     {#if isStale}
       <p class="event-stale">{t('events.staleWarning')}</p>
@@ -803,19 +793,6 @@
     margin-top: var(--space-xs);
   }
 
-  /* --- Filter Layout (side-by-side) --- */
-  .filter-layout {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-    margin-bottom: var(--space-sm);
-  }
-
-  .filter-controls-wrap {
-    flex: 1;
-    min-width: 0;
-  }
-
   .event-stale {
     font-size: var(--fs-xs);
     color: var(--color-pm);
@@ -844,13 +821,6 @@
   /* Chinese font overrides */
   :global(html[data-lang="zh"]) .event-title {
     font-family: var(--font-zh);
-  }
-
-  /* Tablet: stack layout */
-  @media (max-width: 768px) {
-    .filter-layout {
-      flex-direction: column;
-    }
   }
 
   /* Mobile */
