@@ -107,7 +107,7 @@ export const translations: Record<string, Record<Lang, string>> = {
 
   // --- Professional section headings ---
   'pro.section.craft': { en: 'Craft', zh: '吃饭的手艺' },
-  'pro.section.lab': { en: 'Lab', zh: '摸鱼万岁！' },
+  'pro.section.lab': { en: 'Touch Fish!', zh: '摸鱼万岁！' },
 
   // --- Events page ---
   'home.events': { en: 'Bay Area Tech Events Monitor', zh: '湾区科技活动监测' },
