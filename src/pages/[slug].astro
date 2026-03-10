@@ -1,0 +1,20 @@
+---
+import ProfessionalDetail from '../layouts/ProfessionalDetail.astro';
+import { professionalAreas } from '../data/professionalAreas';
+
+export function getStaticPaths() {
+  return professionalAreas.map((area) => ({
+    params: { slug: area.slug },
+    props: area,
+  }));
+}
+
+const { title, description, color, i18nKey } = Astro.props;
+---
+
+<ProfessionalDetail
+  title={title}
+  description={description}
+  color={color}
+  i18nKey={i18nKey}
+/>

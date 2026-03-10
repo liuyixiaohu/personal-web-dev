@@ -1,8 +1,22 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ChangelogPopup from '../components/ChangelogPopup.astro';
+import { professionalAreas } from '../data/professionalAreas';
+
+const areaI18n: Record<string, { titleKey: string; descKey: string; defaultTitle: string; defaultDesc: string }> = {
+  'product-marketing': { titleKey: 'bar.drink.pm', descKey: 'bar.drink.pm.desc', defaultTitle: 'Product Marketing', defaultDesc: 'Nailed the positioning. Then the product pivoted.' },
+  'data-science': { titleKey: 'bar.drink.ds', descKey: 'bar.drink.ds.desc', defaultTitle: 'Data Science', defaultDesc: 'Presented findings to leadership. They went with their gut.' },
+  'visual-design': { titleKey: 'bar.drink.visual', descKey: 'bar.drink.visual.desc', defaultTitle: 'Visual Design', defaultDesc: 'After spending 3 hours adjusting a gradient. The client said, "looks the same." It was not.' },
+};
 
 const siteChangelog = [
+  { version: 'v1.0',
+    why: 'One page. No detours.',
+    changes: [
+      'Merged Chaguan content directly into the homepage',
+      'Added scroll indicator between greeting and content',
+      'Removed Enter Chaguan intermediary step',
+    ]},
   { version: 'v0.9',
     why: 'Small touches that make it feel more personal.',
     changes: [
@@ -79,32 +93,86 @@ const siteChangelog = [
 
 <BaseLayout title="Kun Li - Product Marketing × Data Science × Design" description="I wasn't great at math or English, yet somehow I ended up a data scientist in the U.S., and eventually found my way back to expression.">
   <div class="site-version">
-    <ChangelogPopup version="v0.9" id="site" entries={siteChangelog} align="right" />
+    <ChangelogPopup version="v1.0" id="site" entries={siteChangelog} align="right" />
   </div>
 
-  <main class="home">
+  <main>
     <h1 class="sr-only">Kun Li | Product Marketing, Data Science &amp; Design</h1>
-    <div class="home-content">
-      <div class="home-tagline">
-        <p class="greeting-quote">
-          <span class="greeting-lead" data-i18n="greeting.lead">In case I don't see ya...</span>
-          <span class="greeting-body" data-i18n="greeting.body">good afternoon, good evening, and good night.</span>
-        </p>
-        <div class="greeting-source-line">
-          <p class="greeting-source" data-i18n="greeting.source">The Truman Show</p>
-          <span class="secret-heart" id="secret-heart">♥</span>
+
+    <!-- Zone 1: Hero — full first viewport -->
+    <section class="home-hero">
+      <div class="home-content">
+        <div class="home-tagline">
+          <p class="greeting-quote">
+            <span class="greeting-lead" data-i18n="greeting.lead">In case I don't see ya...</span>
+            <span class="greeting-body" data-i18n="greeting.body">good afternoon, good evening, and good night.</span>
+          </p>
+          <div class="greeting-source-line">
+            <p class="greeting-source" data-i18n="greeting.source">The Truman Show</p>
+            <span class="secret-heart" id="secret-heart">♥</span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <nav class="home-choices">
-      <a href="/chaguan" class="choice-link choice-link--professional">
-        <svg class="choice-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/><path d="M6 2v2"/></svg>
-        <span class="choice-label" data-i18n="home.professional">Enter Chaguan</span>
+      <a href="#content" class="scroll-hint" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
       </a>
-    </nav>
+    </section>
+
+    <!-- Zone 2: Content — uses grid-page for 36rem content track -->
+    <div id="content" class="home-body grid-page">
+
+      <!-- Craft -->
+      <section class="section">
+        <h2 class="section-label" data-i18n="pro.section.craft">Craft</h2>
+        {professionalAreas.map((area) => {
+          const i18n = areaI18n[area.slug];
+          return (
+            <a href={`/${area.slug}`} class="item">
+              <span class="item-title" style={`color: ${area.color}`} data-i18n={i18n?.titleKey}>{i18n?.defaultTitle ?? area.title}</span>
+              <span class="item-desc" data-i18n={i18n?.descKey}>{i18n?.defaultDesc ?? ''}</span>
+            </a>
+          );
+        })}
+      </section>
+
+      <!-- Touch Fish! -->
+      <section class="section">
+        <h2 class="section-label" data-i18n="pro.section.lab">Touch Fish!</h2>
+        <a href="/events" class="item item--events">
+          <span class="item-title" data-i18n="home.events">Bay Area Tech Events Monitor</span>
+          <span class="item-desc" data-i18n="home.events.desc">No more doomscrolling Luma into an existential crisis.</span>
+        </a>
+        <a href="/dream-job-monitor" class="item item--dreamjob">
+          <span class="item-title" data-i18n="home.dreamjob">Dream Job Monitor</span>
+          <span class="item-desc" data-i18n="home.dreamjob.desc">Fork it. Tell the AI your dream companies. Never miss a posting.</span>
+        </a>
+      </section>
+
+      <footer class="page-footer">
+        <a href="/life-journey" data-i18n="home.lifeJourney">Journey</a>
+        <span class="dot">&middot;</span>
+        <a href="/special-thanks" data-i18n="home.specialThanks">Special Thanks</a>
+        <span class="dot">&middot;</span>
+        <a href="/brand" data-i18n="home.brand">Brand Guidelines</a>
+      </footer>
+
+    </div>
   </main>
 </BaseLayout>
+
+<script>
+  // Smooth scroll for the scroll-hint chevron
+  document.addEventListener('click', (e) => {
+    const hint = (e.target as HTMLElement).closest('.scroll-hint');
+    if (hint) {
+      e.preventDefault();
+      document.getElementById('content')?.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+</script>
 
 <style>
   /* Version button: fixed top-right, left of language toggle */
@@ -118,7 +186,8 @@ const siteChangelog = [
     align-items: center;
   }
 
-  .home {
+  /* ─── Zone 1: Hero ─── */
+  .home-hero {
     position: relative;
     display: flex;
     align-items: flex-start;
@@ -162,38 +231,26 @@ const siteChangelog = [
     color: var(--text-light);
   }
 
-  .home-choices {
+  /* Scroll indicator */
+  .scroll-hint {
     position: absolute;
-    top: 60vh;
+    bottom: 2rem;
     left: 50%;
     transform: translateX(-50%);
-    display: flex;
-    justify-content: center;
-  }
-
-  .choice-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45em;
+    animation: bounce 2s ease-in-out infinite;
+    opacity: 0.35;
+    color: var(--text-light);
     text-decoration: none;
-    color: var(--color-journey);
-    transition: opacity 0.2s ease;
   }
 
-  .choice-link:hover {
-    opacity: 0.7;
+  .scroll-hint svg {
+    width: 1.5rem;
+    height: 1.5rem;
   }
 
-  .choice-icon {
-    width: 1.2em;
-    height: 1.2em;
-    flex-shrink: 0;
-  }
-
-  .choice-label {
-    font-size: var(--fs-lg);
-    font-weight: 500;
-    letter-spacing: 0.03em;
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
   }
 
   /* Secret heart (hidden entrance) */
@@ -214,6 +271,54 @@ const siteChangelog = [
   .secret-heart.revealed {
     color: #F0D7D7;
     opacity: 1;
+  }
+
+  /* ─── Zone 2: Content ─── */
+  .home-body {
+    min-height: auto;
+    padding-block-start: var(--space-xl);
+  }
+
+  /* --- Sections --- */
+  .section {
+    margin-bottom: var(--space-lg);
+  }
+
+  .section-label {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-light);
+    margin-bottom: var(--space-xs);
+  }
+
+  /* Accent colors */
+  .item--events .item-title { color: var(--color-rose); }
+  .item--dreamjob .item-title { color: var(--color-ds); }
+
+  /* Footer links */
+  .page-footer {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 0.5em;
+    margin-top: var(--space-xl);
+    font-size: var(--fs-xs);
+  }
+
+  .page-footer a {
+    color: var(--text);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .page-footer a:hover {
+    opacity: 0.5;
+  }
+
+  .page-footer .dot {
+    color: var(--text-light);
   }
 
 </style>
