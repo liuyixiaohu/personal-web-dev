@@ -107,7 +107,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   // --- Events page ---
   'home.events': { en: 'Bay Area Events', zh: '湾区活动' },
   'home.brand': { en: 'Brand Guidelines', zh: '品牌指南' },
-  'events.title': { en: 'Today\'s New Luma Events at SF Bay Area', zh: '今日新增 Luma 活动（旧金山湾区）' },
+  'events.title': { en: 'Today\'s Newly Added Luma Events in the Bay Area', zh: '今日新增 Luma 活动（旧金山湾区）' },
   'events.subtitlePre': { en: 'Only showing tech & AI events ', zh: '仅展示每日' },
   'events.subtitleHighlight': { en: 'newly', zh: '新增' },
   'events.subtitlePost': { en: ' added since the last daily check.', zh: '的科技与 AI 相关活动。' },
@@ -214,6 +214,14 @@ export const translations: Record<string, Record<Lang, string>> = {
   'brand.usage.textLight': { en: 'Subtle / decorative', zh: '装饰性文字' },
   'brand.usage.textMid': { en: 'Secondary text', zh: '次要文字' },
   'brand.usage.textPrimary': { en: 'Primary text', zh: '主要文字' },
+
+  // --- Feedback ---
+  'events.feedback': { en: 'Feedback', zh: '反馈' },
+  'events.feedbackTitle': { en: 'Any Suggestion? Pls!!!', zh: '有什么建议吗？求求了！！！' },
+  'events.feedbackPlaceholder': { en: 'Bugs, ideas, anything...', zh: '问题、建议、随便说说…' },
+  'events.feedbackSend': { en: 'Send', zh: '发送' },
+  'events.feedbackSent': { en: 'Thanks! Feedback sent.', zh: '谢谢！反馈已发送。' },
+  'events.feedbackError': { en: 'Failed to send. Try again?', zh: '发送失败，再试一次？' },
 
   // --- Language toggle button ---
   'lang.toggle': { en: '中', zh: 'EN' },

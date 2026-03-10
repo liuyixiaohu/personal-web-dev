@@ -30,8 +30,17 @@
   let searchQuery = $state<string>('');
 
   // --- Changelog ---
-  const VERSION = 'v0.9';
+  const VERSION = 'v1.0';
   const CHANGELOG = [
+    { version: 'v1.0',
+      why: 'Switched from showing all events to only daily new additions — less noise, more signal.',
+      changes: [
+        'Now shows only newly added events since the last daily check',
+        'Added subtitle explaining the page scope, plus a "Why?" explainer',
+        'Shows refresh schedule next to the last-checked timestamp',
+        'Filters out events that already started (tomorrow onward only)',
+        'Expanded event range from 1 week to several months ahead',
+      ]},
     { version: 'v0.9',
       why: 'Visual polish: better icons, tighter headings, cleaner layout.',
       changes: [
@@ -102,6 +111,30 @@
   ];
   let changelogOpen = $state(false);
   let whyOpen = $state(false);
+  let feedbackOpen = $state(false);
+  let feedbackSending = $state(false);
+  let feedbackSent = $state(false);
+  let feedbackError = $state(false);
+
+  async function handleFeedback(e: Event) {
+    e.preventDefault();
+    feedbackSending = true;
+    feedbackError = false;
+    const form = e.target as HTMLFormElement;
+    try {
+      const res = await fetch('https://formspree.io/f/xbdzgjpr', {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' },
+      });
+      if (!res.ok) throw new Error();
+      feedbackSent = true;
+    } catch {
+      feedbackError = true;
+    } finally {
+      feedbackSending = false;
+    }
+  }
 
   // --- Calendar (read-only) ---
   let filterHeight = $state(0);
@@ -294,6 +327,34 @@
           </div>
         {/if}
       </div>
+      <div class="feedback-wrap">
+        <button class="version-btn" onclick={() => { feedbackOpen = !feedbackOpen; feedbackSent = false; feedbackError = false; }}>
+          {t('events.feedback')}
+        </button>
+        {#if feedbackOpen}
+          <div class="changelog-backdrop" onclick={() => feedbackOpen = false} role="presentation"></div>
+          <div class="feedback-popup">
+            <div class="changelog-header">
+              <span class="changelog-title">{t('events.feedbackTitle')}</span>
+              <button class="changelog-close" onclick={() => feedbackOpen = false}>&times;</button>
+            </div>
+            {#if feedbackSent}
+              <p class="feedback-success">{t('events.feedbackSent')}</p>
+            {:else}
+              <form onsubmit={handleFeedback}>
+                <textarea name="message" required placeholder={t('events.feedbackPlaceholder')} rows="4" class="feedback-textarea"></textarea>
+                <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+                <button type="submit" class="feedback-submit" disabled={feedbackSending}>
+                  {feedbackSending ? '...' : t('events.feedbackSend')}
+                </button>
+              </form>
+              {#if feedbackError}
+                <p class="feedback-error-msg">{t('events.feedbackError')}</p>
+              {/if}
+            {/if}
+          </div>
+        {/if}
+      </div>
     </div>
 
     <p class="event-subtitle">
@@ -422,6 +483,86 @@
   .version-btn:hover {
     border-color: rgba(0, 0, 0, 0.25);
     color: var(--text);
+  }
+
+  .feedback-wrap {
+    position: relative;
+  }
+
+  .feedback-popup {
+    position: absolute;
+    top: calc(100% + 0.4rem);
+    right: 0;
+    z-index: 100;
+    width: min(18rem, calc(100vw - 2rem));
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    padding: 0.75rem;
+  }
+
+  @media (max-width: 480px) {
+    .feedback-popup {
+      position: fixed;
+      top: auto;
+      right: 1rem;
+      bottom: 1rem;
+      left: 1rem;
+      width: auto;
+    }
+  }
+
+  .feedback-textarea {
+    width: 100%;
+    font-family: inherit;
+    font-size: var(--fs-sm);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.5rem;
+    resize: vertical;
+    background: var(--bg);
+    color: var(--text);
+    box-sizing: border-box;
+  }
+
+  .feedback-textarea:focus {
+    outline: none;
+    border-color: var(--text-light);
+  }
+
+  .feedback-submit {
+    margin-top: 0.5rem;
+    font-family: inherit;
+    font-size: var(--fs-sm);
+    color: var(--text);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.3em 0.8em;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+
+  .feedback-submit:hover {
+    border-color: rgba(0, 0, 0, 0.25);
+  }
+
+  .feedback-submit:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  .feedback-success {
+    color: var(--color-ds-mid);
+    font-size: var(--fs-sm);
+    margin: 0.5rem 0 0;
+  }
+
+  .feedback-error-msg {
+    color: var(--color-pm);
+    font-size: var(--fs-xs);
+    margin: 0.4rem 0 0;
   }
 
   .changelog-backdrop {
