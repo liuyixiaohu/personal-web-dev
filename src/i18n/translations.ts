@@ -108,7 +108,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'home.events': { en: 'Bay Area Events', zh: '湾区活动' },
   'home.brand': { en: 'Brand Guidelines', zh: '品牌指南' },
   'events.title': { en: 'Today\'s Newly Added Luma Events in the Bay Area', zh: '今日新增 Luma 活动（旧金山湾区）' },
-  'events.subtitlePre': { en: 'Only showing tech & AI events ', zh: '仅展示每日' },
+  'events.subtitlePre': { en: 'Only showing Tech & AI events ', zh: '仅展示每日' },
   'events.subtitleHighlight': { en: 'newly', zh: '新增' },
   'events.subtitlePost': { en: ' added since the last daily check.', zh: '的科技与 AI 相关活动。' },
   'events.whyTitle': { en: 'Why show only newly added events?', zh: '为什么设计为只显示新增活动？' },
