@@ -51,12 +51,31 @@
     'events.dayThu', 'events.dayFri', 'events.daySat',
   ] as const;
 
-  // Generate 15-minute time slots: ['00:00', '00:15', ..., '23:45']
-  const TIME_SLOTS: string[] = [];
-  for (let h = 0; h < 24; h++) {
-    for (let m = 0; m < 60; m += 15) {
-      TIME_SLOTS.push(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`);
-    }
+  // Hour (0–23) and minute (00/15/30/45) options for time dropdowns
+  const HOURS = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, '0'));
+  const MINUTES = ['00', '15', '30', '45'];
+
+  // Decompose "HH:MM" strings into hour/minute parts
+  let startH = $derived(selectedTimeStart ? selectedTimeStart.split(':')[0] : '');
+  let startM = $derived(selectedTimeStart ? selectedTimeStart.split(':')[1] : '');
+  let endH = $derived(selectedTimeEnd ? selectedTimeEnd.split(':')[0] : '');
+  let endM = $derived(selectedTimeEnd ? selectedTimeEnd.split(':')[1] : '');
+
+  function setStartHour(h: string) {
+    if (!h) { onTimeStartChange(''); return; }
+    onTimeStartChange(`${h}:${startM || '00'}`);
+  }
+  function setStartMin(m: string) {
+    if (!startH) return;
+    onTimeStartChange(`${startH}:${m}`);
+  }
+  function setEndHour(h: string) {
+    if (!h) { onTimeEndChange(''); return; }
+    onTimeEndChange(`${h}:${endM || '00'}`);
+  }
+  function setEndMin(m: string) {
+    if (!endH) return;
+    onTimeEndChange(`${endH}:${m}`);
   }
 
   // --- Location collapse ---
@@ -97,7 +116,7 @@
 
   <!-- Location filter (multi-select, collapsible) -->
   {#if allLocations.length > 0}
-    <div class="filter-row filter-row--stacked">
+    <div class="filter-row">
       <span class="filter-label">{t('events.filterLocation')}</span>
       <div class="location-pills-wrap">
         <div class="filter-pills filter-pills--wrap"
@@ -136,36 +155,36 @@
     </div>
   </div>
 
-  <!-- Time range filter (dropdowns) -->
+  <!-- Time range filter (4 dropdowns: hour:min – hour:min) -->
   <div class="filter-row">
     <span class="filter-label">{t('events.filterTime')}</span>
     <div class="time-range">
-      <select
-        class="time-select"
-        value={selectedTimeStart}
-        onchange={(e) => onTimeStartChange((e.target as HTMLSelectElement).value)}
-      >
+      <select class="time-select" value={startH}
+        onchange={(e) => setStartHour((e.target as HTMLSelectElement).value)}>
         <option value="">{t('events.timeAny')}</option>
-        {#each TIME_SLOTS as slot}
-          <option value={slot}>{slot}</option>
-        {/each}
+        {#each HOURS as h}<option value={h}>{h}</option>{/each}
+      </select>
+      <span class="time-sep">:</span>
+      <select class="time-select" value={startM || '00'} disabled={!startH}
+        onchange={(e) => setStartMin((e.target as HTMLSelectElement).value)}>
+        {#each MINUTES as m}<option value={m}>{m}</option>{/each}
       </select>
       <span class="time-sep">–</span>
-      <select
-        class="time-select"
-        value={selectedTimeEnd}
-        onchange={(e) => onTimeEndChange((e.target as HTMLSelectElement).value)}
-      >
+      <select class="time-select" value={endH}
+        onchange={(e) => setEndHour((e.target as HTMLSelectElement).value)}>
         <option value="">{t('events.timeAny')}</option>
-        {#each TIME_SLOTS as slot}
-          <option value={slot}>{slot}</option>
-        {/each}
+        {#each HOURS as h}<option value={h}>{h}</option>{/each}
+      </select>
+      <span class="time-sep">:</span>
+      <select class="time-select" value={endM || '00'} disabled={!endH}
+        onchange={(e) => setEndMin((e.target as HTMLSelectElement).value)}>
+        {#each MINUTES as m}<option value={m}>{m}</option>{/each}
       </select>
     </div>
   </div>
 
   <!-- Sort (pills) -->
-  <div class="filter-row filter-row--stacked">
+  <div class="filter-row">
     <span class="filter-label">{t('events.sortBy')}</span>
     <div class="filter-pills">
       {#each [
