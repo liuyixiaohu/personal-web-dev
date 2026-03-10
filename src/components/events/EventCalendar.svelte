@@ -116,14 +116,14 @@
     user-select: none;
     border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 4px;
-    overflow: hidden;
   }
 
   .cal-corner {
     position: sticky;
     top: 0;
+    left: 0;
     background: var(--bg, #fff);
-    z-index: 1;
+    z-index: 2;
   }
 
   .cal-day-header {
@@ -150,6 +150,10 @@
     align-items: center;
     justify-content: flex-end;
     border-top: 1px solid rgba(0, 0, 0, 0.02);
+    position: sticky;
+    left: 0;
+    background: var(--bg, #fff);
+    z-index: 1;
   }
 
   .cal-time-label--hour {
