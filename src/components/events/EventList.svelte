@@ -317,14 +317,14 @@
     <div class="event-empty">
       <p>{t('events.noEvents')}</p>
       {#if updatedAt}
-        <p class="event-meta">{t('events.lastUpdated')}: {formatUpdatedAt(updatedAt, lang)}</p>
+        <p class="event-meta">{t('events.lastUpdated')}: {formatUpdatedAt(updatedAt, lang)} · {t('events.refreshNote')}</p>
       {/if}
     </div>
 
   {:else}
     {#if updatedAt}
       <div class="event-meta-bar">
-        <span class="event-updated">{t('events.lastUpdated')}: {formatUpdatedAt(updatedAt, lang)}</span>
+        <span class="event-updated">{t('events.lastUpdated')}: {formatUpdatedAt(updatedAt, lang)} · {t('events.refreshNote')}</span>
       </div>
     {/if}
 
