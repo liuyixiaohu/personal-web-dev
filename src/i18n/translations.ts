@@ -111,7 +111,7 @@ export const translations: Record<string, Record<Lang, string>> = {
 
   // --- Events page ---
   'home.events': { en: 'Bay Area Tech Events Monitor', zh: '湾区科技活动监测' },
-  'home.events.desc': { en: 'No more scrolling Luma until you question your life choices.', zh: '再也不用刷 Luma 刷到怀疑人生了。' },
+  'home.events.desc': { en: 'No more doomscrolling Luma into an existential crisis.', zh: '再也不用刷 Luma 刷到怀疑人生了。' },
   'home.brand': { en: 'Brand Guidelines', zh: '品牌指南' },
   'events.title': { en: 'Today\'s Newly Added Luma Events in the Bay Area', zh: '今日新增 Luma 活动（旧金山湾区）' },
   'events.subtitlePre': { en: 'Only showing Tech & AI events ', zh: '仅展示每日' },
