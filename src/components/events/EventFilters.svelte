@@ -1,11 +1,10 @@
 <script lang="ts">
-  import type { Lang } from '../../i18n/translations';
   import { t } from '../../i18n/langStore';
-  import { priceCount, locationCount, type LumaEvent } from './eventUtils';
 
   interface Props {
-    events: LumaEvent[];
     allLocations: string[];
+    locationCounts: Map<string, number>;
+    priceCounts: Map<string, number>;
     selectedLocations: Set<string>;
     selectedPrice: string | null;
     selectedDays: Set<number>;
@@ -13,7 +12,6 @@
     selectedTimeEnd: string;
     sortBy: string;
     searchQuery: string;
-    lang: Lang;
     onLocationToggle: (loc: string) => void;
     onPriceChange: (price: string | null) => void;
     onDayToggle: (day: number) => void;
@@ -25,8 +23,9 @@
   }
 
   let {
-    events,
     allLocations,
+    locationCounts,
+    priceCounts,
     selectedLocations,
     selectedPrice,
     selectedDays,
@@ -34,7 +33,6 @@
     selectedTimeEnd,
     sortBy,
     searchQuery,
-    lang,
     onLocationToggle,
     onPriceChange,
     onDayToggle,
@@ -108,7 +106,7 @@
           onclick={() => onPriceChange(selectedPrice === priceOpt ? null : priceOpt)}
         >
           {priceOpt === 'free-approval' ? t('events.filterFreeApproval') :
-           t('events.filterPaid')} <span class="pill-count">({priceCount(events, priceOpt)})</span>
+           t('events.filterPaid')} <span class="pill-count">({priceCounts.get(priceOpt) ?? 0})</span>
         </button>
       {/each}
     </div>
@@ -127,7 +125,7 @@
               class="pill"
               class:pill--active={selectedLocations.has(loc)}
               onclick={() => onLocationToggle(loc)}
-            >{loc} <span class="pill-count">({locationCount(events, loc)})</span></button>
+            >{loc} <span class="pill-count">({locationCounts.get(loc) ?? 0})</span></button>
           {/each}
         </div>
         {#if locationOverflows || locationExpanded}

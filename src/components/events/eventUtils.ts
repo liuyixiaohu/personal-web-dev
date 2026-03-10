@@ -19,6 +19,12 @@ export interface LumaEvent {
   price_currency: string | null;
   categories: string[];
   first_seen_at?: string;
+  // Pre-computed (set by enrichEvents)
+  _startMs?: number;
+  _dayOfWeek?: number;    // 0=Sun..6=Sat, in LA timezone
+  _timeMinutes?: number;  // minutes since midnight, in LA timezone
+  _dateKey?: string;       // YYYY-MM-DD in LA timezone
+  _strippedLocation?: string;
 }
 
 export interface EventData {
@@ -103,19 +109,40 @@ export function matchesPrice(event: LumaEvent, selectedPrice: string | null): bo
 }
 
 export function eventDateKey(event: LumaEvent): string {
-  const d = new Date(event.start_at);
-  const local = new Date(d.toLocaleString('en-US', { timeZone: TZ }));
-  return `${local.getFullYear()}-${String(local.getMonth() + 1).padStart(2, '0')}-${String(local.getDate()).padStart(2, '0')}`;
+  return event._dateKey!;
 }
 
-export function priceCount(events: LumaEvent[], opt: string): number {
-  return events.filter(e => {
-    if (opt === 'free-approval') return e.is_free || e.price_cents == null;
-    if (opt === 'paid') return !e.is_free && e.price_cents != null;
-    return true;
-  }).length;
+/** Pre-compute derived values once per event to avoid repeated Date parsing. */
+export function enrichEvents(events: LumaEvent[]): void {
+  for (const e of events) {
+    const d = new Date(e.start_at);
+    e._startMs = d.getTime();
+    const local = new Date(d.toLocaleString('en-US', { timeZone: TZ }));
+    e._dayOfWeek = local.getDay();
+    e._timeMinutes = local.getHours() * 60 + local.getMinutes();
+    e._dateKey = `${local.getFullYear()}-${String(local.getMonth() + 1).padStart(2, '0')}-${String(local.getDate()).padStart(2, '0')}`;
+    e._strippedLocation = stripState(e.location || '');
+  }
 }
 
-export function locationCount(events: LumaEvent[], loc: string): number {
-  return events.filter(e => stripState(e.location) === loc).length;
+/** Build location count map and sorted location list in a single pass. */
+export function buildLocationIndex(events: LumaEvent[]): { sorted: string[]; counts: Map<string, number> } {
+  const counts = new Map<string, number>();
+  for (const e of events) {
+    const loc = e._strippedLocation!;
+    if (loc) counts.set(loc, (counts.get(loc) ?? 0) + 1);
+  }
+  const sorted = [...counts.keys()].sort((a, b) => counts.get(b)! - counts.get(a)!);
+  return { sorted, counts };
+}
+
+/** Build price count map in a single pass. */
+export function buildPriceCounts(events: LumaEvent[]): Map<string, number> {
+  let freeApproval = 0;
+  let paid = 0;
+  for (const e of events) {
+    if (e.is_free || e.price_cents == null) freeApproval++;
+    if (!e.is_free && e.price_cents != null) paid++;
+  }
+  return new Map([['free-approval', freeApproval], ['paid', paid]]);
 }
