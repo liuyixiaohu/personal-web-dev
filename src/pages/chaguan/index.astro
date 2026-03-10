@@ -35,6 +35,10 @@ const areaI18n: Record<string, { titleKey: string; descKey: string; defaultTitle
         <span class="item-title" data-i18n="home.events">Bay Area Tech Events Monitor</span>
         <span class="item-desc" data-i18n="home.events.desc">No more doomscrolling Luma into an existential crisis.</span>
       </a>
+      <a href="/dream-job-monitor" class="item item--dreamjob">
+        <span class="item-title" data-i18n="home.dreamjob">Dream Job Monitor</span>
+        <span class="item-desc" data-i18n="home.dreamjob.desc">Fork it. Tell the AI your dream companies. Never miss a posting.</span>
+      </a>
     </section>
 
     <footer class="page-footer">
@@ -69,6 +73,7 @@ const areaI18n: Record<string, { titleKey: string; descKey: string; defaultTitle
 
   /* Accent colors */
   .item--events .item-title { color: var(--color-rose); }
+  .item--dreamjob .item-title { color: var(--color-ds); }
 
   /* Footer links */
   .page-footer {
