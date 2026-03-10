@@ -14,8 +14,9 @@ const areaI18n: Record<string, { titleKey: string; descKey: string; defaultTitle
     <h1 class="sr-only">Professional Portfolio | Kun Li</h1>
     <a href="/" class="back-link" data-i18n="nav.back">&larr; Back</a>
 
-    <!-- Core areas -->
+    <!-- Craft -->
     <section class="section">
+      <h2 class="section-label" data-i18n="pro.section.craft">Craft</h2>
       {professionalAreas.map((area) => {
         const i18n = areaI18n[area.slug];
         return (
@@ -27,20 +28,25 @@ const areaI18n: Record<string, { titleKey: string; descKey: string; defaultTitle
       })}
     </section>
 
-    <!-- Life Journey -->
+    <!-- Lab -->
     <section class="section">
-      <a href="/life-journey" class="item item--journey">
-        <span class="item-title" data-i18n="home.lifeJourney">Life Journey</span>
-      </a>
-    </section>
-
-    <!-- Extras -->
-    <section class="section">
+      <h2 class="section-label" data-i18n="pro.section.lab">Lab</h2>
       <a href="/events" class="item item--events">
         <span class="item-title" data-i18n="home.events">Bay Area Events</span>
       </a>
       <a href="/brand" class="item item--brand">
         <span class="item-title" data-i18n="home.brand">Brand Guidelines</span>
+      </a>
+    </section>
+
+    <!-- Trace -->
+    <section class="section">
+      <h2 class="section-label" data-i18n="pro.section.trace">Trace</h2>
+      <a href="/life-journey" class="item item--journey">
+        <span class="item-title" data-i18n="home.lifeJourney">Life Journey</span>
+      </a>
+      <a href="/special-thanks" class="item item--thanks">
+        <span class="item-title" data-i18n="home.specialThanks">Special Thanks</span>
       </a>
     </section>
 
@@ -57,9 +63,19 @@ const areaI18n: Record<string, { titleKey: string; descKey: string; defaultTitle
     margin-bottom: var(--space-lg);
   }
 
-  /* Core area accent colors applied via inline style from data */
+  .section-label {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-light);
+    margin-bottom: var(--space-xs);
+  }
+
+  /* Accent colors */
   .item--journey .item-title { color: var(--color-journey); }
   .item--events .item-title { color: var(--color-rose); }
   .item--brand .item-title { color: #8BAF9A; }
+  .item--thanks .item-title { color: var(--color-rose); }
 
 </style>

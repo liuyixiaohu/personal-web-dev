@@ -104,6 +104,11 @@ export const translations: Record<string, Record<Lang, string>> = {
     zh: '关于科勒的故事。一座拥有卓越工艺与设计传承的小镇。',
   },
 
+  // --- Professional section headings ---
+  'pro.section.craft': { en: 'Craft', zh: '吃饭的手艺活儿' },
+  'pro.section.lab': { en: 'Lab', zh: '一切都是为了摸鱼' },
+  'pro.section.trace': { en: 'Trace', zh: '每一步都算数儿' },
+
   // --- Events page ---
   'home.events': { en: 'Bay Area Events', zh: '湾区活动' },
   'home.brand': { en: 'Brand Guidelines', zh: '品牌指南' },
