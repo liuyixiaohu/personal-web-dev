@@ -24,6 +24,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   // --- Navigation ---
   'nav.back': { en: '\u2190 Back', zh: '\u2190 返回' },
   'nav.backToProfessional': { en: '\u2190 Back to Professional', zh: '\u2190 返回职业' },
+  'nav.backToChaguan': { en: '\u2190 Back to Chaguan', zh: '\u2190 返回茶馆' },
 
   // --- Professional page titles ---
   'professional.productMarketing': { en: 'Product Marketing', zh: '产品营销' },
@@ -107,7 +108,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   // --- Professional section headings ---
   'pro.section.craft': { en: 'Craft', zh: '吃饭的手艺活儿' },
   'pro.section.lab': { en: 'Lab', zh: '一切都是为了摸鱼' },
-  'pro.section.trace': { en: 'Trace', zh: '每一步都算数儿' },
+  'pro.section.trace': { en: 'Trace', zh: '每一步都算数' },
 
   // --- Events page ---
   'home.events': { en: 'Bay Area Events', zh: '湾区活动' },

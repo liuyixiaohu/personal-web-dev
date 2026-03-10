@@ -13,7 +13,7 @@ const { title, description, color, i18nKey } = Astro.props;
 
 <BaseLayout title={`${title} | Kun Li`} description={description}>
   <main class="page grid-page">
-    <a href="/professional" class="back-link" data-i18n="nav.backToProfessional">&larr; Back to Professional</a>
+    <a href="/chaguan" class="back-link" data-i18n="nav.backToChaguan">&larr; Back to Chaguan</a>
     <h1 data-i18n={i18nKey} style={`color: ${color}`}>{title}</h1>
     <slot>
       <p class="placeholder" data-i18n="common.comingSoon">Content coming soon...</p>
