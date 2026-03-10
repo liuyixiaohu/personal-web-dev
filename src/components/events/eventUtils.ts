@@ -88,49 +88,6 @@ export function locationDisplay(event: LumaEvent): string {
   return stripState(event.location || '');
 }
 
-// --- Calendar helpers ---
-export function toLocalSlotKey(iso: string): string {
-  const d = new Date(iso);
-  const local = new Date(d.toLocaleString('en-US', { timeZone: TZ }));
-  const y = local.getFullYear();
-  const m = String(local.getMonth() + 1).padStart(2, '0');
-  const day = String(local.getDate()).padStart(2, '0');
-  const h = String(local.getHours()).padStart(2, '0');
-  const min = local.getMinutes() < 30 ? '00' : '30';
-  return `${y}-${m}-${day}T${h}:${min}`;
-}
-
-export function getEventSlots(event: LumaEvent): string[] {
-  const slots: string[] = [];
-  const start = new Date(new Date(event.start_at).toLocaleString('en-US', { timeZone: TZ }));
-  const end = new Date(new Date(event.end_at).toLocaleString('en-US', { timeZone: TZ }));
-  const cursor = new Date(start);
-  cursor.setMinutes(cursor.getMinutes() < 30 ? 0 : 30, 0, 0);
-  while (cursor < end) {
-    const y = cursor.getFullYear();
-    const m = String(cursor.getMonth() + 1).padStart(2, '0');
-    const d = String(cursor.getDate()).padStart(2, '0');
-    const h = String(cursor.getHours()).padStart(2, '0');
-    const min = String(cursor.getMinutes()).padStart(2, '0');
-    slots.push(`${y}-${m}-${d}T${h}:${min}`);
-    cursor.setMinutes(cursor.getMinutes() + 30);
-  }
-  return slots;
-}
-
-export function formatDayHeader(dayStr: string, lang: Lang): string {
-  const [y, m, d] = dayStr.split('-').map(Number);
-  const date = new Date(y, m - 1, d);
-  const wk = date.toLocaleDateString(locale(lang), { weekday: 'short' });
-  const mon = date.toLocaleDateString(locale(lang), { month: 'short' });
-  return `${wk}, ${mon} ${d}`;
-}
-
-export function formatTimeLabel(time: string): string {
-  const h = parseInt(time.split(':')[0], 10);
-  return h === 12 ? 'Noon' : `${h}`;
-}
-
 export function formatDateGroup(dateKey: string, lang: Lang): string {
   const [y, m, d] = dateKey.split('-').map(Number);
   const date = new Date(y, m - 1, d);

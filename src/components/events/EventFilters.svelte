@@ -8,11 +8,17 @@
     allLocations: string[];
     selectedLocations: Set<string>;
     selectedPrice: string | null;
+    selectedDays: Set<number>;
+    selectedTimeStart: string;
+    selectedTimeEnd: string;
     sortBy: string;
     searchQuery: string;
     lang: Lang;
     onLocationToggle: (loc: string) => void;
     onPriceChange: (price: string | null) => void;
+    onDayToggle: (day: number) => void;
+    onTimeStartChange: (v: string) => void;
+    onTimeEndChange: (v: string) => void;
     onSortChange: (sort: string) => void;
     onSearchChange: (query: string) => void;
     onClear: () => void;
@@ -23,15 +29,35 @@
     allLocations,
     selectedLocations,
     selectedPrice,
+    selectedDays,
+    selectedTimeStart,
+    selectedTimeEnd,
     sortBy,
     searchQuery,
     lang,
     onLocationToggle,
     onPriceChange,
+    onDayToggle,
+    onTimeStartChange,
+    onTimeEndChange,
     onSortChange,
     onSearchChange,
     onClear,
   }: Props = $props();
+
+  // Day-of-week labels (0=Sun ... 6=Sat)
+  const DAY_KEYS = [
+    'events.daySun', 'events.dayMon', 'events.dayTue', 'events.dayWed',
+    'events.dayThu', 'events.dayFri', 'events.daySat',
+  ] as const;
+
+  // Generate 15-minute time slots: ['00:00', '00:15', ..., '23:45']
+  const TIME_SLOTS: string[] = [];
+  for (let h = 0; h < 24; h++) {
+    for (let m = 0; m < 60; m += 15) {
+      TIME_SLOTS.push(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`);
+    }
+  }
 
   // --- Location collapse ---
   let locationExpanded = $state(false);
@@ -45,7 +71,9 @@
   });
 
   let hasActiveFilters = $derived(
-    selectedLocations.size > 0 || selectedPrice !== null || searchQuery.trim() !== ''
+    selectedLocations.size > 0 || selectedPrice !== null ||
+    selectedDays.size > 0 || selectedTimeStart !== '' || selectedTimeEnd !== '' ||
+    searchQuery.trim() !== ''
   );
 </script>
 
@@ -93,6 +121,48 @@
       </div>
     </div>
   {/if}
+
+  <!-- Day-of-week filter (multi-select pills) -->
+  <div class="filter-row">
+    <span class="filter-label">{t('events.filterDay')}</span>
+    <div class="filter-pills">
+      {#each DAY_KEYS as dayKey, i}
+        <button
+          class="pill"
+          class:pill--active={selectedDays.has(i)}
+          onclick={() => onDayToggle(i)}
+        >{t(dayKey)}</button>
+      {/each}
+    </div>
+  </div>
+
+  <!-- Time range filter (dropdowns) -->
+  <div class="filter-row">
+    <span class="filter-label">{t('events.filterTime')}</span>
+    <div class="time-range">
+      <select
+        class="time-select"
+        value={selectedTimeStart}
+        onchange={(e) => onTimeStartChange((e.target as HTMLSelectElement).value)}
+      >
+        <option value="">{t('events.timeAny')}</option>
+        {#each TIME_SLOTS as slot}
+          <option value={slot}>{slot}</option>
+        {/each}
+      </select>
+      <span class="time-sep">–</span>
+      <select
+        class="time-select"
+        value={selectedTimeEnd}
+        onchange={(e) => onTimeEndChange((e.target as HTMLSelectElement).value)}
+      >
+        <option value="">{t('events.timeAny')}</option>
+        {#each TIME_SLOTS as slot}
+          <option value={slot}>{slot}</option>
+        {/each}
+      </select>
+    </div>
+  </div>
 
   <!-- Sort (pills) -->
   <div class="filter-row filter-row--stacked">
@@ -271,6 +341,33 @@
   .search-input::placeholder {
     color: var(--text-light);
     opacity: 0.5;
+  }
+
+  .time-range {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .time-select {
+    font-family: inherit;
+    font-size: var(--fs-xs);
+    padding: 0.2em 0.4em;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.12s;
+  }
+
+  .time-select:focus {
+    border-color: rgba(0, 0, 0, 0.25);
+  }
+
+  .time-sep {
+    color: var(--text-light);
   }
 
   /* Chinese font overrides */
