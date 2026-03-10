@@ -108,11 +108,11 @@ const siteChangelog = [
         </div>
       </div>
 
-      <a href="#content" class="scroll-hint" aria-hidden="true">
+      <button class="scroll-hint" aria-label="Scroll to content">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="6 9 12 15 18 9"/>
         </svg>
-      </a>
+      </button>
     </section>
 
     <!-- Zone 2: Content — uses grid-page for 36rem content track -->
@@ -155,13 +155,8 @@ const siteChangelog = [
 </BaseLayout>
 
 <script>
-  // Smooth scroll for the scroll-hint chevron
-  document.addEventListener('click', (e) => {
-    const hint = (e.target as HTMLElement).closest('.scroll-hint');
-    if (hint) {
-      e.preventDefault();
-      document.getElementById('content')?.scrollIntoView({ behavior: 'smooth' });
-    }
+  document.querySelector('.scroll-hint')?.addEventListener('click', () => {
+    document.getElementById('content')?.scrollIntoView({ behavior: 'smooth' });
   });
 </script>
 
@@ -225,23 +220,31 @@ const siteChangelog = [
   /* Scroll indicator */
   .scroll-hint {
     position: absolute;
-    bottom: 2rem;
+    bottom: 2.5rem;
     left: 50%;
     transform: translateX(-50%);
     animation: bounce 2s ease-in-out infinite;
-    opacity: 0.35;
+    opacity: 0.5;
     color: var(--text-light);
-    text-decoration: none;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+
+  .scroll-hint:hover {
+    opacity: 0.8;
   }
 
   .scroll-hint svg {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 2rem;
+    height: 2rem;
   }
 
   @keyframes bounce {
     0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(6px); }
+    50% { transform: translateX(-50%) translateY(8px); }
   }
 
   /* Secret heart (hidden entrance) */
