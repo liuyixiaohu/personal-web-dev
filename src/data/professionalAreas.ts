@@ -4,6 +4,7 @@ export interface ProfessionalArea {
   subtitle: string;
   description: string;
   color: string;
+  comingDate?: string;   // temporary: e.g. '3.12' — remove once page is live
   i18n: {
     title: string;       // detail page heading (e.g., 'craft.pm.title')
     cardTitle: string;    // homepage card title (e.g., 'craft.pm')
@@ -18,6 +19,7 @@ export const professionalAreas: ProfessionalArea[] = [
     subtitle: 'Nailed the positioning. Then the product pivoted.',
     description: "Kun Li's product marketing work: strategy, go-to-market, and growth.",
     color: 'var(--color-pm)',
+    comingDate: '3.12',
     i18n: {
       title: 'craft.pm.title',
       cardTitle: 'craft.pm',
@@ -30,6 +32,7 @@ export const professionalAreas: ProfessionalArea[] = [
     subtitle: 'Presented findings to leadership. They went with their gut.',
     description: "Kun Li's data science portfolio: analytics, modeling, and insights.",
     color: 'var(--color-ds)',
+    comingDate: '3.14',
     i18n: {
       title: 'craft.ds.title',
       cardTitle: 'craft.ds',
@@ -42,6 +45,7 @@ export const professionalAreas: ProfessionalArea[] = [
     subtitle: 'After spending 3 hours adjusting a gradient. The client said, "looks the same." It was not.',
     description: "Kun Li's visual design work: UI, branding, and creative direction.",
     color: 'var(--color-visual)',
+    comingDate: '3.16',
     i18n: {
       title: 'craft.visual.title',
       cardTitle: 'craft.visual',

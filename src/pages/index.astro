@@ -125,6 +125,7 @@ const siteChangelog = [
           <a href={`/${area.slug}`} class="item">
             <span class="item-title" style={`color: ${area.color}`} data-i18n={area.i18n.cardTitle}>{area.title}</span>
             <span class="item-desc" data-i18n={area.i18n.cardDesc}>{area.subtitle}</span>
+            {area.comingDate && <span class="coming-date">{area.comingDate}</span>}
           </a>
         ))}
       </section>
@@ -283,6 +284,16 @@ const siteChangelog = [
   .home-body {
     min-height: auto;
     padding-block-start: var(--space-xl);
+  }
+
+  /* Temporary release dates */
+  .coming-date {
+    display: block;
+    font-size: 0.65rem;
+    color: var(--text-light);
+    opacity: 0.6;
+    margin-top: 0.15rem;
+    font-style: italic;
   }
 
   /* Accent colors */
