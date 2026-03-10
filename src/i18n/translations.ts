@@ -112,6 +112,8 @@ export const translations: Record<string, Record<Lang, string>> = {
   // --- Events page ---
   'home.events': { en: 'Bay Area Tech Events Monitor', zh: '湾区科技活动监测' },
   'home.events.desc': { en: 'No more doomscrolling Luma into an existential crisis.', zh: '再也不用刷 Luma 刷到怀疑人生了。' },
+  'home.dreamjob': { en: 'Dream Job Monitor', zh: '理想工作监控' },
+  'home.dreamjob.desc': { en: 'Fork it. Tell the AI your dream companies. Never miss a posting.', zh: 'Fork 后让 AI 帮你配置。再也不怕错过心仪的岗位。' },
   'home.brand': { en: 'Brand Guidelines', zh: '品牌指南' },
   'events.title': { en: 'Today\'s Newly Added Luma Events in the Bay Area', zh: '今日新增 Luma 活动（旧金山湾区）' },
   'events.subtitlePre': { en: 'Only showing Tech & AI events ', zh: '仅展示每日' },
@@ -242,6 +244,35 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.timeFrom': { en: 'From', zh: '从' },
   'events.timeTo': { en: 'To', zh: '到' },
   'events.timeAny': { en: 'Any', zh: '不限' },
+
+  // --- Dream Job Monitor page ---
+  'djm.title': { en: 'Dream Job Monitor', zh: '理想工作监控' },
+  'djm.subtitle': { en: 'An open-source seed you fork, then tell AI what to watch.', zh: '一个开源种子项目：fork 后让 AI 帮你配置监控。' },
+  'djm.section.what': { en: 'What Is This', zh: '这是什么' },
+  'djm.what.p1': {
+    en: 'Everyone\'s dream companies are different. Instead of editing config files, you fork this repo, open it in Claude Code or Codex, say "kickoff", and the AI sets everything up through conversation.',
+    zh: '每个人的理想公司都不一样。你只需 fork 这个仓库，在 Claude Code 或 Codex 中打开，输入「kickoff」，AI 就会通过对话帮你完成所有配置。',
+  },
+  'djm.what.p2': {
+    en: 'Once deployed, it checks career pages daily and creates a GitHub Issue whenever new matching positions appear.',
+    zh: '部署完成后，它会每天检查职位页面，一旦发现新的匹配岗位，就会自动创建 GitHub Issue 通知你。',
+  },
+  'djm.section.how': { en: 'How It Works', zh: '工作原理' },
+  'djm.pipe.fetch': { en: 'Fetch', zh: '获取' },
+  'djm.pipe.filter': { en: 'Filter', zh: '筛选' },
+  'djm.pipe.diff': { en: 'Diff', zh: '对比' },
+  'djm.pipe.notify': { en: 'Notify', zh: '通知' },
+  'djm.how.body': {
+    en: 'Pulls job listings from 9 ATS platforms via public APIs, filters by your keywords, diffs against previous snapshots, and creates a GitHub Issue with new matches. Runs daily via GitHub Actions.',
+    zh: '通过公开 API 从 9 个 ATS 平台获取职位列表，按关键词筛选，与历史快照对比找出新增岗位，然后创建 GitHub Issue。每天通过 GitHub Actions 自动运行。',
+  },
+  'djm.section.quickstart': { en: 'Quick Start', zh: '快速开始' },
+  'djm.step1': { en: 'Fork the repo on GitHub', zh: '在 GitHub 上 fork 仓库' },
+  'djm.step2': { en: 'Open in Claude Code or Codex, say "kickoff"', zh: '在 Claude Code 或 Codex 中打开，输入「kickoff」' },
+  'djm.step3': { en: 'AI asks your companies, roles, and locations', zh: 'AI 会询问你的目标公司、职位和地点' },
+  'djm.step4': { en: 'Push to GitHub — Actions runs daily at 8 PM PST', zh: '推送到 GitHub — Actions 每天太平洋时间晚 8 点自动运行' },
+  'djm.section.platforms': { en: 'Supported Platforms', zh: '支持的平台' },
+  'djm.cta': { en: 'View on GitHub', zh: '在 GitHub 上查看' },
 
   // --- Language toggle button ---
   'lang.toggle': { en: '中', zh: 'EN' },
