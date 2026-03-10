@@ -9,9 +9,9 @@ const areaI18n: Record<string, { titleKey: string; descKey: string; defaultTitle
 };
 ---
 
-<BaseLayout title="Professional | Kun Li" description="Kun Li's professional expertise: Product Marketing, Data Science, and Visual Design.">
+<BaseLayout title="Chaguan | Kun Li" description="Kun Li's portfolio: Craft, Lab, and Trace — professional work, experiments, and life journey.">
   <main class="pro-page grid-page">
-    <h1 class="sr-only">Professional Portfolio | Kun Li</h1>
+    <h1 class="sr-only">Chaguan | Kun Li</h1>
     <a href="/" class="back-link" data-i18n="nav.back">&larr; Back</a>
 
     <!-- Craft -->
@@ -20,7 +20,7 @@ const areaI18n: Record<string, { titleKey: string; descKey: string; defaultTitle
       {professionalAreas.map((area) => {
         const i18n = areaI18n[area.slug];
         return (
-          <a href={`/professional/${area.slug}`} class="item">
+          <a href={`/chaguan/${area.slug}`} class="item">
             <span class="item-title" style={`color: ${area.color}`} data-i18n={i18n?.titleKey}>{i18n?.defaultTitle ?? area.title}</span>
             <span class="item-desc" data-i18n={i18n?.descKey}>{i18n?.defaultDesc ?? ''}</span>
           </a>
