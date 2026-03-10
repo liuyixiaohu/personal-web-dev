@@ -6,7 +6,6 @@ export type Lang = 'en' | 'zh';
 
 export const translations: Record<string, Record<Lang, string>> = {
   // --- Homepage ---
-  'home.professional': { en: 'Enter Chaguan', zh: '进入茶馆' },
   'home.specialThanks': { en: 'Special Thanks', zh: '特别感谢' },
   'home.lifeJourney': { en: 'Journey', zh: '旅程' },
 
@@ -23,8 +22,6 @@ export const translations: Record<string, Record<Lang, string>> = {
 
   // --- Navigation ---
   'nav.back': { en: '\u2190 Back', zh: '\u2190 返回' },
-  'nav.backToProfessional': { en: '\u2190 Back to Professional', zh: '\u2190 返回职业' },
-  'nav.backToChaguan': { en: '\u2190 Back to Chaguan', zh: '\u2190 返回茶馆' },
 
   // --- Professional page titles ---
   'professional.productMarketing': { en: 'Product Marketing', zh: '产品营销' },
