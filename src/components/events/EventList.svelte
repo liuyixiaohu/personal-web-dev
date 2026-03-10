@@ -131,9 +131,17 @@
       const data: EventData = await resp.json();
 
       const newSet = new Set(data.new_event_ids ?? []);
+      // Only show events starting tomorrow or later (user's local midnight)
+      const tomorrow = new Date();
+      tomorrow.setHours(0, 0, 0, 0);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const tomorrowMs = tomorrow.getTime();
+
+      const isFuture = (e: LumaEvent) => new Date(e.start_at).getTime() >= tomorrowMs;
+
       events = newSet.size > 0
-        ? data.events.filter(e => newSet.has(e.api_id))
-        : data.events;
+        ? data.events.filter(e => newSet.has(e.api_id) && isFuture(e))
+        : data.events.filter(isFuture);
       updatedAt = data.updated_at;
 
       const updatedTime = new Date(data.updated_at).getTime();
@@ -317,14 +325,14 @@
     <div class="event-empty">
       <p>{t('events.noEvents')}</p>
       {#if updatedAt}
-        <p class="event-meta">{t('events.lastUpdated')}: {formatUpdatedAt(updatedAt, lang)} · {t('events.refreshNote')}</p>
+        <p class="event-meta">{t('events.lastUpdated')}: {formatUpdatedAt(updatedAt, lang)} {t('events.refreshNote')}</p>
       {/if}
     </div>
 
   {:else}
     {#if updatedAt}
       <div class="event-meta-bar">
-        <span class="event-updated">{t('events.lastUpdated')}: {formatUpdatedAt(updatedAt, lang)} · {t('events.refreshNote')}</span>
+        <span class="event-updated">{t('events.lastUpdated')}: {formatUpdatedAt(updatedAt, lang)} {t('events.refreshNote')}</span>
       </div>
     {/if}
 
