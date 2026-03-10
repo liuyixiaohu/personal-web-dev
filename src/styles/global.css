@@ -157,6 +157,20 @@ a:hover {
   margin-top: 0.15rem;
 }
 
+/* Section : reusable content grouping */
+.section {
+  margin-bottom: var(--space-lg);
+}
+
+.section-label {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-light);
+  margin-bottom: var(--space-xs);
+}
+
 /* ============================================
    Content Grid System
    ============================================
