@@ -3,12 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ChangelogPopup from '../components/ChangelogPopup.astro';
 import { professionalAreas } from '../data/professionalAreas';
 
-const areaI18n: Record<string, { titleKey: string; descKey: string; defaultTitle: string; defaultDesc: string }> = {
-  'product-marketing': { titleKey: 'bar.drink.pm', descKey: 'bar.drink.pm.desc', defaultTitle: 'Product Marketing', defaultDesc: 'Nailed the positioning. Then the product pivoted.' },
-  'data-science': { titleKey: 'bar.drink.ds', descKey: 'bar.drink.ds.desc', defaultTitle: 'Data Science', defaultDesc: 'Presented findings to leadership. They went with their gut.' },
-  'visual-design': { titleKey: 'bar.drink.visual', descKey: 'bar.drink.visual.desc', defaultTitle: 'Visual Design', defaultDesc: 'After spending 3 hours adjusting a gradient. The client said, "looks the same." It was not.' },
-};
-
 const siteChangelog = [
   { version: 'v1.0',
     why: 'One page. No detours.',
@@ -127,15 +121,12 @@ const siteChangelog = [
       <!-- Craft -->
       <section class="section">
         <h2 class="section-label" data-i18n="pro.section.craft">Craft</h2>
-        {professionalAreas.map((area) => {
-          const i18n = areaI18n[area.slug];
-          return (
-            <a href={`/${area.slug}`} class="item">
-              <span class="item-title" style={`color: ${area.color}`} data-i18n={i18n?.titleKey}>{i18n?.defaultTitle ?? area.title}</span>
-              <span class="item-desc" data-i18n={i18n?.descKey}>{i18n?.defaultDesc ?? ''}</span>
-            </a>
-          );
-        })}
+        {professionalAreas.map((area) => (
+          <a href={`/${area.slug}`} class="item">
+            <span class="item-title" style={`color: ${area.color}`} data-i18n={area.i18n.cardTitle}>{area.title}</span>
+            <span class="item-desc" data-i18n={area.i18n.cardDesc}>{area.subtitle}</span>
+          </a>
+        ))}
       </section>
 
       <!-- Touch Fish! -->
@@ -269,7 +260,7 @@ const siteChangelog = [
   }
 
   .secret-heart.revealed {
-    color: #F0D7D7;
+    color: var(--bubble-pm);
     opacity: 1;
   }
 
@@ -277,20 +268,6 @@ const siteChangelog = [
   .home-body {
     min-height: auto;
     padding-block-start: var(--space-xl);
-  }
-
-  /* --- Sections --- */
-  .section {
-    margin-bottom: var(--space-lg);
-  }
-
-  .section-label {
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-light);
-    margin-bottom: var(--space-xs);
   }
 
   /* Accent colors */
