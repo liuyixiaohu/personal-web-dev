@@ -4,6 +4,13 @@ import ChangelogPopup from '../components/ChangelogPopup.astro';
 import { professionalAreas } from '../data/professionalAreas';
 
 const siteChangelog = [
+  { version: 'v1.1',
+    why: 'Small things that say someone lives here.',
+    changes: [
+      'Footer with identity and social links (LinkedIn, GitHub)',
+      'Temporary release dates on coming-soon pages',
+      'Scroll indicator and brand guide refinements',
+    ]},
   { version: 'v1.0',
     why: 'One page. No detours.',
     changes: [
@@ -21,73 +28,60 @@ const siteChangelog = [
   { version: 'v0.8',
     why: 'Less code, same pixels. Refactored for maintainability.',
     changes: [
-      'Centralized accent colors as CSS custom properties',
-      'Extracted shared layouts for journal and professional pages',
-      'Unified .back-link and .item styles into global.css',
-      'Replaced all hardcoded hex colors with design tokens',
+      'Design tokens: all hardcoded colors replaced with CSS custom properties',
+      'Shared layouts extracted for professional and journal pages',
       'Net ~300 lines removed through DRY refactoring',
     ]},
   { version: 'v0.7',
     why: 'People deserve their own pages.',
     changes: [
-      'Homepage now shows Enter Chaguan + Special Thanks',
-      'Added Special Thanks section with individual journal pages',
-      'Moved Events and Brand links into the professional page',
-      'Inline SVG icons replacing emojis site-wide',
-      'Per-heading line-heights for tighter typography',
-      'Events page updated to v0.9, Brand Guidelines to v0.4',
+      'Special Thanks section with individual journal pages',
+      'Homepage redesigned: Enter Chaguan + Special Thanks',
+      'Inline SVG icons and tighter per-heading typography',
     ]},
   { version: 'v0.6',
     why: 'A website without a design system is just vibes.',
     changes: [
-      'Named-line CSS Grid for consistent page layouts',
-      'Major Third (1.25x) modular type scale',
-      'Unified text colors and WCAG AA contrast',
-      'Brand Guidelines page (Brand v0.1)',
-      'Simplified fonts from 7 to 5 combinations',
+      'Design system: CSS Grid layout, modular type scale, unified colors',
+      'Brand Guidelines page documenting the visual language',
+      'Fonts simplified from 7 to 5 combinations',
     ]},
   { version: 'v0.5',
     why: 'Bay Area tech events were scattered everywhere. Fixed that.',
     changes: [
-      'Bay Area Events page with Luma integration (Events v0.1)',
-      'Daily auto-fetch of new events',
-      'Bilingual event listing in English and Chinese',
+      'Bay Area Events page with daily auto-fetched Luma listings',
+      'Bilingual event display in English and Chinese',
     ]},
   { version: 'v0.4',
     why: 'Every pin on the map is a story waiting to be told.',
     changes: [
       'Interactive D3 world map replacing the Three.js globe',
-      'Province and state boundaries appear on zoom',
-      'Animated pins with ripple effects',
-      'Full-screen map experience with zoom slider',
+      'Animated pins, zoom with province/state boundaries',
     ]},
   { version: 'v0.3',
     why: 'Tried a 3D robot bartender. It was fun. Then it wasn\'t.',
     changes: [
-      'Removed robot bartender, drink mixing, and bottle shelf experiments',
-      'Clean, text-based professional page with witty descriptions',
-      'Simplified homepage to greeting + two choices',
+      'Removed 3D robot bartender experiments',
+      'Clean text-based professional page and simplified homepage',
     ]},
   { version: 'v0.2',
     why: 'A website should greet you like an old friend.',
     changes: [
-      'Truman Show greeting as the homepage centerpiece',
-      'Time-aware messages and late-night cat visitors',
+      'Truman Show greeting with time-aware messages',
       'Enter Chaguan as the main navigation concept',
     ]},
   { version: 'v0.1',
     why: 'Everyone needs a corner of the internet to call home.',
     changes: [
-      'Personal website with interactive globe and city pins',
-      'Bilingual support: English and Chinese',
-      'Google Analytics tracking',
+      'Personal website with interactive globe and bilingual support',
+      'City pins marking places from the life journey',
     ]},
 ];
 ---
 
 <BaseLayout title="Kun Li - Product Marketing × Data Science × Design" description="I wasn't great at math or English, yet somehow I ended up a data scientist in the U.S., and eventually found my way back to expression.">
   <div class="site-version">
-    <ChangelogPopup version="v1.0" id="site" entries={siteChangelog} align="right" />
+    <ChangelogPopup version="v1.1" id="site" entries={siteChangelog} align="right" />
   </div>
 
   <main>
