@@ -8,7 +8,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   // --- Homepage ---
   'home.professional': { en: 'Enter Chaguan', zh: '进入茶馆' },
   'home.specialThanks': { en: 'Special Thanks', zh: '特别感谢' },
-  'home.lifeJourney': { en: 'Life Journey', zh: '人生旅途' },
+  'home.lifeJourney': { en: 'Journey', zh: '旅途' },
 
   // --- Greeting ---
   'greeting.lead': {
@@ -108,7 +108,6 @@ export const translations: Record<string, Record<Lang, string>> = {
   // --- Professional section headings ---
   'pro.section.craft': { en: 'Craft', zh: '吃饭的手艺活儿' },
   'pro.section.lab': { en: 'Lab', zh: '一切都是为了摸鱼' },
-  'pro.section.trace': { en: 'Trace', zh: '每一步都算数' },
 
   // --- Events page ---
   'home.events': { en: 'Bay Area Events', zh: '湾区活动' },

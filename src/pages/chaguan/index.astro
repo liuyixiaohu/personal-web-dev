@@ -34,21 +34,15 @@ const areaI18n: Record<string, { titleKey: string; descKey: string; defaultTitle
       <a href="/events" class="item item--events">
         <span class="item-title" data-i18n="home.events">Bay Area Events</span>
       </a>
-      <a href="/brand" class="item item--brand">
-        <span class="item-title" data-i18n="home.brand">Brand Guidelines</span>
-      </a>
     </section>
 
-    <!-- Trace -->
-    <section class="section">
-      <h2 class="section-label" data-i18n="pro.section.trace">Trace</h2>
-      <a href="/life-journey" class="item item--journey">
-        <span class="item-title" data-i18n="home.lifeJourney">Life Journey</span>
-      </a>
-      <a href="/special-thanks" class="item item--thanks">
-        <span class="item-title" data-i18n="home.specialThanks">Special Thanks</span>
-      </a>
-    </section>
+    <footer class="page-footer">
+      <a href="/life-journey" data-i18n="home.lifeJourney">Journey</a>
+      <span class="dot">&middot;</span>
+      <a href="/brand" data-i18n="home.brand">Brand Guidelines</a>
+      <span class="dot">&middot;</span>
+      <a href="/special-thanks" data-i18n="home.specialThanks">Special Thanks</a>
+    </footer>
 
   </main>
 </BaseLayout>
@@ -73,9 +67,30 @@ const areaI18n: Record<string, { titleKey: string; descKey: string; defaultTitle
   }
 
   /* Accent colors */
-  .item--journey .item-title { color: var(--color-journey); }
   .item--events .item-title { color: var(--color-rose); }
-  .item--brand .item-title { color: #8BAF9A; }
-  .item--thanks .item-title { color: var(--color-rose); }
+
+  /* Footer links */
+  .page-footer {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 0.5em;
+    margin-top: var(--space-xl);
+    font-size: var(--fs-xs);
+  }
+
+  .page-footer a {
+    color: var(--text);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .page-footer a:hover {
+    opacity: 0.5;
+  }
+
+  .page-footer .dot {
+    color: var(--text-light);
+  }
 
 </style>
