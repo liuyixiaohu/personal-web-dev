@@ -84,17 +84,25 @@
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const data: EventData = await resp.json();
 
-      const newSet = new Set(data.new_event_ids ?? []);
       // Only show events starting tomorrow or later (user's local midnight)
       const tomorrow = new Date();
       tomorrow.setHours(0, 0, 0, 0);
       tomorrow.setDate(tomorrow.getDate() + 1);
       const tomorrowMs = tomorrow.getTime();
-
       const isFuture = (e: LumaEvent) => new Date(e.start_at).getTime() >= tomorrowMs;
 
-      const filtered = newSet.size > 0
-        ? data.events.filter(e => newSet.has(e.api_id) && isFuture(e))
+      // Use first_seen_at timestamps (survives back-to-back runs)
+      // instead of new_event_ids (gets reset to [] on consecutive runs)
+      const prevCheck = data.previous_updated_at
+        ? new Date(data.previous_updated_at).getTime()
+        : 0;
+      const isNew = (e: LumaEvent) =>
+        prevCheck > 0 && e.first_seen_at
+          ? new Date(e.first_seen_at).getTime() >= prevCheck
+          : false;
+
+      const filtered = prevCheck > 0
+        ? data.events.filter(e => isNew(e) && isFuture(e))
         : data.events.filter(isFuture);
       enrichEvents(filtered);
       events = filtered;
