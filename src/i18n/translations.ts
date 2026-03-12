@@ -79,7 +79,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'home.events': { en: 'Bay Area Tech Events Monitor', zh: '湾区科技活动监测' },
   'home.events.desc': { en: 'No more doomscrolling Luma into an existential crisis.', zh: '再也不用刷 Luma 刷到怀疑人生了。' },
   'home.joblens': { en: 'JobLens', zh: 'JobLens' },
-  'home.joblens.desc': { en: 'Coming soon.', zh: '即将推出。' },
+  'home.joblens.desc': { en: 'A Chrome extension that filters LinkedIn jobs so you don\'t have to.', zh: '一个帮你过滤 LinkedIn 职位的 Chrome 扩展，省得你自己筛。' },
   'home.dreamjob': { en: 'Dream Job Monitor', zh: '理想工作监控' },
   'home.dreamjob.desc': { en: 'Fork it. Tell the AI your dream companies. Never miss a posting.', zh: 'Fork 后让 AI 帮你配置。再也不怕错过心仪的岗位。' },
   'home.brand': { en: 'Brand Guidelines', zh: '品牌指南' },
