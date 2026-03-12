@@ -128,8 +128,6 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.searchPlaceholder': { en: 'e.g. hackathon, google, etc', zh: '如：hackathon、google' },
   'events.excludeLabel': { en: 'Exclude the event including...', zh: '排除包含以下关键词的活动' },
   'events.excludePlaceholder': { en: 'in case you don\'t enjoy happy hour', zh: '万一你不喜欢 happy hour' },
-  'events.moreFilters': { en: 'More filters', zh: '更多筛选' },
-  'events.lessFilters': { en: 'Less filters', zh: '收起筛选' },
   'events.clearFilters': { en: 'Clear filters', zh: '清除筛选' },
   'events.noMatch': { en: 'No events match filters', zh: '没有匹配的活动' },
   'events.showMore': { en: 'More', zh: '更多' },
