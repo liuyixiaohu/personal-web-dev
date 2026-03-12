@@ -70,7 +70,7 @@
     <div class="modal-divider"></div>
 
     <h2 class="modal-title">{translatedTitle}</h2>
-    <p class="modal-body">{translatedStory}</p>
+    <p class="modal-body">{@html translatedStory}</p>
   </div>
 </div>
 
@@ -155,5 +155,19 @@
   .modal-body {
     color: var(--text-light);
     line-height: 1.7;
+    white-space: pre-line;
+  }
+
+  .modal-body :global(a) {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 2px;
+    transition: text-decoration-color 0.15s ease;
+  }
+
+  .modal-body :global(a:hover) {
+    text-decoration-color: var(--text);
+    opacity: 1;
   }
 </style>
