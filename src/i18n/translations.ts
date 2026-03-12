@@ -29,13 +29,13 @@ export const translations: Record<string, Record<Lang, string>> = {
   // --- Craft (professional areas) ---
   'craft.pm': { en: 'Product Marketing', zh: '产品营销' },
   'craft.pm.title': { en: 'Product Marketing', zh: '产品营销' },
-  'craft.pm.desc': { en: 'Nailed the positioning. Then the product pivoted.', zh: '找到一个完美的产品定位！然后产品转型了！' },
+  'craft.pm.desc': { en: 'Nailed the positioning. Then the product pivoted.', zh: '产品定位找到了! 产品转型了:)' },
   'craft.ds': { en: 'Data Science', zh: '数据科学' },
   'craft.ds.title': { en: 'Data Science', zh: '数据科学' },
-  'craft.ds.desc': { en: 'Presented findings to leadership. They went with their gut.', zh: '给上司汇报了分析结果。完事儿他们相信他们的"第六感"。' },
+  'craft.ds.desc': { en: 'Presented findings to leadership. They went with their gut.', zh: '汇报了分析结果后，领导团队最终选择相信自己的"第六感"。' },
   'craft.visual': { en: 'Visual Design', zh: '视觉设计' },
   'craft.visual.title': { en: 'Visual Design', zh: '视觉设计' },
-  'craft.visual.desc': { en: 'After spending 3 hours adjusting a gradient. The client said, "looks the same." It was not.', zh: '花三小时调了个渐变。客户说"看起来一样。"那能一样吗？' },
+  'craft.visual.desc': { en: 'After spending 3 hours adjusting a gradient. The client said, "looks the same." It was not.', zh: '客户说花三小时调的渐变看起来一样。我："？"' },
 
   // --- Common ---
   'common.comingSoon': { en: 'Content coming soon...', zh: '内容即将上线…' },
@@ -82,7 +82,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'home.events': { en: 'Bay Area Tech Events Monitor', zh: '湾区科技活动监测' },
   'home.events.desc': { en: 'No more doomscrolling Luma into an existential crisis.', zh: '再也不用刷 Luma 刷到怀疑人生了。' },
   'home.joblens': { en: 'JobLens', zh: 'JobLens' },
-  'home.joblens.desc': { en: 'A Chrome extension that filters LinkedIn jobs so you don\'t have to.', zh: '一个帮你过滤 LinkedIn 职位的 Chrome 扩展，省得你自己筛。' },
+  'home.joblens.desc': { en: 'A Chrome extension that filters LinkedIn jobs so you don\'t have to.', zh: '十个岗位九个是 reposted 的日子一去不复返。' },
   'home.dreamjob': { en: 'Dream Job Monitor', zh: '理想工作监控' },
   'home.dreamjob.desc': { en: 'Fork it. Tell the AI your dream companies. Never miss a posting.', zh: 'Fork 后让 AI 帮你配置。再也不怕错过心仪的岗位。' },
   'home.brand': { en: 'Brand Guidelines', zh: '品牌指南' },
@@ -255,6 +255,14 @@ export const translations: Record<string, Record<Lang, string>> = {
   'djm.example.notification': { en: 'Sample Notification', zh: '通知示例' },
   'djm.example.link': { en: 'View my setup →', zh: '查看我的配置 →' },
   'djm.cta': { en: 'View on GitHub', zh: '在 GitHub 上查看' },
+
+  // --- JobLens Feedback ---
+  'joblens.feedback': { en: 'Feedback', zh: '反馈' },
+  'joblens.feedbackTitle': { en: 'Any Suggestion? Pls!!!', zh: '有什么建议吗？求求了！！！' },
+  'joblens.feedbackPlaceholder': { en: 'Bugs, ideas, anything...', zh: '问题、建议、随便说说…' },
+  'joblens.feedbackSend': { en: 'Send', zh: '发送' },
+  'joblens.feedbackSent': { en: 'Thanks! Feedback sent.', zh: '谢谢！反馈已发送。' },
+  'joblens.feedbackError': { en: 'Failed to send. Try again?', zh: '发送失败，再试一次？' },
 
   // --- Language toggle button ---
   'lang.toggle': { en: '中', zh: 'EN' },

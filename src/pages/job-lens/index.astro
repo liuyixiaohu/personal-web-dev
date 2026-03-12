@@ -11,7 +11,26 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <img src="/images/joblens-icon.png" alt="JobLens icon" class="jl-logo" />
       <div>
         <h1>JobLens</h1>
-        <p class="jl-subtitle">A Chrome extension that filters LinkedIn jobs so you don't have to.</p>
+        <p class="jl-subtitle">
+          A Chrome extension that filters LinkedIn jobs so you don't have to.
+          <span class="jl-feedback-wrap">
+            <button class="jl-feedback-btn" id="jl-feedback-toggle" data-i18n="joblens.feedback">Feedback</button>
+            <div class="jl-feedback-backdrop" id="jl-feedback-backdrop" style="display:none"></div>
+            <div class="jl-feedback-popup" id="jl-feedback-popup" style="display:none">
+              <div class="jl-feedback-header">
+                <span class="jl-feedback-title" data-i18n="joblens.feedbackTitle">Any Suggestion? Pls!!!</span>
+                <button class="jl-feedback-close" id="jl-feedback-close">&times;</button>
+              </div>
+              <form id="jl-feedback-form">
+                <textarea name="message" required rows="4" class="jl-feedback-textarea" id="jl-feedback-textarea" placeholder="Bugs, ideas, anything..."></textarea>
+                <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+                <button type="submit" class="jl-feedback-submit" id="jl-feedback-submit" data-i18n="joblens.feedbackSend">Send</button>
+              </form>
+              <p class="jl-feedback-success" id="jl-feedback-success" style="display:none" data-i18n="joblens.feedbackSent">Thanks! Feedback sent.</p>
+              <p class="jl-feedback-error" id="jl-feedback-error" style="display:none" data-i18n="joblens.feedbackError">Failed to send. Try again?</p>
+            </div>
+          </span>
+        </p>
       </div>
     </header>
 
@@ -150,19 +169,74 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 <script>
   document.addEventListener('astro:page-load', () => {
-    const dialog = document.getElementById('jl-lightbox');
-    const lbImg = document.getElementById('jl-lightbox-img');
-    if (!dialog || !lbImg) return;
-
-    document.querySelectorAll('.jl-screenshot').forEach(img => {
-      img.addEventListener('click', () => {
-        lbImg.src = img.src;
-        lbImg.alt = img.alt;
-        dialog.showModal();
+    // --- Lightbox ---
+    const dialog = document.getElementById('jl-lightbox') as HTMLDialogElement | null;
+    const lbImg = document.getElementById('jl-lightbox-img') as HTMLImageElement | null;
+    if (dialog && lbImg) {
+      document.querySelectorAll('.jl-screenshot').forEach(img => {
+        img.addEventListener('click', () => {
+          lbImg.src = (img as HTMLImageElement).src;
+          lbImg.alt = (img as HTMLImageElement).alt;
+          dialog.showModal();
+        });
       });
-    });
+      dialog.addEventListener('click', () => dialog.close());
+    }
 
-    dialog.addEventListener('click', () => dialog.close());
+    // --- Feedback ---
+    const toggle = document.getElementById('jl-feedback-toggle');
+    const popup = document.getElementById('jl-feedback-popup');
+    const backdrop = document.getElementById('jl-feedback-backdrop');
+    const closeBtn = document.getElementById('jl-feedback-close');
+    const form = document.getElementById('jl-feedback-form') as HTMLFormElement | null;
+    const submitBtn = document.getElementById('jl-feedback-submit');
+    const successMsg = document.getElementById('jl-feedback-success');
+    const errorMsg = document.getElementById('jl-feedback-error');
+
+    function openFeedback() {
+      if (!popup || !backdrop) return;
+      popup.style.display = '';
+      backdrop.style.display = '';
+      if (successMsg) successMsg.style.display = 'none';
+      if (errorMsg) errorMsg.style.display = 'none';
+      if (form) form.style.display = '';
+    }
+
+    function closeFeedback() {
+      if (popup) popup.style.display = 'none';
+      if (backdrop) backdrop.style.display = 'none';
+    }
+
+    toggle?.addEventListener('click', () => {
+      if (popup?.style.display === 'none') openFeedback();
+      else closeFeedback();
+    });
+    backdrop?.addEventListener('click', closeFeedback);
+    closeBtn?.addEventListener('click', closeFeedback);
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!submitBtn || !form) return;
+      submitBtn.setAttribute('disabled', '');
+      submitBtn.textContent = '...';
+      if (errorMsg) errorMsg.style.display = 'none';
+
+      try {
+        const res = await fetch('https://formspree.io/f/xreykpga', {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        if (!res.ok) throw new Error();
+        form.style.display = 'none';
+        if (successMsg) successMsg.style.display = '';
+      } catch {
+        if (errorMsg) errorMsg.style.display = '';
+      } finally {
+        submitBtn.removeAttribute('disabled');
+        // Text restored by applyTranslations via data-i18n
+      }
+    });
   });
 </script>
 
@@ -446,5 +520,141 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     max-height: 90vh;
     border-radius: 8px;
     object-fit: contain;
+  }
+
+  /* Feedback button & popup */
+  .jl-feedback-wrap {
+    position: relative;
+    display: inline-block;
+  }
+
+  .jl-feedback-btn {
+    font-family: inherit;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    background: none;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    padding: 0.15em 0.5em;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+    line-height: 1.4;
+    vertical-align: middle;
+    margin-left: 0.3em;
+  }
+
+  .jl-feedback-btn:hover {
+    border-color: rgba(0, 0, 0, 0.25);
+    color: var(--text);
+  }
+
+  .jl-feedback-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+  }
+
+  .jl-feedback-popup {
+    position: absolute;
+    top: calc(100% + 0.4rem);
+    right: 0;
+    z-index: 100;
+    width: min(18rem, calc(100vw - 2rem));
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    padding: 0.75rem;
+  }
+
+  @media (max-width: 480px) {
+    .jl-feedback-popup {
+      position: fixed;
+      top: auto;
+      right: 1rem;
+      bottom: 1rem;
+      left: 1rem;
+      width: auto;
+    }
+  }
+
+  .jl-feedback-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .jl-feedback-title {
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .jl-feedback-close {
+    font-family: inherit;
+    font-size: 1.1rem;
+    background: none;
+    border: none;
+    color: var(--text-light);
+    cursor: pointer;
+    padding: 0 0.2em;
+    line-height: 1;
+  }
+
+  .jl-feedback-close:hover {
+    color: var(--text);
+  }
+
+  .jl-feedback-textarea {
+    width: 100%;
+    font-family: inherit;
+    font-size: var(--fs-sm);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.5rem;
+    resize: vertical;
+    background: var(--bg);
+    color: var(--text);
+    box-sizing: border-box;
+  }
+
+  .jl-feedback-textarea:focus {
+    outline: none;
+    border-color: var(--text-light);
+  }
+
+  .jl-feedback-submit {
+    margin-top: 0.5rem;
+    font-family: inherit;
+    font-size: var(--fs-sm);
+    color: var(--text);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.3em 0.8em;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+
+  .jl-feedback-submit:hover {
+    border-color: rgba(0, 0, 0, 0.25);
+  }
+
+  .jl-feedback-submit:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  .jl-feedback-success {
+    color: var(--color-ds-mid);
+    font-size: var(--fs-sm);
+    margin: 0.5rem 0 0;
+  }
+
+  .jl-feedback-error {
+    color: var(--color-pm);
+    font-size: var(--fs-xs);
+    margin: 0.4rem 0 0;
   }
 </style>
