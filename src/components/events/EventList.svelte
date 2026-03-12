@@ -29,6 +29,7 @@
   let selectedTimeEnd = $state<string>(loadPref('events.timeEnd', ''));
   let sortBy = $state<string>(loadPref('events.sort', 'time-asc'));
   let searchQuery = $state<string>('');
+  let excludeKeywords = $state<string[]>(loadPref<string[]>('events.exclude', []));
 
   let changelogOpen = $state(false);
   let whyOpen = $state(false);
@@ -75,6 +76,7 @@
     localStorage.setItem('events.days', JSON.stringify([...selectedDays]));
     localStorage.setItem('events.timeStart', JSON.stringify(selectedTimeStart));
     localStorage.setItem('events.timeEnd', JSON.stringify(selectedTimeEnd));
+    localStorage.setItem('events.exclude', JSON.stringify(excludeKeywords));
   });
 
   // --- Data fetching ---
@@ -144,6 +146,11 @@
         }
       }
       if (q && !e.name.toLowerCase().includes(q) && !e.host_names.some(h => h.toLowerCase().includes(q))) return false;
+      if (excludeKeywords.length > 0) {
+        const nameLower = e.name.toLowerCase();
+        const hostsLower = e.host_names.map(h => h.toLowerCase());
+        if (excludeKeywords.some(kw => nameLower.includes(kw) || hostsLower.some(h => h.includes(kw)))) return false;
+      }
       return true;
     });
 
@@ -206,6 +213,7 @@
     selectedTimeStart = '';
     selectedTimeEnd = '';
     searchQuery = '';
+    excludeKeywords = [];
   }
 </script>
 
@@ -321,6 +329,7 @@
       {selectedTimeEnd}
       {sortBy}
       {searchQuery}
+      {excludeKeywords}
       onLocationToggle={toggleLocation}
       onPriceChange={(p) => selectedPrice = p}
       onDayToggle={toggleDay}
@@ -328,6 +337,8 @@
       onTimeEndChange={(v) => selectedTimeEnd = v}
       onSortChange={(s) => sortBy = s}
       onSearchChange={(q) => searchQuery = q}
+      onAddExclude={(kw) => excludeKeywords = [...excludeKeywords, kw.toLowerCase().trim()]}
+      onRemoveExclude={(kw) => excludeKeywords = excludeKeywords.filter(k => k !== kw)}
       onClear={clearFilters}
     />
 
