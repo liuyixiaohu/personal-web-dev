@@ -194,16 +194,24 @@
   });
 
   // --- Filter callbacks ---
+  function pushFilter(filter_type: string, filter_value?: string | number | null) {
+    (window as any).dataLayer?.push({ event: 'filter_use', filter_type, filter_value: filter_value ?? undefined });
+  }
+
+  let searchDebounceTimer: ReturnType<typeof setTimeout> | undefined;
+
   function toggleLocation(loc: string) {
     const next = new Set(selectedLocations);
     if (next.has(loc)) next.delete(loc); else next.add(loc);
     selectedLocations = next;
+    pushFilter('location', loc);
   }
 
   function toggleDay(day: number) {
     const next = new Set(selectedDays);
     if (next.has(day)) next.delete(day); else next.add(day);
     selectedDays = next;
+    pushFilter('day', day);
   }
 
   function clearFilters() {
@@ -214,6 +222,7 @@
     selectedTimeEnd = '';
     searchQuery = '';
     excludeKeywords = [];
+    pushFilter('clear');
   }
 </script>
 
@@ -331,14 +340,14 @@
       {searchQuery}
       {excludeKeywords}
       onLocationToggle={toggleLocation}
-      onPriceChange={(p) => selectedPrice = p}
+      onPriceChange={(p) => { selectedPrice = p; pushFilter('price', p); }}
       onDayToggle={toggleDay}
-      onTimeStartChange={(v) => selectedTimeStart = v}
-      onTimeEndChange={(v) => selectedTimeEnd = v}
-      onSortChange={(s) => sortBy = s}
-      onSearchChange={(q) => searchQuery = q}
-      onAddExclude={(kw) => excludeKeywords = [...excludeKeywords, kw.toLowerCase().trim()]}
-      onRemoveExclude={(kw) => excludeKeywords = excludeKeywords.filter(k => k !== kw)}
+      onTimeStartChange={(v) => { selectedTimeStart = v; pushFilter('time_start', v); }}
+      onTimeEndChange={(v) => { selectedTimeEnd = v; pushFilter('time_end', v); }}
+      onSortChange={(s) => { sortBy = s; pushFilter('sort', s); }}
+      onSearchChange={(q) => { searchQuery = q; clearTimeout(searchDebounceTimer); if (q.trim()) searchDebounceTimer = setTimeout(() => pushFilter('search', q), 800); }}
+      onAddExclude={(kw) => { excludeKeywords = [...excludeKeywords, kw.toLowerCase().trim()]; pushFilter('exclude', kw); }}
+      onRemoveExclude={(kw) => { excludeKeywords = excludeKeywords.filter(k => k !== kw); pushFilter('remove_exclude', kw); }}
       onClear={clearFilters}
     />
 
