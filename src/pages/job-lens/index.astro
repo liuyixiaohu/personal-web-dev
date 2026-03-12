@@ -140,8 +140,31 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </a>
     </div>
 
+    <!-- Lightbox -->
+    <dialog class="jl-lightbox" id="jl-lightbox">
+      <img id="jl-lightbox-img" alt="" />
+    </dialog>
+
   </main>
 </BaseLayout>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const dialog = document.getElementById('jl-lightbox');
+    const lbImg = document.getElementById('jl-lightbox-img');
+    if (!dialog || !lbImg) return;
+
+    document.querySelectorAll('.jl-screenshot').forEach(img => {
+      img.addEventListener('click', () => {
+        lbImg.src = img.src;
+        lbImg.alt = img.alt;
+        dialog.showModal();
+      });
+    });
+
+    dialog.addEventListener('click', () => dialog.close());
+  });
+</script>
 
 <style>
   .jl-header {
@@ -249,6 +272,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     width: 100%;
     border-radius: 8px;
     border: 1px solid var(--border);
+    cursor: zoom-in;
+    transition: opacity 0.2s ease;
+  }
+
+  .jl-screenshot:hover {
+    opacity: 0.85;
   }
 
   .jl-screenshot-figure figcaption {
@@ -398,5 +427,24 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     height: 1.2em;
   }
 
+  /* Lightbox */
+  .jl-lightbox {
+    border: none;
+    background: none;
+    padding: 0;
+    max-width: 90vw;
+    max-height: 90vh;
+    cursor: zoom-out;
+  }
 
+  .jl-lightbox::backdrop {
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .jl-lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 8px;
+    object-fit: contain;
+  }
 </style>
