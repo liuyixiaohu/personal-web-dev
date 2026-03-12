@@ -78,6 +78,8 @@ export const translations: Record<string, Record<Lang, string>> = {
   // --- Events page ---
   'home.events': { en: 'Bay Area Tech Events Monitor', zh: '湾区科技活动监测' },
   'home.events.desc': { en: 'No more doomscrolling Luma into an existential crisis.', zh: '再也不用刷 Luma 刷到怀疑人生了。' },
+  'home.joblens': { en: 'JobLens', zh: 'JobLens' },
+  'home.joblens.desc': { en: 'Coming soon.', zh: '即将推出。' },
   'home.dreamjob': { en: 'Dream Job Monitor', zh: '理想工作监控' },
   'home.dreamjob.desc': { en: 'Fork it. Tell the AI your dream companies. Never miss a posting.', zh: 'Fork 后让 AI 帮你配置。再也不怕错过心仪的岗位。' },
   'home.brand': { en: 'Brand Guidelines', zh: '品牌指南' },
@@ -121,6 +123,8 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.calendar': { en: 'Event Distribution', zh: '活动分布' },
   'events.searchLabel': { en: 'Search Events or Hosts', zh: '搜索活动或主办方' },
   'events.searchPlaceholder': { en: 'e.g. hackathon, google, etc', zh: '如：hackathon、google' },
+  'events.excludeLabel': { en: 'Exclude the event including...', zh: '排除包含以下关键词的活动' },
+  'events.excludePlaceholder': { en: 'in case you don\'t enjoy happy hour', zh: '万一你不喜欢 happy hour' },
   'events.clearFilters': { en: 'Clear filters', zh: '清除筛选' },
   'events.noMatch': { en: 'No events match filters', zh: '没有匹配的活动' },
   'events.showMore': { en: 'More', zh: '更多' },

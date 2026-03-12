@@ -1,6 +1,13 @@
-export const VERSION = 'v1.0';
+export const VERSION = 'v1.1';
 
 export const CHANGELOG = [
+  { version: 'v1.1',
+    why: 'Sometimes you just want to hide all the happy hours.',
+    changes: [
+      'Exclude keywords filter: type a word, press Enter, and matching events disappear',
+      'Add multiple keywords as chips, click × to remove',
+      'Excluded keywords are saved between visits',
+    ]},
   { version: 'v1.0',
     why: 'Switched from showing all events to only daily new additions — less noise, more signal.',
     changes: [
