@@ -21,7 +21,10 @@ export const translations: Record<string, Record<Lang, string>> = {
   'greeting.source': { en: '\u2014 The Truman Show', zh: '\u2014\u2014《楚门的世界》' },
 
   // --- Navigation ---
-  'nav.back': { en: '\u2190 Back', zh: '\u2190 返回' },
+  'nav.back': { en: '\u2190 Home', zh: '\u2190 首页' },
+
+  // --- Life Journey ---
+  'journey.hint': { en: 'Click a pin to read the story', zh: '点击图钉查看故事' },
 
   // --- Craft (professional areas) ---
   'craft.pm': { en: 'Product Marketing', zh: '产品营销' },
@@ -125,6 +128,8 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.searchPlaceholder': { en: 'e.g. hackathon, google, etc', zh: '如：hackathon、google' },
   'events.excludeLabel': { en: 'Exclude the event including...', zh: '排除包含以下关键词的活动' },
   'events.excludePlaceholder': { en: 'in case you don\'t enjoy happy hour', zh: '万一你不喜欢 happy hour' },
+  'events.moreFilters': { en: 'More filters', zh: '更多筛选' },
+  'events.lessFilters': { en: 'Less filters', zh: '收起筛选' },
   'events.clearFilters': { en: 'Clear filters', zh: '清除筛选' },
   'events.noMatch': { en: 'No events match filters', zh: '没有匹配的活动' },
   'events.showMore': { en: 'More', zh: '更多' },
@@ -255,4 +260,5 @@ export const translations: Record<string, Record<Lang, string>> = {
 
   // --- Language toggle button ---
   'lang.toggle': { en: '中', zh: 'EN' },
+  'lang.tooltip': { en: 'Switch to Chinese', zh: 'Switch to English' },
 };
