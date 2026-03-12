@@ -6,8 +6,10 @@
   import { feature, mesh } from 'topojson-client';
   import { pins, type PinData } from './pins';
   import StoryModal from './StoryModal.svelte';
+  import { t } from '../../i18n/langStore';
 
   let selectedPin = $state<PinData | null>(null);
+  let hintVisible = $state(true);
   let countryPaths = $state<string[]>([]);
   let provincePath = $state('');
   let provincesLoaded = $state(false);
@@ -97,26 +99,20 @@
       .on('zoom', (e) => {
         transform = `translate(${e.transform.x},${e.transform.y}) scale(${e.transform.k})`;
         currentScale = e.transform.k;
+        hintVisible = false;
       });
 
     select(svgEl).call(zoomBehavior);
 
-    // Initial view: centered on Kansas, zoomed to 50% of slider range
-    const initialScale = Math.pow(MAX_ZOOM, 0.5);
-    const kansasCoords = projection([-98.5, 38.5]);
-    if (kansasCoords) {
-      const [px, py] = kansasCoords;
-      const tx = width / 2 - px * initialScale;
-      const ty = height / 2 - py * initialScale;
-      select(svgEl).call(
-        zoomBehavior.transform,
-        zoomIdentity.translate(tx, ty).scale(initialScale),
-      );
-    }
+    // Initial view: world overview (zoom 1) so all pins (China + US) are visible
+    // No transform needed — default projection already centers the world map
   });
 </script>
 
 <div class="map-container">
+  {#if hintVisible}
+    <p class="map-hint">{t('journey.hint')}</p>
+  {/if}
   <div class="zoom-controls">
     <button class="zoom-btn" onclick={zoomIn} aria-label="Zoom in">+</button>
     <input
@@ -189,6 +185,30 @@
   .map-container {
     position: relative;
     width: 100%;
+  }
+
+  .map-hint {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    translate: -50% 0;
+    z-index: 5;
+    font-size: var(--fs-xs, 0.78rem);
+    color: #4a6e5d;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 0.35em 0.9em;
+    border-radius: 4px;
+    border: 1px solid #b8d4ca;
+    pointer-events: none;
+    animation: hint-fade 4s ease-in-out forwards;
+    white-space: nowrap;
+  }
+
+  @keyframes hint-fade {
+    0%, 70% { opacity: 1; }
+    100% { opacity: 0; }
   }
 
   .world-map {

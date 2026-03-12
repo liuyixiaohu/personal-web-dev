@@ -3,16 +3,18 @@
 
   initLang();
   let label = $state(t('lang.toggle'));
+  let tooltip = $state(t('lang.tooltip'));
 
   $effect(() => {
     const unsub = subscribe(() => {
       label = t('lang.toggle');
+      tooltip = t('lang.tooltip');
     });
     return unsub;
   });
 </script>
 
-<button class="lang-toggle" onclick={() => toggleLang()} aria-label="Switch language">
+<button class="lang-toggle" onclick={() => toggleLang()} aria-label="Switch language" title={tooltip}>
   {label}
 </button>
 
