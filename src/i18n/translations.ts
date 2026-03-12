@@ -265,6 +265,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'joblens.feedbackError': { en: 'Failed to send. Try again?', zh: '发送失败，再试一次？' },
 
   // --- Workflow (visual-design page) ---
+  'workflow.sprintCadence': { en: 'Sprint Cadence', zh: 'Sprint Cadence' },
   'workflow.gantt': { en: 'Gantt Chart', zh: '甘特图' },
   'workflow.week1': { en: 'Week 1', zh: '第一周' },
   'workflow.week2': { en: 'Week 2', zh: '第二周' },
