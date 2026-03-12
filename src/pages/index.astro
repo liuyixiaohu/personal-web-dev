@@ -169,6 +169,34 @@ const siteChangelog = [
   document.querySelector('.scroll-hint')?.addEventListener('click', () => {
     document.getElementById('content')?.scrollIntoView({ behavior: 'smooth' });
   });
+
+  // --- Tracking: Craft card clicks ---
+  document.querySelectorAll('.section:first-of-type .item').forEach((el) => {
+    el.addEventListener('click', () => {
+      const slug = (el as HTMLAnchorElement).getAttribute('href')?.replace(/^\//, '') || '';
+      (window as any).dataLayer?.push({ event: 'craft_card_click', craft_area: slug });
+    });
+  });
+
+  // --- Tracking: Tool link clicks (Events, JobLens, Dream Job Monitor) ---
+  document.querySelector('.item--events')?.addEventListener('click', () => {
+    (window as any).dataLayer?.push({ event: 'tool_link_click', tool_name: 'events' });
+  });
+  document.querySelector('.item--joblens')?.addEventListener('click', () => {
+    (window as any).dataLayer?.push({ event: 'tool_link_click', tool_name: 'joblens' });
+  });
+  document.querySelector('.item--dreamjob')?.addEventListener('click', () => {
+    (window as any).dataLayer?.push({ event: 'tool_link_click', tool_name: 'dream-job-monitor' });
+  });
+
+  // --- Tracking: Footer social link clicks ---
+  document.querySelectorAll('.social-link').forEach((el) => {
+    el.addEventListener('click', () => {
+      const href = (el as HTMLAnchorElement).getAttribute('href') || '';
+      const platform = href.includes('linkedin') ? 'linkedin' : href.includes('github') ? 'github' : 'other';
+      (window as any).dataLayer?.push({ event: 'social_link_click', platform });
+    });
+  });
 </script>
 
 <style>
