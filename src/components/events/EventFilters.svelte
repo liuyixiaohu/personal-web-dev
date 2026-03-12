@@ -12,6 +12,7 @@
     selectedTimeEnd: string;
     sortBy: string;
     searchQuery: string;
+    excludeKeywords: string[];
     onLocationToggle: (loc: string) => void;
     onPriceChange: (price: string | null) => void;
     onDayToggle: (day: number) => void;
@@ -19,6 +20,8 @@
     onTimeEndChange: (v: string) => void;
     onSortChange: (sort: string) => void;
     onSearchChange: (query: string) => void;
+    onAddExclude: (keyword: string) => void;
+    onRemoveExclude: (keyword: string) => void;
     onClear: () => void;
   }
 
@@ -33,6 +36,7 @@
     selectedTimeEnd,
     sortBy,
     searchQuery,
+    excludeKeywords,
     onLocationToggle,
     onPriceChange,
     onDayToggle,
@@ -40,6 +44,8 @@
     onTimeEndChange,
     onSortChange,
     onSearchChange,
+    onAddExclude,
+    onRemoveExclude,
     onClear,
   }: Props = $props();
 
@@ -87,10 +93,23 @@
     }
   });
 
+  let excludeInput = $state('');
+
+  function handleExcludeKeydown(e: KeyboardEvent) {
+    if (e.key === 'Enter' && excludeInput.trim()) {
+      e.preventDefault();
+      const kw = excludeInput.trim().toLowerCase();
+      if (!excludeKeywords.includes(kw)) {
+        onAddExclude(kw);
+      }
+      excludeInput = '';
+    }
+  }
+
   let hasActiveFilters = $derived(
     selectedLocations.size > 0 || selectedPrice !== null ||
     selectedDays.size > 0 || selectedTimeStart !== '' || selectedTimeEnd !== '' ||
-    searchQuery.trim() !== ''
+    searchQuery.trim() !== '' || excludeKeywords.length > 0
   );
 </script>
 
@@ -216,6 +235,27 @@
       value={searchQuery}
       oninput={(e) => onSearchChange((e.target as HTMLInputElement).value)}
     />
+  </div>
+
+  <div class="filter-row filter-row--stacked">
+    <span class="filter-label">{t('events.excludeLabel')}</span>
+    <input
+      class="search-input"
+      type="text"
+      placeholder={t('events.excludePlaceholder')}
+      bind:value={excludeInput}
+      onkeydown={handleExcludeKeydown}
+    />
+    {#if excludeKeywords.length > 0}
+      <div class="exclude-chips">
+        {#each excludeKeywords as kw}
+          <span class="exclude-chip">
+            {kw}
+            <button class="exclude-chip-remove" onclick={() => onRemoveExclude(kw)}>&times;</button>
+          </span>
+        {/each}
+      </div>
+    {/if}
   </div>
 </div>
 
@@ -385,6 +425,40 @@
 
   .time-sep {
     color: var(--text-light);
+  }
+
+  .exclude-chips {
+    display: flex;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+  }
+
+  .exclude-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25em;
+    font-size: var(--fs-xs);
+    padding: 0.15em 0.45em;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.03);
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .exclude-chip-remove {
+    font-family: inherit;
+    font-size: 0.85em;
+    background: none;
+    border: none;
+    color: var(--text-light);
+    cursor: pointer;
+    padding: 0 0.1em;
+    line-height: 1;
+  }
+
+  .exclude-chip-remove:hover {
+    color: var(--text);
   }
 
   /* Chinese font overrides */
