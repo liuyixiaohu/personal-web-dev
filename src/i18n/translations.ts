@@ -38,47 +38,25 @@ export const translations: Record<string, Record<Lang, string>> = {
   'common.comingSoon': { en: 'Content coming soon...', zh: '内容即将上线…' },
 
   // --- Globe pin titles ---
-  'pin.jiaozhou.title': { en: 'Where it all began', zh: '一切开始的地方' },
-  'pin.qingdao.title': { en: 'Coastal memories', zh: '海边的记忆' },
-  'pin.weifang.title': { en: 'Kite city', zh: '风筝之城' },
-  'pin.hongkong.title': { en: 'East meets West', zh: '东西交汇' },
-  'pin.bangkok.title': { en: 'City of angels', zh: '天使之城' },
-  'pin.dubai.title': { en: 'Desert mirage', zh: '沙漠海市蜃楼' },
-  'pin.chicago.title': { en: 'The Windy City', zh: '风城' },
+  'pin.jiaozhou.title': { en: 'Where this wonderfully absurd life began', zh: '奇妙人生开始的地方' },
+  'pin.qingdao.title': { en: 'Qingdao & Tsingtao', zh: '青岛与青岛啤酒' },
+  'pin.shouguang.title': { en: 'Hometown of Chinese Vegetables', zh: '中国蔬菜之乡' },
   'pin.madison.title': { en: 'Between the lakes', zh: '湖间小城' },
   'pin.fairfield.title': { en: 'Golden state chapter', zh: '金州篇章' },
-  'pin.benicia.title': { en: 'By the strait', zh: '海峡之畔' },
   'pin.berkeley.title': { en: 'Ideas in bloom', zh: '思想之花' },
-  'pin.kohler.title': { en: 'A village of craft', zh: '匠心小镇' },
 
   // --- Globe pin stories (placeholder) ---
   'pin.jiaozhou.story': {
-    en: 'Placeholder story about Jiaozhou. The roots of a journey, quietly planted in this corner of Shandong.',
-    zh: '关于胶州的故事。旅途的根，在山东这个角落悄然扎下。',
+    en: 'One day in the last century, a person who was bad at English and absolutely terrible at math, even through high school, yet somehow ended up working as a Data Scientist in the USA was born.\nThat\'s me.\n<a href="https://baike.baidu.com/en/item/Jiaozhou%20City/997960" target="_blank" rel="noopener">Jiaozhou</a> is my real hometown, a place famously known for not being known... Which is why, if someone asks me where I\'m from, I always say Qingdao. (Technically, Jiaozhou is part of Qingdao. So it\'s not entirely a lie.)',
+    zh: '上世纪某一天，一个不怎么擅长英语、数学也有些烂，结果最终跑到一个说英文的国家做数据科学的我诞生了。<a href="https://baike.baidu.com/en/item/Jiaozhou%20City/997960" target="_blank" rel="noopener">胶州</a>是我真正的家乡，尽管有 5000 年的历史，但是很少有人听说过，所以有人问我是哪里人的时候，我总是说青岛的。（好在胶州确实属于青岛，所以也不全错。）',
   },
   'pin.qingdao.story': {
-    en: 'Placeholder story about Qingdao. Sea breeze, red roofs, and the taste of salt in the air.',
-    zh: '关于青岛的故事。海风、红瓦屋顶，空气中弥漫着咸味。',
+    en: '"I\'m from a seaside city known for beer and tourism, but I don\'t drink, don\'t like seafood, and don\'t know how to swim" is one of my classic ice breakers.\nThe most famous thing about <a href="https://baike.baidu.com/en/item/Qingdao%20City/985933" target="_blank" rel="noopener">Qingdao</a> is probably Tsingtao Beer, the green bottle that you can find at 99 Ranch and most Asian supermarkets.',
+    zh: '"我来自一个以啤酒和旅游闻名的海滨城市，但我不喝酒，不爱吃海鲜，也不会游泳"是我的经典破冰台词之一。<a href="https://baike.baidu.com/en/item/Qingdao%20City/985933" target="_blank" rel="noopener">青岛</a>最家喻户晓的东西大概是青岛啤酒，你都能在 99 Ranch 和大多数亚洲超市里找到。',
   },
-  'pin.weifang.story': {
-    en: 'Placeholder story about Weifang. A city where the sky is always full of color.',
-    zh: '关于潍坊的故事。一座天空永远五彩斑斓的城市。',
-  },
-  'pin.hongkong.story': {
-    en: 'Placeholder story about Hong Kong. Neon-lit streets, dim sum mornings, and a skyline that never sleeps.',
-    zh: '关于香港的故事。霓虹灯下的街道、早茶的清晨，以及永不沉睡的天际线。',
-  },
-  'pin.bangkok.story': {
-    en: 'Placeholder story about Bangkok. Golden temples, bustling markets, and the warmth of Thai hospitality.',
-    zh: '关于曼谷的故事。金色的寺庙、热闹的市场，以及泰国人的热情好客。',
-  },
-  'pin.dubai.story': {
-    en: 'Placeholder story about Dubai. A city rising from the sand, where ambition touches the clouds.',
-    zh: '关于迪拜的故事。一座从沙漠中崛起的城市，雄心壮志触及云端。',
-  },
-  'pin.chicago.story': {
-    en: 'Placeholder story about Chicago. Deep-dish pizza, jazz, and the wind off Lake Michigan.',
-    zh: '关于芝加哥的故事。深盘披萨、爵士乐，以及密歇根湖畔的风。',
+  'pin.shouguang.story': {
+    en: 'My college was called "Weifang University of Science and Technology." Still, it is actually located in <a href="https://baike.baidu.com/en/item/Shouguang%20City/1001909" target="_blank" rel="noopener">Shouguang</a>, a small city I\'d probably never have heard of if I hadn\'t gone to school there, as unknown to most people as Jiaozhou.\nHowever, it holds a lot of my firsts: first time taking a train alone, first time being so far from home (a two-hour drive, which honestly doesn\'t seem that far now... it takes similar time to drive from Berkeley to SFO in the morning, due to traffic), first time being away from home for four years, first time living like a "real adult," and the first time I dared to tell my family I was dating someone...',
+    zh: '尽管我大学的名字叫"潍坊科技学院"，但它的的确确在<a href="https://baike.baidu.com/en/item/Shouguang%20City/1001909" target="_blank" rel="noopener">寿光</a>，一个如果我不是在那里上学也许永远不会听说的小城市。尽管它对大多数人来说和胶州一样名不见经传，但却承载了我很多的第一次：第一次一个人坐火车、第一次一个人离家这么远（要两个小时的车程，现在看起来其实也还好...早晨从伯克利开到 SFO 也要一个半小时，多亏了堵车）、第一次离家四年这么久、第一次像一个"大人"一样生活、第一次敢对家里人公开自己恋爱了...',
   },
   'pin.madison.story': {
     en: 'Placeholder story about Madison. A city cradled between two lakes, full of ideas and energy.',
@@ -88,17 +66,9 @@ export const translations: Record<string, Record<Lang, string>> = {
     en: 'Placeholder story about Fairfield. Where the Central Valley meets the coastal hills.',
     zh: '关于费尔菲尔德的故事。中央谷地与海岸丘陵在此交汇。',
   },
-  'pin.benicia.story': {
-    en: 'Placeholder story about Benicia. A small waterfront town with big character.',
-    zh: '关于贝尼西亚的故事。一座个性鲜明的海滨小镇。',
-  },
   'pin.berkeley.story': {
     en: 'Placeholder story about Berkeley. Where free thinking and the Bay breeze go hand in hand.',
     zh: '关于伯克利的故事。自由思想与海湾微风相伴而行。',
-  },
-  'pin.kohler.story': {
-    en: 'Placeholder story about Kohler. A small village with an outsized legacy of craft and design.',
-    zh: '关于科勒的故事。一座拥有卓越工艺与设计传承的小镇。',
   },
 
   // --- Professional section headings ---
