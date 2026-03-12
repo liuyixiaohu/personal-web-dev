@@ -106,23 +106,6 @@
     }
   }
 
-  // --- Collapsible "more filters" ---
-  let filtersExpanded = $state(
-    typeof localStorage !== 'undefined' && localStorage.getItem('events.filtersExpanded') === 'true'
-  );
-
-  $effect(() => {
-    localStorage.setItem('events.filtersExpanded', String(filtersExpanded));
-  });
-
-  // Count of active filters hidden behind "More filters"
-  let hiddenActiveCount = $derived(
-    (selectedLocations.size > 0 ? 1 : 0) +
-    (selectedDays.size > 0 ? 1 : 0) +
-    (selectedTimeStart !== '' || selectedTimeEnd !== '' ? 1 : 0) +
-    (sortBy !== 'time-asc' ? 1 : 0)
-  );
-
   let hasActiveFilters = $derived(
     selectedLocations.size > 0 || selectedPrice !== null ||
     selectedDays.size > 0 || selectedTimeStart !== '' || selectedTimeEnd !== '' ||
@@ -131,156 +114,154 @@
 </script>
 
 <div class="filter-controls">
-  <!-- Search (always visible, top priority) -->
-  <div class="filter-row filter-row--stacked">
-    <span class="filter-label">{t('events.searchLabel')}</span>
-    <input
-      class="search-input"
-      type="text"
-      placeholder={t('events.searchPlaceholder')}
-      value={searchQuery}
-      oninput={(e) => onSearchChange((e.target as HTMLInputElement).value)}
-    />
-  </div>
-
-  <!-- Exclude (always visible) -->
-  <div class="filter-row filter-row--stacked">
-    <span class="filter-label">{t('events.excludeLabel')}</span>
-    <input
-      class="search-input"
-      type="text"
-      placeholder={t('events.excludePlaceholder')}
-      bind:value={excludeInput}
-      onkeydown={handleExcludeKeydown}
-    />
-    {#if excludeKeywords.length > 0}
-      <div class="exclude-chips">
-        {#each excludeKeywords as kw}
-          <span class="exclude-chip">
-            {kw}
-            <button class="exclude-chip-remove" onclick={() => onRemoveExclude(kw)}>&times;</button>
-          </span>
-        {/each}
-      </div>
-    {/if}
-  </div>
-
-  <!-- Price filter (always visible) -->
-  <div class="filter-row">
-    <span class="filter-label">{t('events.filterPrice')}</span>
-    <div class="filter-pills">
-      {#each ['free-approval', 'paid'] as priceOpt}
-        <button
-          class="pill"
-          class:pill--active={selectedPrice === priceOpt}
-          onclick={() => onPriceChange(selectedPrice === priceOpt ? null : priceOpt)}
-        >
-          {priceOpt === 'free-approval' ? t('events.filterFreeApproval') :
-           t('events.filterPaid')} <span class="pill-count">({priceCounts.get(priceOpt) ?? 0})</span>
-        </button>
-      {/each}
-    </div>
-  </div>
-
-  <!-- More filters toggle -->
-  <button class="more-filters-btn" onclick={() => filtersExpanded = !filtersExpanded}>
-    {filtersExpanded ? t('events.lessFilters') : t('events.moreFilters')}{#if !filtersExpanded && hiddenActiveCount > 0}<span class="active-badge">{hiddenActiveCount}</span>{/if}
-  </button>
-
-  <!-- Collapsible filters -->
-  {#if filtersExpanded}
-    <!-- Location filter (multi-select, collapsible) -->
-    {#if allLocations.length > 0}
-      <div class="filter-row">
-        <span class="filter-label">{t('events.filterLocation')}</span>
-        <div class="location-pills-wrap">
-          <div class="filter-pills filter-pills--wrap"
-               class:filter-pills--collapsed={!locationExpanded}
-               bind:this={locationPillsEl}>
-            {#each allLocations as loc}
-              <button
-                class="pill"
-                class:pill--active={selectedLocations.has(loc)}
-                onclick={() => onLocationToggle(loc)}
-              >{loc} <span class="pill-count">({locationCounts.get(loc) ?? 0})</span></button>
-            {/each}
+  <div class="filter-grid">
+    <!-- Left column: clickable pill filters -->
+    <div class="filter-col-pills">
+      <!-- Location filter (multi-select, collapsible) -->
+      {#if allLocations.length > 0}
+        <div class="filter-row">
+          <span class="filter-label">{t('events.filterLocation')}</span>
+          <div class="location-pills-wrap">
+            <div class="filter-pills filter-pills--wrap"
+                 class:filter-pills--collapsed={!locationExpanded}
+                 bind:this={locationPillsEl}>
+              {#each allLocations as loc}
+                <button
+                  class="pill"
+                  class:pill--active={selectedLocations.has(loc)}
+                  onclick={() => onLocationToggle(loc)}
+                >{loc} <span class="pill-count">({locationCounts.get(loc) ?? 0})</span></button>
+              {/each}
+            </div>
+            {#if locationOverflows || locationExpanded}
+              <button class="show-more-btn"
+                      class:show-more-btn--collapsed={!locationExpanded}
+                      onclick={() => locationExpanded = !locationExpanded}>
+                {locationExpanded ? t('events.showLess') : t('events.showMore')}
+              </button>
+            {/if}
           </div>
-          {#if locationOverflows || locationExpanded}
-            <button class="show-more-btn"
-                    class:show-more-btn--collapsed={!locationExpanded}
-                    onclick={() => locationExpanded = !locationExpanded}>
-              {locationExpanded ? t('events.showLess') : t('events.showMore')}
-            </button>
-          {/if}
+        </div>
+      {/if}
+
+      <!-- Day-of-week filter -->
+      <div class="filter-row">
+        <span class="filter-label">{t('events.filterDay')}</span>
+        <div class="filter-pills">
+          {#each DAY_KEYS as dayKey, i}
+            <button
+              class="pill"
+              class:pill--active={selectedDays.has(i)}
+              onclick={() => onDayToggle(i)}
+            >{t(dayKey)}</button>
+          {/each}
         </div>
       </div>
-    {/if}
 
-    <!-- Day-of-week filter (multi-select pills) -->
-    <div class="filter-row">
-      <span class="filter-label">{t('events.filterDay')}</span>
-      <div class="filter-pills">
-        {#each DAY_KEYS as dayKey, i}
-          <button
-            class="pill"
-            class:pill--active={selectedDays.has(i)}
-            onclick={() => onDayToggle(i)}
-          >{t(dayKey)}</button>
-        {/each}
+      <!-- Price filter -->
+      <div class="filter-row">
+        <span class="filter-label">{t('events.filterPrice')}</span>
+        <div class="filter-pills">
+          {#each ['free-approval', 'paid'] as priceOpt}
+            <button
+              class="pill"
+              class:pill--active={selectedPrice === priceOpt}
+              onclick={() => onPriceChange(selectedPrice === priceOpt ? null : priceOpt)}
+            >
+              {priceOpt === 'free-approval' ? t('events.filterFreeApproval') :
+               t('events.filterPaid')} <span class="pill-count">({priceCounts.get(priceOpt) ?? 0})</span>
+            </button>
+          {/each}
+        </div>
+      </div>
+
+      <!-- Time range filter -->
+      <div class="filter-row">
+        <span class="filter-label">{t('events.filterTime')}</span>
+        <div class="time-range">
+          <select class="time-select" value={startH}
+            onchange={(e) => setStartHour((e.target as HTMLSelectElement).value)}>
+            <option value="">{t('events.timeAny')}</option>
+            {#each HOURS as h}<option value={h}>{h}</option>{/each}
+          </select>
+          <span class="time-sep">:</span>
+          <select class="time-select" value={startM || '00'} disabled={!startH}
+            onchange={(e) => setStartMin((e.target as HTMLSelectElement).value)}>
+            {#each MINUTES as m}<option value={m}>{m}</option>{/each}
+          </select>
+          <span class="time-sep">–</span>
+          <select class="time-select" value={endH}
+            onchange={(e) => setEndHour((e.target as HTMLSelectElement).value)}>
+            <option value="">{t('events.timeAny')}</option>
+            {#each HOURS as h}<option value={h}>{h}</option>{/each}
+          </select>
+          <span class="time-sep">:</span>
+          <select class="time-select" value={endM || '00'} disabled={!endH}
+            onchange={(e) => setEndMin((e.target as HTMLSelectElement).value)}>
+            {#each MINUTES as m}<option value={m}>{m}</option>{/each}
+          </select>
+        </div>
+      </div>
+
+      <!-- Sort -->
+      <div class="filter-row">
+        <span class="filter-label">{t('events.sortBy')}</span>
+        <div class="filter-pills">
+          {#each [
+            ['time-asc', t('events.sortTimeAsc')],
+            ['time-desc', t('events.sortTimeDesc')],
+            ['alpha-asc', t('events.sortAlphaAsc')],
+            ['alpha-desc', t('events.sortAlphaDesc')],
+            ['guests-desc', t('events.sortGuestsDesc')],
+            ['guests-asc', t('events.sortGuestsAsc')],
+          ] as [val, label]}
+            <button
+              class="pill"
+              class:pill--active={sortBy === val}
+              onclick={() => onSortChange(val)}
+            >{label}</button>
+          {/each}
+        </div>
       </div>
     </div>
 
-    <!-- Time range filter (4 dropdowns: hour:min – hour:min) -->
-    <div class="filter-row">
-      <span class="filter-label">{t('events.filterTime')}</span>
-      <div class="time-range">
-        <select class="time-select" value={startH}
-          onchange={(e) => setStartHour((e.target as HTMLSelectElement).value)}>
-          <option value="">{t('events.timeAny')}</option>
-          {#each HOURS as h}<option value={h}>{h}</option>{/each}
-        </select>
-        <span class="time-sep">:</span>
-        <select class="time-select" value={startM || '00'} disabled={!startH}
-          onchange={(e) => setStartMin((e.target as HTMLSelectElement).value)}>
-          {#each MINUTES as m}<option value={m}>{m}</option>{/each}
-        </select>
-        <span class="time-sep">–</span>
-        <select class="time-select" value={endH}
-          onchange={(e) => setEndHour((e.target as HTMLSelectElement).value)}>
-          <option value="">{t('events.timeAny')}</option>
-          {#each HOURS as h}<option value={h}>{h}</option>{/each}
-        </select>
-        <span class="time-sep">:</span>
-        <select class="time-select" value={endM || '00'} disabled={!endH}
-          onchange={(e) => setEndMin((e.target as HTMLSelectElement).value)}>
-          {#each MINUTES as m}<option value={m}>{m}</option>{/each}
-        </select>
+    <!-- Right column: text inputs -->
+    <div class="filter-col-inputs">
+      <div class="filter-row filter-row--stacked">
+        <span class="filter-label">{t('events.searchLabel')}</span>
+        <input
+          class="search-input"
+          type="text"
+          placeholder={t('events.searchPlaceholder')}
+          value={searchQuery}
+          oninput={(e) => onSearchChange((e.target as HTMLInputElement).value)}
+        />
+      </div>
+
+      <div class="filter-row filter-row--stacked">
+        <span class="filter-label">{t('events.excludeLabel')}</span>
+        <input
+          class="search-input"
+          type="text"
+          placeholder={t('events.excludePlaceholder')}
+          bind:value={excludeInput}
+          onkeydown={handleExcludeKeydown}
+        />
+        {#if excludeKeywords.length > 0}
+          <div class="exclude-chips">
+            {#each excludeKeywords as kw}
+              <span class="exclude-chip">
+                {kw}
+                <button class="exclude-chip-remove" onclick={() => onRemoveExclude(kw)}>&times;</button>
+              </span>
+            {/each}
+          </div>
+        {/if}
       </div>
     </div>
+  </div>
 
-    <!-- Sort (pills) -->
-    <div class="filter-row">
-      <span class="filter-label">{t('events.sortBy')}</span>
-      <div class="filter-pills">
-        {#each [
-          ['time-asc', t('events.sortTimeAsc')],
-          ['time-desc', t('events.sortTimeDesc')],
-          ['alpha-asc', t('events.sortAlphaAsc')],
-          ['alpha-desc', t('events.sortAlphaDesc')],
-          ['guests-desc', t('events.sortGuestsDesc')],
-          ['guests-asc', t('events.sortGuestsAsc')],
-        ] as [val, label]}
-          <button
-            class="pill"
-            class:pill--active={sortBy === val}
-            onclick={() => onSortChange(val)}
-          >{label}</button>
-        {/each}
-      </div>
-    </div>
-  {/if}
-
-  <!-- Clear filters -->
+  <!-- Clear filters (full width below grid) -->
   {#if hasActiveFilters}
     <button class="clear-filters" onclick={onClear}>{t('events.clearFilters')}</button>
   {/if}
@@ -294,6 +275,38 @@
     flex-direction: column;
     gap: 0.5rem;
     font-size: var(--fs-xs);
+  }
+
+  .filter-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.75rem 1.5rem;
+    align-items: start;
+  }
+
+  .filter-col-pills {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+
+  .filter-col-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 14rem;
+    max-width: 20rem;
+  }
+
+  /* Stack to single column on narrow screens */
+  @media (max-width: 640px) {
+    .filter-grid {
+      grid-template-columns: 1fr;
+    }
+    .filter-col-inputs {
+      max-width: 100%;
+    }
   }
 
   .filter-row {
@@ -387,40 +400,6 @@
     bottom: 0;
   }
 
-  .more-filters-btn {
-    font-family: inherit;
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    background: none;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 3px;
-    padding: 0.2em 0.6em;
-    cursor: pointer;
-    align-self: flex-start;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4em;
-    transition: border-color 0.12s, color 0.12s;
-  }
-
-  .more-filters-btn:hover {
-    border-color: rgba(0, 0, 0, 0.2);
-    color: var(--text);
-  }
-
-  .active-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 1.2em;
-    height: 1.2em;
-    font-size: 0.8em;
-    background: rgba(0, 0, 0, 0.08);
-    border-radius: 2px;
-    color: var(--text);
-    font-weight: 500;
-  }
-
   .clear-filters {
     font-family: inherit;
     font-size: var(--fs-xs);
@@ -446,8 +425,6 @@
     background: transparent;
     color: var(--text);
     width: 100%;
-    max-width: 20rem;
-    margin-bottom: var(--space-xs);
     outline: none;
     transition: border-color 0.12s;
   }
