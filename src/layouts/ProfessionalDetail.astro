@@ -11,7 +11,7 @@ interface Props {
 const { title, description, color, i18nKey } = Astro.props;
 ---
 
-<BaseLayout title={`${title} | Kun Li`} description={description}>
+<BaseLayout title={title} description={description}>
   <main class="page grid-page">
     <a href="/" class="back-link" data-i18n="nav.back">&larr; Back</a>
     <h1 data-i18n={i18nKey} style={`color: ${color}`}>{title}</h1>
