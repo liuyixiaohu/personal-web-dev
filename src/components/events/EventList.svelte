@@ -256,24 +256,6 @@
           </div>
         {/if}
       </div>
-    </div>
-
-    <p class="event-subtitle">
-      {t('events.subtitlePre')}<span class="newly-highlight">{t('events.subtitleHighlight')}</span>{t('events.subtitlePost')}
-      <span class="why-wrap">
-        <button class="why-btn" onclick={() => whyOpen = !whyOpen}>Why?</button>
-        {#if whyOpen}
-          <div class="why-backdrop" onclick={() => whyOpen = false} role="presentation"></div>
-          <div class="why-popup">
-            <div class="changelog-header">
-              <span class="changelog-title">{t('events.whyTitle')}</span>
-              <button class="changelog-close" onclick={() => whyOpen = false}>&times;</button>
-            </div>
-            <p class="why-point">{t('events.whyPoint1')}</p>
-            <p class="why-point">{t('events.whyPoint2')}</p>
-          </div>
-        {/if}
-      </span>
       <span class="feedback-wrap">
         <button class="why-btn" onclick={() => { feedbackOpen = !feedbackOpen; feedbackSent = false; feedbackError = false; }}>
           {t('events.feedback')}
@@ -299,6 +281,24 @@
                 <p class="feedback-error-msg">{t('events.feedbackError')}</p>
               {/if}
             {/if}
+          </div>
+        {/if}
+      </span>
+    </div>
+
+    <p class="event-subtitle">
+      {t('events.subtitlePre')}<span class="newly-highlight">{t('events.subtitleHighlight')}</span>{t('events.subtitlePost')}
+      <span class="why-wrap">
+        <button class="why-btn" onclick={() => whyOpen = !whyOpen}>Why?</button>
+        {#if whyOpen}
+          <div class="why-backdrop" onclick={() => whyOpen = false} role="presentation"></div>
+          <div class="why-popup">
+            <div class="changelog-header">
+              <span class="changelog-title">{t('events.whyTitle')}</span>
+              <button class="changelog-close" onclick={() => whyOpen = false}>&times;</button>
+            </div>
+            <p class="why-point">{t('events.whyPoint1')}</p>
+            <p class="why-point">{t('events.whyPoint2')}</p>
           </div>
         {/if}
       </span>
