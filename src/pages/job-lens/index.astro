@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="JobLens" description="Smart LinkedIn job filter — flags Reposted, Applied, No Sponsor, Unpaid, and lets you skip companies & title keywords.">
+<BaseLayout title="JobLens" description="Smart LinkedIn job filter. Flags Reposted, Applied, No Sponsor, Unpaid, and lets you skip companies & title keywords.">
   <main class="jl-page grid-page">
     <a href="/" class="back-link" data-i18n="nav.back">&larr; Back</a>
 
@@ -10,9 +10,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <header class="jl-header">
       <img src="/images/joblens-icon.png" alt="JobLens icon" class="jl-logo" />
       <div>
-        <h1>JobLens</h1>
-        <p class="jl-subtitle">
-          A Chrome extension that filters LinkedIn jobs so you don't have to.
+        <div class="jl-title-row">
+          <h1>JobLens</h1>
+          <div class="jl-version-wrap">
+            <button class="jl-version-btn" id="jl-changelog-toggle">v1.0</button>
+            <div class="jl-changelog-backdrop" id="jl-changelog-backdrop" style="display:none"></div>
+            <div class="jl-changelog-popup" id="jl-changelog-popup" style="display:none">
+              <div class="jl-changelog-header">
+                <span class="jl-changelog-title">Changelog</span>
+                <button class="jl-changelog-close" id="jl-changelog-close">&times;</button>
+              </div>
+              <div id="jl-changelog-content"></div>
+            </div>
+          </div>
           <span class="jl-feedback-wrap">
             <button class="jl-feedback-btn" id="jl-feedback-toggle" data-i18n="joblens.feedback">Feedback</button>
             <div class="jl-feedback-backdrop" id="jl-feedback-backdrop" style="display:none"></div>
@@ -30,6 +40,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
               <p class="jl-feedback-error" id="jl-feedback-error" style="display:none" data-i18n="joblens.feedbackError">Failed to send. Try again?</p>
             </div>
           </span>
+        </div>
+        <p class="jl-subtitle">
+          A Chrome extension that filters LinkedIn jobs so you don't have to.
         </p>
       </div>
     </header>
@@ -37,7 +50,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <!-- What It Does -->
     <section class="section">
       <h2>What It Does</h2>
-      <p>LinkedIn search shows everything — reposted roles, jobs you already applied to, positions that don't sponsor visas. JobLens sits on the page and flags them automatically, so you only spend time on jobs that actually fit.</p>
+      <p>LinkedIn search shows everything: reposted roles, jobs you already applied to, positions that don't sponsor visas. JobLens sits on the page and flags them automatically, so you only spend time on jobs that actually fit.</p>
     </section>
 
     <!-- What It Flags -->
@@ -92,7 +105,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <ol class="jl-steps">
         <li>Install from the <a href="#" class="jl-link">Chrome Web Store</a></li>
         <li>Go to <strong>LinkedIn Jobs</strong> and search for roles</li>
-        <li>The JobLens panel appears on the left — badges auto-detect <strong>Reposted</strong> and <strong>Applied</strong></li>
+        <li>The JobLens panel appears on the left. Badges auto-detect <strong>Reposted</strong> and <strong>Applied</strong></li>
         <li>Click <strong>Scan Jobs</strong> to check descriptions for No Sponsor and Unpaid</li>
         <li>Add companies or keywords to your <strong>skip lists</strong></li>
         <li>Toggle <strong>Dim mode</strong> to fade flagged cards</li>
@@ -132,15 +145,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <span class="jl-step-label">Focus</span>
         </div>
       </div>
-      <p>Reads card text and job descriptions directly in the page. No external servers, no API calls — everything runs in your browser.</p>
+      <p>Reads card text and job descriptions directly in the page. No external servers, no API calls. Everything runs in your browser.</p>
 
       <ul class="jl-features">
-        <li><strong>Auto-Scan</strong> — clicks through every visible listing and checks the detail panel</li>
-        <li><strong>Skip lists</strong> — block companies or title keywords, supports batch paste</li>
-        <li><strong>Dim mode</strong> — fades flagged cards so clean listings stand out</li>
-        <li><strong>Badge persistence</strong> — badges survive LinkedIn's DOM re-renders</li>
-        <li><strong>Draggable panel</strong> — move it anywhere, click to collapse</li>
-        <li><strong>Keyboard shortcut</strong> — <code>Ctrl+Shift+J</code> to toggle the panel</li>
+        <li><strong>Auto-Scan</strong>: clicks through every visible listing and checks the detail panel</li>
+        <li><strong>Skip lists</strong>: block companies or title keywords, supports batch paste</li>
+        <li><strong>Dim mode</strong>: fades flagged cards so clean listings stand out</li>
+        <li><strong>Badge persistence</strong>: badges survive LinkedIn's DOM re-renders</li>
+        <li><strong>Draggable panel</strong>: move it anywhere, click to collapse</li>
+        <li><strong>Keyboard shortcut</strong>: <code>Ctrl+Shift+J</code> to toggle the panel</li>
       </ul>
     </section>
 
@@ -187,6 +200,51 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     document.querySelector('.jl-store-link')?.addEventListener('click', () => {
       (window as any).dataLayer?.push({ event: 'joblens_cta_click' });
     });
+
+    // --- Changelog ---
+    const JL_CHANGELOG = [
+      { version: 'v1.0',
+        why: 'LinkedIn search shows everything: reposted, applied, no-sponsor. Why not flag them automatically?',
+        changes: [
+          'Auto-scan LinkedIn job cards and flag Reposted, Applied, No Sponsor, Unpaid',
+          'Skip lists for companies and title keywords, with batch import/export',
+          'Draggable frosted-glass panel with dim mode for filtered cards',
+        ]},
+    ];
+
+    const clToggle = document.getElementById('jl-changelog-toggle');
+    const clPopup = document.getElementById('jl-changelog-popup');
+    const clBackdrop = document.getElementById('jl-changelog-backdrop');
+    const clClose = document.getElementById('jl-changelog-close');
+    const clContent = document.getElementById('jl-changelog-content');
+
+    if (clContent) {
+      clContent.innerHTML = JL_CHANGELOG.map(r => `
+        <div class="jl-changelog-release">
+          <div class="jl-changelog-version">${r.version}</div>
+          <p class="jl-changelog-why">${r.why}</p>
+          <ul class="jl-changelog-list">
+            ${r.changes.map(c => `<li>${c}</li>`).join('')}
+          </ul>
+        </div>
+      `).join('');
+    }
+
+    function openChangelog() {
+      if (clPopup) clPopup.style.display = '';
+      if (clBackdrop) clBackdrop.style.display = '';
+    }
+    function closeChangelog() {
+      if (clPopup) clPopup.style.display = 'none';
+      if (clBackdrop) clBackdrop.style.display = 'none';
+    }
+
+    clToggle?.addEventListener('click', () => {
+      if (clPopup?.style.display === 'none') openChangelog();
+      else closeChangelog();
+    });
+    clBackdrop?.addEventListener('click', closeChangelog);
+    clClose?.addEventListener('click', closeChangelog);
 
     // --- Feedback ---
     const toggle = document.getElementById('jl-feedback-toggle');
@@ -257,6 +315,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     width: 64px;
     height: 64px;
     border-radius: 12px;
+  }
+
+  .jl-title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
   }
 
   .jl-header h1 {
@@ -527,6 +592,124 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     object-fit: contain;
   }
 
+  /* Version badge & changelog */
+  .jl-version-wrap {
+    position: relative;
+  }
+
+  .jl-version-btn {
+    font-family: inherit;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.1em 0.4em;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+
+  .jl-version-btn:hover {
+    border-color: rgba(0, 0, 0, 0.25);
+    color: var(--text);
+  }
+
+  .jl-changelog-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+  }
+
+  .jl-changelog-popup {
+    position: absolute;
+    top: calc(100% + 0.4rem);
+    left: 0;
+    z-index: 100;
+    width: min(22rem, calc(100vw - 2rem));
+    max-height: 28rem;
+    overflow-y: auto;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    padding: 0.75rem;
+  }
+
+  @media (max-width: 480px) {
+    .jl-changelog-popup {
+      position: fixed;
+      top: auto;
+      right: 1rem;
+      bottom: 1rem;
+      left: 1rem;
+      width: auto;
+      max-height: 70vh;
+    }
+  }
+
+  .jl-changelog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .jl-changelog-title {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .jl-changelog-close {
+    font-family: inherit;
+    font-size: 1.1rem;
+    color: var(--text-light);
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 0.15rem;
+  }
+
+  .jl-changelog-close:hover {
+    color: var(--text);
+  }
+
+  .jl-changelog-popup :global(.jl-changelog-release) {
+    margin-bottom: 0.6rem;
+  }
+
+  .jl-changelog-popup :global(.jl-changelog-release:last-child) {
+    margin-bottom: 0;
+  }
+
+  .jl-changelog-popup :global(.jl-changelog-version) {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .jl-changelog-popup :global(.jl-changelog-why) {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    font-style: italic;
+    margin: 0.15rem 0 0.2rem;
+    line-height: 1.4;
+  }
+
+  .jl-changelog-popup :global(.jl-changelog-list) {
+    margin: 0.2rem 0 0 1rem;
+    padding: 0;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  .jl-changelog-popup :global(.jl-changelog-list li) {
+    margin-bottom: 0.1rem;
+  }
+
   /* Feedback button & popup */
   .jl-feedback-wrap {
     position: relative;
@@ -545,7 +728,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     transition: border-color 0.15s, color 0.15s;
     line-height: 1.4;
     vertical-align: middle;
-    margin-left: 0.3em;
   }
 
   .jl-feedback-btn:hover {

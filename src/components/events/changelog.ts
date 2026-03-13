@@ -9,7 +9,7 @@ export const CHANGELOG = [
       'Excluded keywords are saved between visits',
     ]},
   { version: 'v1.0',
-    why: 'Switched from showing all events to only daily new additions — less noise, more signal.',
+    why: 'Switched from showing all events to only daily new additions. Less noise, more signal.',
     changes: [
       'Now shows only newly added events since the last daily check',
       'Added subtitle explaining the page scope, plus a "Why?" explainer',
