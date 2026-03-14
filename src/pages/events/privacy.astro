@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Events Privacy Policy" description="Bay Area Events Monitor privacy policy. No personal data collected.">
+  <main class="privacy-page grid-page">
+    <a href="/events/" class="back-link">&larr; Events</a>
+
+    <header class="privacy-header">
+      <h1>Privacy Policy</h1>
+      <p class="privacy-updated">Last updated: March 13, 2026</p>
+    </header>
+
+    <section class="section">
+      <h2>What This Page Does</h2>
+      <p>The Bay Area Events Monitor displays newly discovered tech and AI events from Luma. It runs entirely in your browser.</p>
+    </section>
+
+    <section class="section">
+      <h2>Data Collection</h2>
+      <p>This page does <strong>not</strong> collect or store any personal data beyond standard analytics. Specifically:</p>
+      <ul class="privacy-list">
+        <li>No data sent to external servers (except fetching event data)</li>
+        <li>No cookies set by this page</li>
+        <li>No user accounts or sign-in</li>
+      </ul>
+      <p>This website uses Google Analytics via Google Tag Manager to understand page visits and interactions. Google's <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" class="privacy-link">privacy policy</a> applies to that data. However, <strong>NO PERSONAL IDENTIFIERS</strong> are collected. The analytics data is fully anonymous and is only used to improve the experience, such as underused features may be removed, and popular ones refined, etc.</p>
+    </section>
+
+    <section class="section">
+      <h2>Event Data</h2>
+      <p>Event listings are fetched from a public source and displayed directly in your browser. No personal data is included in these requests.</p>
+    </section>
+
+    <section class="section">
+      <h2>Local Storage</h2>
+      <p>Your language preference is saved using the browser's local storage. This data stays on your device and is never transmitted anywhere.</p>
+    </section>
+
+    <section class="section">
+      <h2>Feedback Form</h2>
+      <p>If you submit feedback, it is sent to Formspree. Only the message content is transmitted. No personal identifiers are attached.</p>
+    </section>
+
+    <section class="section">
+      <h2>Changes</h2>
+      <p>If this policy changes, the updated version will be posted here.</p>
+    </section>
+
+    <section class="section">
+      <h2>Contact</h2>
+      <p>Questions? Reach out at <a href="/events/" class="privacy-link">kunli.co/events</a>.</p>
+    </section>
+
+  </main>
+</BaseLayout>
+
+<style>
+  .privacy-header {
+    margin-bottom: var(--space-xl);
+  }
+
+  .privacy-header h1 {
+    font-size: var(--fs-xl);
+    font-weight: 500;
+    color: var(--color-rose);
+  }
+
+  .privacy-updated {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    margin-top: var(--space-xs);
+  }
+
+  .section {
+    border-top: 1px solid var(--border);
+    padding-top: var(--space-lg);
+    margin-bottom: var(--space-xl);
+  }
+
+  .section h2 {
+    font-size: var(--fs-lg);
+    font-weight: 500;
+    margin-bottom: var(--space-sm);
+  }
+
+  .section p {
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: var(--space-xs);
+  }
+
+  .privacy-list {
+    padding-left: 1.5rem;
+  }
+
+  .privacy-list li {
+    margin-bottom: var(--space-xs);
+    line-height: 1.6;
+    color: var(--text-light);
+  }
+
+  .privacy-list li::marker {
+    color: var(--color-rose);
+  }
+
+  .privacy-list strong {
+    color: var(--text);
+  }
+
+  .privacy-link {
+    color: var(--color-rose);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .privacy-link:hover {
+    opacity: 0.7;
+  }
+</style>
