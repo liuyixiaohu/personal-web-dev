@@ -79,7 +79,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'pro.section.lab': { en: 'Touch Fish!', zh: '摸鱼万岁！' },
 
   // --- Events page ---
-  'home.events': { en: 'Bay Area Tech Events Monitor', zh: '湾区科技活动监测' },
+  'home.events': { en: 'Luma\'s Bay Area Tech Events Monitor', zh: '湾区科技活动监测（Luma）' },
   'home.events.desc': { en: 'No more doomscrolling Luma into an existential crisis.', zh: '再也不用刷 Luma 刷到怀疑人生了。' },
   'home.joblens': { en: 'JobLens', zh: 'JobLens' },
   'home.joblens.desc': { en: 'A Chrome extension that filters LinkedIn jobs so you don\'t have to.', zh: '十个岗位九个是 reposted 的日子一去不复返。' },
@@ -196,6 +196,14 @@ export const translations: Record<string, Record<Lang, string>> = {
   'brand.usage.textMid': { en: 'Secondary text', zh: '次要文字' },
   'brand.usage.textPrimary': { en: 'Primary text', zh: '主要文字' },
 
+  // --- Events Privacy ---
+  'events.privacyTitle': { en: 'Privacy', zh: '隐私' },
+  'events.privacyDesc': {
+    en: 'This page runs entirely in your browser. Event data is fetched from a public source and displayed directly. No personal data is collected, transmitted, or stored.',
+    zh: '本页面完全在你的浏览器中运行。活动数据从公开来源获取并直接显示。不收集、传输或存储任何个人数据。',
+  },
+  'events.privacyLink': { en: 'Full privacy policy \u2192', zh: '完整隐私政策 \u2192' },
+
   // --- Feedback ---
   'events.feedback': { en: 'Feedback', zh: '反馈' },
   'events.feedbackTitle': { en: 'Any Suggestion? Pls!!!', zh: '有什么建议吗？求求了！！！' },
@@ -255,6 +263,69 @@ export const translations: Record<string, Record<Lang, string>> = {
   'djm.example.notification': { en: 'Sample Notification', zh: '通知示例' },
   'djm.example.link': { en: 'View my setup →', zh: '查看我的配置 →' },
   'djm.cta': { en: 'View on GitHub', zh: '在 GitHub 上查看' },
+
+  // --- JobLens ---
+  'joblens.subtitle': {
+    en: 'A Chrome extension that helps you focus on job applications worth your time.',
+    zh: '一个帮你专注于高转化率工作申请的 Chrome 扩展。',
+  },
+  'joblens.inspirationTitle': { en: 'Inspiration', zh: '灵感来源' },
+  'joblens.inspiration1': {
+    en: 'If you\'ve job-hunted on LinkedIn, you know the drill: click a listing, "Reposted." Click another, "Reposted" again. Those roles have been up for weeks and the odds of hearing back are slim, but you can\'t tell until you\'ve already clicked.',
+    zh: 'Kun 在 LinkedIn 上反复遇到同一个问题：点开一个职位，显示「Reposted」；再点一个，又是「Reposted」。这些岗位已经挂了好几周了，转化率几乎为零，但不点进去根本看不出来。',
+  },
+  'joblens.inspiration2': {
+    en: 'It doesn\'t stop there. Visa sponsorship? Unpaid? That info is buried in the full description, so you\'re opening every single listing just to rule it out. Do that dozens of times a day and most of your "job search" is really just triage.',
+    zh: '更麻烦的是，想知道一个岗位是否赞助国际学生签证，或者是不是无薪岗位？每次都得点进详情页才行。一天看几十个下来，大部分时间都浪费在了根本不可能的岗位上。',
+  },
+  'joblens.inspiration3': {
+    en: 'The frustrating part is that LinkedIn is actually good at finding relevant jobs. Its recommendations surface roles you\'d miss on your own, and its search understands queries like "Product Marketing Intern in the past 24 hours." The platform itself isn\'t the problem. The workflow is. That\'s why JobLens exists.',
+    zh: '但 LinkedIn 的推荐算法确实好用。即使职位名称不完全匹配你的关键词，它也能推出相关岗位；它的自然语言搜索（比如「Product Marketing Intern in the past 24 hours」）也真的有效。离开这个平台不是办法，改善体验才是。于是 JobLens 就诞生了。',
+  },
+  'joblens.changelogTitle': { en: 'Changelog', zh: '更新日志' },
+  'joblens.whatTitle': { en: 'What It Does', zh: '它做什么' },
+  'joblens.whatDesc': {
+    en: 'LinkedIn search shows everything: reposted roles, jobs you already applied to, positions that don\'t sponsor visas. JobLens sits on the page and flags them automatically, so you only spend time on jobs that actually fit.',
+    zh: 'LinkedIn 搜索什么都显示：已转发的岗位、你已经申请过的、不赞助签证的。JobLens 自动标记它们，让你只把时间花在真正合适的工作上。',
+  },
+  'joblens.flagsTitle': { en: 'What It Flags', zh: '标记内容' },
+  'joblens.flag.reposted': { en: 'Job has been reposted (card text + detail panel)', zh: '岗位已被转发（卡片文字 + 详情面板）' },
+  'joblens.flag.applied': { en: 'You already applied to this one', zh: '你已经申请过这个岗位' },
+  'joblens.flag.noSponsor': { en: 'Description says visa sponsorship not available', zh: '职位描述中表明不提供签证赞助' },
+  'joblens.flag.unpaid': { en: 'Volunteer or unpaid position', zh: '志愿者或无薪岗位' },
+  'joblens.flag.skippedCo': { en: 'Company you\'ve blocked', zh: '你已屏蔽的公司' },
+  'joblens.flag.skippedTitle': { en: 'Title contains a keyword you\'re avoiding', zh: '职位名称包含你要排除的关键词' },
+  'joblens.demoTitle': { en: 'See It in Action', zh: '实际效果' },
+  'joblens.cap.badges': { en: 'Badges flag issues at a glance', zh: '标记一目了然' },
+  'joblens.cap.dim': { en: 'Dim mode fades flagged cards', zh: '淡化模式让已标记的卡片变暗' },
+  'joblens.startTitle': { en: 'Get Started', zh: '快速开始' },
+  'joblens.step1': { en: 'Install from the <a href="#" class="jl-link">Chrome Web Store</a>', zh: '从 <a href="#" class="jl-link">Chrome 网上应用店</a>安装' },
+  'joblens.step2': { en: 'Go to <strong>LinkedIn Jobs</strong> and search for roles', zh: '打开 <strong>LinkedIn Jobs</strong>，搜索职位' },
+  'joblens.step3': { en: 'The JobLens panel appears on the left. Badges auto-detect <strong>Reposted</strong> and <strong>Applied</strong>', zh: 'JobLens 面板出现在左侧，自动检测 <strong>Reposted</strong> 和 <strong>Applied</strong>' },
+  'joblens.step4': { en: 'Click <strong>Scan Jobs</strong> to check descriptions for No Sponsor and Unpaid', zh: '点击 <strong>Scan Jobs</strong> 检查描述中的 No Sponsor 和 Unpaid' },
+  'joblens.step5': { en: 'Add companies or keywords to your <strong>skip lists</strong>', zh: '将公司或关键词添加到<strong>屏蔽列表</strong>' },
+  'joblens.step6': { en: 'Toggle <strong>Dim mode</strong> to fade flagged cards', zh: '开启<strong>淡化模式</strong>，让已标记的卡片变暗' },
+  'joblens.howTitle': { en: 'How It Works', zh: '工作原理' },
+  'joblens.pipe.detect': { en: 'Detect', zh: '检测' },
+  'joblens.pipe.badge': { en: 'Badge', zh: '标记' },
+  'joblens.pipe.filter': { en: 'Filter', zh: '筛选' },
+  'joblens.pipe.focus': { en: 'Focus', zh: '聚焦' },
+  'joblens.howDesc': {
+    en: 'Reads card text and job descriptions directly in the page. No external servers, no API calls. Everything runs in your browser.',
+    zh: '直接读取页面上的卡片文字和职位描述。没有外部服务器，没有 API 调用。一切都在你的浏览器中运行。',
+  },
+  'joblens.feat.autoScan': { en: '<strong>Auto-Scan</strong>: clicks through every visible listing and checks the detail panel', zh: '<strong>自动扫描</strong>：逐个点击可见的职位列表并检查详情面板' },
+  'joblens.feat.skipLists': { en: '<strong>Skip lists</strong>: block companies or title keywords, supports batch paste', zh: '<strong>屏蔽列表</strong>：屏蔽公司或职位关键词，支持批量粘贴' },
+  'joblens.feat.dimMode': { en: '<strong>Dim mode</strong>: fades flagged cards so clean listings stand out', zh: '<strong>淡化模式</strong>：让已标记卡片变暗，突出未标记的职位' },
+  'joblens.feat.persistence': { en: '<strong>Badge persistence</strong>: badges survive LinkedIn\'s DOM re-renders', zh: '<strong>标记持久化</strong>：标记在 LinkedIn 重新渲染后依然保留' },
+  'joblens.feat.draggable': { en: '<strong>Draggable panel</strong>: move it anywhere, click to collapse', zh: '<strong>可拖动面板</strong>：随意拖动，点击折叠' },
+  'joblens.feat.keyboard': { en: '<strong>Keyboard shortcut</strong>: <code>Ctrl+Shift+J</code> to toggle the panel', zh: '<strong>快捷键</strong>：<code>Ctrl+Shift+J</code> 切换面板显示' },
+  'joblens.privacyTitle': { en: 'Privacy', zh: '隐私' },
+  'joblens.privacyDesc': {
+    en: 'JobLens runs entirely in your browser. No data is collected, transmitted, or stored externally. Your skip lists and preferences are saved locally on your device.',
+    zh: 'JobLens 完全在你的浏览器中运行。不收集、传输或存储任何外部数据。你的屏蔽列表和偏好设置保存在本地设备上。',
+  },
+  'joblens.privacyLink': { en: 'Full privacy policy \u2192', zh: '完整隐私政策 \u2192' },
 
   // --- JobLens Feedback ---
   'joblens.feedback': { en: 'Feedback', zh: '反馈' },
