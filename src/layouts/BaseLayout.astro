@@ -2,13 +2,16 @@
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 import LanguageToggle from '../components/LanguageToggle.svelte';
+import Footer from '../components/Footer.astro';
+import BackToTop from '../components/BackToTop.astro';
 
 interface Props {
   title?: string;
   description?: string;
+  hideFooter?: boolean;
 }
 
-const { title = "Kun Li | Product Marketing, Data Science & Design", description = "I wasn't great at math or English, yet somehow I ended up a data scientist in the U.S., and eventually found my way back to expression." } = Astro.props;
+const { title = "Kun Li | Product Marketing, Data Science & Design", description = "I wasn't great at math or English, yet somehow I ended up a data scientist in the U.S., and eventually found my way back to expression.", hideFooter = false } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -95,6 +98,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PNCRCQBM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <LanguageToggle client:load />
     <slot />
+    {!hideFooter && <Footer />}
+    <BackToTop />
 
     <script>
       import { initLang, getLang, t } from '../i18n/langStore';
