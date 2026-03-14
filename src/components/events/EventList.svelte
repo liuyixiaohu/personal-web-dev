@@ -369,6 +369,12 @@
         {/each}
       </ul>
     {/each}
+
+    <section class="privacy-section">
+      <h2 class="privacy-heading">{t('events.privacyTitle')}</h2>
+      <p class="privacy-desc">{t('events.privacyDesc')}</p>
+      <a href="/events/privacy" class="privacy-link">{t('events.privacyLink')}</a>
+    </section>
   {/if}
 </div>
 {/key}
@@ -765,5 +771,34 @@
       flex-direction: column;
       gap: 0.2rem;
     }
+  }
+
+  .privacy-section {
+    border-top: 1px solid var(--border);
+    padding-top: var(--space-lg);
+    margin-top: var(--space-xl);
+  }
+
+  .privacy-heading {
+    font-size: var(--fs-lg);
+    font-weight: 500;
+    margin-bottom: var(--space-sm);
+  }
+
+  .privacy-desc {
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: var(--space-xs);
+  }
+
+  .privacy-link {
+    color: var(--color-rose);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: var(--fs-xs);
+  }
+
+  .privacy-link:hover {
+    opacity: 0.7;
   }
 </style>
