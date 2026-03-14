@@ -375,6 +375,8 @@
       <p class="privacy-desc">{t('events.privacyDesc')}</p>
       <a href="/events/privacy" class="privacy-link">{t('events.privacyLink')}</a>
     </section>
+
+    <p class="haas-credit">{t('events.haasCredit')}</p>
   {/if}
 </div>
 {/key}
@@ -800,5 +802,12 @@
 
   .privacy-link:hover {
     opacity: 0.7;
+  }
+
+  .haas-credit {
+    text-align: center;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    margin-top: var(--space-lg);
   }
 </style>
