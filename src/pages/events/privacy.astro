@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/privacy.css';
 ---
 
 <BaseLayout title="Events Privacy Policy" description="Bay Area Events Monitor privacy policy. No personal data collected.">
@@ -54,67 +55,3 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   </main>
 </BaseLayout>
-
-<style>
-  .privacy-header {
-    margin-bottom: var(--space-xl);
-  }
-
-  .privacy-header h1 {
-    font-size: var(--fs-xl);
-    font-weight: 500;
-    color: var(--color-rose);
-  }
-
-  .privacy-updated {
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    margin-top: var(--space-xs);
-  }
-
-  .section {
-    border-top: 1px solid var(--border);
-    padding-top: var(--space-lg);
-    margin-bottom: var(--space-xl);
-  }
-
-  .section h2 {
-    font-size: var(--fs-lg);
-    font-weight: 500;
-    margin-bottom: var(--space-sm);
-  }
-
-  .section p {
-    color: var(--text-light);
-    line-height: 1.6;
-    margin-bottom: var(--space-xs);
-  }
-
-  .privacy-list {
-    padding-left: 1.5rem;
-  }
-
-  .privacy-list li {
-    margin-bottom: var(--space-xs);
-    line-height: 1.6;
-    color: var(--text-light);
-  }
-
-  .privacy-list li::marker {
-    color: var(--color-rose);
-  }
-
-  .privacy-list strong {
-    color: var(--text);
-  }
-
-  .privacy-link {
-    color: var(--color-rose);
-    text-decoration: none;
-    font-weight: 500;
-  }
-
-  .privacy-link:hover {
-    opacity: 0.7;
-  }
-</style>
