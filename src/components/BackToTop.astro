@@ -1,0 +1,71 @@
+---
+// Back-to-top button — fades in after scrolling past 400px.
+// Minimal text style matching the site's literary aesthetic.
+---
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top" data-i18n="nav.backToTop">
+  &#8593; Top
+</button>
+
+<script>
+  function setupBackToTop() {
+    const btn = document.getElementById('back-to-top');
+    if (!btn) return;
+
+    const threshold = 400;
+
+    function onScroll() {
+      if (window.scrollY > threshold) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll(); // check initial position
+
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // Run on initial load and after view transitions
+  setupBackToTop();
+  document.addEventListener('astro:after-swap', setupBackToTop);
+</script>
+
+<style>
+  .back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    font-family: inherit;
+    letter-spacing: 0.02em;
+    padding: 0.3em 0.5em;
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .back-to-top:hover {
+    opacity: 0.5;
+  }
+
+  @media (max-width: 600px) {
+    .back-to-top {
+      bottom: 1rem;
+      right: 1rem;
+    }
+  }
+</style>
