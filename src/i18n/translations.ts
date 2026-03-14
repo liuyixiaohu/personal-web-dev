@@ -204,7 +204,6 @@ export const translations: Record<string, Record<Lang, string>> = {
     zh: '本页面完全在你的浏览器中运行。活动数据从公开来源获取并直接显示。不收集、传输或存储任何个人数据。',
   },
   'events.privacyLink': { en: 'Full privacy policy \u2192', zh: '完整隐私政策 \u2192' },
-  'events.haasCredit': { en: 'Built during my MBA at Berkeley Haas, 2024\u20132026.', zh: '诞生于 Berkeley Haas MBA 期间，2024\u20132026。' },
 
   // --- Feedback ---
   'events.feedback': { en: 'Feedback', zh: '反馈' },
@@ -328,7 +327,6 @@ export const translations: Record<string, Record<Lang, string>> = {
     zh: 'JobLens 完全在你的浏览器中运行。不收集、传输或存储任何外部数据。你的屏蔽列表和偏好设置保存在本地设备上。',
   },
   'joblens.privacyLink': { en: 'Full privacy policy \u2192', zh: '完整隐私政策 \u2192' },
-  'joblens.haasCredit': { en: 'Built during my MBA at Berkeley Haas, 2024\u20132026.', zh: '诞生于 Berkeley Haas MBA 期间，2024\u20132026。' },
 
   // --- JobLens Feedback ---
   'joblens.feedback': { en: 'Feedback', zh: '反馈' },
