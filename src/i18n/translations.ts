@@ -22,6 +22,7 @@ export const translations: Record<string, Record<Lang, string>> = {
 
   // --- Navigation ---
   'nav.back': { en: '\u2190 Home', zh: '\u2190 首页' },
+  'nav.backToTop': { en: '\u2191 Top', zh: '\u2191 顶部' },
 
   // --- Life Journey ---
   'journey.hint': { en: 'Click a pin to read the story', zh: '点击图钉查看故事' },
