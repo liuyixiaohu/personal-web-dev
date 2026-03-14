@@ -299,7 +299,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'joblens.cap.badges': { en: 'Badges flag issues at a glance', zh: '标记一目了然' },
   'joblens.cap.dim': { en: 'Dim mode fades flagged cards', zh: '淡化模式让已标记的卡片变暗' },
   'joblens.startTitle': { en: 'Get Started', zh: '快速开始' },
-  'joblens.step1': { en: 'Install from the <a href="#" class="jl-link">Chrome Web Store</a>', zh: '从 <a href="#" class="jl-link">Chrome 网上应用店</a>安装' },
+  'joblens.step1': { en: 'Install from the <a href="https://chromewebstore.google.com/detail/ainpeagpaoafcblhcebbakofagiocooa?utm_source=kunli_website" class="jl-link" target="_blank" rel="noopener">Chrome Web Store</a>', zh: '从 <a href="https://chromewebstore.google.com/detail/ainpeagpaoafcblhcebbakofagiocooa?utm_source=kunli_website" class="jl-link" target="_blank" rel="noopener">Chrome 网上应用店</a>安装' },
   'joblens.step2': { en: 'Go to <strong>LinkedIn Jobs</strong> and search for roles', zh: '打开 <strong>LinkedIn Jobs</strong>，搜索职位' },
   'joblens.step3': { en: 'The JobLens panel appears on the left. Badges auto-detect <strong>Reposted</strong> and <strong>Applied</strong>', zh: 'JobLens 面板出现在左侧，自动检测 <strong>Reposted</strong> 和 <strong>Applied</strong>' },
   'joblens.step4': { en: 'Click <strong>Scan Jobs</strong> to check descriptions for No Sponsor and Unpaid', zh: '点击 <strong>Scan Jobs</strong> 检查描述中的 No Sponsor 和 Unpaid' },

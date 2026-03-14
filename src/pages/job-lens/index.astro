@@ -13,23 +13,23 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <div class="jl-title-row">
           <h1>JobLens</h1>
           <div class="jl-version-wrap">
-            <button class="jl-version-btn" id="jl-changelog-toggle">v1.0</button>
+            <button class="jl-version-btn" id="jl-changelog-toggle" aria-label="View changelog">v1.0</button>
             <div class="jl-changelog-backdrop" id="jl-changelog-backdrop" style="display:none"></div>
             <div class="jl-changelog-popup" id="jl-changelog-popup" style="display:none">
               <div class="jl-changelog-header">
                 <span class="jl-changelog-title" data-i18n="joblens.changelogTitle">Changelog</span>
-                <button class="jl-changelog-close" id="jl-changelog-close">&times;</button>
+                <button class="jl-changelog-close" id="jl-changelog-close" aria-label="Close changelog">&times;</button>
               </div>
               <div id="jl-changelog-content"></div>
             </div>
           </div>
           <span class="jl-feedback-wrap">
-            <button class="jl-feedback-btn" id="jl-feedback-toggle" data-i18n="joblens.feedback">Feedback</button>
+            <button class="jl-feedback-btn" id="jl-feedback-toggle" data-i18n="joblens.feedback" aria-label="Send feedback">Feedback</button>
             <div class="jl-feedback-backdrop" id="jl-feedback-backdrop" style="display:none"></div>
             <div class="jl-feedback-popup" id="jl-feedback-popup" style="display:none">
               <div class="jl-feedback-header">
                 <span class="jl-feedback-title" data-i18n="joblens.feedbackTitle">Any Suggestion? Pls!!!</span>
-                <button class="jl-feedback-close" id="jl-feedback-close">&times;</button>
+                <button class="jl-feedback-close" id="jl-feedback-close" aria-label="Close feedback form">&times;</button>
               </div>
               <form id="jl-feedback-form">
                 <textarea name="message" required rows="4" class="jl-feedback-textarea" id="jl-feedback-textarea" placeholder="Bugs, ideas, anything..."></textarea>
@@ -111,7 +111,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <section class="section">
       <h2 data-i18n="joblens.startTitle">Get Started</h2>
       <ol class="jl-steps">
-        <li data-i18n="joblens.step1">Install from the <a href="#" class="jl-link">Chrome Web Store</a></li>
+        <li data-i18n="joblens.step1">Install from the <a href="https://chromewebstore.google.com/detail/ainpeagpaoafcblhcebbakofagiocooa?utm_source=kunli_website" class="jl-link" target="_blank" rel="noopener">Chrome Web Store</a></li>
         <li data-i18n="joblens.step2">Go to <strong>LinkedIn Jobs</strong> and search for roles</li>
         <li data-i18n="joblens.step3">The JobLens panel appears on the left. Badges auto-detect <strong>Reposted</strong> and <strong>Applied</strong></li>
         <li data-i18n="joblens.step4">Click <strong>Scan Jobs</strong> to check descriptions for No Sponsor and Unpaid</li>
