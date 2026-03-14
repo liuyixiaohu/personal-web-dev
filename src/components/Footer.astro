@@ -1,20 +1,15 @@
 ---
 // Shared site footer — included via BaseLayout on all pages.
-// Homepage shows nav links (Journey, Special Thanks, Brand Guidelines);
-// other pages show only the identity row.
-const isHome = Astro.url.pathname === '/';
 ---
 
 <footer class="site-footer">
-  {isHome && (
-    <nav class="footer-nav">
-      <a href="/life-journey" data-i18n="home.lifeJourney">Journey</a>
-      <span class="dot">&middot;</span>
-      <a href="/special-thanks" data-i18n="home.specialThanks">Special Thanks</a>
-      <span class="dot">&middot;</span>
-      <a href="/brand" data-i18n="home.brand">Brand Guidelines</a>
-    </nav>
-  )}
+  <nav class="footer-nav">
+    <a href="/life-journey" data-i18n="home.lifeJourney">Journey</a>
+    <span class="dot">&middot;</span>
+    <a href="/special-thanks" data-i18n="home.specialThanks">Special Thanks</a>
+    <span class="dot">&middot;</span>
+    <a href="/brand" data-i18n="home.brand">Brand Guidelines</a>
+  </nav>
   <div class="footer-identity">
     <a href="/" class="footer-name">Kun Li</a>
     <span class="dot">&middot;</span>
