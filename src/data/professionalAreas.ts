@@ -19,7 +19,7 @@ export const professionalAreas: ProfessionalArea[] = [
     subtitle: 'Nailed the positioning. Then the product pivoted.',
     description: "Kun Li's product marketing work: strategy, go-to-market, and growth.",
     color: 'var(--color-pm)',
-    comingDate: '3.12',
+    comingDate: '3.14',
     i18n: {
       title: 'craft.pm.title',
       cardTitle: 'craft.pm',
