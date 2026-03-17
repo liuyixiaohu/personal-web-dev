@@ -100,7 +100,7 @@
         : 0;
       const isNew = (e: LumaEvent) =>
         prevCheck > 0 && e.first_seen_at
-          ? new Date(e.first_seen_at).getTime() >= prevCheck
+          ? new Date(e.first_seen_at).getTime() > prevCheck
           : false;
 
       const filtered = prevCheck > 0
