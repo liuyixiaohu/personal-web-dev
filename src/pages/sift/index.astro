@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Sift" description="Clean up your LinkedIn feed and job search. Hide ads, filter spam, flag sketchy jobs, and unfollow with one click.">
+<BaseLayout title="Sift" description="Clean up your LinkedIn feed. Hide ads, filter spam, mute keywords, and unfollow with one click.">
   <main class="jl-page grid-page">
     <a href="/" class="back-link" data-i18n="nav.back">&larr; Back</a>
 
@@ -13,7 +13,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <div class="jl-title-row">
           <h1>Sift</h1>
           <div class="jl-version-wrap">
-            <button class="jl-version-btn" id="jl-changelog-toggle" aria-label="View changelog">v2.0</button>
+            <button class="jl-version-btn" id="jl-changelog-toggle" aria-label="View changelog">v2.1</button>
             <div class="jl-changelog-backdrop" id="jl-changelog-backdrop" style="display:none"></div>
             <div class="jl-changelog-popup" id="jl-changelog-popup" style="display:none">
               <div class="jl-changelog-header">
@@ -42,7 +42,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           </span>
         </div>
         <p class="jl-subtitle" data-i18n="joblens.subtitle">
-          A Chrome extension that cleans up your LinkedIn feed and job search.
+          Take back a LinkedIn worth your time.
         </p>
       </div>
     </header>
@@ -57,12 +57,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <!-- Feed Cleanup -->
     <section class="section">
       <h2 data-i18n="joblens.feedTitle">Feed Cleanup</h2>
-      <p data-i18n="joblens.feedDesc">Sift automatically hides ads, suggested posts, and recommended content from your LinkedIn feed. Mute posts by keyword to filter recurring spam topics. One-click Unfollow opens the post menu so you can unfollow directly without hunting for the ... button.</p>
+      <p data-i18n="joblens.feedDesc">Sift automatically hides ads, suggested posts, and recommended content from your LinkedIn feed. Mute and Unfollow buttons appear inline on every post. Search your keyword rules right from the popup.</p>
       <ul class="jl-features">
         <li data-i18n="joblens.feat.hideAds"><strong>Hide Ads</strong>: removes Promoted posts automatically</li>
         <li data-i18n="joblens.feat.hideSuggested"><strong>Hide Suggested & Recommended</strong>: filters non-connection noise</li>
-        <li data-i18n="joblens.feat.muteKeywords"><strong>Mute Keywords</strong>: right-click any text to mute a keyword</li>
-        <li data-i18n="joblens.feat.unfollow"><strong>One-click Unfollow</strong>: hover any post, click Unfollow to open the menu</li>
+        <li data-i18n="joblens.feat.muteKeywords"><strong>Mute Keywords</strong>: add keywords via popup or right-click menu</li>
+        <li data-i18n="joblens.feat.unfollow"><strong>Inline Mute & Unfollow</strong>: buttons on every post — no hunting for the ... menu</li>
+        <li data-i18n="joblens.feat.search"><strong>Search Rules</strong>: find keywords quickly in the popup</li>
         <li data-i18n="joblens.feat.forceRecent"><strong>Force Recent</strong>: switch to chronological sort automatically</li>
         <li data-i18n="joblens.feat.hideSidebar"><strong>Hide Sidebar</strong>: remove LinkedIn News and footer clutter</li>
         <li data-i18n="joblens.feat.pause"><strong>Shift+J</strong>: pause/resume all filters instantly</li>
@@ -123,8 +124,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <li data-i18n="joblens.step1">Install from the <a href="https://chromewebstore.google.com/detail/ainpeagpaoafcblhcebbakofagiocooa?utm_source=kunli_website" class="jl-link" target="_blank" rel="noopener">Chrome Web Store</a></li>
         <li data-i18n="joblens.step2">Visit <strong>LinkedIn</strong> — your feed is automatically cleaned up</li>
         <li data-i18n="joblens.step3">Go to <strong>Jobs &rarr; Search Results</strong> — cards are auto-flagged</li>
-        <li data-i18n="joblens.step4">Click the <strong>Sift icon</strong> to open Controls, Stats, and Data tabs</li>
-        <li data-i18n="joblens.step5">Add companies or keywords to your <strong>skip lists</strong></li>
+        <li data-i18n="joblens.step4">Click the <strong>Sift icon</strong> to manage keywords, view stats, and adjust settings</li>
+        <li data-i18n="joblens.step5">Use inline <strong>Mute</strong> and <strong>Unfollow</strong> buttons on any post</li>
       </ol>
     </section>
 
@@ -209,6 +210,27 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     // --- Changelog ---
     const JL_CHANGELOG = [
+      { version: 'v2.1',
+        why: {
+          en: 'Fewer clicks, more control. Mute and Unfollow now live right on every post.',
+          zh: '更少点击，更多掌控。Mute 和 Unfollow 按钮现在直接显示在每条帖子上。',
+        },
+        changes: {
+          en: [
+            'Inline Mute & Unfollow buttons on every post — no more hunting for the ... menu',
+            'Search your keyword rules from the popup',
+            'Simplified popup: removed float toggles, split into clearer sections',
+            'Narrowed job search scope to search results page for a more focused experience',
+            'Fixed hidden cards not reappearing when toggling hideFiltered off',
+          ],
+          zh: [
+            '每条帖子上直接显示 Mute 和 Unfollow 按钮，不用再找 ... 菜单',
+            '弹窗中可搜索关键词规则',
+            '简化弹窗：移除浮动开关，分区更清晰',
+            '收窄求职页面范围至搜索结果页，体验更聚焦',
+            '修复切换 hideFiltered 时隐藏卡片不重新显示的问题',
+          ],
+        }},
       { version: 'v2.0',
         why: {
           en: 'LinkedIn isn\'t just job search — your feed is half ads too. Why not clean up both?',
