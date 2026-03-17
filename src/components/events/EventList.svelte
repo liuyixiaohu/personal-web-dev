@@ -450,7 +450,7 @@
   .feedback-textarea {
     width: 100%;
     font-family: inherit;
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     border: 1px solid var(--border);
     border-radius: 4px;
     padding: 0.5rem;
@@ -468,7 +468,7 @@
   .feedback-submit {
     margin-top: 0.5rem;
     font-family: inherit;
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     color: var(--text);
     background: none;
     border: 1px solid var(--border);
@@ -489,7 +489,7 @@
 
   .feedback-success {
     color: var(--color-ds-mid);
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     margin: 0.5rem 0 0;
   }
 
@@ -757,7 +757,7 @@
   }
 
   @keyframes highlight-fade {
-    0% { background: rgba(90, 160, 120, 0.15); }
+    0% { background: rgba(90, 138, 110, 0.15); }
     100% { background: transparent; }
   }
 

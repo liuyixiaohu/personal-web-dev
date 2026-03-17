@@ -245,25 +245,25 @@ const area = professionalAreas.find((a) => a.slug === 'visual-design')!;
 
   .bar-plan {
     background: rgba(90, 138, 110, 0.15);
-    color: #3d6b4f;
+    color: var(--color-visual);
     border: 1px solid rgba(90, 138, 110, 0.25);
   }
 
   .bar-decide {
-    background: rgba(180, 140, 60, 0.15);
-    color: #8a6d2f;
-    border: 1px solid rgba(180, 140, 60, 0.25);
+    background: rgba(90, 99, 107, 0.1);
+    color: var(--text-light);
+    border: 1px solid rgba(90, 99, 107, 0.2);
   }
 
   .bar-dev {
     background: rgba(90, 122, 148, 0.15);
-    color: #3d5f7a;
+    color: var(--color-ds);
     border: 1px solid rgba(90, 122, 148, 0.25);
   }
 
   .bar-release {
     background: rgba(154, 104, 104, 0.15);
-    color: #7a4444;
+    color: var(--color-pm);
     border: 1px solid rgba(154, 104, 104, 0.25);
   }
 
@@ -301,11 +301,11 @@ const area = professionalAreas.find((a) => a.slug === 'visual-design')!;
     flex-shrink: 0;
   }
 
-  .dot-plan   { background: #5a8a6e; }
-  .dot-brain  { background: #5a8a6e; opacity: 0.6; }
-  .dot-decide { background: #b48c3c; }
-  .dot-dev    { background: #5a7a94; }
-  .dot-release { background: #9a6868; }
+  .dot-plan   { background: var(--color-visual); }
+  .dot-brain  { background: var(--color-visual); opacity: 0.6; }
+  .dot-decide { background: var(--text-light); }
+  .dot-dev    { background: var(--color-ds); }
+  .dot-release { background: var(--color-pm); }
 
   /* ── Tables ── */
   .wf-table {
@@ -361,27 +361,27 @@ const area = professionalAreas.find((a) => a.slug === 'visual-design')!;
 
   .tag-plan {
     background: rgba(90, 138, 110, 0.12);
-    color: #3d6b4f;
+    color: var(--color-visual);
   }
 
   .tag-brain {
     background: rgba(90, 138, 110, 0.08);
-    color: #5a8a6e;
+    color: var(--color-visual);
   }
 
   .tag-decide {
-    background: rgba(180, 140, 60, 0.12);
-    color: #8a6d2f;
+    background: rgba(90, 99, 107, 0.1);
+    color: var(--text-light);
   }
 
   .tag-dev {
     background: rgba(90, 122, 148, 0.12);
-    color: #3d5f7a;
+    color: var(--color-ds);
   }
 
   .tag-release {
     background: rgba(154, 104, 104, 0.12);
-    color: #7a4444;
+    color: var(--color-pm);
   }
 
   /* ── Callout ── */
