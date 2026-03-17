@@ -1,89 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ChangelogPopup from '../components/ChangelogPopup.astro';
 import { professionalAreas } from '../data/professionalAreas';
-
-const siteChangelog = [
-  { version: 'v1.1',
-    why: 'Small things that say someone lives here.',
-    changes: [
-      'Footer with identity and social links (LinkedIn, GitHub)',
-      'Temporary release dates on coming-soon pages',
-      'Scroll indicator and brand guide refinements',
-    ]},
-  { version: 'v1.0',
-    why: 'One page. No detours.',
-    changes: [
-      'Merged Chaguan content directly into the homepage',
-      'Added scroll indicator between greeting and content',
-      'Removed Enter Chaguan intermediary step',
-    ]},
-  { version: 'v0.9',
-    why: 'Small touches that make it feel more personal.',
-    changes: [
-      'Added unique subtitles for each person on Special Thanks',
-      'Easter egg page now greets you with bilingual intro text',
-      'Language toggle works on the password gate page',
-    ]},
-  { version: 'v0.8',
-    why: 'Less code, same pixels. Refactored for maintainability.',
-    changes: [
-      'Design tokens: all hardcoded colors replaced with CSS custom properties',
-      'Shared layouts extracted for professional and journal pages',
-      'Net ~300 lines removed through DRY refactoring',
-    ]},
-  { version: 'v0.7',
-    why: 'People deserve their own pages.',
-    changes: [
-      'Special Thanks section with individual journal pages',
-      'Homepage redesigned: Enter Chaguan + Special Thanks',
-      'Inline SVG icons and tighter per-heading typography',
-    ]},
-  { version: 'v0.6',
-    why: 'A website without a design system is just vibes.',
-    changes: [
-      'Design system: CSS Grid layout, modular type scale, unified colors',
-      'Brand Guidelines page documenting the visual language',
-      'Fonts simplified from 7 to 5 combinations',
-    ]},
-  { version: 'v0.5',
-    why: 'Bay Area tech events were scattered everywhere. Fixed that.',
-    changes: [
-      'Bay Area Events page with daily auto-fetched Luma listings',
-      'Bilingual event display in English and Chinese',
-    ]},
-  { version: 'v0.4',
-    why: 'Every pin on the map is a story waiting to be told.',
-    changes: [
-      'Interactive D3 world map replacing the Three.js globe',
-      'Animated pins, zoom with province/state boundaries',
-    ]},
-  { version: 'v0.3',
-    why: 'Tried a 3D robot bartender. It was fun. Then it wasn\'t.',
-    changes: [
-      'Removed 3D robot bartender experiments',
-      'Clean text-based professional page and simplified homepage',
-    ]},
-  { version: 'v0.2',
-    why: 'A website should greet you like an old friend.',
-    changes: [
-      'Truman Show greeting with time-aware messages',
-      'Enter Chaguan as the main navigation concept',
-    ]},
-  { version: 'v0.1',
-    why: 'Everyone needs a corner of the internet to call home.',
-    changes: [
-      'Personal website with interactive globe and bilingual support',
-      'City pins marking places from the life journey',
-    ]},
-];
 ---
 
 <BaseLayout title="Kun Li" description="I wasn't great at math or English, yet somehow I ended up a data scientist in the U.S., and eventually found my way back to expression.">
-  <div class="site-version">
-    <ChangelogPopup version="v1.1" id="site" entries={siteChangelog} align="right" />
-  </div>
-
   <main>
     <h1 class="sr-only">Kun Li</h1>
 
@@ -180,17 +100,6 @@ const siteChangelog = [
 </script>
 
 <style>
-  /* Version button: fixed top-right, left of language toggle */
-  .site-version {
-    position: fixed;
-    top: 1.25rem;
-    right: calc(1.25rem + 2.4rem + 0.5rem);
-    z-index: 900;
-    height: 2.4rem;
-    display: flex;
-    align-items: center;
-  }
-
   /* ─── Zone 1: Hero ─── */
   .home-hero {
     position: relative;
