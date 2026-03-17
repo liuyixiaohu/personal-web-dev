@@ -109,7 +109,7 @@
   }
 
   .modal-location {
-    color: #8a9199;
+    color: var(--text-light);
   }
 
   .modal-city {
@@ -121,7 +121,7 @@
     background: none;
     border: none;
     font-size: 1.6rem;
-    color: #8a9199;
+    color: var(--text-light);
     cursor: pointer;
     padding: 0.2rem 0.5rem;
     line-height: 1;
@@ -130,20 +130,20 @@
   }
 
   .modal-close:hover {
-    color: #1F2328;
+    color: var(--text);
     background: rgba(0, 0, 0, 0.04);
   }
 
   .modal-divider {
     height: 1px;
-    background: #e2ded8;
+    background: var(--border);
     margin-bottom: 1.25rem;
   }
 
   .modal-title {
     font-size: var(--fs-lg);
     font-weight: 500;
-    color: #1F2328;
+    color: var(--text);
     margin-bottom: 1rem;
     line-height: 1.3;
   }
