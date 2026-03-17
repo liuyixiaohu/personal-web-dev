@@ -8,6 +8,8 @@ export default defineConfig({
   site: 'https://kunli.co',
   integrations: [
     svelte(),
-    sitemap(),
+    sitemap({
+      filter: (page) => !page.startsWith('https://kunli.co/job-lens'),
+    }),
   ]
 });
