@@ -4,10 +4,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 <BaseLayout title="Sift" description="Clean up your LinkedIn feed. Hide ads, filter spam, mute keywords, and unfollow with one click.">
   <main class="jl-page grid-page">
-    <a href="/" class="back-link" data-i18n="nav.back">&larr; Back</a>
+    <a href="/" class="back-link wide" data-i18n="nav.back">&larr; Back</a>
 
     <!-- Header -->
-    <header class="jl-header">
+    <header class="jl-header wide">
       <img src="/images/joblens-icon.png" alt="Sift icon" class="jl-logo" />
       <div>
         <div class="jl-title-row">
@@ -76,27 +76,27 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <p data-i18n="joblens.jobsDesc">On LinkedIn's job search results page, Sift flags suspicious listings so you skip the ones not worth your time.</p>
       <div class="jl-flags">
         <div class="jl-flag">
-          <span class="jl-flag-badge" style="background:#D9797B">Reposted</span>
+          <span class="jl-flag-badge" style="background:var(--color-rose)">Reposted</span>
           <span class="jl-flag-desc" data-i18n="joblens.flag.reposted">Job has been reposted — stale listing</span>
         </div>
         <div class="jl-flag">
-          <span class="jl-flag-badge" style="background:#D9797B">Applied</span>
+          <span class="jl-flag-badge" style="background:var(--color-rose)">Applied</span>
           <span class="jl-flag-desc" data-i18n="joblens.flag.applied">You already applied to this one</span>
         </div>
         <div class="jl-flag">
-          <span class="jl-flag-badge" style="background:#D9797B">No Sponsor</span>
+          <span class="jl-flag-badge" style="background:var(--color-rose)">No Sponsor</span>
           <span class="jl-flag-desc" data-i18n="joblens.flag.noSponsor">Description says visa sponsorship not available</span>
         </div>
         <div class="jl-flag">
-          <span class="jl-flag-badge" style="background:#D9797B">Unpaid</span>
+          <span class="jl-flag-badge" style="background:var(--color-rose)">Unpaid</span>
           <span class="jl-flag-desc" data-i18n="joblens.flag.unpaid">Volunteer or unpaid position</span>
         </div>
         <div class="jl-flag">
-          <span class="jl-flag-badge" style="background:#D9797B">Skipped Co.</span>
+          <span class="jl-flag-badge" style="background:var(--color-rose)">Skipped Co.</span>
           <span class="jl-flag-desc" data-i18n="joblens.flag.skippedCo">Company on your skip list</span>
         </div>
         <div class="jl-flag">
-          <span class="jl-flag-badge" style="background:#D9797B">Skipped Title</span>
+          <span class="jl-flag-badge" style="background:var(--color-rose)">Skipped Title</span>
           <span class="jl-flag-desc" data-i18n="joblens.flag.skippedTitle">Title contains a keyword you're avoiding</span>
         </div>
       </div>
@@ -860,7 +860,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   .jl-feedback-title {
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     font-weight: 500;
     color: var(--text);
   }
@@ -883,7 +883,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   .jl-feedback-textarea {
     width: 100%;
     font-family: inherit;
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     border: 1px solid var(--border);
     border-radius: 4px;
     padding: 0.5rem;
@@ -901,7 +901,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   .jl-feedback-submit {
     margin-top: 0.5rem;
     font-family: inherit;
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     color: var(--text);
     background: none;
     border: 1px solid var(--border);
@@ -922,7 +922,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   .jl-feedback-success {
     color: var(--color-ds-mid);
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
     margin: 0.5rem 0 0;
   }
 
