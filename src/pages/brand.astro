@@ -3,6 +3,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ChangelogPopup from '../components/ChangelogPopup.astro';
 
 const brandChangelog = [
+  { version: 'v0.5',
+    why: 'One breakpoint and fixed headings made mid-size screens awkward.',
+    changes: [
+      'Fluid --fs-xl and --fs-lg via clamp() — headings scale smoothly',
+      'Unified breakpoints to 52rem (tablet) and 32rem (mobile)',
+      'Wide track collapses to content below 52rem — no more edge-to-edge',
+      'Grid System section now uses wide track (was full)',
+    ]},
   { version: 'v0.4',
     why: 'Larger text needs tighter line-height. Now it does.',
     changes: [
@@ -40,7 +48,7 @@ const brandChangelog = [
     <header class="brand-header wide">
       <div class="brand-title-row">
         <h1 data-i18n="brand.title">Brand Guidelines</h1>
-        <ChangelogPopup version="v0.4" id="brand" entries={brandChangelog} />
+        <ChangelogPopup version="v0.5" id="brand" entries={brandChangelog} />
       </div>
     </header>
 
@@ -299,18 +307,16 @@ const brandChangelog = [
     </section>
 
     <!-- Grid System -->
-    <section class="section full">
-      <div class="grid-section-inner">
-        <h2 data-i18n="brand.grid">Grid System</h2>
-        <p class="section-note" data-i18n="brand.gridNote">Named-line CSS Grid with three content tracks.</p>
-        <div class="grid-demo">
-          <div class="grid-demo-track grid-demo-track--full">
-            <span class="grid-demo-label">full · 100%</span>
-            <div class="grid-demo-track grid-demo-track--wide">
-              <span class="grid-demo-label">wide · 44rem</span>
-              <div class="grid-demo-track grid-demo-track--content">
-                <span class="grid-demo-label">content · 36rem</span>
-              </div>
+    <section class="section wide">
+      <h2 data-i18n="brand.grid">Grid System</h2>
+      <p class="section-note" data-i18n="brand.gridNote">Named-line CSS Grid with three content tracks.</p>
+      <div class="grid-demo">
+        <div class="grid-demo-track grid-demo-track--full">
+          <span class="grid-demo-label">full · 100%</span>
+          <div class="grid-demo-track grid-demo-track--wide">
+            <span class="grid-demo-label">wide · 44rem</span>
+            <div class="grid-demo-track grid-demo-track--content">
+              <span class="grid-demo-label">content · 36rem</span>
             </div>
           </div>
         </div>
@@ -608,11 +614,6 @@ const brandChangelog = [
   }
 
   /* --- Grid Demo --- */
-  .grid-section-inner {
-    max-width: var(--grid-wide);
-    margin: 0 auto;
-    padding: 0 var(--content-padding);
-  }
   .grid-demo {
     margin-top: var(--space-sm);
   }
@@ -726,7 +727,7 @@ const brandChangelog = [
   }
 
   /* --- Responsive --- */
-  @media (max-width: 480px) {
+  @media (max-width: 52rem) {
     .principles {
       grid-template-columns: 1fr;
     }
@@ -734,11 +735,25 @@ const brandChangelog = [
       grid-template-columns: repeat(2, 1fr);
     }
     .spacing-row {
-      grid-template-columns: 1fr;
-      gap: 0.2rem;
+      grid-template-columns: 7rem auto;
     }
     .spacing-track {
       display: none;
+    }
+    .scale-step,
+    .type-style-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.15rem;
+    }
+  }
+  @media (max-width: 32rem) {
+    .swatch-grid {
+      grid-template-columns: 1fr;
+    }
+    .spacing-row {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
     }
   }
 </style>
