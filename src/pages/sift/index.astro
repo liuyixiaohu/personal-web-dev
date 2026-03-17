@@ -23,7 +23,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
               <div id="jl-changelog-content"></div>
             </div>
           </div>
-          <a class="jl-github-btn" href="https://github.com/liuyixiaohu/sift" target="_blank" rel="noopener" aria-label="View on GitHub">GitHub</a>
           <span class="jl-feedback-wrap">
             <button class="jl-feedback-btn" id="jl-feedback-toggle" data-i18n="joblens.feedback" aria-label="Send feedback">Feedback</button>
             <div class="jl-feedback-backdrop" id="jl-feedback-backdrop" style="display:none"></div>
@@ -177,6 +176,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <a href="https://chromewebstore.google.com/detail/ainpeagpaoafcblhcebbakofagiocooa?utm_source=kunli_website" class="jl-store-link" target="_blank" rel="noopener">
         <svg class="jl-store-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
         <span>Chrome Web Store</span>
+      </a>
+      <a href="https://github.com/liuyixiaohu/sift" class="jl-github-link" target="_blank" rel="noopener">
+        <svg class="jl-store-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        <span>GitHub</span>
       </a>
     </div>
 
@@ -604,7 +607,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   /* CTA */
   .jl-cta {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
     margin-top: var(--space-xl);
     padding-bottom: var(--space-xl);
   }
@@ -630,6 +636,26 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   .jl-store-icon {
     width: 1.2em;
     height: 1.2em;
+  }
+
+  .jl-github-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: var(--fs-md);
+    font-weight: 500;
+    color: var(--text);
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 0.5em 1.2em;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: border-color 0.2s ease, opacity 0.2s ease;
+  }
+
+  .jl-github-link:hover {
+    border-color: var(--text-light);
+    opacity: 0.85;
   }
 
 
@@ -776,23 +802,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   .jl-feedback-wrap {
     position: relative;
     display: inline-block;
-  }
-
-  .jl-github-btn {
-    font-family: inherit;
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    padding: 0.1em 0.4em;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: border-color 0.15s, color 0.15s;
-  }
-
-  .jl-github-btn:hover {
-    border-color: rgba(0, 0, 0, 0.25);
-    color: var(--text);
   }
 
   .jl-feedback-btn {
