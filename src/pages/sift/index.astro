@@ -23,6 +23,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
               <div id="jl-changelog-content"></div>
             </div>
           </div>
+          <a class="jl-github-btn" href="https://github.com/liuyixiaohu/sift" target="_blank" rel="noopener" aria-label="View on GitHub">GitHub</a>
           <span class="jl-feedback-wrap">
             <button class="jl-feedback-btn" id="jl-feedback-toggle" data-i18n="joblens.feedback" aria-label="Send feedback">Feedback</button>
             <div class="jl-feedback-backdrop" id="jl-feedback-backdrop" style="display:none"></div>
@@ -775,6 +776,23 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   .jl-feedback-wrap {
     position: relative;
     display: inline-block;
+  }
+
+  .jl-github-btn {
+    font-family: inherit;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.1em 0.4em;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .jl-github-btn:hover {
+    border-color: rgba(0, 0, 0, 0.25);
+    color: var(--text);
   }
 
   .jl-feedback-btn {
