@@ -133,14 +133,14 @@
 
     <g {transform}>
       {#each countryPaths as d}
-        <path {d} fill="var(--bubble-visual)" stroke="#b8d4ca" stroke-width="0.5" />
+        <path {d} fill="var(--bubble-visual)" stroke="var(--border)" stroke-width="0.5" />
       {/each}
 
       {#if showProvinces && provincePath}
         <path
           d={provincePath}
           fill="none"
-          stroke="#8aac9a"
+          stroke="var(--color-visual)"
           stroke-width={0.4 / currentScale}
         />
       {/if}
@@ -194,13 +194,13 @@
     translate: -50% 0;
     z-index: 5;
     font-size: var(--fs-xs, 0.78rem);
-    color: #4a6e5d;
+    color: var(--color-visual);
     background: rgba(255, 255, 255, 0.75);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     padding: 0.35em 0.9em;
     border-radius: 4px;
-    border: 1px solid #b8d4ca;
+    border: 1px solid var(--border);
     pointer-events: none;
     animation: hint-fade 4s ease-in-out forwards;
     white-space: nowrap;
@@ -265,10 +265,10 @@
   .zoom-btn {
     width: 28px;
     height: 28px;
-    border: 1px solid #b8d4ca;
+    border: 1px solid var(--border);
     border-radius: 4px;
     background: rgba(255, 255, 255, 0.85);
-    color: #4a6e5d;
+    color: var(--color-visual);
     font-size: 1rem;
     line-height: 1;
     cursor: pointer;
@@ -290,6 +290,6 @@
     width: 28px;
     height: 100px;
     cursor: pointer;
-    accent-color: #8aac9a;
+    accent-color: var(--color-visual);
   }
 </style>
