@@ -386,6 +386,10 @@ export const translations: Record<string, Record<Lang, string>> = {
   'workflow.m4': { en: '3 days dev (Fri–Tue)', zh: '三天开发（周五~周二）' },
   'workflow.m5': { en: 'Wed–Thu: release & test', zh: '周三四发布测试' },
 
+  // --- 404 page ---
+  '404.message': { en: 'This page doesn\'t exist or has been moved.', zh: '页面不存在或已迁移。' },
+  '404.home': { en: 'Back to Home', zh: '返回首页' },
+
   // --- Language toggle button ---
   'lang.toggle': { en: '中', zh: 'EN' },
   'lang.tooltip': { en: 'Switch to Chinese', zh: 'Switch to English' },
