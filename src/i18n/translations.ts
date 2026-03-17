@@ -267,8 +267,8 @@ export const translations: Record<string, Record<Lang, string>> = {
 
   // --- Sift (formerly JobLens) ---
   'joblens.subtitle': {
-    en: 'A Chrome extension that cleans up your LinkedIn feed.',
-    zh: '一个帮你清理 LinkedIn 动态的 Chrome 扩展。',
+    en: 'Your time deserves a better feed.',
+    zh: '你的时间，值得更好的动态。',
   },
   'joblens.inspirationTitle': { en: 'Inspiration', zh: '灵感来源' },
   'joblens.inspiration1': {
