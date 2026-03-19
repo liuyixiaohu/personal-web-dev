@@ -29,10 +29,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     <!-- How It Works (the philosophy) -->
     <section class="section">
       <h2 data-i18n="ingrain.notAiTitle">Not Another AI Tool</h2>
-      <p data-i18n="ingrain.notAi1">If you're expecting InGrain to be "AI-powered" in the way everything claims to be these days, a black box that does something vaguely smart and asks you to trust it, you'll be pleasantly disappointed.</p>
-      <p data-i18n="ingrain.notAi2">The core of InGrain is a <strong>memory algorithm</strong>, built on decades of cognitive science research into how humans forget and retain information. The foundation draws from established work in spaced repetition theory and memory modeling, then upgraded by its creators to fit how people actually learn from AI conversations. This is not a wrapper around existing tools. It's a genuinely improved model. It tracks <em>your</em> forgetting curve for each piece of knowledge individually, and schedules reviews at precisely the moments when you're about to lose something.</p>
-      <p data-i18n="ingrain.notAi3">No hallucinations. No probabilistic hand-waving. Because every decision is grounded in an interpretable model, InGrain can provide evidence-based recommendations for what you should review, when, and why. It doesn't just remind you. It gives you the most effective path to actually retaining what matters.</p>
-      <p data-i18n="ingrain.notAi4">Is there AI involved? Sure, there's a language model that helps extract the key concepts from your conversations so you don't have to type them out yourself. But that's the assistant, not the brain. The brain is the algorithm.</p>
+      <p data-i18n="ingrain.notAi1">InGrain is not primarily an AI product. There is a language model involved, it helps extract key concepts from your conversations so you don't have to do it manually. But that's a utility, not the core.</p>
+      <p data-i18n="ingrain.notAi2">The core is a <strong>memory algorithm</strong>, built on established cognitive science research into how humans forget and retain information. It draws from spaced repetition theory and memory modeling, then adapted and upgraded by its creators to fit how people learn from AI conversations. It tracks your forgetting curve for each piece of knowledge and schedules reviews around the time you'd otherwise start losing it.</p>
+      <p data-i18n="ingrain.notAi3">Because the model is interpretable, InGrain can explain its recommendations: what to review, when, and why. It aims to give you a more effective path to retaining what matters, based on evidence rather than guesswork.</p>
     </section>
 
     <!-- What It Does -->
@@ -49,7 +48,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         </li>
         <li>
           <strong data-i18n="ingrain.feat.schedule">Precision scheduling</strong>
-          <span data-i18n="ingrain.feat.scheduleDesc">The memory algorithm knows when you're about to forget something and brings it back at exactly the right moment. Not too early, not too late.</span>
+          <span data-i18n="ingrain.feat.scheduleDesc">The memory algorithm estimates when you're likely to forget something and schedules a review before that happens.</span>
         </li>
         <li>
           <strong data-i18n="ingrain.feat.recall">Active recall, not passive re-reading</strong>
@@ -98,7 +97,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <span class="ig-pipe-label" data-i18n="ingrain.pipe.remember">Remember</span>
         </div>
       </div>
-      <p data-i18n="ingrain.flowDesc">Chat with any AI as you normally would. Click the InGrain button when you're done. The algorithm takes care of the rest, surfacing the right knowledge at the right time, for as long as you want to keep it.</p>
+      <p data-i18n="ingrain.flowDesc">Chat with any AI as you normally would. Click the InGrain button when you're done. The algorithm handles scheduling from there.</p>
     </section>
 
     <!-- Who It's For -->
