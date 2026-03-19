@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="InGrain" description="Remember what you learn from AI conversations. One-click capture, spaced repetition, and personalized review.">
+<BaseLayout title="InGrain" description="A memory system for what you learn from AI conversations. Not another AI tool — a forgetting-proof algorithm, augmented by its maker.">
   <main class="ig-page grid-page">
     <a href="/" class="back-link">&larr; Back</a>
 
@@ -14,201 +14,291 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <h1>InGrain</h1>
           <span class="ig-badge">Early Preview</span>
         </div>
-        <p class="ig-subtitle">Remember what you learn from AI conversations.</p>
+        <p class="ig-subtitle">A memory system for your AI conversations.</p>
       </div>
     </header>
 
     <!-- The Problem -->
     <section class="section">
-      <h2>The Problem</h2>
-      <p>You ask AI great questions every day — about statistics, coding, design, strategy. You get great answers. And then you forget them. A week later you're asking the same thing again.</p>
-      <p>Your AI chat history is full of insights you never internalized. Scrolling back through old conversations isn't learning — it's searching.</p>
+      <h2>The Forgetting Problem</h2>
+      <p>You ask brilliant questions every day. You get brilliant answers. And then, reliably, you forget them. A week later you're asking the same thing — or worse, you don't even realize you've already learned it once.</p>
+      <p>This isn't a willpower problem. It's how human memory works. Without reinforcement at the right intervals, knowledge decays. Psychologists have studied this for over a century. The forgetting curve is not a metaphor — it's a measurable, predictable phenomenon.</p>
+      <p>InGrain exists because your AI conversations deserve better than a chat log you'll never scroll back to.</p>
     </section>
 
-    <!-- What InGrain Does -->
+    <!-- How It Works (the philosophy) -->
     <section class="section">
-      <h2>What InGrain Does</h2>
-      <p>InGrain captures knowledge from your AI conversations and turns it into something you actually remember.</p>
+      <h2>Not Another AI Tool</h2>
+      <p>If you're expecting InGrain to be "AI-powered" in the way everything claims to be these days — a black box that does something vaguely smart and asks you to trust it — you'll be pleasantly disappointed.</p>
+      <p>The core of InGrain is a <strong>memory algorithm</strong>. It's deterministic, interpretable, and grounded in decades of cognitive science research on how humans forget and retain information. It models <em>your</em> forgetting curve for each piece of knowledge individually, and schedules reviews at precisely the moments when you're about to lose something.</p>
+      <p>No hallucinations. No probabilistic hand-waving. The algorithm tells you exactly <em>why</em> it's showing you something today and <em>when</em> you'll see it next. Every parameter is inspectable, every decision is explainable.</p>
+      <p>Is there AI involved? Sure — there's a language model that helps extract the key concepts from your conversations so you don't have to type them out yourself. But that's the assistant, not the brain. The brain is the algorithm, and it's been carefully tuned by its maker.</p>
+    </section>
+
+    <!-- What It Does -->
+    <section class="section">
+      <h2>What It Does</h2>
       <ul class="ig-features">
-        <li><strong>One-click capture</strong> — A browser button grabs the conversation you just had. No copy-pasting, no manual entry.</li>
-        <li><strong>Automatic extraction</strong> — AI identifies the key concepts worth remembering and organizes them for you.</li>
-        <li><strong>Spaced review</strong> — InGrain brings back the right knowledge at the right time, just before you'd forget it.</li>
-        <li><strong>Active recall</strong> — Instead of re-reading notes, you're challenged to think through what you learned.</li>
-        <li><strong>Your data, your device</strong> — Everything stays on your computer. No cloud accounts required.</li>
+        <li>
+          <strong>One-click capture</strong>
+          <span>A button in your browser grabs the conversation you just had. No copying, no pasting, no thinking about it.</span>
+        </li>
+        <li>
+          <strong>Automatic distillation</strong>
+          <span>Key concepts are extracted and organized — you just confirm which ones matter to you.</span>
+        </li>
+        <li>
+          <strong>Precision scheduling</strong>
+          <span>The memory algorithm knows when you're about to forget something and brings it back at exactly the right moment. Not too early (wasted time), not too late (already forgotten).</span>
+        </li>
+        <li>
+          <strong>Active recall, not passive re-reading</strong>
+          <span>You're challenged to think, not just recognize. This is the difference between "I've seen this before" and "I know this."</span>
+        </li>
+        <li>
+          <strong>Adapts to you</strong>
+          <span>The more you use it, the better it understands how you learn. The algorithm adjusts to your personal forgetting patterns — what's easy for you might be hard for someone else.</span>
+        </li>
+        <li>
+          <strong>Your data stays yours</strong>
+          <span>Everything lives on your computer. No cloud accounts, no data harvesting, no surprise subscription.</span>
+        </li>
       </ul>
     </section>
 
-    <!-- How It Works -->
+    <!-- The Flow -->
     <section class="section">
-      <h2>How It Works</h2>
-      <ol class="ig-steps">
-        <li>
-          <span class="ig-step-num">1</span>
-          <div>
-            <strong>Have a conversation</strong>
-            <p>Chat with Claude, ChatGPT, or any AI as you normally would.</p>
-          </div>
-        </li>
-        <li>
-          <span class="ig-step-num">2</span>
-          <div>
-            <strong>Capture it</strong>
-            <p>Click the InGrain button in your browser. Done.</p>
-          </div>
-        </li>
-        <li>
-          <span class="ig-step-num">3</span>
-          <div>
-            <strong>Review what matters</strong>
-            <p>Open InGrain when you have a few minutes. It knows what you need to review today.</p>
-          </div>
-        </li>
-      </ol>
+      <h2>The Flow</h2>
+      <div class="ig-pipeline">
+        <div class="ig-pipe-step">
+          <span class="ig-pipe-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </span>
+          <span class="ig-pipe-label">Converse</span>
+        </div>
+        <span class="ig-arrow">&rarr;</span>
+        <div class="ig-pipe-step">
+          <span class="ig-pipe-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </span>
+          <span class="ig-pipe-label">Capture</span>
+        </div>
+        <span class="ig-arrow">&rarr;</span>
+        <div class="ig-pipe-step">
+          <span class="ig-pipe-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </span>
+          <span class="ig-pipe-label">Schedule</span>
+        </div>
+        <span class="ig-arrow">&rarr;</span>
+        <div class="ig-pipe-step">
+          <span class="ig-pipe-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </span>
+          <span class="ig-pipe-label">Remember</span>
+        </div>
+      </div>
+      <p>Chat with any AI as you normally would. Click the InGrain button when you're done. The algorithm takes care of the rest — surfacing the right knowledge at the right time, for as long as you want to keep it.</p>
     </section>
 
     <!-- Who It's For -->
     <section class="section">
       <h2>Who It's For</h2>
-      <p>Anyone who uses AI to learn — data scientists exploring new techniques, engineers debugging unfamiliar systems, designers learning new tools, students studying for exams. If you ask AI questions and want to actually retain the answers, InGrain is for you.</p>
+      <p>Anyone who uses AI to learn and wants to actually retain what they learn. Data scientists picking up new techniques. Engineers debugging systems they don't fully understand yet. Designers exploring unfamiliar tools. Students preparing for exams. Professionals switching fields.</p>
+      <p>If your AI conversations are worth having, they're worth remembering.</p>
     </section>
 
     <!-- Status -->
     <section class="section">
       <h2>Current Status</h2>
-      <p>InGrain is in early testing with a small group. If you're interested in trying it out, reach out.</p>
-      <div class="ig-cta">
-        <a href="mailto:px.li@outlook.com" class="ig-contact-btn">Get in Touch</a>
-      </div>
+      <p>InGrain is in early testing with a small group of users. The memory algorithm is live and adapting. If you're interested in trying it — or just curious how it works — reach out.</p>
     </section>
+
+    <!-- CTA -->
+    <div class="ig-cta">
+      <a href="mailto:px.li@outlook.com" class="ig-contact-link">
+        <svg class="ig-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span>Get in Touch</span>
+      </a>
+    </div>
 
   </main>
 </BaseLayout>
 
 <style>
-  .ig-page {
-    padding-bottom: var(--space-xl);
-  }
-
+  /* ── Header ── */
   .ig-header {
     display: flex;
-    align-items: flex-start;
-    gap: 1.25rem;
-    margin-bottom: var(--space-lg);
-    padding-top: 0.5rem;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
   }
 
   .ig-logo {
-    width: 72px;
-    height: 72px;
-    border-radius: 16px;
-    flex-shrink: 0;
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
   }
 
   .ig-title-row {
     display: flex;
     align-items: baseline;
-    gap: 0.75rem;
+    gap: 0.5rem;
+    flex-wrap: wrap;
   }
 
   .ig-title-row h1 {
-    margin: 0;
     font-size: var(--fs-xl);
-    font-family: var(--font-body);
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--color-ds);
   }
 
   .ig-badge {
-    font-size: 0.75rem;
-    padding: 0.2em 0.6em;
-    border-radius: 999px;
-    background: #f0ebe4;
+    font-size: var(--fs-xs);
     color: var(--text-light);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.1em 0.4em;
     white-space: nowrap;
   }
 
   .ig-subtitle {
-    margin: 0.25rem 0 0;
+    font-size: 1rem;
     color: var(--text-light);
-    font-size: var(--fs-base);
+    margin-top: var(--space-xs);
   }
 
+  /* ── Sections (inherit from Sift pattern) ── */
+  .section {
+    border-top: 1px solid var(--border);
+    padding-top: var(--space-lg);
+    margin-bottom: var(--space-xl);
+  }
+
+  .section h2 {
+    font-size: var(--fs-lg);
+    font-weight: 500;
+    margin-bottom: var(--space-sm);
+  }
+
+  .section p {
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: var(--space-xs);
+  }
+
+  .section p strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .section p em {
+    font-style: italic;
+  }
+
+  /* ── Features ── */
   .ig-features {
     list-style: none;
     padding: 0;
-    margin: 1rem 0 0;
+    margin: var(--space-sm) 0 0;
   }
 
   .ig-features li {
-    padding: 0.5rem 0;
+    padding: var(--space-sm) 0;
     line-height: 1.6;
+    color: var(--text-light);
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
   }
 
   .ig-features li + li {
     border-top: 1px solid var(--border);
   }
 
-  .ig-features strong {
+  .ig-features li strong {
     color: var(--text);
+    font-weight: 600;
+    font-size: var(--fs-base);
   }
 
-  .ig-steps {
-    list-style: none;
-    padding: 0;
-    margin: 1.5rem 0 0;
+  .ig-features li span {
+    font-size: var(--fs-xs);
+  }
+
+  /* ── Pipeline ── */
+  .ig-pipeline {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-md);
+  }
+
+  .ig-pipe-step {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    align-items: center;
+    gap: 0.3rem;
   }
 
-  .ig-steps li {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-  }
-
-  .ig-step-num {
+  .ig-pipe-icon {
+    width: 2rem;
+    height: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    background: var(--text);
-    color: var(--bg);
+    color: var(--color-ds);
+  }
+
+  .ig-pipe-icon svg {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .ig-pipe-label {
+    font-size: var(--fs-xs);
     font-weight: 600;
-    font-size: 0.875rem;
-    flex-shrink: 0;
-    margin-top: 0.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text);
   }
 
-  .ig-steps li div strong {
-    display: block;
-    margin-bottom: 0.15rem;
-  }
-
-  .ig-steps li div p {
-    margin: 0;
+  .ig-arrow {
     color: var(--text-light);
-    font-size: 0.95em;
+    font-size: var(--fs-md);
+    margin-bottom: 1.2rem;
   }
 
+  /* ── CTA ── */
   .ig-cta {
-    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-xl);
+    padding-bottom: var(--space-xl);
   }
 
-  .ig-contact-btn {
+  .ig-contact-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.6em 1.4em;
-    background: var(--text);
-    color: var(--bg);
-    border-radius: 8px;
+    gap: 0.5em;
+    font-size: var(--fs-md);
+    font-weight: 500;
+    color: #fff;
+    background: var(--color-ds);
+    padding: 0.5em 1.2em;
+    border-radius: 6px;
     text-decoration: none;
-    font-size: var(--fs-base);
-    transition: opacity 0.2s;
+    transition: opacity 0.2s ease;
   }
 
-  .ig-contact-btn:hover {
+  .ig-contact-link:hover {
     opacity: 0.85;
+  }
+
+  .ig-contact-icon {
+    width: 1.2em;
+    height: 1.2em;
   }
 </style>
