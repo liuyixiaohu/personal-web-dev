@@ -376,6 +376,9 @@ export const translations: Record<string, Record<Lang, string>> = {
   'ingrain.who2': { en: 'If your AI conversations are worth having, they\'re worth remembering.', zh: '如果你的 AI 对话值得进行，那就值得记住。' },
   'ingrain.statusTitle': { en: 'Current Status', zh: '当前状态' },
   'ingrain.status': { en: 'InGrain is in early testing with a small, invited group of users. The memory algorithm is live and adapting. Access is currently invite-only.', zh: 'InGrain 正在与一小群受邀用户进行早期测试。记忆算法已上线并持续优化中。目前仅限邀请使用。' },
+  'ingrain.privacyTitle': { en: 'Privacy', zh: '隐私' },
+  'ingrain.privacyDesc': { en: 'Your knowledge stays on your device. When AI processing is needed, content passes through our server but is never stored. Optional telemetry collects only behavioral data, never conversation content.', zh: '你的知识留在你的设备上。需要 AI 处理时，内容会经过我们的服务器但不会被存储。可选的遥测仅收集行为数据，不收集对话内容。' },
+  'ingrain.privacyLink': { en: 'Full privacy policy \u2192', zh: '完整隐私政策 \u2192' },
 
   // --- Workflow (visual-design page) ---
   'workflow.sprintCadence': { en: 'Sprint Cadence', zh: 'Sprint Cadence' },
