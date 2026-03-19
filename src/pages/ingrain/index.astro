@@ -2,9 +2,9 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="InGrain" description="A memory system for what you learn from AI conversations. Not another AI tool — a forgetting-proof algorithm, augmented by its maker.">
+<BaseLayout title="InGrain" description="A memory system for what you learn from AI conversations. Built on cognitive science research, refined by Kun.">
   <main class="ig-page grid-page">
-    <a href="/" class="back-link">&larr; Back</a>
+    <a href="/" class="back-link" data-i18n="nav.back">&larr; Back</a>
 
     <!-- Header -->
     <header class="ig-header">
@@ -14,104 +14,104 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <h1>InGrain</h1>
           <span class="ig-badge">Early Preview</span>
         </div>
-        <p class="ig-subtitle">A memory system for your AI conversations.</p>
+        <p class="ig-subtitle" data-i18n="ingrain.subtitle">A memory system for your AI conversations.</p>
       </div>
     </header>
 
     <!-- The Problem -->
     <section class="section">
-      <h2>The Forgetting Problem</h2>
-      <p>You ask brilliant questions every day. You get brilliant answers. And then, reliably, you forget them. A week later you're asking the same thing — or worse, you don't even realize you've already learned it once.</p>
-      <p>This isn't a willpower problem. It's how human memory works. Without reinforcement at the right intervals, knowledge decays. Psychologists have studied this for over a century. The forgetting curve is not a metaphor — it's a measurable, predictable phenomenon.</p>
-      <p>InGrain exists because your AI conversations deserve better than a chat log you'll never scroll back to.</p>
+      <h2 data-i18n="ingrain.problemTitle">The Forgetting Problem</h2>
+      <p data-i18n="ingrain.problem1">You ask brilliant questions every day. You get brilliant answers. And then, reliably, you forget them. A week later you're asking the same thing, or worse, you don't even realize you've already learned it once.</p>
+      <p data-i18n="ingrain.problem2">This isn't a willpower problem. It's how human memory works. Without reinforcement at the right intervals, knowledge decays. Psychologists have studied this for over a century. The forgetting curve is not a metaphor. It's a measurable, predictable phenomenon.</p>
+      <p data-i18n="ingrain.problem3">InGrain exists because your AI conversations deserve better than a chat log you'll never scroll back to.</p>
     </section>
 
     <!-- How It Works (the philosophy) -->
     <section class="section">
-      <h2>Not Another AI Tool</h2>
-      <p>If you're expecting InGrain to be "AI-powered" in the way everything claims to be these days — a black box that does something vaguely smart and asks you to trust it — you'll be pleasantly disappointed.</p>
-      <p>The core of InGrain is a <strong>memory algorithm</strong>. It's deterministic, interpretable, and grounded in decades of cognitive science research on how humans forget and retain information. It models <em>your</em> forgetting curve for each piece of knowledge individually, and schedules reviews at precisely the moments when you're about to lose something.</p>
-      <p>No hallucinations. No probabilistic hand-waving. The algorithm tells you exactly <em>why</em> it's showing you something today and <em>when</em> you'll see it next. Every parameter is inspectable, every decision is explainable.</p>
-      <p>Is there AI involved? Sure — there's a language model that helps extract the key concepts from your conversations so you don't have to type them out yourself. But that's the assistant, not the brain. The brain is the algorithm, and it's been carefully tuned by its maker.</p>
+      <h2 data-i18n="ingrain.notAiTitle">Not Another AI Tool</h2>
+      <p data-i18n="ingrain.notAi1">If you're expecting InGrain to be "AI-powered" in the way everything claims to be these days, a black box that does something vaguely smart and asks you to trust it, you'll be pleasantly disappointed.</p>
+      <p data-i18n="ingrain.notAi2">The core of InGrain is a <strong>memory algorithm</strong>, built on decades of cognitive science research into how humans forget and retain information. The foundation draws from established work in spaced repetition theory and memory modeling, then refined and augmented by Kun to fit how people actually learn from AI conversations. It models <em>your</em> forgetting curve for each piece of knowledge individually, and schedules reviews at precisely the moments when you're about to lose something.</p>
+      <p data-i18n="ingrain.notAi3">No hallucinations. No probabilistic hand-waving. The algorithm tells you exactly <em>why</em> it's showing you something today and <em>when</em> you'll see it next. Every parameter is inspectable, every decision is explainable.</p>
+      <p data-i18n="ingrain.notAi4">Is there AI involved? Sure, there's a language model that helps extract the key concepts from your conversations so you don't have to type them out yourself. But that's the assistant, not the brain. The brain is the algorithm.</p>
     </section>
 
     <!-- What It Does -->
     <section class="section">
-      <h2>What It Does</h2>
+      <h2 data-i18n="ingrain.featuresTitle">What It Does</h2>
       <ul class="ig-features">
         <li>
-          <strong>One-click capture</strong>
-          <span>A button in your browser grabs the conversation you just had. No copying, no pasting, no thinking about it.</span>
+          <strong data-i18n="ingrain.feat.capture">One-click capture</strong>
+          <span data-i18n="ingrain.feat.captureDesc">A button in your browser grabs the conversation you just had. No copying, no pasting, no thinking about it.</span>
         </li>
         <li>
-          <strong>Automatic distillation</strong>
-          <span>Key concepts are extracted and organized — you just confirm which ones matter to you.</span>
+          <strong data-i18n="ingrain.feat.distill">Automatic distillation</strong>
+          <span data-i18n="ingrain.feat.distillDesc">Key concepts are extracted and organized. You just confirm which ones matter to you.</span>
         </li>
         <li>
-          <strong>Precision scheduling</strong>
-          <span>The memory algorithm knows when you're about to forget something and brings it back at exactly the right moment. Not too early (wasted time), not too late (already forgotten).</span>
+          <strong data-i18n="ingrain.feat.schedule">Precision scheduling</strong>
+          <span data-i18n="ingrain.feat.scheduleDesc">The memory algorithm knows when you're about to forget something and brings it back at exactly the right moment. Not too early, not too late.</span>
         </li>
         <li>
-          <strong>Active recall, not passive re-reading</strong>
-          <span>You're challenged to think, not just recognize. This is the difference between "I've seen this before" and "I know this."</span>
+          <strong data-i18n="ingrain.feat.recall">Active recall, not passive re-reading</strong>
+          <span data-i18n="ingrain.feat.recallDesc">You're challenged to think, not just recognize. This is the difference between "I've seen this before" and "I know this."</span>
         </li>
         <li>
-          <strong>Adapts to you</strong>
-          <span>The more you use it, the better it understands how you learn. The algorithm adjusts to your personal forgetting patterns — what's easy for you might be hard for someone else.</span>
+          <strong data-i18n="ingrain.feat.adapt">Adapts to you</strong>
+          <span data-i18n="ingrain.feat.adaptDesc">The more you use it, the better it understands how you learn. The algorithm adjusts to your personal forgetting patterns. What's easy for you might be hard for someone else.</span>
         </li>
         <li>
-          <strong>Your data stays yours</strong>
-          <span>Everything lives on your computer. No cloud accounts, no data harvesting, no surprise subscription.</span>
+          <strong data-i18n="ingrain.feat.privacy">Your data stays yours</strong>
+          <span data-i18n="ingrain.feat.privacyDesc">Everything lives on your computer. No cloud accounts, no data harvesting, no surprise subscription.</span>
         </li>
       </ul>
     </section>
 
     <!-- The Flow -->
     <section class="section">
-      <h2>The Flow</h2>
+      <h2 data-i18n="ingrain.flowTitle">The Flow</h2>
       <div class="ig-pipeline">
         <div class="ig-pipe-step">
           <span class="ig-pipe-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           </span>
-          <span class="ig-pipe-label">Converse</span>
+          <span class="ig-pipe-label" data-i18n="ingrain.pipe.converse">Converse</span>
         </div>
         <span class="ig-arrow">&rarr;</span>
         <div class="ig-pipe-step">
           <span class="ig-pipe-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
           </span>
-          <span class="ig-pipe-label">Capture</span>
+          <span class="ig-pipe-label" data-i18n="ingrain.pipe.capture">Capture</span>
         </div>
         <span class="ig-arrow">&rarr;</span>
         <div class="ig-pipe-step">
           <span class="ig-pipe-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           </span>
-          <span class="ig-pipe-label">Schedule</span>
+          <span class="ig-pipe-label" data-i18n="ingrain.pipe.schedule">Schedule</span>
         </div>
         <span class="ig-arrow">&rarr;</span>
         <div class="ig-pipe-step">
           <span class="ig-pipe-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
           </span>
-          <span class="ig-pipe-label">Remember</span>
+          <span class="ig-pipe-label" data-i18n="ingrain.pipe.remember">Remember</span>
         </div>
       </div>
-      <p>Chat with any AI as you normally would. Click the InGrain button when you're done. The algorithm takes care of the rest — surfacing the right knowledge at the right time, for as long as you want to keep it.</p>
+      <p data-i18n="ingrain.flowDesc">Chat with any AI as you normally would. Click the InGrain button when you're done. The algorithm takes care of the rest, surfacing the right knowledge at the right time, for as long as you want to keep it.</p>
     </section>
 
     <!-- Who It's For -->
     <section class="section">
-      <h2>Who It's For</h2>
-      <p>Anyone who uses AI to learn and wants to actually retain what they learn. Data scientists picking up new techniques. Engineers debugging systems they don't fully understand yet. Designers exploring unfamiliar tools. Students preparing for exams. Professionals switching fields.</p>
-      <p>If your AI conversations are worth having, they're worth remembering.</p>
+      <h2 data-i18n="ingrain.whoTitle">Who It's For</h2>
+      <p data-i18n="ingrain.who1">Anyone who uses AI to learn and wants to actually retain what they learn. Data scientists picking up new techniques. Engineers debugging systems they don't fully understand yet. Designers exploring unfamiliar tools. Students preparing for exams. Professionals switching fields.</p>
+      <p data-i18n="ingrain.who2">If your AI conversations are worth having, they're worth remembering.</p>
     </section>
 
     <!-- Status -->
     <section class="section">
-      <h2>Current Status</h2>
-      <p>InGrain is in early testing with a small group of users. The memory algorithm is live and adapting. If you're interested in trying it — or just curious how it works — reach out.</p>
+      <h2 data-i18n="ingrain.statusTitle">Current Status</h2>
+      <p data-i18n="ingrain.status">InGrain is in early testing with a small, invited group of users. The memory algorithm is live and adapting. Access is currently invite-only.</p>
     </section>
 
     <!-- CTA -->
