@@ -38,6 +38,7 @@ export interface EventData {
 export const DATA_URL = '/data/events.json';
 export const STALE_THRESHOLD_MS = 48 * 60 * 60 * 1000; // 48 hours
 export const TZ = 'America/Los_Angeles';
+export const BLOCKED_CALENDARS = new Set(['社交感染聚会']);
 
 // --- Helpers ---
 export function locale(lang: Lang): string {

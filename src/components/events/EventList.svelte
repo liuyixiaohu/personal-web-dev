@@ -4,7 +4,7 @@
   import type { Lang } from '../../i18n/translations';
   import {
     type LumaEvent, type EventData,
-    DATA_URL, STALE_THRESHOLD_MS,
+    DATA_URL, STALE_THRESHOLD_MS, BLOCKED_CALENDARS,
     loadPref, matchesPrice, enrichEvents,
     buildLocationIndex, buildPriceCounts,
     eventDateKey, formatUpdatedAt, formatDateGroup,
@@ -103,9 +103,10 @@
           ? new Date(e.first_seen_at).getTime() > prevCheck
           : false;
 
+      const notBlocked = (e: LumaEvent) => !BLOCKED_CALENDARS.has(e.calendar_name);
       const filtered = prevCheck > 0
-        ? data.events.filter(e => isNew(e) && isFuture(e))
-        : data.events.filter(isFuture);
+        ? data.events.filter(e => notBlocked(e) && isNew(e) && isFuture(e))
+        : data.events.filter(e => notBlocked(e) && isFuture(e));
       enrichEvents(filtered);
       events = filtered;
       updatedAt = data.updated_at;
