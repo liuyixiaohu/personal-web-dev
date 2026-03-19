@@ -1,0 +1,214 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="InGrain" description="Remember what you learn from AI conversations. One-click capture, spaced repetition, and personalized review.">
+  <main class="ig-page grid-page">
+    <a href="/" class="back-link">&larr; Back</a>
+
+    <!-- Header -->
+    <header class="ig-header">
+      <img src="/images/ingrain-icon.png" alt="InGrain icon" class="ig-logo" />
+      <div>
+        <div class="ig-title-row">
+          <h1>InGrain</h1>
+          <span class="ig-badge">Early Preview</span>
+        </div>
+        <p class="ig-subtitle">Remember what you learn from AI conversations.</p>
+      </div>
+    </header>
+
+    <!-- The Problem -->
+    <section class="section">
+      <h2>The Problem</h2>
+      <p>You ask AI great questions every day — about statistics, coding, design, strategy. You get great answers. And then you forget them. A week later you're asking the same thing again.</p>
+      <p>Your AI chat history is full of insights you never internalized. Scrolling back through old conversations isn't learning — it's searching.</p>
+    </section>
+
+    <!-- What InGrain Does -->
+    <section class="section">
+      <h2>What InGrain Does</h2>
+      <p>InGrain captures knowledge from your AI conversations and turns it into something you actually remember.</p>
+      <ul class="ig-features">
+        <li><strong>One-click capture</strong> — A browser button grabs the conversation you just had. No copy-pasting, no manual entry.</li>
+        <li><strong>Automatic extraction</strong> — AI identifies the key concepts worth remembering and organizes them for you.</li>
+        <li><strong>Spaced review</strong> — InGrain brings back the right knowledge at the right time, just before you'd forget it.</li>
+        <li><strong>Active recall</strong> — Instead of re-reading notes, you're challenged to think through what you learned.</li>
+        <li><strong>Your data, your device</strong> — Everything stays on your computer. No cloud accounts required.</li>
+      </ul>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section">
+      <h2>How It Works</h2>
+      <ol class="ig-steps">
+        <li>
+          <span class="ig-step-num">1</span>
+          <div>
+            <strong>Have a conversation</strong>
+            <p>Chat with Claude, ChatGPT, or any AI as you normally would.</p>
+          </div>
+        </li>
+        <li>
+          <span class="ig-step-num">2</span>
+          <div>
+            <strong>Capture it</strong>
+            <p>Click the InGrain button in your browser. Done.</p>
+          </div>
+        </li>
+        <li>
+          <span class="ig-step-num">3</span>
+          <div>
+            <strong>Review what matters</strong>
+            <p>Open InGrain when you have a few minutes. It knows what you need to review today.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Who It's For -->
+    <section class="section">
+      <h2>Who It's For</h2>
+      <p>Anyone who uses AI to learn — data scientists exploring new techniques, engineers debugging unfamiliar systems, designers learning new tools, students studying for exams. If you ask AI questions and want to actually retain the answers, InGrain is for you.</p>
+    </section>
+
+    <!-- Status -->
+    <section class="section">
+      <h2>Current Status</h2>
+      <p>InGrain is in early testing with a small group. If you're interested in trying it out, reach out.</p>
+      <div class="ig-cta">
+        <a href="mailto:px.li@outlook.com" class="ig-contact-btn">Get in Touch</a>
+      </div>
+    </section>
+
+  </main>
+</BaseLayout>
+
+<style>
+  .ig-page {
+    padding-bottom: var(--space-xl);
+  }
+
+  .ig-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    margin-bottom: var(--space-lg);
+    padding-top: 0.5rem;
+  }
+
+  .ig-logo {
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+    flex-shrink: 0;
+  }
+
+  .ig-title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  .ig-title-row h1 {
+    margin: 0;
+    font-size: var(--fs-xl);
+    font-family: var(--font-body);
+  }
+
+  .ig-badge {
+    font-size: 0.75rem;
+    padding: 0.2em 0.6em;
+    border-radius: 999px;
+    background: #f0ebe4;
+    color: var(--text-light);
+    white-space: nowrap;
+  }
+
+  .ig-subtitle {
+    margin: 0.25rem 0 0;
+    color: var(--text-light);
+    font-size: var(--fs-base);
+  }
+
+  .ig-features {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+  }
+
+  .ig-features li {
+    padding: 0.5rem 0;
+    line-height: 1.6;
+  }
+
+  .ig-features li + li {
+    border-top: 1px solid var(--border);
+  }
+
+  .ig-features strong {
+    color: var(--text);
+  }
+
+  .ig-steps {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .ig-steps li {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .ig-step-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: var(--text);
+    color: var(--bg);
+    font-weight: 600;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .ig-steps li div strong {
+    display: block;
+    margin-bottom: 0.15rem;
+  }
+
+  .ig-steps li div p {
+    margin: 0;
+    color: var(--text-light);
+    font-size: 0.95em;
+  }
+
+  .ig-cta {
+    margin-top: 1.5rem;
+  }
+
+  .ig-contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6em 1.4em;
+    background: var(--text);
+    color: var(--bg);
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: var(--fs-base);
+    transition: opacity 0.2s;
+  }
+
+  .ig-contact-btn:hover {
+    opacity: 0.85;
+  }
+</style>
