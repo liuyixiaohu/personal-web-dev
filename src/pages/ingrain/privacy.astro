@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/privacy.css';
+---
+
+<BaseLayout title="InGrain Privacy Policy" description="InGrain privacy policy. Your data stays on your device.">
+  <main class="privacy-page grid-page">
+    <a href="/ingrain/" class="back-link">&larr; InGrain</a>
+
+    <header class="privacy-header">
+      <h1 style="color: var(--color-ds)">Privacy Policy</h1>
+      <p class="privacy-updated">Last updated: March 19, 2026</p>
+    </header>
+
+    <section class="section">
+      <h2>What InGrain Does</h2>
+      <p>InGrain is a desktop application and Chrome extension that helps you capture and retain knowledge from AI conversations. It uses a memory algorithm to schedule reviews at effective intervals.</p>
+    </section>
+
+    <section class="section">
+      <h2>Data Storage</h2>
+      <p>Your knowledge points, conversation content, and review history are stored <strong>locally on your device</strong> in a SQLite database. This data is not uploaded to any server unless you explicitly choose to participate in the telemetry program described below.</p>
+    </section>
+
+    <section class="section">
+      <h2>AI Processing</h2>
+      <p>When you capture a conversation, the text is sent to OpenAI's API for knowledge extraction. This is the only time your conversation content leaves your device. The request is made through our server, which holds the API key on your behalf. We do not store the content of your conversations on our server.</p>
+      <p>During review sessions, your responses are sent to OpenAI for interactive dialogue. The same principle applies: content passes through but is not stored by us.</p>
+      <p>OpenAI's <a href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener" class="privacy-link">privacy policy</a> and <a href="https://openai.com/policies/terms-of-use" target="_blank" rel="noopener" class="privacy-link">terms of use</a> apply to data processed by their API.</p>
+    </section>
+
+    <section class="section">
+      <h2>Telemetry (Optional)</h2>
+      <p>If you enter a tester code, InGrain periodically syncs <strong>behavioral data only</strong> to our server for product improvement. This includes:</p>
+      <ul class="privacy-list">
+        <li>App open timestamps</li>
+        <li>Review ratings and response times</li>
+        <li>Feature usage counts (captures, inbox actions)</li>
+        <li>Knowledge point categories and review scheduling data</li>
+      </ul>
+      <p>Telemetry <strong>never</strong> includes:</p>
+      <ul class="privacy-list">
+        <li>Conversation content or text</li>
+        <li>Knowledge point titles or summaries</li>
+        <li>URLs or links you visited</li>
+        <li>Any personally identifiable information</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Chrome Extension</h2>
+      <p>The InGrain Chrome extension runs on claude.ai pages. When you click the capture button, it reads the conversation text from the current page and sends it to the local InGrain application via Chrome's Native Messaging protocol. The data travels through a local system pipe, not over the network.</p>
+      <ul class="privacy-list">
+        <li><strong>nativeMessaging</strong>: to communicate with the local InGrain application</li>
+        <li><strong>Host permission (claude.ai)</strong>: to read conversation content when you click capture</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Data Export</h2>
+      <p>You can export your behavioral data at any time from Settings. The export contains only scheduling and usage statistics, not conversation content. You control what you share.</p>
+    </section>
+
+    <section class="section">
+      <h2>Changes</h2>
+      <p>If this policy changes, the updated version will be posted here.</p>
+    </section>
+
+    <section class="section">
+      <h2>Contact</h2>
+      <p>Questions? Reach out at <a href="mailto:px.li@outlook.com" class="privacy-link">px.li@outlook.com</a>.</p>
+    </section>
+
+  </main>
+</BaseLayout>
