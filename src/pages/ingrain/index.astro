@@ -113,6 +113,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <p data-i18n="ingrain.status">InGrain is in early testing with a small, invited group of users. The memory algorithm is live and adapting. Access is currently invite-only.</p>
     </section>
 
+    <!-- Privacy -->
+    <section class="section">
+      <h2 data-i18n="ingrain.privacyTitle">Privacy</h2>
+      <p data-i18n="ingrain.privacyDesc">Your knowledge stays on your device. When AI processing is needed, content passes through our server but is never stored. Optional telemetry collects only behavioral data, never conversation content.</p>
+      <a href="/ingrain/privacy" class="ig-privacy-link" data-i18n="ingrain.privacyLink">Full privacy policy &rarr;</a>
+    </section>
+
     <!-- CTA -->
     <div class="ig-cta">
       <a href="mailto:px.li@outlook.com" class="ig-contact-link">
@@ -294,6 +301,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   .ig-contact-link:hover {
     opacity: 0.85;
+  }
+
+  .ig-privacy-link {
+    color: var(--color-ds);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: var(--fs-xs);
+  }
+
+  .ig-privacy-link:hover {
+    opacity: 0.7;
   }
 
   .ig-contact-icon {
