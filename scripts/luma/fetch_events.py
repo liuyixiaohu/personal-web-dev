@@ -32,7 +32,7 @@ SOURCES = [
 ]
 MAX_PAGES = 50  # effectively unlimited; stops when API returns has_more=false
 REQUEST_DELAY = 1.0
-DATA_FILE = Path(__file__).resolve().parent.parent.parent / "public" / "data" / "events.json"
+DATA_FILE = Path(__file__).resolve().parent.parent.parent / "public" / "data" / "luma_events.json"
 
 BASE_URL = "https://api.lu.ma"
 MAX_RETRIES = 1
@@ -122,6 +122,7 @@ def normalize_event(raw_entry: dict) -> dict:
         "is_free": ticket_info.get("is_free", True),
         "price_cents": price.get("cents") if price else None,
         "price_currency": price.get("currency", "usd") if price else None,
+        "source": "luma",
     }
 
 
@@ -188,6 +189,8 @@ def main() -> None:
             event["first_seen_at"] = old_entry["first_seen_at"]
         else:
             event["first_seen_at"] = now_iso
+        if old_entry and old_entry.get("source"):
+            event["source"] = old_entry["source"]
 
     current_ids = set(merged.keys())
     new_ids = sorted(current_ids - old_ids)
