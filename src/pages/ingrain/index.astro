@@ -1,5 +1,30 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ChangelogPopup from '../../components/ChangelogPopup.astro';
+
+const changelogEntries = [
+  {
+    version: 'v0.2',
+    why: 'Seamless capture and remote data collection for early testers.',
+    changes: [
+      'Chrome extension for one-click capture from AI conversations',
+      'Automatic background sync of usage data',
+      'Shared API key via tester code — no setup needed',
+      'System notifications for scheduled reviews',
+    ],
+  },
+  {
+    version: 'v0.1',
+    why: 'Initial release with core learning loop.',
+    changes: [
+      'Memory algorithm with personalized scheduling',
+      'AI-powered knowledge extraction from conversations',
+      'Active recall reviews with Socratic dialogue',
+      'Import from text, files, and share links',
+      'Local-first architecture — content stays on your device',
+    ],
+  },
+];
 ---
 
 <BaseLayout title="InGrain" description="A memory system for what you learn from AI conversations. Built on cognitive science research, upgraded by its creators.">
@@ -13,6 +38,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <div class="ig-title-row">
           <h1>InGrain</h1>
           <span class="ig-badge">Early Preview</span>
+          <ChangelogPopup version="v0.2" id="ig" entries={changelogEntries} />
         </div>
         <p class="ig-subtitle" data-i18n="ingrain.subtitle">A memory system for your AI conversations.</p>
       </div>
