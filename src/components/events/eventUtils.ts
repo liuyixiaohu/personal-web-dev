@@ -19,6 +19,7 @@ export interface LumaEvent {
   price_currency: string | null;
   categories: string[];
   first_seen_at?: string;
+  source?: string;
   // Pre-computed (set by enrichEvents)
   _startMs?: number;
   _dayOfWeek?: number;    // 0=Sun..6=Sat, in LA timezone
