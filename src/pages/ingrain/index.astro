@@ -4,6 +4,17 @@ import ChangelogPopup from '../../components/ChangelogPopup.astro';
 
 const changelogEntries = [
   {
+    version: 'v0.3',
+    why: 'Chrome Web Store release and quality improvements.',
+    changes: [
+      'Chrome extension published to the Web Store',
+      'Keyboard shortcut (Alt+Q) for quick capture',
+      'Extension popup with connection status',
+      'Improved error handling and reliability',
+      'Chinese language support',
+    ],
+  },
+  {
     version: 'v0.2',
     why: 'Seamless capture and remote data collection for early testers.',
     changes: [
@@ -38,7 +49,7 @@ const changelogEntries = [
         <div class="ig-title-row">
           <h1>InGrain</h1>
           <span class="ig-badge">Early Preview</span>
-          <ChangelogPopup version="v0.2" id="ig" entries={changelogEntries} />
+          <ChangelogPopup version="v0.3" id="ig" entries={changelogEntries} />
         </div>
         <p class="ig-subtitle" data-i18n="ingrain.subtitle">A memory system for your AI conversations.</p>
       </div>
