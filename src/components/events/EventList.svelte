@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { subscribe, initLang, getLang, t } from '../../i18n/langStore';
+  import { onLangChange, getLang, t } from '../../i18n/langStore';
   import type { Lang } from '../../i18n/translations';
   import {
     type LumaEvent, type EventData,
@@ -13,6 +13,9 @@
   import EventCard from './EventCard.svelte';
   import { VERSION, CHANGELOG } from './changelog';
   import Popup from './Popup.svelte';
+  import FeedbackForm from './FeedbackForm.svelte';
+  import AnnounceModal from './AnnounceModal.svelte';
+  import { track } from '../../utils/analytics';
 
   // --- State ---
   let lang = $state<Lang>('en');
@@ -36,48 +39,11 @@
   let changelogOpen = $state(false);
   let whyOpen = $state(false);
   let feedbackOpen = $state(false);
-  let feedbackSending = $state(false);
-  let feedbackSent = $state(false);
-  let feedbackError = $state(false);
-
-  const ANNOUNCE_KEY = 'events.announce.v1.3';
-  let announceOpen = $state(
-    typeof localStorage !== 'undefined' && !localStorage.getItem(ANNOUNCE_KEY)
-  );
-  function dismissAnnounce() {
-    announceOpen = false;
-    localStorage.setItem(ANNOUNCE_KEY, '1');
-  }
-
-  async function handleFeedback(e: Event) {
-    e.preventDefault();
-    feedbackSending = true;
-    feedbackError = false;
-    const form = e.target as HTMLFormElement;
-    try {
-      const res = await fetch('https://formspree.io/f/xbdzgjpr', {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { Accept: 'application/json' },
-      });
-      if (!res.ok) throw new Error();
-      feedbackSent = true;
-    } catch {
-      feedbackError = true;
-    } finally {
-      feedbackSending = false;
-    }
-  }
+  let feedbackFormRef: FeedbackForm | undefined = $state();
 
 
   // --- Language ---
-  initLang();
-  lang = getLang();
-
-  $effect(() => {
-    const unsub = subscribe((newLang) => { lang = newLang; });
-    return unsub;
-  });
+  $effect(() => onLangChange(() => { lang = getLang(); }));
 
   // --- Persist filter/sort to localStorage ---
   $effect(() => {
@@ -209,7 +175,7 @@
 
   // --- Filter callbacks ---
   function pushFilter(filter_type: string, filter_value?: string | number | null) {
-    (window as any).dataLayer?.push({ event: 'filter_use', filter_type, filter_value: filter_value ?? undefined });
+    track('filter_use', { filter_type, filter_value: filter_value ?? undefined });
   }
 
   let searchDebounceTimer: ReturnType<typeof setTimeout> | undefined;
@@ -241,23 +207,7 @@
   }
 </script>
 
-{#key lang}
-
-{#if announceOpen}
-  <!-- svelte-ignore a11y_click_events_have_key_events -->
-  <!-- svelte-ignore a11y_no_static_element_interactions -->
-  <div class="announce-overlay" onclick={dismissAnnounce}>
-    <div class="announce-card" onclick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
-      <h3 class="announce-title">{t('events.announceTitle')}</h3>
-      <ol class="announce-list">
-        <li>{t('events.announceP1')}</li>
-        <li>{t('events.announceP2')}</li>
-        <li>{t('events.announceP3')}</li>
-      </ol>
-      <button class="announce-btn" onclick={dismissAnnounce}>{t('events.announceOk')}</button>
-    </div>
-  </div>
-{/if}
+<AnnounceModal storageKey="events.announce.v1.3" />
 
 <div class="event-list">
   <header class="event-header">
@@ -282,24 +232,11 @@
         </Popup>
       </div>
       <span class="feedback-wrap">
-        <button class="why-btn" onclick={() => { feedbackOpen = !feedbackOpen; feedbackSent = false; feedbackError = false; }}>
+        <button class="why-btn" onclick={() => { feedbackOpen = !feedbackOpen; feedbackFormRef?.reset(); }}>
           {t('events.feedback')}
         </button>
         <Popup open={feedbackOpen} title={t('events.feedbackTitle')} onClose={() => feedbackOpen = false} width="18rem">
-          {#if feedbackSent}
-            <p class="feedback-success">{t('events.feedbackSent')}</p>
-          {:else}
-            <form onsubmit={handleFeedback}>
-              <textarea name="message" required placeholder={t('events.feedbackPlaceholder')} rows="4" class="feedback-textarea"></textarea>
-              <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-              <button type="submit" class="feedback-submit" disabled={feedbackSending}>
-                {feedbackSending ? '...' : t('events.feedbackSend')}
-              </button>
-            </form>
-            {#if feedbackError}
-              <p class="feedback-error-msg">{t('events.feedbackError')}</p>
-            {/if}
-          {/if}
+          <FeedbackForm bind:this={feedbackFormRef} />
         </Popup>
       </span>
     </div>
@@ -391,7 +328,6 @@
 
   {/if}
 </div>
-{/key}
 
 <style>
   .event-list {
@@ -434,59 +370,6 @@
   .feedback-wrap {
     position: relative;
     display: inline-block;
-  }
-
-
-  .feedback-textarea {
-    width: 100%;
-    font-family: inherit;
-    font-size: var(--fs-xs);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 0.5rem;
-    resize: vertical;
-    background: var(--bg);
-    color: var(--text);
-    box-sizing: border-box;
-  }
-
-  .feedback-textarea:focus {
-    outline: none;
-    border-color: var(--text-light);
-  }
-
-  .feedback-submit {
-    margin-top: 0.5rem;
-    font-family: inherit;
-    font-size: var(--fs-xs);
-    color: var(--text);
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 0.3em 0.8em;
-    cursor: pointer;
-    transition: border-color 0.15s;
-  }
-
-  .feedback-submit:hover {
-    border-color: rgba(0, 0, 0, 0.25);
-  }
-
-  .feedback-submit:disabled {
-    opacity: 0.5;
-    cursor: default;
-  }
-
-  .feedback-success {
-    color: var(--color-ds-mid);
-    font-size: var(--fs-xs);
-    margin: 0.5rem 0 0;
-  }
-
-  .feedback-error-msg {
-    color: var(--color-pm);
-    font-size: var(--fs-xs);
-    margin: 0.4rem 0 0;
   }
 
 
@@ -699,68 +582,6 @@
 
   .privacy-link:hover {
     opacity: 0.7;
-  }
-
-  /* Announcement modal */
-  .announce-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(250, 247, 242, 0.8);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    padding: 1.5rem;
-  }
-
-  .announce-card {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
-    max-width: 28rem;
-    width: 100%;
-    padding: clamp(1.25rem, 3vw, 2rem);
-  }
-
-  .announce-title {
-    font-size: var(--fs-md);
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 0.75rem;
-  }
-
-  .announce-list {
-    list-style: decimal;
-    padding-left: 1.2em;
-    color: var(--text-light);
-    font-size: var(--fs-sm);
-    line-height: 1.7;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .announce-btn {
-    display: block;
-    width: 100%;
-    padding: 0.5em 0;
-    font-family: inherit;
-    font-size: var(--fs-sm);
-    font-weight: 500;
-    color: var(--text);
-    background: rgba(0, 0, 0, 0.04);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.15s ease;
-  }
-
-  .announce-btn:hover {
-    background: rgba(0, 0, 0, 0.08);
   }
 
 </style>

@@ -5,6 +5,7 @@
 // ============================================
 
 import { translations, type Lang } from './translations';
+import { track } from '../utils/analytics';
 
 let currentLang: Lang = 'en';
 const listeners = new Set<(lang: Lang) => void>();
@@ -32,7 +33,7 @@ export function setLang(lang: Lang): void {
 export function toggleLang(): void {
   const newLang = currentLang === 'en' ? 'zh' : 'en';
   setLang(newLang);
-  (window as any).dataLayer?.push({ event: 'language_toggle', language: newLang });
+  track('language_toggle', { language: newLang });
 }
 
 /** Initialize language from localStorage (call once on mount) */
@@ -49,6 +50,16 @@ export function initLang(): void {
 export function subscribe(fn: (lang: Lang) => void): () => void {
   listeners.add(fn);
   return () => listeners.delete(fn);
+}
+
+/**
+ * Convenience helper: initialise language from localStorage
+ * and subscribe to future changes in one call.
+ * Returns the unsubscribe function (pass it to $effect cleanup).
+ */
+export function onLangChange(callback: () => void): () => void {
+  initLang();
+  return subscribe(callback);
 }
 
 /** Translate a key using the current language */

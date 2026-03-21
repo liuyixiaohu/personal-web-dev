@@ -2,6 +2,7 @@
   import type { Lang } from '../../i18n/translations';
   import { t } from '../../i18n/langStore';
   import { formatEventRange, formatPrice, locationDisplay, type LumaEvent } from './eventUtils';
+  import { track } from '../../utils/analytics';
 
   interface Props {
     event: LumaEvent;
@@ -14,7 +15,7 @@
 <li class="event-card" id="event-{event.api_id}">
   <div class="event-card-header">
     <a href={event.url} target="_blank" rel="noopener noreferrer" class="event-name"
-       onclick={() => (window as any).dataLayer?.push({ event: 'event_card_click', event_name: event.name, event_url: event.url })}>
+       onclick={() => track('event_card_click', { event_name: event.name, event_url: event.url })}>
       {event.name}
     </a>
     <span class="event-price" class:event-price--free={event.is_free} class:event-price--eventbrite={event.source === 'eventbrite' && event.price_cents == null} class:event-price--approval={event.source !== 'eventbrite' && !event.is_free && event.price_cents == null} class:event-price--paid={!event.is_free && event.price_cents != null}>
