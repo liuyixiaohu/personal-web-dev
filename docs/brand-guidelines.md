@@ -100,11 +100,28 @@ Fluid scale using `clamp()`, adapts to viewport width.
 | `--space-lg` | `clamp(1.5rem, 3vw, 3rem)` |
 | `--space-xl` | `clamp(2rem, 5vw, 5rem)` |
 
-### Paragraph Spacing
+### Typography Rhythm
 
-Use `0.75em` as `margin-bottom` between paragraphs (`<p>` elements). The `em` unit ties spacing to the current font size, so larger text gets proportionally more space and smaller text gets less. Last paragraphs should have no bottom margin.
+All vertical spacing uses `em` units so it scales proportionally with font size.
 
-Content with multiple paragraphs should use `\n\n` as the paragraph delimiter in data/translations, converted to `<p>` tags at render time. This keeps content and presentation separate.
+| Relationship | Spacing | Rationale |
+|---|---|---|
+| **Paragraph → Paragraph** | `margin-bottom: 0.75em` | Same-level content, light separation |
+| **Heading → Body** | `margin-bottom: 0.5em` | Heading ties closely to its content |
+| **Body → Heading** | `margin-top: 1.5em` | New section, strongest visual break |
+
+**Letter-spacing by size:**
+
+| Size | Letter-spacing | Rationale |
+|---|---|---|
+| `--fs-xl`, `--fs-lg` | `-0.01em` | Large text looks tighter |
+| body, `--fs-md` | `0` (default) | Normal tracking |
+| `--fs-xs` (Overline) | `0.05em` | Small uppercase needs air |
+
+**Line-height by level** (defined in Type Styles):
+`1.2` (display) → `1.3` (heading) → `1.4` (subheading) → `1.6` (body) → `1.8` (long-form) → `1.5` (caption)
+
+**Content rule:** Multi-paragraph content should use `\n\n` as delimiter in data/translations, converted to `<p>` tags at render time. This keeps content and presentation separate.
 
 ---
 
