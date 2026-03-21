@@ -20,6 +20,13 @@
   const usaPins = pins.filter(p => p.country.includes('USA'));
   const chinaPins = pins.filter(p => p.country.includes('China'));
 
+  // Ripple delays: sorted by year, 1.2s apart, full cycle = 6 * 1.2 = 7.2s
+  const RIPPLE_GAP = 1.2; // seconds between each pin's ripple
+  const RIPPLE_CYCLE = pins.length * RIPPLE_GAP; // total cycle duration
+  const sortedByYear = [...pins].sort((a, b) => a.year - b.year);
+  const rippleDelay: Record<string, number> = {};
+  sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
+
   // Label positions relative to pin (Google Maps style, no connector lines).
   // 'anchor' controls SVG text-anchor: 'start' = label right of point, 'end' = label left.
   const labelPos: Record<string, { dx: number; dy: number; anchor: string }> = {
@@ -109,7 +116,7 @@
         {#each pinPositions.filter(p => p.panel === 'china') as pin, i}
           {@const lp = labelPos[pin.id] ?? { dx: 14, dy: -8, anchor: 'start' }}
           <circle cx={pin.x} cy={pin.y} r="8" fill="none" stroke={pin.color}
-            stroke-width="1.5" class="pin-ripple" style="animation-delay: {i * 0.4}s" />
+            stroke-width="1.5" class="pin-ripple" style="animation-delay: {rippleDelay[pin.id]}s; animation-duration: {RIPPLE_CYCLE}s" />
           <circle cx={pin.x} cy={pin.y} r="8" fill={pin.color} class="pin-dot" />
           <text x={pin.x + lp.dx} y={pin.y + lp.dy}
             text-anchor={lp.anchor} class="map-label"
@@ -136,7 +143,7 @@
         {#each pinPositions.filter(p => p.panel === 'usa') as pin, i}
           {@const lp = labelPos[pin.id] ?? { dx: 14, dy: -8, anchor: 'start' }}
           <circle cx={pin.x} cy={pin.y} r="8" fill="none" stroke={pin.color}
-            stroke-width="1.5" class="pin-ripple" style="animation-delay: {i * 0.4}s" />
+            stroke-width="1.5" class="pin-ripple" style="animation-delay: {rippleDelay[pin.id]}s; animation-duration: {RIPPLE_CYCLE}s" />
           <circle cx={pin.x} cy={pin.y} r="8" fill={pin.color} class="pin-dot" />
           <text x={pin.x + lp.dx} y={pin.y + lp.dy}
             text-anchor={lp.anchor} class="map-label"
@@ -226,6 +233,7 @@
 
   @keyframes ripple {
     0% { transform: scale(1); opacity: 0.6; }
+    12% { transform: scale(3); opacity: 0; }
     100% { transform: scale(3); opacity: 0; }
   }
 
