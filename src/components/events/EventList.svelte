@@ -12,6 +12,7 @@
   import EventFilters from './EventFilters.svelte';
   import EventCard from './EventCard.svelte';
   import { VERSION, CHANGELOG } from './changelog';
+  import Popup from './Popup.svelte';
 
   // --- State ---
   let lang = $state<Lang>('en');
@@ -236,54 +237,40 @@
         <button class="version-btn" onclick={() => changelogOpen = !changelogOpen}>
           {VERSION}
         </button>
-        {#if changelogOpen}
-          <div class="changelog-backdrop" onclick={() => changelogOpen = false} role="presentation"></div>
-          <div class="changelog-popup">
-            <div class="changelog-header">
-              <span class="changelog-title">Changelog</span>
-              <button class="changelog-close" onclick={() => changelogOpen = false}>&times;</button>
+        <Popup open={changelogOpen} title="Changelog" onClose={() => changelogOpen = false}>
+          {#each CHANGELOG as release}
+            <div class="changelog-release">
+              <div class="changelog-version">{release.version}</div>
+              <p class="changelog-why">{release.why}</p>
+              <ul class="changelog-list">
+                {#each release.changes as change}
+                  <li>{change}</li>
+                {/each}
+              </ul>
             </div>
-            {#each CHANGELOG as release}
-              <div class="changelog-release">
-                <div class="changelog-version">{release.version}</div>
-                <p class="changelog-why">{release.why}</p>
-                <ul class="changelog-list">
-                  {#each release.changes as change}
-                    <li>{change}</li>
-                  {/each}
-                </ul>
-              </div>
-            {/each}
-          </div>
-        {/if}
+          {/each}
+        </Popup>
       </div>
       <span class="feedback-wrap">
         <button class="why-btn" onclick={() => { feedbackOpen = !feedbackOpen; feedbackSent = false; feedbackError = false; }}>
           {t('events.feedback')}
         </button>
-        {#if feedbackOpen}
-          <div class="changelog-backdrop" onclick={() => feedbackOpen = false} role="presentation"></div>
-          <div class="feedback-popup">
-            <div class="changelog-header">
-              <span class="changelog-title">{t('events.feedbackTitle')}</span>
-              <button class="changelog-close" onclick={() => feedbackOpen = false}>&times;</button>
-            </div>
-            {#if feedbackSent}
-              <p class="feedback-success">{t('events.feedbackSent')}</p>
-            {:else}
-              <form onsubmit={handleFeedback}>
-                <textarea name="message" required placeholder={t('events.feedbackPlaceholder')} rows="4" class="feedback-textarea"></textarea>
-                <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-                <button type="submit" class="feedback-submit" disabled={feedbackSending}>
-                  {feedbackSending ? '...' : t('events.feedbackSend')}
-                </button>
-              </form>
-              {#if feedbackError}
-                <p class="feedback-error-msg">{t('events.feedbackError')}</p>
-              {/if}
+        <Popup open={feedbackOpen} title={t('events.feedbackTitle')} onClose={() => feedbackOpen = false} width="18rem">
+          {#if feedbackSent}
+            <p class="feedback-success">{t('events.feedbackSent')}</p>
+          {:else}
+            <form onsubmit={handleFeedback}>
+              <textarea name="message" required placeholder={t('events.feedbackPlaceholder')} rows="4" class="feedback-textarea"></textarea>
+              <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+              <button type="submit" class="feedback-submit" disabled={feedbackSending}>
+                {feedbackSending ? '...' : t('events.feedbackSend')}
+              </button>
+            </form>
+            {#if feedbackError}
+              <p class="feedback-error-msg">{t('events.feedbackError')}</p>
             {/if}
-          </div>
-        {/if}
+          {/if}
+        </Popup>
       </span>
     </div>
 
@@ -291,17 +278,10 @@
       {t('events.subtitlePre')}<span class="newly-highlight">{t('events.subtitleHighlight')}</span>{t('events.subtitlePost')}
       <span class="why-wrap">
         <button class="why-btn" onclick={() => whyOpen = !whyOpen}>Why?</button>
-        {#if whyOpen}
-          <div class="why-backdrop" onclick={() => whyOpen = false} role="presentation"></div>
-          <div class="why-popup">
-            <div class="changelog-header">
-              <span class="changelog-title">{t('events.whyTitle')}</span>
-              <button class="changelog-close" onclick={() => whyOpen = false}>&times;</button>
-            </div>
-            <p class="why-point">{t('events.whyPoint1')}</p>
-            <p class="why-point">{t('events.whyPoint2')}</p>
-          </div>
-        {/if}
+        <Popup open={whyOpen} title={t('events.whyTitle')} onClose={() => whyOpen = false}>
+          <p class="why-point">{t('events.whyPoint1')}</p>
+          <p class="why-point">{t('events.whyPoint2')}</p>
+        </Popup>
       </span>
     </p>
   </header>
@@ -424,29 +404,6 @@
     display: inline-block;
   }
 
-  .feedback-popup {
-    position: absolute;
-    top: calc(100% + 0.4rem);
-    right: 0;
-    z-index: 100;
-    width: min(18rem, calc(100vw - 2rem));
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    padding: 0.75rem;
-  }
-
-  @media (max-width: 480px) {
-    .feedback-popup {
-      position: fixed;
-      top: auto;
-      right: 1rem;
-      bottom: 1rem;
-      left: 1rem;
-      width: auto;
-    }
-  }
 
   .feedback-textarea {
     width: 100%;
@@ -500,66 +457,6 @@
     margin: 0.4rem 0 0;
   }
 
-  .changelog-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 99;
-  }
-
-  .changelog-popup {
-    position: absolute;
-    top: calc(100% + 0.4rem);
-    right: 0;
-    z-index: 100;
-    width: min(22rem, calc(100vw - 2rem));
-    max-height: 28rem;
-    overflow-y: auto;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    padding: 0.75rem;
-  }
-
-  @media (max-width: 480px) {
-    .changelog-popup {
-      position: fixed;
-      top: auto;
-      right: 1rem;
-      bottom: 1rem;
-      left: 1rem;
-      width: auto;
-      max-height: 70vh;
-    }
-  }
-
-  .changelog-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-  }
-
-  .changelog-title {
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    color: var(--text);
-  }
-
-  .changelog-close {
-    font-family: inherit;
-    font-size: 1.1rem;
-    color: var(--text-light);
-    background: none;
-    border: none;
-    cursor: pointer;
-    line-height: 1;
-    padding: 0 0.15rem;
-  }
-
-  .changelog-close:hover {
-    color: var(--text);
-  }
 
   .changelog-release {
     margin-bottom: 0.6rem;
@@ -638,27 +535,6 @@
     color: var(--text);
   }
 
-  .why-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 99;
-  }
-
-  .why-popup {
-    position: absolute;
-    top: calc(100% + 0.4rem);
-    left: 0;
-    z-index: 100;
-    width: min(22rem, calc(100vw - 2rem));
-    max-height: 28rem;
-    overflow-y: auto;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    padding: 0.75rem;
-    text-align: left;
-  }
 
   .why-point {
     font-size: var(--fs-xs);
@@ -671,17 +547,6 @@
     margin-bottom: 0;
   }
 
-  @media (max-width: 480px) {
-    .why-popup {
-      position: fixed;
-      top: auto;
-      right: 1rem;
-      bottom: 1rem;
-      left: 1rem;
-      width: auto;
-      max-height: 70vh;
-    }
-  }
 
   .event-meta-bar {
     font-size: var(--fs-xs);
