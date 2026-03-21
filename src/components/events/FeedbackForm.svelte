@@ -52,7 +52,7 @@
     font-family: inherit;
     font-size: var(--fs-xs);
     border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     padding: 0.5rem;
     resize: vertical;
     background: var(--bg);
@@ -72,7 +72,7 @@
     color: var(--text);
     background: none;
     border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     padding: 0.3em 0.8em;
     cursor: pointer;
     transition: border-color 0.15s;

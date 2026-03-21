@@ -50,8 +50,8 @@
   .announce-card {
     background: rgba(255, 255, 255, 0.9);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
     max-width: 28rem;
     width: 100%;
     padding: clamp(1.25rem, 3vw, 2rem);
@@ -86,7 +86,7 @@
     color: var(--text);
     background: rgba(0, 0, 0, 0.04);
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: var(--radius-md);
     cursor: pointer;
     transition: background 0.15s ease;
   }
