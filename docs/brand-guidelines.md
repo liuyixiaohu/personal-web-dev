@@ -106,7 +106,7 @@ All vertical spacing uses `em` units so it scales proportionally with font size.
 | Relationship | Spacing | Rationale |
 |---|---|---|
 | **Paragraph → Paragraph** | `margin-bottom: 0.75em` | Same-level content, light separation |
-| **Heading → Body** | `margin-bottom: 0.5em` | Heading ties closely to its content |
+| **Heading → Body** | `margin-bottom: 0.75em` | Same as paragraph spacing for consistent rhythm |
 | **Body → Heading** | `margin-top: 1.5em` | New section, strongest visual break |
 
 **Letter-spacing by size:**
