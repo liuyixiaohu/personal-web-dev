@@ -110,7 +110,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.loading': { en: 'Loading events...', zh: '正在加载活动...' },
   'events.free': { en: 'Free', zh: '免费' },
   'events.approval': { en: 'Requires Approval', zh: '需要审批' },
-  'events.seeEventbrite': { en: 'See Eventbrite for price', zh: '价格请见 Eventbrite' },
+  'events.seeEventbrite': { en: 'See Eventbrite', zh: '详见 Eventbrite' },
   'events.guests': { en: 'guests', zh: '位参与者' },
   'events.online': { en: 'Online', zh: '线上' },
   'events.hostedBy': { en: 'Hosted by', zh: '主办方' },
