@@ -1,6 +1,6 @@
 # Brand Guidelines: kunli.co
 
-> Developer reference for the visual design system.
+> Visual design system for Kun Li's personal brand.
 > Live showcase: [kunli.co/brand](https://kunli.co/brand)
 
 ---
@@ -10,7 +10,7 @@
 1. **Minimal**: Less is more. No decoration for decoration's sake.
 2. **Fast**: Static HTML, zero unnecessary JS, CDN fonts.
 3. **Warm**: Cream tones, serif fonts, literary voice.
-4. **Bilingual**: Every visible text has English and Chinese via `data-i18n`.
+4. **Bilingual**: Every visible text has English and Chinese.
 
 ---
 
@@ -57,32 +57,27 @@
 - Character: Humanist serif, elegant, warm, literary
 
 **Chinese: LXGW WenKai (霞鹜文楷)**
-- Source: cdnjs CDN (`lxgw-wenkai-web`)
+- Source: cdnjs CDN
 - Character: Kai (楷书) style, handwritten warmth
 
 **Pairing rationale:** Both share a "hand-written elegance" quality. EB Garamond has calligraphic DNA from Renaissance humanism; LXGW WenKai derives from Japanese Klee One with modern kai warmth.
 
-```css
---font-body: 'EB Garamond', Garamond, 'Times New Roman', serif;
---font-zh: 'LXGW WenKai', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-```
-
 ### Type Scale: Major Third (1.25×)
 
-| Variable | Ratio | Value | Usage |
-|---|---|---|---|
-| `--fs-xs` | - | `0.75rem` | Labels, tags, captions, secondary text |
-| (base) | 1.25⁰ | `1rem` | Body text |
-| `--fs-md` | 1.25¹ | `1.25rem` | Subheadings, nav titles |
-| `--fs-lg` | 1.25² | `1.563rem` | Page headings |
-| `--fs-xl` | 1.25³ | `1.953rem` | Hero / display headings |
+| Level | Size | Usage |
+|---|---|---|
+| `--fs-xs` | `0.75rem` | Labels, tags, captions, secondary text |
+| (base) | `1rem` | Body text |
+| `--fs-md` | `1.25rem` | Subheadings, nav titles |
+| `--fs-lg` | `1.563rem` | Page headings |
+| `--fs-xl` | `1.953rem` | Hero / display headings |
 
-Root font-size is fluid: `--fs-base: clamp(1rem, 0.9rem + 0.5vw, 1.25rem)`
+Root font-size is fluid: `clamp(1rem, 0.9rem + 0.5vw, 1.25rem)`
 
-### Rules
+### Typography Rules
 
-- No hardcoded font sizes, always use scale variables.
-- Chinese text: never italicize. Use `font-style: normal` override.
+- No hardcoded font sizes; always use scale variables.
+- Chinese text: never italicize.
 - Use weight 500 or 600 for emphasis (keeps elegance over bold 700).
 
 ---
@@ -105,9 +100,9 @@ All vertical spacing uses `em` units so it scales proportionally with font size.
 
 | Relationship | Spacing | Rationale |
 |---|---|---|
-| **Paragraph → Paragraph** | `margin-bottom: 0.75em` | Same-level content, light separation |
-| **Heading → Body** | `margin-bottom: 0.75em` | Same as paragraph spacing for consistent rhythm |
-| **Body → Heading** | `margin-top: 1.5em` | New section, strongest visual break |
+| **Paragraph → Paragraph** | `0.75em` | Same-level content, light separation |
+| **Heading → Body** | `0.75em` | Same as paragraph spacing for consistent rhythm |
+| **Body → Heading** | `1.5em` | New section, strongest visual break |
 
 **Letter-spacing by size:**
 
@@ -117,36 +112,20 @@ All vertical spacing uses `em` units so it scales proportionally with font size.
 | body, `--fs-md` | `0` (default) | Normal tracking |
 | `--fs-xs` (Overline) | `0.05em` | Small uppercase needs air |
 
-**Line-height by level** (defined in Type Styles):
+**Line-height by level:**
 `1.2` (display) → `1.3` (heading) → `1.4` (subheading) → `1.6` (body) → `1.8` (long-form) → `1.5` (caption)
-
-**Content rule:** Multi-paragraph content should use `\n\n` as delimiter in data/translations, converted to `<p>` tags at render time. This keeps content and presentation separate.
 
 ---
 
-## Layout: Grid System
+## Layout
 
-Named-line CSS Grid with three content tracks:
+Three content width tracks:
 
-| Track | Width | Class | Usage |
-|---|---|---|---|
-| content | 36rem | (default) | Body text, prose, navigation |
-| wide | 44rem | `.wide` | Tools, tables, wider media |
-| full | 100% | `.full` | Full-bleed images, immersive sections |
-
-```html
-<main class="grid-page">
-  <h1>Title</h1>                <!-- auto → content (36rem) -->
-  <div class="wide">...</div>   <!-- wide (44rem) -->
-  <div class="full">...</div>   <!-- full-bleed (100%) -->
-</main>
-```
-
-```css
---grid-content: 36rem;
---grid-wide: 44rem;
---grid-gutter: var(--content-padding);  /* clamp(1rem, 4vw, 3rem) */
-```
+| Track | Width | Usage |
+|---|---|---|
+| Content | 36rem | Body text, prose, navigation |
+| Wide | 44rem | Tools, tables, wider media |
+| Full | 100% | Full-bleed images, immersive sections |
 
 ---
 
@@ -154,46 +133,27 @@ Named-line CSS Grid with three content tracks:
 
 ### Buttons
 
-```css
-/* Default */
-padding: 0.5rem 1rem;
-border: 1px solid var(--border);
-border-radius: 4px;
-font-size: var(--fs-xs);
-transition: background 0.15s, border-color 0.15s;
-
-/* Primary (inverted) */
-background: var(--text);
-color: var(--bg);
-```
+- Default: `1px solid` border, `--fs-xs`, `--radius-md`
+- Primary (inverted): dark background, light text
+- Transitions: `0.15s`
 
 ### Cards / List Items
 
-```css
-padding: 0.6rem 0;
-border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-/* Title: --fs-md, weight 500 */
-/* Description: --fs-xs, color --text-light */
-```
+- Bottom border: `1px solid` at low opacity
+- Title: `--fs-md`, weight 500
+- Description: `--fs-xs`, `--text-light`
 
 ### Pills / Filters
 
-```css
-font-size: 0.72rem;
-padding: 0.2em 0.55em;
-border: 1px solid rgba(0, 0, 0, 0.1);
-border-radius: 3px;
-/* Active: background rgba(0, 0, 0, 0.06), border rgba(0, 0, 0, 0.15) */
-```
+- Small font (~0.72rem), tight padding
+- `1px solid` border, `--radius-sm`
+- Active state: subtle background fill, stronger border
 
 ### Links
 
-```css
-color: var(--text);
-text-decoration: none;
-transition: opacity 0.2s ease;
-/* Hover: opacity 0.7 */
-```
+- Color: `--text`
+- No underline by default
+- Hover: `opacity 0.7`
 
 ### Transitions
 
@@ -204,8 +164,6 @@ transition: opacity 0.2s ease;
 ---
 
 ## Border Radius
-
-Consolidated scale -- always use CSS variables, not hardcoded values.
 
 | Variable | Value | Usage |
 |---|---|---|
@@ -232,49 +190,32 @@ All shadows use black at 0.04--0.08 opacity for warmth.
 
 ### Color Contrast (WCAG AA)
 
-All text colors must meet 4.5:1 against `--bg` (#FAF7F2) for normal text, 3:1 for large text (18px+ or 14px bold).
+All text colors must meet 4.5:1 against `--bg` for normal text, 3:1 for large text (18px+ or 14px bold).
 
 | Color | Ratio | Status |
 |---|---|---|
 | `--text` (#1F2328) | 14.78:1 | AA pass |
 | `--text-light` (#5A636B) | 5.73:1 | AA pass |
-| Accent colors (#5a7a94, #5a8a6e) | 3.7--4.2:1 | AA large only -- use for large text or decorative elements |
-| Rose (#D9797B) | 2.82:1 | Decorative only -- never for informational text |
+| Accent colors (#5a7a94, #5a8a6e) | 3.7--4.2:1 | AA large only |
+| Rose (#D9797B) | 2.82:1 | Decorative only |
 
 ### Focus States
 
-Global `:focus-visible` ring defined in `global.css`:
-
-```css
-:focus-visible {
-  outline: 2px solid var(--color-visual);
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
-}
-```
-
-- Keyboard navigation shows green focus ring
-- Mouse clicks do not (`:focus { outline: none }` on inputs is intentional)
-- Never remove focus styles without providing a visible alternative
+- Keyboard navigation: `2px solid` green outline with `2px` offset
+- Mouse clicks: no visible focus ring (intentional)
+- Never remove focus styles without a visible alternative
 
 ### Reduced Motion
 
-```css
-@media (prefers-reduced-motion: reduce) {
-  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-}
-```
-
-Respects user OS preference. All animations and transitions are disabled when the user prefers reduced motion.
+All animations and transitions are disabled when the user prefers reduced motion (respects OS preference).
 
 ---
 
 ## Images & Media
 
-- All `<img>` must have descriptive `alt` text (empty `alt=""` only for decorative images)
-- Max width: `100%` (set globally)
-- Border radius for content images: `var(--radius-lg)` (8px)
-- Story/modal photos: `class="story-photo"` with `border-radius: 8px` and `margin: var(--space-sm) 0`
+- All images must have descriptive alt text
+- Max width: 100%
+- Content images: `--radius-lg` border radius
 
 ---
 
@@ -282,12 +223,12 @@ Respects user OS preference. All animations and transitions are disabled when th
 
 **Mark:** Serif "K" in EB Garamond on cream background.
 
-| Format | Size | File | Usage |
-|---|---|---|---|
-| SVG | scalable | `favicon.svg` | Modern browsers (preferred) |
-| PNG | 32px | `favicon-32.png` | Browser tab fallback |
-| PNG | 256px | `favicon.png` | High-res, og:image fallback |
-| PNG | 180px | `apple-touch-icon.png` | iOS home screen |
+| Format | Size | Usage |
+|---|---|---|
+| SVG | scalable | Modern browsers (preferred) |
+| PNG | 32px | Browser tab fallback |
+| PNG | 256px | High-res, social sharing |
+| PNG | 180px | iOS home screen |
 
 Colors: `--bg` (#FAF7F2) background, `--text` (#1F2328) fill.
 
@@ -296,20 +237,5 @@ Colors: `--bg` (#FAF7F2) background, `--text` (#1F2328) fill.
 ## Responsive Strategy
 
 - **Primary approach**: Fluid scaling via `clamp()`, no breakpoints for most things.
-- **Single breakpoint**: `@media (max-width: 480px)` for layout-level changes only.
-- Grid system handles responsive content width automatically via `min()` function.
-
----
-
-## i18n
-
-All visible text uses `data-i18n` attributes for bilingual support (EN/ZH):
-
-```html
-<span data-i18n="key.name">English fallback</span>
-```
-
-- Translation keys defined in `src/i18n/translations.ts`
-- Language state managed by `src/stores/langStore.ts`
-- Chinese font applied via `html[data-lang="zh"]` selector in global CSS
-- Svelte components use `getLang()` + `t()` from `langStore.ts`
+- **Single breakpoint**: `480px` for layout-level changes only.
+- Grid system handles responsive content width automatically.
