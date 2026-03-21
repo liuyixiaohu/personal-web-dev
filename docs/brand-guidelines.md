@@ -100,6 +100,12 @@ Fluid scale using `clamp()`, adapts to viewport width.
 | `--space-lg` | `clamp(1.5rem, 3vw, 3rem)` |
 | `--space-xl` | `clamp(2rem, 5vw, 5rem)` |
 
+### Paragraph Spacing
+
+Use `--space-sm` as `margin-bottom` between paragraphs (`<p>` elements). This creates clear visual separation between paragraphs while remaining tighter than section spacing (`--space-md` or above). Last paragraphs should have no bottom margin.
+
+Content with multiple paragraphs should use `\n\n` as the paragraph delimiter in data/translations, converted to `<p>` tags at render time. This keeps content and presentation separate.
+
 ---
 
 ## Layout: Grid System
