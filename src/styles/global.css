@@ -125,6 +125,14 @@ a:hover {
   opacity: 1;
 }
 
+.back-link--fixed {
+  position: fixed;
+  top: var(--space-md);
+  left: var(--space-md);
+  z-index: 10;
+  margin-bottom: 0;
+}
+
 /* Item list : used in professional + special-thanks index pages */
 .item {
   display: block;
@@ -156,6 +164,15 @@ a:hover {
   color: var(--text-light);
   line-height: 1.5;
   margin-top: 0.15rem;
+}
+
+.coming-date {
+  display: block;
+  font-size: var(--fs-xs);
+  color: var(--text-light);
+  opacity: 0.6;
+  margin-top: 0.15rem;
+  font-style: italic;
 }
 
 /* Section : reusable content grouping */

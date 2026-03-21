@@ -1,17 +1,13 @@
 <script lang="ts">
-  import { toggleLang, subscribe, initLang, t } from '../i18n/langStore';
+  import { toggleLang, onLangChange, t } from '../i18n/langStore';
 
-  initLang();
   let label = $state(t('lang.toggle'));
   let tooltip = $state(t('lang.tooltip'));
 
-  $effect(() => {
-    const unsub = subscribe(() => {
-      label = t('lang.toggle');
-      tooltip = t('lang.tooltip');
-    });
-    return unsub;
-  });
+  $effect(() => onLangChange(() => {
+    label = t('lang.toggle');
+    tooltip = t('lang.tooltip');
+  }));
 </script>
 
 <button class="lang-toggle" onclick={() => toggleLang()} aria-label="Switch language" title={tooltip}>

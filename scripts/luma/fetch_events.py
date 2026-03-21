@@ -6,16 +6,13 @@ timestamp, and the output includes a `new_event_ids` array listing events
 that did not exist in the previous run.
 """
 
-import json
 import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-import requests
-
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from common import load_old_events, stamp_first_seen, save_events
+from common import load_old_events, stamp_first_seen, save_events, request_with_retry, merge_into
 
 # --- Configuration ---
 SOURCES = [
@@ -39,33 +36,6 @@ REQUEST_DELAY = 1.0
 DATA_FILE = Path(__file__).resolve().parent.parent.parent / "public" / "data" / "luma_events.json"
 
 BASE_URL = "https://api.lu.ma"
-MAX_RETRIES = 1
-RETRY_BACKOFF = 2.0
-
-
-# --- HTTP helpers ---
-
-
-def _request_with_retry(url: str, params: dict, page: int) -> dict:
-    for attempt in range(MAX_RETRIES + 1):
-        try:
-            resp = requests.get(url, params=params, timeout=30)
-            resp.raise_for_status()
-            return resp.json()
-        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
-            if attempt < MAX_RETRIES:
-                print(f"  Retry page {page} after transient error: {e}")
-                time.sleep(RETRY_BACKOFF)
-            else:
-                raise
-        except requests.exceptions.HTTPError as e:
-            status = e.response.status_code if e.response is not None else 0
-            if status >= 500 and attempt < MAX_RETRIES:
-                print(f"  Retry page {page} after server error {status}")
-                time.sleep(RETRY_BACKOFF)
-            else:
-                raise
-    return {}
 
 
 # --- Fetch & normalize ---
@@ -85,9 +55,10 @@ def fetch_category_events(source: dict) -> list[dict]:
         if cursor:
             params["pagination_cursor"] = cursor
 
-        data = _request_with_retry(
-            f"{BASE_URL}/discover/get-paginated-events", params, page
+        resp = request_with_retry(
+            f"{BASE_URL}/discover/get-paginated-events", params=params, page=page
         )
+        data = resp.json()
 
         entries = data.get("entries", [])
         all_entries.extend(entries)
@@ -150,19 +121,7 @@ def main() -> None:
             raw_entries = fetch_category_events(source)
             events = [normalize_event(e) for e in raw_entries]
             events = [e for e in events if e["api_id"]]
-
-            for event in events:
-                aid = event["api_id"]
-                if aid in merged:
-                    cats = merged[aid].get("categories", [])
-                    if source["label"] not in cats:
-                        cats.append(source["label"])
-                        merged[aid]["categories"] = cats
-                else:
-                    event["categories"] = [source["label"]]
-                    merged[aid] = event
-
-            print(f"  {len(events)} events fetched")
+            merge_into(merged, events, source["label"])
         except Exception as e:
             print(f"  ERROR: {e}")
             continue

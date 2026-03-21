@@ -6,7 +6,7 @@ import CountryPair from '../components/globe/CountryPair.svelte';
 <BaseLayout title="Life Journey" description="Explore Kun's life journey through an interactive map: cities, stories, and experiences from around the world." hideFooter>
   <main class="journey-page">
     <h1 class="sr-only">Life Journey</h1>
-    <a href="/" class="back-link" data-i18n="nav.back">&larr; Back</a>
+    <a href="/" class="back-link back-link--fixed" data-i18n="nav.back">&larr; Back</a>
     <CountryPair client:only="svelte" />
   </main>
 </BaseLayout>
@@ -22,11 +22,4 @@ import CountryPair from '../components/globe/CountryPair.svelte';
     background: var(--bubble-ds);
   }
 
-  .back-link {
-    position: fixed;
-    top: var(--space-md);
-    left: var(--space-md);
-    z-index: 10;
-    margin-bottom: 0;
-  }
 </style>
