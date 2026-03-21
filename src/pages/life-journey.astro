@@ -153,7 +153,7 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
     font-size: var(--fs-md);
     color: var(--text-light);
     font-weight: 500;
-    letter-spacing: 0.03em;
+    letter-spacing: 0;
     padding-right: var(--space-md);
   }
 
@@ -178,7 +178,7 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
     padding: 1.5rem;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.25s ease;
+    transition: opacity 0.2s ease;
   }
 
   .modal-overlay.visible {
@@ -189,8 +189,8 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
   .modal-card {
     background: rgba(255, 255, 255, 0.85);
     border: 1px solid rgba(0, 0, 0, 0.06);
-    border-radius: 16px;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
     max-width: 32rem;
     max-height: 80vh;
     overflow-y: auto;
@@ -198,7 +198,7 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
     padding: clamp(1.5rem, 3vw, 2.5rem);
     font-family: inherit;
     transform: translateY(20px);
-    transition: transform 0.3s ease;
+    transition: transform 0.4s ease;
   }
 
   .modal-overlay.visible .modal-card {
@@ -223,7 +223,7 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
     cursor: pointer;
     padding: 0.2rem 0.5rem;
     line-height: 1;
-    border-radius: 6px;
+    border-radius: var(--radius-md);
     transition: all 0.2s ease;
   }
 
@@ -284,7 +284,7 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
   .modal-body :global(.story-photo) {
     display: block;
     max-width: 100%;
-    border-radius: 8px;
+    border-radius: var(--radius-lg);
     margin: var(--space-sm) 0;
   }
 </style>
@@ -328,7 +328,7 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
   }
 
   .map-label {
-    font-size: 30px;
+    font-size: var(--fs-lg);
     font-family: var(--font-body);
     fill: var(--text-light);
     cursor: pointer;
