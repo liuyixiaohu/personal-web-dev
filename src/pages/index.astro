@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ScrollArrow from '../components/ScrollArrow.astro';
 import { professionalAreas } from '../data/professionalAreas';
 ---
 
@@ -22,11 +23,7 @@ import { professionalAreas } from '../data/professionalAreas';
         </div>
       </div>
 
-      <div class="scroll-hint" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
-      </div>
+      <ScrollArrow />
     </section>
 
     <!-- Zone 2: Content — uses grid-page for 36rem content track -->
@@ -143,28 +140,11 @@ import { professionalAreas } from '../data/professionalAreas';
   }
 
   /* Scroll indicator */
-  .scroll-hint {
+  .hero :global(.scroll-arrow) {
     position: absolute;
     bottom: 2.5rem;
     left: 50%;
     transform: translateX(-50%);
-    animation: bounce 2s ease-in-out infinite;
-    opacity: 0.5;
-    color: var(--text-light);
-    background: none;
-    border: none;
-    padding: 0.5rem;
-    pointer-events: none;
-  }
-
-  .scroll-hint svg {
-    width: 2rem;
-    height: 2rem;
-  }
-
-  @keyframes bounce {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(8px); }
   }
 
   /* Secret heart (hidden entrance) */
