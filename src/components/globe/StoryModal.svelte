@@ -1,7 +1,7 @@
 <script lang="ts">
   import { fade, fly } from 'svelte/transition';
   import type { PinData } from './pins';
-  import { subscribe, initLang, t } from '../../i18n/langStore';
+  import { onLangChange, t } from '../../i18n/langStore';
 
   interface Props {
     pin: PinData;
@@ -15,17 +15,13 @@
     return `pin.${pinId.replace(/-/g, '')}.${field}`;
   }
 
-  initLang();
   let translatedTitle = $state(t(pinKey(pin.id, 'title')));
   let translatedStory = $state(t(pinKey(pin.id, 'story')));
 
-  $effect(() => {
-    const unsub = subscribe(() => {
-      translatedTitle = t(pinKey(pin.id, 'title'));
-      translatedStory = t(pinKey(pin.id, 'story'));
-    });
-    return unsub;
-  });
+  $effect(() => onLangChange(() => {
+    translatedTitle = t(pinKey(pin.id, 'title'));
+    translatedStory = t(pinKey(pin.id, 'story'));
+  }));
 
   function handleOverlayClick(e: MouseEvent) {
     if (e.target === e.currentTarget) {

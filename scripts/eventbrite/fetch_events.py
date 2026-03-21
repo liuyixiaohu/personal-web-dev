@@ -16,10 +16,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-import requests
-
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from common import load_old_events, stamp_first_seen, save_events
+from common import load_old_events, stamp_first_seen, save_events, request_with_retry, merge_into
 
 # --- Configuration ---
 CITIES = [
@@ -38,35 +36,8 @@ DATA_FILE = (
 USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"
 SERVER_DATA_RE = re.compile(r"window\.__SERVER_DATA__\s*=\s*({.+?});\s*$", re.DOTALL | re.MULTILINE)
 
-MAX_RETRIES = 1
-RETRY_BACKOFF = 2.0
-
 
 # --- HTTP helpers ---
-
-
-def _request_with_retry(url: str, page: int) -> str:
-    """Fetch a page's HTML, retrying once on transient/server errors."""
-    headers = {"User-Agent": USER_AGENT}
-    for attempt in range(MAX_RETRIES + 1):
-        try:
-            resp = requests.get(url, headers=headers, timeout=30)
-            resp.raise_for_status()
-            return resp.text
-        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
-            if attempt < MAX_RETRIES:
-                print(f"  Retry page {page} after transient error: {e}")
-                time.sleep(RETRY_BACKOFF)
-            else:
-                raise
-        except requests.exceptions.HTTPError as e:
-            status = e.response.status_code if e.response is not None else 0
-            if status >= 500 and attempt < MAX_RETRIES:
-                print(f"  Retry page {page} after server error {status}")
-                time.sleep(RETRY_BACKOFF)
-            else:
-                raise
-    return ""
 
 
 def _parse_server_data(html: str) -> dict | None:
@@ -134,7 +105,10 @@ def fetch_city_events(city: dict) -> list[dict]:
         url = URL_TEMPLATE.format(city=city["slug"], category=CATEGORY, page=page)
         print(f"  Page {page}: {url}")
 
-        html = _request_with_retry(url, page)
+        resp = request_with_retry(
+            url, headers={"User-Agent": USER_AGENT}, page=page
+        )
+        html = resp.text
         server_data = _parse_server_data(html)
 
         if server_data is None:
@@ -182,19 +156,7 @@ def main() -> None:
             raw_events = fetch_city_events(city)
             events = [normalize_event(e) for e in raw_events]
             events = [e for e in events if e["api_id"]]
-
-            for event in events:
-                aid = event["api_id"]
-                if aid in merged:
-                    cats = merged[aid].get("categories", [])
-                    if city["label"] not in cats:
-                        cats.append(city["label"])
-                        merged[aid]["categories"] = cats
-                else:
-                    event["categories"] = [city["label"]]
-                    merged[aid] = event
-
-            print(f"  {len(events)} events fetched")
+            merge_into(merged, events, city["label"])
         except Exception as e:
             print(f"  ERROR: {e}")
             continue

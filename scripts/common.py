@@ -3,8 +3,73 @@
 from __future__ import annotations
 
 import json
+import time
 from datetime import datetime, timezone
 from pathlib import Path
+
+import requests
+
+
+def request_with_retry(
+    url: str,
+    params: dict | None = None,
+    headers: dict | None = None,
+    page: int = 0,
+    max_retries: int = 1,
+    backoff: float = 2.0,
+) -> requests.Response:
+    """GET *url* with retry on transient and 5xx errors.
+
+    Returns the raw ``requests.Response`` so callers can use ``.json()``
+    or ``.text`` as needed.
+    """
+    for attempt in range(max_retries + 1):
+        try:
+            resp = requests.get(url, params=params, headers=headers, timeout=30)
+            resp.raise_for_status()
+            return resp
+        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
+            if attempt < max_retries:
+                print(f"  Retry page {page} after transient error: {e}")
+                time.sleep(backoff)
+            else:
+                raise
+        except requests.exceptions.HTTPError as e:
+            status = e.response.status_code if e.response is not None else 0
+            if status >= 500 and attempt < max_retries:
+                print(f"  Retry page {page} after server error {status}")
+                time.sleep(backoff)
+            else:
+                raise
+    # Unreachable in practice (the last attempt either returns or raises),
+    # but keeps mypy happy.
+    raise RuntimeError("request_with_retry: exhausted retries without result")
+
+
+def merge_into(merged: dict[str, dict], events: list[dict], label: str) -> None:
+    """Merge *events* into *merged* (keyed by api_id), deduplicating categories.
+
+    For each event, if the api_id already exists the *label* is appended to its
+    categories list (unless already present).  Otherwise the event is inserted
+    with ``categories=[label]``.
+
+    Prints the number of events merged.
+    """
+    new_count = 0
+    updated_count = 0
+    for event in events:
+        aid = event["api_id"]
+        if aid in merged:
+            cats = merged[aid].get("categories", [])
+            if label not in cats:
+                cats.append(label)
+                merged[aid]["categories"] = cats
+            updated_count += 1
+        else:
+            event["categories"] = [label]
+            merged[aid] = event
+            new_count += 1
+    print(f"  {len(events)} events fetched ({new_count} new to merge, {updated_count} duplicates)")
 
 
 def load_old_events(data_file: Path) -> tuple[dict[str, dict], str]:

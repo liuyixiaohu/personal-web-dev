@@ -4,6 +4,7 @@
   import { pins, type PinData } from './pins';
   import StoryModal from './StoryModal.svelte';
   import { t } from '../../i18n/langStore';
+  import { track } from '../../utils/analytics';
 
   let selectedPin = $state<PinData | null>(null);
   let loaded = $state(false);
@@ -90,11 +91,7 @@
 
   function handlePinClick(pin: PinData) {
     selectedPin = pin;
-    (window as any).dataLayer?.push({
-      event: 'map_pin_click',
-      pin_city: pin.city,
-      pin_id: pin.id,
-    });
+    track('map_pin_click', { pin_city: pin.city, pin_id: pin.id });
   }
 </script>
 
