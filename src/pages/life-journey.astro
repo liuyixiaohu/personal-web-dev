@@ -68,172 +68,17 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
 </script>
 
 <script>
-  import { geoMercator, geoPath } from 'd3-geo';
-  import { t } from '../i18n/langStore';
+  import { buildSVG } from '../utils/journey/buildSVG';
+  import { initModal } from '../utils/journey/modal';
+  import { updateLabels } from '../utils/journey/updateLabels';
 
   function initJourney() {
     const data = (window as any).__journeyData;
     if (!data) return;
     const { pins, LABEL_POS, rippleDelay, RIPPLE_CYCLE } = data;
 
-    const PAD = 160;
+    const { openModal } = initModal();
 
-    function fitAndCrop(countryGeo: any, padPx: number, padTop?: number) {
-      const top = padTop ?? padPx;
-      const BIG = 2000;
-      const proj = geoMercator().fitExtent([[padPx, padPx], [BIG - padPx, BIG - padPx]], countryGeo);
-      const gen = geoPath().projection(proj);
-      const bounds = gen.bounds(countryGeo);
-      const x0 = bounds[0][0] - padPx;
-      const y0 = bounds[0][1] - top;
-      const w = bounds[1][0] - bounds[0][0] + padPx * 2;
-      const h = bounds[1][1] - bounds[0][1] + top + padPx;
-      return { proj, gen, vb: `${x0} ${y0} ${w} ${h}` };
-    }
-
-    function buildSVG(svgEl: SVGSVGElement, countryGeo: any, provGeo: any, countryPins: any[], clipId: string, padTop: number) {
-      const { proj, gen, vb } = fitAndCrop(countryGeo, PAD, padTop);
-      svgEl.setAttribute('viewBox', vb);
-
-      // Country fill
-      const countryPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      countryPath.setAttribute('d', gen(countryGeo) ?? '');
-      countryPath.setAttribute('class', 'country-fill');
-      svgEl.appendChild(countryPath);
-
-      // Clip path for provinces
-      const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-      const clipPath = document.createElementNS('http://www.w3.org/2000/svg', 'clipPath');
-      clipPath.id = clipId;
-      const clipShape = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      clipShape.setAttribute('d', gen(countryGeo) ?? '');
-      clipPath.appendChild(clipShape);
-      defs.appendChild(clipPath);
-      svgEl.insertBefore(defs, svgEl.firstChild);
-
-      // Province boundaries
-      if (provGeo) {
-        const provPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        provPath.setAttribute('d', gen(provGeo) ?? '');
-        provPath.setAttribute('class', 'province-line');
-        provPath.setAttribute('clip-path', `url(#${clipId})`);
-        svgEl.appendChild(provPath);
-      }
-
-      // Pins
-      for (const pin of countryPins) {
-        const [x, y] = proj([pin.lng, pin.lat]) ?? [0, 0];
-        const lp = LABEL_POS[pin.id] ?? { dx: 14, dy: -8, anchor: 'start' };
-        const delay = rippleDelay[pin.id] ?? 0;
-
-        // Ripple
-        const ripple = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        ripple.setAttribute('cx', String(x));
-        ripple.setAttribute('cy', String(y));
-        ripple.setAttribute('r', '8');
-        ripple.setAttribute('fill', 'none');
-        ripple.setAttribute('stroke', pin.color);
-        ripple.setAttribute('stroke-width', '1.5');
-        ripple.setAttribute('class', 'pin-ripple');
-        ripple.style.animationDelay = `${delay}s`;
-        ripple.style.animationDuration = `${RIPPLE_CYCLE}s`;
-        svgEl.appendChild(ripple);
-
-        // Dot
-        const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        dot.setAttribute('cx', String(x));
-        dot.setAttribute('cy', String(y));
-        dot.setAttribute('r', '8');
-        dot.setAttribute('fill', pin.color);
-        dot.setAttribute('class', 'pin-dot');
-        svgEl.appendChild(dot);
-
-        // Label
-        const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        label.setAttribute('x', String(x + lp.dx));
-        label.setAttribute('y', String(y + lp.dy));
-        label.setAttribute('text-anchor', lp.anchor);
-        label.setAttribute('class', 'map-label');
-        label.setAttribute('role', 'button');
-        label.setAttribute('tabindex', '0');
-        label.setAttribute('data-pin-id', pin.id);
-        label.textContent = `${t(`journey.city.${pin.id}`)} · ${pin.year}`;
-        label.dataset.year = pin.year;
-        label.dataset.i18nPrefix = `journey.city.${pin.id}`;
-
-        label.addEventListener('click', () => openModal(pin));
-        label.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') openModal(pin);
-        });
-
-        svgEl.appendChild(label);
-      }
-    }
-
-    // Modal logic
-    const modal = document.getElementById('story-modal')!;
-    const modalTitle = document.getElementById('modal-title')!;
-    const modalBody = document.getElementById('modal-body')!;
-    const modalCity = document.getElementById('modal-city')!;
-    const modalCountry = document.getElementById('modal-country')!;
-    const modalClose = document.getElementById('modal-close')!;
-
-    /** Convert \n\n-delimited text to <p> blocks. Inline HTML (links, imgs) preserved. */
-    function toParagraphs(raw: string): string {
-      return raw
-        .split(/\n\n+/)
-        .map(p => p.trim())
-        .filter(Boolean)
-        .map(p => p.startsWith('<img') ? p : `<p>${p}</p>`)
-        .join('');
-    }
-
-    function openModal(pin: any) {
-      modalCity.textContent = pin.city;
-      modalCountry.textContent = pin.country;
-      const titleKey = `pin.${pin.id.replace(/-/g, '')}.title`;
-      const storyKey = `pin.${pin.id.replace(/-/g, '')}.story`;
-      modalTitle.textContent = t(titleKey);
-      modalTitle.setAttribute('data-i18n', titleKey);
-      modalBody.innerHTML = toParagraphs(t(storyKey));
-      modalBody.setAttribute('data-i18n', storyKey);
-      modal.classList.add('visible');
-      modal.setAttribute('aria-hidden', 'false');
-      // Track
-      (window as any).dataLayer?.push({ event: 'map_pin_click', pin_city: pin.city, pin_id: pin.id });
-    }
-
-    function closeModal() {
-      modal.classList.remove('visible');
-      modal.setAttribute('aria-hidden', 'true');
-    }
-
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
-    });
-    modalClose.addEventListener('click', closeModal);
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('visible')) closeModal();
-    });
-
-    // Re-translate SVG labels on language change
-    function updateLabels() {
-      document.querySelectorAll('.map-label[data-i18n-prefix]').forEach((el) => {
-        const prefix = (el as HTMLElement).dataset.i18nPrefix!;
-        const year = (el as HTMLElement).dataset.year!;
-        el.textContent = `${t(prefix)} · ${year}`;
-      });
-      // Also update modal if open
-      if (modal.classList.contains('visible')) {
-        const titleKey = modalTitle.getAttribute('data-i18n');
-        const storyKey = modalBody.getAttribute('data-i18n');
-        if (titleKey) modalTitle.textContent = t(titleKey);
-        if (storyKey) modalBody.innerHTML = toParagraphs(t(storyKey));
-      }
-    }
-    document.addEventListener('lang-change', updateLabels);
-
-    // Fetch and render
     fetch('/data/journey-countries.json')
       .then(res => res.json())
       .then(geo => {
@@ -242,11 +87,13 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
         const chinaPins = pins.filter((p: any) => p.country.includes('China'));
         const usaPins = pins.filter((p: any) => p.country.includes('USA'));
 
-        buildSVG(chinaSvg, geo.china, geo.provinces, chinaPins, 'clip-china', 80);
-        buildSVG(usaSvg, geo.usa, geo.provinces, usaPins, 'clip-usa', 80);
+        buildSVG(chinaSvg, geo.china, geo.provinces, chinaPins, 'clip-china', 80, LABEL_POS, rippleDelay, RIPPLE_CYCLE, openModal);
+        buildSVG(usaSvg, geo.usa, geo.provinces, usaPins, 'clip-usa', 80, LABEL_POS, rippleDelay, RIPPLE_CYCLE, openModal);
 
         document.getElementById('country-pair')?.classList.add('loaded');
       });
+
+    document.addEventListener('lang-change', updateLabels);
   }
 
   // Run on initial load
