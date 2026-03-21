@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { subscribe, initLang, getLang } from '../../i18n/langStore';
+  import { onLangChange, getLang } from '../../i18n/langStore';
   import type { Lang } from '../../i18n/translations';
+  import { track } from '../../utils/analytics';
 
   // ExcelJS and XLSX are dynamically imported when needed (saves ~1.2 MB on initial load)
   type ExcelJSModule = typeof import('exceljs');
@@ -68,11 +69,7 @@
 
   let lang: Lang = $state('en');
 
-  $effect(() => {
-    initLang();
-    lang = getLang();
-    return subscribe((l) => { lang = l; });
-  });
+  $effect(() => onLangChange(() => { lang = getLang(); }));
 
   let authenticated = $state(false);
   let passwordInput = $state('');
@@ -114,10 +111,10 @@
     if (hash === PASSWORD_HASH) {
       authenticated = true;
       sessionStorage.setItem('excel-tool-auth', 'true');
-      (window as any).dataLayer?.push({ event: 'excel_tool_auth', success: true });
+      track('excel_tool_auth', { success: true });
     } else {
       passwordError = '密码不对哦';
-      (window as any).dataLayer?.push({ event: 'excel_tool_auth', success: false });
+      track('excel_tool_auth', { success: false });
     }
   }
 
@@ -771,7 +768,7 @@
       URL.revokeObjectURL(url);
 
       statusMessage = `✓ 已更新 ${result.month}月数据，下载中…`;
-      (window as any).dataLayer?.push({ event: 'excel_tool_process', task: selectedTask, month: result.month, year: result.year });
+      track('excel_tool_process', { task: selectedTask, month: result.month, year: result.year });
     } catch (err) {
       statusMessage = `处理失败: ${err instanceof Error ? err.message : '未知错误'}`;
     }
