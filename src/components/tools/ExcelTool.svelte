@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onLangChange, getLang } from '../../i18n/langStore';
+  import { subscribeLang, getLang } from '../../i18n/langStore';
   import type { Lang } from '../../i18n/translations';
   import { track } from '../../utils/analytics';
 
@@ -69,7 +69,7 @@
 
   let lang: Lang = $state('en');
 
-  $effect(() => onLangChange(() => { lang = getLang(); }));
+  $effect(() => subscribeLang(() => { lang = getLang(); }));
 
   let authenticated = $state(false);
   let passwordInput = $state('');
@@ -142,7 +142,6 @@
   };
 
   function classifyFile(name: string): { role: FileRole; label: string } | null {
-    const lower = name.toLowerCase();
     if (name.includes('保险登记')) return { role: 'output', label: '输出表' };
     if (name.includes('人保')) return { role: 'renBao', label: '人保' };
     if (name.includes('优米')) return { role: 'youmi', label: '优米' };

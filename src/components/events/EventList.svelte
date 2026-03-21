@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { onLangChange, getLang, t } from '../../i18n/langStore';
+  import { subscribeLang, getLang, t } from '../../i18n/langStore';
   import type { Lang } from '../../i18n/translations';
   import {
     type LumaEvent, type EventData,
@@ -43,7 +43,7 @@
 
 
   // --- Language ---
-  $effect(() => onLangChange(() => { lang = getLang(); }));
+  $effect(() => subscribeLang(() => { lang = getLang(); }));
 
   // --- Persist filter/sort to localStorage ---
   $effect(() => {
