@@ -131,6 +131,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.eventCount': { en: 'events found', zh: '个活动' },
   'events.filterLocation': { en: 'Location', zh: '地点' },
   'events.filterPrice': { en: 'Price', zh: '费用' },
+  'events.filterSource': { en: 'Source', zh: '来源' },
   'events.filterAll': { en: 'All', zh: '全部' },
   'events.filterFreeApproval': { en: 'Free (May Require Approval)', zh: '免费（可能需要审批）' },
   'events.filterPaid': { en: 'Paid', zh: '付费' },

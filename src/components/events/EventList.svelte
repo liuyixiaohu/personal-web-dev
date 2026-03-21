@@ -25,6 +25,7 @@
   // --- Filter & Sort State (persisted via localStorage) ---
   let selectedLocations = $state<Set<string>>(new Set(loadPref<string[]>('events.locations', [])));
   let selectedPrice = $state<string | null>(loadPref('events.price', null));
+  let selectedSource = $state<string | null>(loadPref('events.source', null));
   let selectedDays = $state<Set<number>>(new Set(loadPref<number[]>('events.days', [])));
   let selectedTimeStart = $state<string>(loadPref('events.timeStart', ''));
   let selectedTimeEnd = $state<string>(loadPref('events.timeEnd', ''));
@@ -81,6 +82,7 @@
   // --- Persist filter/sort to localStorage ---
   $effect(() => {
     localStorage.setItem('events.price', JSON.stringify(selectedPrice));
+    localStorage.setItem('events.source', JSON.stringify(selectedSource));
     localStorage.setItem('events.sort', JSON.stringify(sortBy));
     localStorage.setItem('events.locations', JSON.stringify([...selectedLocations]));
     localStorage.setItem('events.days', JSON.stringify([...selectedDays]));
@@ -144,6 +146,7 @@
     let result = events.filter(e => {
       if (selectedLocations.size > 0 && !selectedLocations.has(e._strippedLocation!)) return false;
       if (!matchesPrice(e, selectedPrice)) return false;
+      if (selectedSource && e.source !== selectedSource) return false;
       if (selectedDays.size > 0 && !selectedDays.has(e._dayOfWeek!)) return false;
       if (selectedTimeStart || selectedTimeEnd) {
         const mins = e._timeMinutes!;
@@ -228,6 +231,7 @@
   function clearFilters() {
     selectedLocations = new Set();
     selectedPrice = null;
+    selectedSource = null;
     selectedDays = new Set();
     selectedTimeStart = '';
     selectedTimeEnd = '';
@@ -340,6 +344,7 @@
       {priceCounts}
       {selectedLocations}
       {selectedPrice}
+      {selectedSource}
       {selectedDays}
       {selectedTimeStart}
       {selectedTimeEnd}
@@ -348,6 +353,7 @@
       {excludeKeywords}
       onLocationToggle={toggleLocation}
       onPriceChange={(p) => { selectedPrice = p; pushFilter('price', p); }}
+      onSourceChange={(s) => { selectedSource = s; pushFilter('source', s); }}
       onDayToggle={toggleDay}
       onTimeStartChange={(v) => { selectedTimeStart = v; pushFilter('time_start', v); }}
       onTimeEndChange={(v) => { selectedTimeEnd = v; pushFilter('time_end', v); }}
