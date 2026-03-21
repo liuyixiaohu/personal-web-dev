@@ -30,7 +30,7 @@ URL_TEMPLATE = "https://www.eventbrite.com/d/{city}/{category}/?page={page}"
 MAX_PAGES = 50  # effectively unlimited; stops when no more results
 REQUEST_DELAY = 2.0
 DATA_FILE = (
-    Path(__file__).resolve().parent.parent.parent / "public" / "data" / "eventbrite_events.json"
+    Path(__file__).resolve().parent.parent.parent / "data" / "eventbrite_events.json"
 )
 
 USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"
