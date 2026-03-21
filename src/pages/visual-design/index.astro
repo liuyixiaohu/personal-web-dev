@@ -16,6 +16,10 @@ const area = professionalAreas.find((a) => a.slug === 'visual-design')!;
       <span class="card-title" data-i18n="workflow.sprintCadence">Sprint Cadence</span>
       <span class="card-arrow">&rarr;</span>
     </a>
+    <a href="/brand" class="card">
+      <span class="card-title" data-i18n="home.brand">Brand Guidelines</span>
+      <span class="card-arrow">&rarr;</span>
+    </a>
   </nav>
 </ProfessionalDetail>
 
@@ -30,7 +34,7 @@ const area = professionalAreas.find((a) => a.slug === 'visual-design')!;
     justify-content: space-between;
     padding: var(--space-sm) var(--space-md);
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: var(--radius-md);
     text-decoration: none;
     color: var(--text);
     transition: border-color 0.2s, background-color 0.2s;
