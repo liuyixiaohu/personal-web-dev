@@ -179,6 +179,8 @@
     font-size: var(--fs-xs);
     color: var(--color-visual);
     margin-bottom: 0;
+    position: relative;
+    z-index: 2;
   }
 
   .panels {
@@ -200,7 +202,9 @@
     font-size: var(--fs-md);
     color: var(--text-light);
     font-weight: 500;
-    margin-bottom: 0;
+    margin-bottom: -2rem;
+    position: relative;
+    z-index: 2;
     letter-spacing: 0.03em;
   }
 
