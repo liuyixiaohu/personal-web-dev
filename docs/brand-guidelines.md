@@ -102,7 +102,7 @@ Fluid scale using `clamp()`, adapts to viewport width.
 
 ### Paragraph Spacing
 
-Use `--space-sm` as `margin-bottom` between paragraphs (`<p>` elements). This creates clear visual separation between paragraphs while remaining tighter than section spacing (`--space-md` or above). Last paragraphs should have no bottom margin.
+Use `0.75em` as `margin-bottom` between paragraphs (`<p>` elements). The `em` unit ties spacing to the current font size, so larger text gets proportionally more space and smaller text gets less. Last paragraphs should have no bottom margin.
 
 Content with multiple paragraphs should use `\n\n` as the paragraph delimiter in data/translations, converted to `<p>` tags at render time. This keeps content and presentation separate.
 
