@@ -88,6 +88,7 @@ export function formatPrice(event: LumaEvent): string {
     if (currency === 'USD') return `$${dollars.toFixed(0)}`;
     return `${dollars.toFixed(0)} ${currency}`;
   }
+  if (event.source === 'eventbrite') return t('events.seeEventbrite');
   return t('events.approval');
 }
 
