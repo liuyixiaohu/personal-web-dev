@@ -197,14 +197,13 @@
   }
 
   .panel-label {
-    display: block;
-    text-align: center;
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-md);
+    z-index: 2;
     font-size: var(--fs-md);
     color: var(--text-light);
     font-weight: 500;
-    margin-bottom: -2rem;
-    position: relative;
-    z-index: 2;
     letter-spacing: 0.03em;
   }
 
