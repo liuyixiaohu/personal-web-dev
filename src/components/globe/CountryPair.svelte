@@ -184,7 +184,7 @@
   .panels {
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
+    gap: var(--space-sm);
     align-items: center;
   }
 
