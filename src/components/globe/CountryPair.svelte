@@ -20,40 +20,61 @@
   const usaPins = pins.filter(p => p.country.includes('USA'));
   const chinaPins = pins.filter(p => p.country.includes('China'));
 
-  // SVG dimensions per panel
-  const W = 400;
-  const H = 340;
-  const PAD = 20;
+  // Label positions relative to pin (Google Maps style, no connector lines).
+  // 'anchor' controls SVG text-anchor: 'start' = label right of point, 'end' = label left.
+  const labelPos: Record<string, { dx: number; dy: number; anchor: string }> = {
+    shouguang: { dx: 14,  dy: -14, anchor: 'start' },  // above-right
+    qingdao:   { dx: 14,  dy: 6,   anchor: 'start' },  // right
+    jiaozhou:  { dx: -14, dy: 26,  anchor: 'end' },    // below-left
+    madison:   { dx: 14,  dy: -10, anchor: 'start' },  // above-right
+    fairfield: { dx: -14, dy: -10, anchor: 'end' },    // above-left
+    berkeley:  { dx: -14, dy: 22,  anchor: 'end' },    // below-left
+  };
+
+  const PAD = 60;
+  // Dynamic viewBoxes computed after projection (set in onMount)
+  let chinaVB = $state('0 0 100 100');
+  let usaVB = $state('0 0 100 100');
+
+  /** Fit a country into a large canvas, then crop the viewBox to its rendered bounds */
+  function fitAndCrop(countryGeo: any, padPx: number) {
+    const BIG = 2000; // large canvas so fitExtent has room
+    const proj = geoMercator().fitExtent([[padPx, padPx], [BIG - padPx, BIG - padPx]], countryGeo);
+    const gen = geoPath().projection(proj);
+    const bounds = gen.bounds(countryGeo);
+    const x0 = bounds[0][0] - padPx;
+    const y0 = bounds[0][1] - padPx;
+    const w = bounds[1][0] - bounds[0][0] + padPx * 2;
+    const h = bounds[1][1] - bounds[0][1] + padPx * 2;
+    return { proj, gen, vb: `${x0} ${y0} ${w} ${h}` };
+  }
 
   onMount(async () => {
     const res = await fetch('/data/journey-countries.json');
     const data = await res.json();
 
-    // Create per-country projections fitted to the SVG size
-    const usaProj = geoMercator().fitExtent([[PAD, PAD], [W - PAD, H - PAD]], data.usa);
-    const chinaProj = geoMercator().fitExtent([[PAD, PAD], [W - PAD, H - PAD]], data.china);
+    const china = fitAndCrop(data.china, PAD);
+    const usa = fitAndCrop(data.usa, PAD);
 
-    const usaPathGen = geoPath().projection(usaProj);
-    const chinaPathGen = geoPath().projection(chinaProj);
+    chinaVB = china.vb;
+    usaVB = usa.vb;
 
-    usaPath = usaPathGen(data.usa) ?? '';
-    chinaPath = chinaPathGen(data.china) ?? '';
+    chinaPath = china.gen(data.china) ?? '';
+    usaPath = usa.gen(data.usa) ?? '';
 
-    // Province boundaries -- clip to each country's bounds
     if (data.provinces) {
-      // Split province lines by filtering coordinates into USA vs China regions
-      usaProvPath = usaPathGen(data.provinces) ?? '';
-      chinaProvPath = chinaPathGen(data.provinces) ?? '';
+      chinaProvPath = china.gen(data.provinces) ?? '';
+      usaProvPath = usa.gen(data.provinces) ?? '';
     }
 
     // Project pins
     const positions: PinPos[] = [];
     for (const p of usaPins) {
-      const [x, y] = usaProj([p.lng, p.lat]) ?? [0, 0];
+      const [x, y] = usa.proj([p.lng, p.lat]) ?? [0, 0];
       positions.push({ ...p, x, y, panel: 'usa' });
     }
     for (const p of chinaPins) {
-      const [x, y] = chinaProj([p.lng, p.lat]) ?? [0, 0];
+      const [x, y] = china.proj([p.lng, p.lat]) ?? [0, 0];
       positions.push({ ...p, x, y, panel: 'china' });
     }
     pinPositions = positions;
@@ -77,20 +98,26 @@
     <!-- China panel -->
     <div class="panel">
       <span class="panel-label">China</span>
-      <svg viewBox="0 0 {W} {H}" class="country-svg">
+      <svg viewBox={chinaVB} class="country-svg">
+        <defs>
+          <clipPath id="clip-china"><path d={chinaPath} /></clipPath>
+        </defs>
         <path d={chinaPath} class="country-fill" />
         {#if chinaProvPath}
-          <path d={chinaProvPath} class="province-line" />
+          <path d={chinaProvPath} class="province-line" clip-path="url(#clip-china)" />
         {/if}
         {#each pinPositions.filter(p => p.panel === 'china') as pin, i}
-          <circle cx={pin.x} cy={pin.y} r="5" fill="none" stroke={pin.color}
-            stroke-width="1" class="pin-ripple" style="animation-delay: {i * 0.4}s" />
-          <circle cx={pin.x} cy={pin.y} r="5" fill={pin.color} class="pin-marker"
+          {@const lp = labelPos[pin.id] ?? { dx: 14, dy: -8, anchor: 'start' }}
+          <circle cx={pin.x} cy={pin.y} r="8" fill="none" stroke={pin.color}
+            stroke-width="1.5" class="pin-ripple" style="animation-delay: {i * 0.4}s" />
+          <circle cx={pin.x} cy={pin.y} r="8" fill={pin.color} class="pin-dot" />
+          <text x={pin.x + lp.dx} y={pin.y + lp.dy}
+            text-anchor={lp.anchor} class="map-label"
             onclick={() => handlePinClick(pin)}
             onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') handlePinClick(pin); }}
-            role="button" tabindex="0" aria-label={pin.city}>
-            <title>{pin.city}</title>
-          </circle>
+            role="button" tabindex="0">
+            {pin.city} · {pin.year}
+          </text>
         {/each}
       </svg>
     </div>
@@ -98,20 +125,26 @@
     <!-- USA panel -->
     <div class="panel">
       <span class="panel-label">United States</span>
-      <svg viewBox="0 0 {W} {H}" class="country-svg">
+      <svg viewBox={usaVB} class="country-svg">
+        <defs>
+          <clipPath id="clip-usa"><path d={usaPath} /></clipPath>
+        </defs>
         <path d={usaPath} class="country-fill" />
         {#if usaProvPath}
-          <path d={usaProvPath} class="province-line" />
+          <path d={usaProvPath} class="province-line" clip-path="url(#clip-usa)" />
         {/if}
         {#each pinPositions.filter(p => p.panel === 'usa') as pin, i}
-          <circle cx={pin.x} cy={pin.y} r="5" fill="none" stroke={pin.color}
-            stroke-width="1" class="pin-ripple" style="animation-delay: {i * 0.4}s" />
-          <circle cx={pin.x} cy={pin.y} r="5" fill={pin.color} class="pin-marker"
+          {@const lp = labelPos[pin.id] ?? { dx: 14, dy: -8, anchor: 'start' }}
+          <circle cx={pin.x} cy={pin.y} r="8" fill="none" stroke={pin.color}
+            stroke-width="1.5" class="pin-ripple" style="animation-delay: {i * 0.4}s" />
+          <circle cx={pin.x} cy={pin.y} r="8" fill={pin.color} class="pin-dot" />
+          <text x={pin.x + lp.dx} y={pin.y + lp.dy}
+            text-anchor={lp.anchor} class="map-label"
             onclick={() => handlePinClick(pin)}
             onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') handlePinClick(pin); }}
-            role="button" tabindex="0" aria-label={pin.city}>
-            <title>{pin.city}</title>
-          </circle>
+            role="button" tabindex="0">
+            {pin.city} · {pin.year}
+          </text>
         {/each}
       </svg>
     </div>
@@ -144,14 +177,14 @@
 
   .panels {
     display: flex;
-    gap: var(--space-md);
-    justify-content: center;
-    align-items: start;
+    flex-direction: column;
+    gap: var(--space-lg);
+    align-items: center;
   }
 
   .panel {
-    flex: 1;
-    max-width: 26rem;
+    width: 100%;
+    max-width: 44rem;
     position: relative;
   }
 
@@ -174,13 +207,13 @@
   .country-fill {
     fill: var(--bubble-visual);
     stroke: var(--border);
-    stroke-width: 0.5;
+    stroke-width: 1.5;
   }
 
   .province-line {
     fill: none;
     stroke: var(--color-visual);
-    stroke-width: 0.3;
+    stroke-width: 1;
     opacity: 0.5;
   }
 
@@ -196,23 +229,21 @@
     100% { transform: scale(3); opacity: 0; }
   }
 
-  .pin-marker {
+  .pin-dot {
+    pointer-events: none;
+  }
+
+  .map-label {
+    font-size: 15px;
+    font-family: inherit;
+    fill: var(--text-light);
     cursor: pointer;
-    transition: opacity 0.2s ease;
+    transition: fill 0.15s ease;
+    dominant-baseline: central;
   }
 
-  .pin-marker:hover {
-    opacity: 0.7;
+  .map-label:hover {
+    fill: var(--color-rose);
   }
 
-  @media (max-width: 640px) {
-    .panels {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .panel {
-      max-width: 100%;
-    }
-  }
 </style>
