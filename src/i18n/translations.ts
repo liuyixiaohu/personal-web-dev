@@ -80,8 +80,8 @@ export const translations: Record<string, Record<Lang, string>> = {
   'pro.section.lab': { en: 'Touch Fish!', zh: '摸鱼万岁！' },
 
   // --- Events page ---
-  'home.events': { en: 'Luma\'s Bay Area Tech Events Monitor', zh: '湾区科技活动监测（Luma）' },
-  'home.events.desc': { en: 'No more doomscrolling Luma into an existential crisis.', zh: '再也不用刷 Luma 刷到怀疑人生了。' },
+  'home.events': { en: 'Today\'s New Tech Events @Bay Area', zh: '今日湾区新增科技活动' },
+  'home.events.desc': { en: 'No more doomscrolling event platforms into an existential crisis.', zh: '再也不用刷活动平台刷到怀疑人生了。' },
   'home.ingrain': { en: 'InGrain', zh: 'InGrain' },
   'home.ingrain.desc': { en: 'Remember what you learn from AI conversations.', zh: '记住你从 AI 对话中学到的东西。' },
   'home.joblens': { en: 'Sift', zh: 'Sift' },
@@ -89,14 +89,14 @@ export const translations: Record<string, Record<Lang, string>> = {
   'home.dreamjob': { en: 'Dream Job Monitor', zh: '理想工作监控' },
   'home.dreamjob.desc': { en: 'Fork it. Tell the AI your dream companies. Never miss a posting.', zh: 'Fork 后让 AI 帮你配置。再也不怕错过心仪的岗位。' },
   'home.brand': { en: 'Brand Guidelines', zh: '品牌指南' },
-  'events.title': { en: 'New Luma Events Today', zh: '今日新增 Luma 活动' },
-  'events.subtitlePre': { en: 'Bay Area Tech & AI events from Luma, showing ', zh: '来自 Luma 的湾区科技与 AI 活动，仅展示' },
+  'events.title': { en: 'Today\'s New Tech Events @Bay Area', zh: '今日湾区新增科技活动' },
+  'events.subtitlePre': { en: 'Bay Area Tech & AI events from Luma and Eventbrite, showing ', zh: '来自 Luma 和 Eventbrite 的湾区科技与 AI 活动，仅展示' },
   'events.subtitleHighlight': { en: 'only what\'s new since the last daily check', zh: '上次检查后的新增' },
   'events.subtitlePost': { en: '.', zh: '。' },
   'events.whyTitle': { en: 'Why show only newly added events?', zh: '为什么设计为只显示新增活动？' },
   'events.whyPoint1': {
-    en: 'This page pulls from Luma\'s Bay Area Tech and AI categories once a day. It only shows events that appeared since the last check \u2014 not the full Luma catalog. If you\'re looking for a specific event or topic outside Tech/AI, search directly on Luma.',
-    zh: '本页面每天从 Luma 的湾区 Tech 和 AI 分类中拉取一次数据，只展示上次检查后新增的活动，不是 Luma 的完整列表。如果你要找特定活动或 Tech/AI 以外的主题，请直接在 Luma 上搜索。',
+    en: 'This page pulls from Luma and Eventbrite\'s Bay Area Tech and AI categories once a day. It only shows events that appeared since the last check \u2014 not the full catalog. If you\'re looking for a specific event or topic outside Tech/AI, search directly on those platforms.',
+    zh: '本页面每天从 Luma 和 Eventbrite 的湾区 Tech 和 AI 分类中拉取一次数据，只展示上次检查后新增的活动，不是完整列表。如果你要找特定活动或 Tech/AI 以外的主题，请直接在对应平台上搜索。',
   },
   'events.whyPoint2': {
     en: 'This page is intentionally designed to balance convenience and long-term availability. The data comes from an undisclosed endpoint. Keeping the feature restrained and differentiated, rather than building a full-featured alternative, helps reduce the risk of the data source being noticed and shut down.',
