@@ -3,10 +3,12 @@
   import { geoMercator, geoPath } from 'd3-geo';
   import { pins, type PinData } from './pins';
   import StoryModal from './StoryModal.svelte';
-  import { t } from '../../i18n/langStore';
+  import { t, onLangChange } from '../../i18n/langStore';
   import { track } from '../../utils/analytics';
 
   let selectedPin = $state<PinData | null>(null);
+  let lang = $state(0); // counter to force re-render on lang change
+  $effect(() => onLangChange(() => { lang++; }));
   let loaded = $state(false);
 
   // Rendered paths & pin positions (filled after data loads)
@@ -98,7 +100,8 @@
 </script>
 
 <div class="country-pair" class:loaded>
-  <p class="map-hint">{t('journey.hint')}</p>
+  <!-- lang tick forces re-render on language switch -->
+  <p class="map-hint" data-lang={lang}>{t('journey.hint')}</p>
 
   <div class="panels">
     <!-- China panel -->
