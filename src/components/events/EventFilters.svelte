@@ -7,6 +7,7 @@
     priceCounts: Map<string, number>;
     selectedLocations: Set<string>;
     selectedPrice: string | null;
+    selectedSource: string | null;
     selectedDays: Set<number>;
     selectedTimeStart: string;
     selectedTimeEnd: string;
@@ -15,6 +16,7 @@
     excludeKeywords: string[];
     onLocationToggle: (loc: string) => void;
     onPriceChange: (price: string | null) => void;
+    onSourceChange: (source: string | null) => void;
     onDayToggle: (day: number) => void;
     onTimeStartChange: (v: string) => void;
     onTimeEndChange: (v: string) => void;
@@ -31,6 +33,7 @@
     priceCounts,
     selectedLocations,
     selectedPrice,
+    selectedSource,
     selectedDays,
     selectedTimeStart,
     selectedTimeEnd,
@@ -39,6 +42,7 @@
     excludeKeywords,
     onLocationToggle,
     onPriceChange,
+    onSourceChange,
     onDayToggle,
     onTimeStartChange,
     onTimeEndChange,
@@ -107,14 +111,14 @@
   }
 
   let hasActiveFilters = $derived(
-    selectedLocations.size > 0 || selectedPrice !== null ||
+    selectedLocations.size > 0 || selectedPrice !== null || selectedSource !== null ||
     selectedDays.size > 0 || selectedTimeStart !== '' || selectedTimeEnd !== '' ||
     searchQuery.trim() !== '' || excludeKeywords.length > 0
   );
 </script>
 
 <div class="filter-controls">
-  <!-- Price filter (single-select pills) -->
+  <!-- Price + Source filters (same row) -->
   <div class="filter-row">
     <span class="filter-label">{t('events.filterPrice')}</span>
     <div class="filter-pills">
@@ -127,6 +131,16 @@
           {priceOpt === 'free-approval' ? t('events.filterFreeApproval') :
            t('events.filterPaid')} <span class="pill-count">({priceCounts.get(priceOpt) ?? 0})</span>
         </button>
+      {/each}
+    </div>
+    <span class="filter-label filter-label--sep">{t('events.filterSource')}</span>
+    <div class="filter-pills">
+      {#each ['luma', 'eventbrite'] as src}
+        <button
+          class="pill"
+          class:pill--active={selectedSource === src}
+          onclick={() => onSourceChange(selectedSource === src ? null : src)}
+        >{src === 'luma' ? 'Luma' : 'Eventbrite'}</button>
       {/each}
     </div>
   </div>
@@ -286,6 +300,11 @@
     font-size: var(--fs-xs);
     min-width: 3rem;
     flex-shrink: 0;
+  }
+
+  .filter-label--sep {
+    margin-left: 0.5rem;
+    min-width: auto;
   }
 
   .filter-pills {
