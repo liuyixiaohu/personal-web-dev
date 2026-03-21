@@ -26,6 +26,8 @@ export const translations: Record<string, Record<Lang, string>> = {
 
   // --- Life Journey ---
   'journey.hint': { en: 'Click a pin to read the story', zh: '点击图钉查看故事' },
+  'journey.china': { en: 'China', zh: '中国' },
+  'journey.usa': { en: 'United States', zh: '美国' },
 
   // --- Craft (professional areas) ---
   'craft.pm': { en: 'Product Marketing', zh: '产品营销' },
