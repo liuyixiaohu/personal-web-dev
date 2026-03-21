@@ -89,6 +89,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'home.dreamjob': { en: 'Dream Job Monitor', zh: '理想工作监控' },
   'home.dreamjob.desc': { en: 'Fork it. Tell the AI your dream companies. Never miss a posting.', zh: 'Fork 后让 AI 帮你配置。再也不怕错过心仪的岗位。' },
   'home.brand': { en: 'Brand Guidelines', zh: '品牌指南' },
+  'home.privacy': { en: 'Privacy', zh: '隐私政策' },
   'events.title': { en: 'Today\'s New Tech Events @Bay Area', zh: '今日湾区新增科技活动' },
   'events.subtitlePre': { en: 'Bay Area Tech & AI events from Luma and Eventbrite, showing ', zh: '来自 Luma 和 Eventbrite 的湾区科技与 AI 活动，仅展示' },
   'events.subtitleHighlight': { en: 'only what\'s new since the last daily check', zh: '上次检查后的新增' },
