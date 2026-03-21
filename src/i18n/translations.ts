@@ -102,6 +102,20 @@ export const translations: Record<string, Record<Lang, string>> = {
     en: 'This page is intentionally designed to balance convenience and long-term availability. The data comes from an undisclosed endpoint. Keeping the feature restrained and differentiated, rather than building a full-featured alternative, helps reduce the risk of the data source being noticed and shut down.',
     zh: '本页面在设计上刻意平衡了便利性与长期可用性。数据来自一个不便公开的接口。保持功能的克制与差异化，而非构建一个全面的替代方案，有助于降低数据源被关注并停用的风险。',
   },
+  'events.announceTitle': { en: "What's New", zh: '更新说明' },
+  'events.announceP1': {
+    en: 'Events may appear fewer than usual due to a version update. They will return to normal after tomorrow\'s daily refresh.',
+    zh: '由于版本更新，当前显示的活动可能比平时少。明天每日刷新后将恢复正常。',
+  },
+  'events.announceP2': {
+    en: 'Eventbrite has been added as a second source alongside Luma, bringing more Bay Area tech events into the feed.',
+    zh: '现已新增 Eventbrite 作为第二数据源，与 Luma 一起提供更多湾区科技活动。',
+  },
+  'events.announceP3': {
+    en: "Eventbrite's category tagging isn't always accurate, so some non-tech events may appear. We'll monitor the noise level and remove Eventbrite if needed.",
+    zh: 'Eventbrite 的分类标签并不总是准确，因此可能会出现少量非科技类活动。我们会持续观察，若噪音过多将移除该数据源。',
+  },
+  'events.announceOk': { en: 'Got it', zh: '知道了' },
   'events.lastUpdated': { en: 'Last checked', zh: '最近检查' },
   'events.refreshNote': { en: '(Refreshes daily ~9 PM PT)', zh: '（每日约晚 9 点太平洋时间刷新）' },
   'events.noEvents': { en: 'No new events discovered today. Check back tomorrow!', zh: '今天没有发现新活动，明天再来看看吧！' },
