@@ -33,8 +33,7 @@
 | `#7FB6DD` | - | Blue | Blue accent (Life Journey) |
 | `#F0D7D7` | `--bubble-pm` | Pink | Light pink background |
 | `#D9797B` | - | Pink | Strong pink/rose accent |
-| `#8A939B` | `--text-light` | Text | Secondary/muted text |
-| `#5A636B` | - | Text | Mid-tone text |
+| `#5A636B` | `--text-light` | Text | Secondary/muted text (WCAG AA 5.73:1) |
 | `#1F2328` | `--text` | Text | Primary text |
 
 ### Professional Area Accents
@@ -201,6 +200,96 @@ transition: opacity 0.2s ease;
 - Micro-interactions (buttons, pills): `0.15s`
 - Links and opacity changes: `0.2s`
 - View transitions: `0.4s ease-in-out`
+
+---
+
+## Border Radius
+
+Consolidated scale -- always use CSS variables, not hardcoded values.
+
+| Variable | Value | Usage |
+|---|---|---|
+| `--radius-sm` | `3px` | Pills, badges, small controls |
+| `--radius-md` | `6px` | Buttons, inputs, cards |
+| `--radius-lg` | `12px` | Modals, overlays, large cards |
+| `--radius-full` | `50%` | Circles, avatars |
+
+---
+
+## Shadow / Elevation
+
+All shadows use black at 0.04--0.08 opacity for warmth.
+
+| Variable | Value | Usage |
+|---|---|---|
+| `--shadow-sm` | `0 2px 12px rgba(0,0,0,0.08)` | Dropdowns, tooltips |
+| `--shadow-md` | `0 4px 16px rgba(0,0,0,0.08)` | Popups, floating cards |
+| `--shadow-lg` | `0 8px 40px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04)` | Modals, full overlays |
+
+---
+
+## Accessibility
+
+### Color Contrast (WCAG AA)
+
+All text colors must meet 4.5:1 against `--bg` (#FAF7F2) for normal text, 3:1 for large text (18px+ or 14px bold).
+
+| Color | Ratio | Status |
+|---|---|---|
+| `--text` (#1F2328) | 14.78:1 | AA pass |
+| `--text-light` (#5A636B) | 5.73:1 | AA pass |
+| Accent colors (#5a7a94, #5a8a6e) | 3.7--4.2:1 | AA large only -- use for large text or decorative elements |
+| Rose (#D9797B) | 2.82:1 | Decorative only -- never for informational text |
+
+### Focus States
+
+Global `:focus-visible` ring defined in `global.css`:
+
+```css
+:focus-visible {
+  outline: 2px solid var(--color-visual);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+```
+
+- Keyboard navigation shows green focus ring
+- Mouse clicks do not (`:focus { outline: none }` on inputs is intentional)
+- Never remove focus styles without providing a visible alternative
+
+### Reduced Motion
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+```
+
+Respects user OS preference. All animations and transitions are disabled when the user prefers reduced motion.
+
+---
+
+## Images & Media
+
+- All `<img>` must have descriptive `alt` text (empty `alt=""` only for decorative images)
+- Max width: `100%` (set globally)
+- Border radius for content images: `var(--radius-lg)` (8px)
+- Story/modal photos: `class="story-photo"` with `border-radius: 8px` and `margin: var(--space-sm) 0`
+
+---
+
+## Logo / Favicon
+
+**Mark:** Serif "K" in EB Garamond on cream background.
+
+| Format | Size | File | Usage |
+|---|---|---|---|
+| SVG | scalable | `favicon.svg` | Modern browsers (preferred) |
+| PNG | 32px | `favicon-32.png` | Browser tab fallback |
+| PNG | 256px | `favicon.png` | High-res, og:image fallback |
+| PNG | 180px | `apple-touch-icon.png` | iOS home screen |
+
+Colors: `--bg` (#FAF7F2) background, `--text` (#1F2328) fill.
 
 ---
 

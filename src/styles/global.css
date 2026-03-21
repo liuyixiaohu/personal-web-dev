@@ -40,6 +40,17 @@
   --space-lg: clamp(1.5rem, 3vw, 3rem);
   --space-xl: clamp(2rem, 5vw, 5rem);
 
+  /* Border-radius scale */
+  --radius-sm: 3px;   /* pills, badges, small controls */
+  --radius-md: 6px;   /* buttons, inputs, cards */
+  --radius-lg: 12px;  /* modals, overlays, large cards */
+  --radius-full: 50%; /* circles, avatars */
+
+  /* Shadow / Elevation scale */
+  --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+
   /* Layout */
   --max-width: 72rem;
   --content-padding: clamp(1rem, 4vw, 3rem);
@@ -96,6 +107,23 @@ h1:first-child, h2:first-child, h3:first-child { margin-top: 0; }
 /* Paragraph spacing: em-based, scales with font size */
 p { margin-bottom: 0.75em; }
 p:last-child { margin-bottom: 0; }
+
+/* Accessibility: focus-visible ring for keyboard navigation */
+:focus-visible {
+  outline: 2px solid var(--color-visual);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Accessibility: respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 
 /* Flowed layout: images and media adapt */
 img, video, svg {
