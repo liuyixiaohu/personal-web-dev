@@ -122,7 +122,7 @@
             onclick={() => handlePinClick(pin)}
             onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') handlePinClick(pin); }}
             role="button" tabindex="0">
-            {pin.city} · {pin.year}
+            {t(`journey.city.${pin.id}`)} · {pin.year}
           </text>
         {/each}
       </svg>
@@ -151,7 +151,7 @@
             onclick={() => handlePinClick(pin)}
             onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') handlePinClick(pin); }}
             role="button" tabindex="0">
-            {pin.city} · {pin.year}
+            {t(`journey.city.${pin.id}`)} · {pin.year}
           </text>
         {/each}
       </svg>

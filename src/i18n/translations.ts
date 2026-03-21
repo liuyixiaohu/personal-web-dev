@@ -28,6 +28,12 @@ export const translations: Record<string, Record<Lang, string>> = {
   'journey.hint': { en: 'Click a pin to read the story', zh: '点击图钉查看故事' },
   'journey.china': { en: 'China', zh: '中国' },
   'journey.usa': { en: 'United States', zh: '美国' },
+  'journey.city.jiaozhou': { en: 'Jiaozhou', zh: '胶州' },
+  'journey.city.shouguang': { en: 'Shouguang', zh: '寿光' },
+  'journey.city.qingdao': { en: 'Qingdao', zh: '青岛' },
+  'journey.city.madison': { en: 'Madison', zh: '麦迪逊' },
+  'journey.city.fairfield': { en: 'Fairfield', zh: '费尔菲尔德' },
+  'journey.city.berkeley': { en: 'Berkeley', zh: '伯克利' },
 
   // --- Craft (professional areas) ---
   'craft.pm': { en: 'Product Marketing', zh: '产品营销' },
