@@ -1,6 +1,6 @@
 """Merge per-source event files into a single events.json.
 
-Discovers all *_events.json files in public/data/ automatically,
+Discovers all *_events.json files in data/ automatically,
 so adding a new source only requires a new fetch script.
 
 Run after all fetch scripts have executed:
@@ -17,8 +17,9 @@ from pathlib import Path
 
 from common import load_old_events, save_events
 
-DATA_DIR = Path(__file__).resolve().parent.parent / "public" / "data"
-OUTPUT_FILE = DATA_DIR / "events.json"
+DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+OUTPUT_DIR = Path(__file__).resolve().parent.parent / "public" / "data"
+OUTPUT_FILE = OUTPUT_DIR / "events.json"
 
 # Source priority for cross-platform dedup (lower = preferred)
 SOURCE_PRIORITY = {"luma": 0, "eventbrite": 1}
