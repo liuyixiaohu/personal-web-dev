@@ -44,16 +44,18 @@
   let chinaVB = $state('0 0 100 100');
   let usaVB = $state('0 0 100 100');
 
-  /** Fit a country into a large canvas, then crop the viewBox to its rendered bounds */
-  function fitAndCrop(countryGeo: any, padPx: number) {
-    const BIG = 2000; // large canvas so fitExtent has room
+  /** Fit a country into a large canvas, then crop the viewBox to its rendered bounds.
+   *  padTop can differ from padPx to visually balance label-to-map distance. */
+  function fitAndCrop(countryGeo: any, padPx: number, padTop?: number) {
+    const top = padTop ?? padPx;
+    const BIG = 2000;
     const proj = geoMercator().fitExtent([[padPx, padPx], [BIG - padPx, BIG - padPx]], countryGeo);
     const gen = geoPath().projection(proj);
     const bounds = gen.bounds(countryGeo);
     const x0 = bounds[0][0] - padPx;
-    const y0 = bounds[0][1] - padPx;
+    const y0 = bounds[0][1] - top;
     const w = bounds[1][0] - bounds[0][0] + padPx * 2;
-    const h = bounds[1][1] - bounds[0][1] + padPx * 2;
+    const h = bounds[1][1] - bounds[0][1] + top + padPx;
     return { proj, gen, vb: `${x0} ${y0} ${w} ${h}` };
   }
 
@@ -61,8 +63,8 @@
     const res = await fetch('/data/journey-countries.json');
     const data = await res.json();
 
-    const china = fitAndCrop(data.china, PAD);
-    const usa = fitAndCrop(data.usa, PAD);
+    const china = fitAndCrop(data.china, PAD, 80);   // less top pad — Inner Mongolia fills upward
+    const usa = fitAndCrop(data.usa, PAD, 80);       // less top pad — match China's visual gap
 
     chinaVB = china.vb;
     usaVB = usa.vb;
@@ -195,10 +197,10 @@
   .panel-label {
     display: block;
     text-align: center;
-    font-size: var(--fs-sm);
+    font-size: var(--fs-md);
     color: var(--text-light);
     font-weight: 500;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0;
     letter-spacing: 0.03em;
   }
 
