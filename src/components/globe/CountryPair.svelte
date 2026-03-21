@@ -178,13 +178,13 @@
     text-align: center;
     font-size: var(--fs-xs);
     color: var(--color-visual);
-    margin-bottom: var(--space-sm);
+    margin-bottom: 0;
   }
 
   .panels {
     display: flex;
     flex-direction: column;
-    gap: var(--space-lg);
+    gap: var(--space-md);
     align-items: center;
   }
 
