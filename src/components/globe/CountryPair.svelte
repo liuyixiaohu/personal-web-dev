@@ -63,8 +63,8 @@
     const res = await fetch('/data/journey-countries.json');
     const data = await res.json();
 
-    const china = fitAndCrop(data.china, PAD, 80);   // less top pad — Inner Mongolia fills upward
-    const usa = fitAndCrop(data.usa, PAD, 80);       // less top pad — match China's visual gap
+    const china = fitAndCrop(data.china, PAD, 20);   // minimal top pad — CSS handles label gap
+    const usa = fitAndCrop(data.usa, PAD, 20);       // same — keeps screen-pixel gap consistent
 
     chinaVB = china.vb;
     usaVB = usa.vb;
