@@ -415,6 +415,13 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
     text-decoration-color: var(--text);
     opacity: 1;
   }
+
+  .modal-body :global(.story-photo) {
+    display: block;
+    max-width: 100%;
+    border-radius: 8px;
+    margin: var(--space-sm) 0;
+  }
 </style>
 
 <style is:global>
