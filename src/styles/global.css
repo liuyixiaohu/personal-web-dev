@@ -95,10 +95,10 @@ h1 { line-height: 1.2; letter-spacing: -0.01em; }
 h2 { line-height: 1.3; letter-spacing: -0.01em; }
 h3 { line-height: 1.4; }
 
-/* Heading spacing: more above (new section), less below (ties to content) */
+/* Heading spacing: more above (new section), moderate below */
 h1, h2, h3 {
   margin-top: 1.5em;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.75em;
 }
 
 /* First heading in a container needs no top margin */
