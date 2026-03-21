@@ -304,14 +304,13 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
   }
 
   .panel-label {
-    position: absolute;
-    top: var(--space-sm);
-    right: var(--space-md);
-    z-index: 2;
+    display: block;
+    text-align: right;
     font-size: var(--fs-md);
     color: var(--text-light);
     font-weight: 500;
     letter-spacing: 0.03em;
+    padding-right: var(--space-md);
   }
 
   .country-svg {
