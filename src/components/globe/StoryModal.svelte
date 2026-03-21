@@ -120,7 +120,7 @@
   .modal-close {
     background: none;
     border: none;
-    font-size: 1.6rem;
+    font-size: var(--fs-lg);
     color: var(--text-light);
     cursor: pointer;
     padding: 0.2rem 0.5rem;

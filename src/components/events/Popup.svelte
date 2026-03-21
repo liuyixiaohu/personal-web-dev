@@ -72,7 +72,7 @@
 
   .popup-close {
     font-family: inherit;
-    font-size: 1.1rem;
+    font-size: var(--fs-md);
     color: var(--text-light);
     background: none;
     border: none;
