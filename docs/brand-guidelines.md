@@ -27,10 +27,12 @@
 | `#FAF7F2` | `--bg` | Warm Neutral | Page background |
 | `#F3EFE7` | - | Warm Neutral | Subtle background variation |
 | `#E4DDD2` | - | Warm Neutral | Warm border / card background |
+| `#E2DED8` | `--border` | Warm Neutral | Default border color |
 | `#DDEEE7` | `--bubble-visual` | Green | Light green background |
 | `#A8D7C6` | - | Green | Mid green accent |
 | `#D6E6F3` | `--bubble-ds` | Blue | Light blue background |
 | `#7FB6DD` | - | Blue | Blue accent (Life Journey) |
+| `#7A9AB4` | `--color-ds-mid` | Blue | Mid blue accent (Data Science) |
 | `#F0D7D7` | `--bubble-pm` | Pink | Light pink background |
 | `#D9797B` | - | Pink | Strong pink/rose accent |
 | `#5A636B` | `--text-light` | Text | Secondary/muted text (WCAG AA 5.73:1) |
@@ -67,6 +69,7 @@
 | Level | Size | Usage |
 |---|---|---|
 | `--fs-xs` | `0.75rem` | Labels, tags, captions, secondary text |
+| `--fs-sm` | `0.8rem` | Secondary text, descriptions, captions |
 | (base) | `1rem` | Body text |
 | `--fs-md` | `1.25rem` | Subheadings, nav titles |
 | `--fs-lg` | `1.563rem` | Page headings |

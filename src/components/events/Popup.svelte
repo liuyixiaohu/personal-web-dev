@@ -40,8 +40,8 @@
     overflow-y: auto;
     background: var(--bg);
     border: 1px solid var(--border);
-    border-radius: 6px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
     padding: 0.75rem;
   }
 

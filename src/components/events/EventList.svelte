@@ -355,7 +355,7 @@
     color: var(--text-light);
     background: none;
     border: 1px solid var(--border);
-    border-radius: 3px;
+    border-radius: var(--radius-sm);
     padding: 0.1em 0.4em;
     cursor: pointer;
     transition: border-color 0.15s, color 0.15s;
@@ -437,7 +437,7 @@
     color: var(--text-light);
     background: none;
     border: 1px solid var(--border);
-    border-radius: 3px;
+    border-radius: var(--radius-sm);
     padding: 0.1em 0.4em;
     cursor: pointer;
     transition: border-color 0.15s, color 0.15s;
@@ -524,7 +524,7 @@
     margin-bottom: var(--space-sm);
     padding: var(--space-xs) var(--space-sm);
     background: rgba(240, 215, 215, 0.2);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
   }
 
   .event-cards {
