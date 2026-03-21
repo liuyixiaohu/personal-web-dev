@@ -318,12 +318,12 @@
     font-size: var(--fs-xs);
     padding: 0.2em 0.55em;
     border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 3px;
+    border-radius: var(--radius-sm);
     background: transparent;
     color: var(--text-light);
     cursor: pointer;
     white-space: nowrap;
-    transition: background 0.12s, color 0.12s, border-color 0.12s;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
     line-height: 1.4;
   }
 
@@ -400,14 +400,14 @@
     font-size: var(--fs-xs);
     padding: 0.35em 0.6em;
     border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 3px;
+    border-radius: var(--radius-sm);
     background: transparent;
     color: var(--text);
     width: 100%;
     max-width: 20rem;
     margin-bottom: var(--space-xs);
     outline: none;
-    transition: border-color 0.12s;
+    transition: border-color 0.15s;
   }
 
   .search-input:focus {
@@ -430,12 +430,12 @@
     font-size: var(--fs-xs);
     padding: 0.2em 0.4em;
     border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 3px;
+    border-radius: var(--radius-sm);
     background: transparent;
     color: var(--text);
     cursor: pointer;
     outline: none;
-    transition: border-color 0.12s;
+    transition: border-color 0.15s;
   }
 
   .time-select:focus {
@@ -459,7 +459,7 @@
     font-size: var(--fs-xs);
     padding: 0.15em 0.45em;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 3px;
+    border-radius: var(--radius-sm);
     background: rgba(0, 0, 0, 0.03);
     color: var(--text);
     line-height: 1.4;
