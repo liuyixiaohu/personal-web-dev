@@ -13,7 +13,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <div class="jl-title-row">
           <h1>Sift</h1>
           <div class="jl-version-wrap">
-            <button class="jl-version-btn" id="jl-changelog-toggle" aria-label="View changelog">v2.2</button>
+            <button class="jl-version-btn" id="jl-changelog-toggle" aria-label="View changelog">v2.3</button>
             <div class="jl-changelog-backdrop" id="jl-changelog-backdrop" style="display:none"></div>
             <div class="jl-changelog-popup" id="jl-changelog-popup" style="display:none">
               <div class="jl-changelog-header">
@@ -65,7 +65,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <li data-i18n="joblens.feat.unfollow"><strong>One-click Unfollow</strong>: hover any post to unfollow the author directly</li>
         <li data-i18n="joblens.feat.autoCollapse"><strong>Auto-collapse</strong>: "You unfollowed X" confirmation cards collapse automatically</li>
         <li data-i18n="joblens.feat.hideSidebar"><strong>Hide Sidebar</strong>: remove LinkedIn News and footer clutter</li>
+        <li data-i18n="joblens.feat.keywords"><strong>Keyword Filter</strong>: define custom keywords to hide matching posts</li>
         <li data-i18n="joblens.feat.badge"><strong>Live Badge</strong>: floating counter shows how many posts have been filtered</li>
+        <li data-i18n="joblens.feat.iconBadge"><strong>Icon Badge</strong>: extension icon shows the filtered count at a glance</li>
         <li data-i18n="joblens.feat.pause"><strong>Shift+J</strong>: pause/resume all filters instantly</li>
       </ul>
     </section>
@@ -171,6 +173,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <a href="/sift/privacy" class="jl-link" style="font-size:var(--fs-xs)" data-i18n="joblens.privacyLink">Full privacy policy &rarr;</a>
     </section>
 
+    <!-- Open Source -->
+    <section class="section">
+      <h2 data-i18n="joblens.openSourceTitle">Open Source</h2>
+      <p data-i18n="joblens.openSourceDesc">Sift is open source under the MIT license. You can read every line of code, verify the privacy claims yourself, or contribute improvements.</p>
+    </section>
+
     <!-- CTA -->
     <div class="jl-cta">
       <a href="https://chromewebstore.google.com/detail/ainpeagpaoafcblhcebbakofagiocooa?utm_source=kunli_website" class="jl-store-link" target="_blank" rel="noopener">
@@ -214,6 +222,29 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     // --- Changelog ---
     const JL_CHANGELOG = [
+      { version: 'v2.3',
+        why: {
+          en: 'Keyword filtering, icon badge, and a proper build system. Also: Sift is now open source!',
+          zh: '关键词过滤、图标徽章、正式构建系统。另外：Sift 现已开源！',
+        },
+        changes: {
+          en: [
+            'Feed keyword filter: define custom keywords to hide matching posts',
+            'Extension icon badge: filtered/flagged count shown on the Sift icon',
+            'SPA navigation: instant detection via History API (no more 1s polling delay)',
+            'ES Modules + esbuild: source in src/, bundled to IIFE for Chrome extension',
+            'Automated tests: 23 test cases with vitest',
+            'Open source under MIT license',
+          ],
+          zh: [
+            'Feed 关键词过滤：自定义关键词隐藏匹配帖子',
+            '扩展图标徽章：在 Sift 图标上显示过滤/标记数量',
+            'SPA 导航优化：通过 History API 即时检测（不再有 1 秒轮询延迟）',
+            'ES Modules + esbuild：源码在 src/，打包为 IIFE 供 Chrome 扩展使用',
+            '自动化测试：23 个测试用例，使用 vitest',
+            '以 MIT 协议开源',
+          ],
+        }},
       { version: 'v2.2',
         why: {
           en: 'Reliability and code quality. Sift now survives SPA navigation without a manual refresh.',

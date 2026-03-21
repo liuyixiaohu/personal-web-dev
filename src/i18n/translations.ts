@@ -321,7 +321,9 @@ export const translations: Record<string, Record<Lang, string>> = {
   'joblens.feat.unfollow': { en: '<strong>One-click Unfollow</strong>: hover any post to unfollow the author directly', zh: '<strong>一键取关</strong>：悬停帖子即可直接取消关注作者' },
   'joblens.feat.autoCollapse': { en: '<strong>Auto-collapse</strong>: "You unfollowed X" confirmation cards collapse automatically', zh: '<strong>自动折叠</strong>：取关确认卡片自动折叠' },
   'joblens.feat.hideSidebar': { en: '<strong>Hide Sidebar</strong>: remove LinkedIn News and footer clutter', zh: '<strong>隐藏侧边栏</strong>：移除 LinkedIn News 和页脚杂乱内容' },
+  'joblens.feat.keywords': { en: '<strong>Keyword Filter</strong>: define custom keywords to hide matching posts', zh: '<strong>关键词过滤</strong>：自定义关键词隐藏匹配帖子' },
   'joblens.feat.badge': { en: '<strong>Live Badge</strong>: floating counter shows how many posts have been filtered', zh: '<strong>实时徽章</strong>：浮动计数器显示已过滤的帖子数量' },
+  'joblens.feat.iconBadge': { en: '<strong>Icon Badge</strong>: extension icon shows the filtered count at a glance', zh: '<strong>图标徽章</strong>：扩展图标一目了然地显示过滤数量' },
   'joblens.feat.pause': { en: '<strong>Shift+J</strong>: pause/resume all filters instantly', zh: '<strong>Shift+J</strong>：即时暂停/恢复所有过滤器' },
   'joblens.jobsTitle': { en: 'Job Search Intelligence', zh: '智能求职' },
   'joblens.jobsDesc': {
@@ -358,6 +360,8 @@ export const translations: Record<string, Record<Lang, string>> = {
     zh: 'Sift 完全在你的浏览器中运行。不收集、传输或存储任何外部数据。所有偏好和统计数据保留在你的设备上。',
   },
   'joblens.privacyLink': { en: 'Full privacy policy \u2192', zh: '完整隐私政策 \u2192' },
+  'joblens.openSourceTitle': { en: 'Open Source', zh: '开源' },
+  'joblens.openSourceDesc': { en: 'Sift is open source under the MIT license. You can read every line of code, verify the privacy claims yourself, or contribute improvements.', zh: 'Sift 以 MIT 协议开源。你可以阅读每一行代码，亲自验证隐私声明，或者贡献改进。' },
 
   // --- Sift Feedback ---
   'joblens.feedback': { en: 'Feedback', zh: '反馈' },
