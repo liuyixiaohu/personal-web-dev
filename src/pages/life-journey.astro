@@ -346,8 +346,7 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
     box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
     max-width: 32rem;
     max-height: 80vh;
-    display: flex;
-    flex-direction: column;
+    overflow-y: auto;
     width: 100%;
     padding: clamp(1.5rem, 3vw, 2.5rem);
     font-family: inherit;
@@ -407,8 +406,6 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
   .modal-body {
     color: var(--text-light);
     line-height: 1.7;
-    overflow-y: auto;
-    min-height: 0;
   }
 
   .modal-body :global(strong) {
