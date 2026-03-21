@@ -1,5 +1,5 @@
 ---
-import { ClientRouter } from 'astro:transitions';
+import { ClientRouter, fade } from 'astro:transitions';
 import '../styles/global.css';
 import LanguageToggle from '../components/LanguageToggle.svelte';
 import Footer from '../components/Footer.astro';
@@ -93,7 +93,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       })(window,document,'script','dataLayer','GTM-PNCRCQBM');
     </script>
   </head>
-  <body transition:animate="fade">
+  <body transition:animate={fade({ duration: '0.4s' })}>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PNCRCQBM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <LanguageToggle client:load />
