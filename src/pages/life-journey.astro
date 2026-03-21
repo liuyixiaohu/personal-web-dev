@@ -33,7 +33,11 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
           <svg id="china-svg" class="country-svg"></svg>
         </div>
 
-        <hr class="panel-divider" />
+        <div class="panel-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
 
         <!-- USA panel -->
         <div class="panel">
@@ -316,11 +320,22 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
     display: block;
   }
 
-  .panel-divider {
-    width: 25%;
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 0 auto;
+  .panel-arrow {
+    display: flex;
+    justify-content: center;
+    color: var(--text-light);
+    opacity: 0.5;
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  .panel-arrow svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
   }
 
   /* Modal */
