@@ -7,8 +7,8 @@
   import { track } from '../../utils/analytics';
 
   let selectedPin = $state<PinData | null>(null);
-  let lang = $state(0); // counter to force re-render on lang change
-  $effect(() => onLangChange(() => { lang++; }));
+  let langTick = $state(0);
+  $effect(() => onLangChange(() => { langTick++; }));
   let loaded = $state(false);
 
   // Rendered paths & pin positions (filled after data loads)
@@ -99,9 +99,9 @@
   }
 </script>
 
+{#key langTick}
 <div class="country-pair" class:loaded>
-  <!-- lang tick forces re-render on language switch -->
-  <p class="map-hint" data-lang={lang}>{t('journey.hint')}</p>
+  <p class="map-hint">{t('journey.hint')}</p>
 
   <div class="panels">
     <!-- China panel -->
@@ -161,6 +161,7 @@
     </div>
   </div>
 </div>
+{/key}
 
 {#if selectedPin}
   <StoryModal pin={selectedPin} onClose={() => (selectedPin = null)} />
