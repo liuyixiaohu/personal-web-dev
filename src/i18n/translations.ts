@@ -103,7 +103,7 @@ export const translations: Record<string, Record<Lang, string>> = {
     zh: '本页面在设计上刻意平衡了便利性与长期可用性。数据来自一个不便公开的接口。保持功能的克制与差异化，而非构建一个全面的替代方案，有助于降低数据源被关注并停用的风险。',
   },
   'events.lastUpdated': { en: 'Last checked', zh: '最近检查' },
-  'events.refreshNote': { en: '(Refreshes daily ~7 PM PT)', zh: '（每日约晚 7 点太平洋时间刷新）' },
+  'events.refreshNote': { en: '(Refreshes daily ~9 PM PT)', zh: '（每日约晚 9 点太平洋时间刷新）' },
   'events.noEvents': { en: 'No new events discovered today. Check back tomorrow!', zh: '今天没有发现新活动，明天再来看看吧！' },
   'events.staleWarning': { en: 'Data may be stale. Last update was over 48 hours ago.', zh: '数据可能已过时，上次更新超过48小时前。' },
   'events.fetchError': { en: 'Unable to load events right now. Please try again later.', zh: '暂时无法加载活动信息，请稍后再试。' },

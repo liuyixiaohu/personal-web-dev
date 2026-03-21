@@ -7,11 +7,15 @@ that did not exist in the previous run.
 """
 
 import json
+import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from common import load_old_events, stamp_first_seen, save_events
 
 # --- Configuration ---
 SOURCES = [
@@ -129,30 +133,11 @@ def normalize_event(raw_entry: dict) -> dict:
 # --- Pipeline ---
 
 
-def _load_old_events() -> tuple[dict[str, dict], str]:
-    """Read existing events.json and return (old_map, old_updated_at).
-
-    old_map is keyed by api_id so we can preserve first_seen_at timestamps.
-    Returns empty dict and empty string if the file doesn't exist or is invalid.
-    """
-    if not DATA_FILE.exists():
-        return {}, ""
-    try:
-        with open(DATA_FILE) as f:
-            data = json.load(f)
-        old_updated_at = data.get("updated_at", "")
-        old_map = {e["api_id"]: e for e in data.get("events", []) if e.get("api_id")}
-        return old_map, old_updated_at
-    except (json.JSONDecodeError, KeyError) as e:
-        print(f"  Warning: could not read old events.json: {e}")
-        return {}, ""
-
-
 def main() -> None:
     now_iso = datetime.now(timezone.utc).isoformat()
 
     # --- Load previous data for diff ---
-    old_map, old_updated_at = _load_old_events()
+    old_map, old_updated_at = load_old_events(DATA_FILE)
     old_ids = set(old_map.keys())
     print(f"Previous run: {len(old_ids)} events (updated {old_updated_at or 'never'})")
 
@@ -183,12 +168,10 @@ def main() -> None:
             continue
 
     # --- Stamp first_seen_at & compute diff ---
+    stamp_first_seen(merged, old_map, now_iso)
+    # Preserve source from old data (in case it was manually corrected)
     for aid, event in merged.items():
         old_entry = old_map.get(aid)
-        if old_entry and old_entry.get("first_seen_at"):
-            event["first_seen_at"] = old_entry["first_seen_at"]
-        else:
-            event["first_seen_at"] = now_iso
         if old_entry and old_entry.get("source"):
             event["source"] = old_entry["source"]
 
@@ -198,20 +181,7 @@ def main() -> None:
     all_events = sorted(merged.values(), key=lambda e: e.get("start_at", ""))
     print(f"Total: {len(all_events)} unique events ({len(new_ids)} new)")
 
-    output = {
-        "updated_at": now_iso,
-        "previous_updated_at": old_updated_at,
-        "new_event_ids": new_ids,
-        "events": all_events,
-    }
-
-    DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
-    with open(DATA_FILE, "w") as f:
-        json.dump(output, f, indent=2, ensure_ascii=False)
-
-    print(f"Saved {len(all_events)} events to {DATA_FILE}")
-    if new_ids:
-        print(f"New events: {', '.join(new_ids[:10])}{'...' if len(new_ids) > 10 else ''}")
+    save_events(DATA_FILE, all_events, old_updated_at, now_iso, new_ids)
 
 
 if __name__ == "__main__":
