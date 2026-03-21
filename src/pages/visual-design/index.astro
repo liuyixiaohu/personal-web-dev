@@ -12,13 +12,11 @@ const area = professionalAreas.find((a) => a.slug === 'visual-design')!;
   i18nKey={area.i18n.title}
 >
   <nav class="subpages">
-    <a href="/visual-design/sprint-cadence/" class="card">
-      <span class="card-title" data-i18n="workflow.sprintCadence">Sprint Cadence</span>
-      <span class="card-arrow">&rarr;</span>
+    <a href="/visual-design/sprint-cadence/" class="item">
+      <span class="item-title" data-i18n="workflow.sprintCadence">Sprint Cadence</span>
     </a>
-    <a href="/brand" class="card">
-      <span class="card-title" data-i18n="home.brand">Brand Guidelines</span>
-      <span class="card-arrow">&rarr;</span>
+    <a href="/brand" class="item">
+      <span class="item-title" data-i18n="home.brand">Brand Guidelines</span>
     </a>
   </nav>
 </ProfessionalDetail>
@@ -28,36 +26,7 @@ const area = professionalAreas.find((a) => a.slug === 'visual-design')!;
     margin-top: var(--space-md);
   }
 
-  .card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--space-sm) var(--space-md);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    text-decoration: none;
-    color: var(--text);
-    transition: border-color 0.2s, background-color 0.2s;
-  }
-
-  .card:hover {
-    border-color: var(--color-visual);
-    background-color: rgba(90, 138, 110, 0.04);
-  }
-
-  .card-title {
-    font-size: var(--fs-base);
-    font-weight: 500;
-  }
-
-  .card-arrow {
-    color: var(--text-light);
-    font-size: var(--fs-base);
-    transition: transform 0.2s;
-  }
-
-  .card:hover .card-arrow {
-    transform: translateX(4px);
-    color: var(--color-visual);
+  .subpages .item-title {
+    font-size: var(--fs-sm);
   }
 </style>
