@@ -963,7 +963,7 @@
   .btn {
     padding: 0.5rem 1rem;
     border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     background: transparent;
     color: var(--text);
     font-size: var(--fs-xs);
@@ -1027,7 +1027,7 @@
     align-items: center;
     gap: 0.5em;
     padding: 0.45rem 0.7rem;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
     transition: background 0.15s;
     font-size: var(--fs-xs);
@@ -1048,7 +1048,7 @@
     width: 0.55rem;
     height: 0.55rem;
     border: 1.5px solid var(--border);
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     flex-shrink: 0;
     transition: border-color 0.15s, background 0.15s;
   }
@@ -1066,7 +1066,7 @@
   .drop-zone {
     flex: 1;
     border: 2px dashed var(--border);
-    border-radius: 8px;
+    border-radius: var(--radius-lg);
     padding: 2.5rem 1rem;
     text-align: center;
     cursor: pointer;
@@ -1143,8 +1143,8 @@
     display: flex;
     align-items: center;
     padding: 0.45rem 0.6rem;
-    border-radius: 4px;
-    transition: background 0.1s;
+    border-radius: var(--radius-sm);
+    transition: background 0.15s;
   }
 
   .file-name {
@@ -1160,7 +1160,7 @@
     color: var(--text-light);
     background: rgba(0, 0, 0, 0.04);
     padding: 0.1rem 0.4rem;
-    border-radius: 3px;
+    border-radius: var(--radius-sm);
     margin-left: 0.5em;
     vertical-align: middle;
   }
