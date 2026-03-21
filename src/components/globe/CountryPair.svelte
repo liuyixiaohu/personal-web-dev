@@ -30,15 +30,15 @@
   // Label positions relative to pin (Google Maps style, no connector lines).
   // 'anchor' controls SVG text-anchor: 'start' = label right of point, 'end' = label left.
   const labelPos: Record<string, { dx: number; dy: number; anchor: string }> = {
-    shouguang: { dx: 14,  dy: -14, anchor: 'start' },  // above-right
-    qingdao:   { dx: 14,  dy: 6,   anchor: 'start' },  // right
-    jiaozhou:  { dx: -14, dy: 26,  anchor: 'end' },    // below-left
-    madison:   { dx: 14,  dy: -10, anchor: 'start' },  // above-right
-    fairfield: { dx: -14, dy: -10, anchor: 'end' },    // above-left
-    berkeley:  { dx: -14, dy: 22,  anchor: 'end' },    // below-left
+    shouguang: { dx: 16,  dy: -22, anchor: 'start' },  // above-right
+    qingdao:   { dx: 16,  dy: 12,  anchor: 'start' },  // right
+    jiaozhou:  { dx: -16, dy: 34,  anchor: 'end' },    // below-left
+    madison:   { dx: 16,  dy: -16, anchor: 'start' },  // above-right
+    fairfield: { dx: -16, dy: -16, anchor: 'end' },    // above-left (Pacific)
+    berkeley:  { dx: -16, dy: 30,  anchor: 'end' },    // below-left (Pacific)
   };
 
-  const PAD = 60;
+  const PAD = 160;
   // Dynamic viewBoxes computed after projection (set in onMount)
   let chinaVB = $state('0 0 100 100');
   let usaVB = $state('0 0 100 100');
@@ -198,10 +198,10 @@
   .panel-label {
     display: block;
     text-align: center;
-    font-size: var(--fs-xs);
+    font-size: var(--fs-sm);
     color: var(--text-light);
     font-weight: 500;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.4rem;
     letter-spacing: 0.03em;
   }
 
@@ -242,8 +242,8 @@
   }
 
   .map-label {
-    font-size: 15px;
-    font-family: inherit;
+    font-size: 30px;
+    font-family: var(--font-body);
     fill: var(--text-light);
     cursor: pointer;
     transition: fill 0.15s ease;
