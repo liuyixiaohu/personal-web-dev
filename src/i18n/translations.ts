@@ -312,8 +312,8 @@ export const translations: Record<string, Record<Lang, string>> = {
   'joblens.changelogTitle': { en: 'Changelog', zh: '更新日志' },
   'joblens.feedTitle': { en: 'Feed Cleanup', zh: '动态清理' },
   'joblens.feedDesc': {
-    en: 'Sift automatically hides ads, suggested posts, and recommended content from your LinkedIn feed. One-click Unfollow appears inline on every post \u2014 no digging through menus.',
-    zh: 'Sift 自动隐藏 LinkedIn 动态中的广告、推荐帖子和建议内容。一键取关按钮直接显示在每条帖子上，无需翻找菜单。',
+    en: 'Sift automatically hides ads, suggested posts, recommended content, and posts matching your custom keywords. One-click Unfollow appears inline on every post \u2014 no digging through menus.',
+    zh: 'Sift 自动隐藏 LinkedIn 动态中的广告、推荐帖子、建议内容以及匹配自定义关键词的帖子。一键取关按钮直接显示在每条帖子上，无需翻找菜单。',
   },
   'joblens.feat.hideAds': { en: '<strong>Hide Ads</strong>: removes Promoted posts automatically', zh: '<strong>隐藏广告</strong>：自动移除推广帖子' },
   'joblens.feat.hideSuggested': { en: '<strong>Hide Suggested & Recommended</strong>: filters non-connection noise', zh: '<strong>隐藏推荐</strong>：过滤非人脉噪音' },
