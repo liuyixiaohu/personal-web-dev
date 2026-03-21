@@ -14,8 +14,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           <h1>Sift</h1>
           <div class="jl-version-wrap">
             <button class="jl-version-btn" id="jl-changelog-toggle" aria-label="View changelog">v2.3</button>
-            <div class="jl-changelog-backdrop" id="jl-changelog-backdrop" style="display:none"></div>
-            <div class="jl-changelog-popup" id="jl-changelog-popup" style="display:none">
+            <div class="jl-changelog-backdrop" id="jl-changelog-backdrop" hidden></div>
+            <div class="jl-changelog-popup" id="jl-changelog-popup" hidden>
               <div class="jl-changelog-header">
                 <span class="jl-changelog-title" data-i18n="joblens.changelogTitle">Changelog</span>
                 <button class="jl-changelog-close" id="jl-changelog-close" aria-label="Close changelog">&times;</button>
@@ -25,8 +25,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           </div>
           <span class="jl-feedback-wrap">
             <button class="jl-feedback-btn" id="jl-feedback-toggle" data-i18n="joblens.feedback" aria-label="Send feedback">Feedback</button>
-            <div class="jl-feedback-backdrop" id="jl-feedback-backdrop" style="display:none"></div>
-            <div class="jl-feedback-popup" id="jl-feedback-popup" style="display:none">
+            <div class="jl-feedback-backdrop" id="jl-feedback-backdrop" hidden></div>
+            <div class="jl-feedback-popup" id="jl-feedback-popup" hidden>
               <div class="jl-feedback-header">
                 <span class="jl-feedback-title" data-i18n="joblens.feedbackTitle">Any Suggestion? Pls!!!</span>
                 <button class="jl-feedback-close" id="jl-feedback-close" aria-label="Close feedback form">&times;</button>
@@ -36,8 +36,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
                 <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
                 <button type="submit" class="jl-feedback-submit" id="jl-feedback-submit" data-i18n="joblens.feedbackSend">Send</button>
               </form>
-              <p class="jl-feedback-success" id="jl-feedback-success" style="display:none" data-i18n="joblens.feedbackSent">Thanks! Feedback sent.</p>
-              <p class="jl-feedback-error" id="jl-feedback-error" style="display:none" data-i18n="joblens.feedbackError">Failed to send. Try again?</p>
+              <p class="jl-feedback-success" id="jl-feedback-success" hidden data-i18n="joblens.feedbackSent">Thanks! Feedback sent.</p>
+              <p class="jl-feedback-error" id="jl-feedback-error" hidden data-i18n="joblens.feedbackError">Failed to send. Try again?</p>
             </div>
           </span>
         </div>
@@ -200,6 +200,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <script>
+  import { track } from '../../utils/analytics';
+  import { siftChangelog } from '../../data/siftChangelog';
+
   document.addEventListener('astro:page-load', () => {
     // --- Lightbox ---
     const dialog = document.getElementById('jl-lightbox') as HTMLDialogElement | null;
@@ -217,116 +220,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     // --- CTA tracking ---
     document.querySelector('.jl-store-link')?.addEventListener('click', () => {
-      (window as any).dataLayer?.push({ event: 'joblens_cta_click' });
+      track('joblens_cta_click');
     });
 
     // --- Changelog ---
-    const JL_CHANGELOG = [
-      { version: 'v2.3',
-        why: {
-          en: 'Keyword filtering, icon badge, and a proper build system. Also: Sift is now open source!',
-          zh: '关键词过滤、图标徽章、正式构建系统。另外：Sift 现已开源！',
-        },
-        changes: {
-          en: [
-            'Feed keyword filter: define custom keywords to hide matching posts',
-            'Extension icon badge: filtered/flagged count shown on the Sift icon',
-            'SPA navigation: instant detection via History API (no more 1s polling delay)',
-            'ES Modules + esbuild: source in src/, bundled to IIFE for Chrome extension',
-            'Automated tests: 23 test cases with vitest',
-            'Open source under MIT license',
-          ],
-          zh: [
-            'Feed 关键词过滤：自定义关键词隐藏匹配帖子',
-            '扩展图标徽章：在 Sift 图标上显示过滤/标记数量',
-            'SPA 导航优化：通过 History API 即时检测（不再有 1 秒轮询延迟）',
-            'ES Modules + esbuild：源码在 src/，打包为 IIFE 供 Chrome 扩展使用',
-            '自动化测试：23 个测试用例，使用 vitest',
-            '以 MIT 协议开源',
-          ],
-        }},
-      { version: 'v2.2',
-        why: {
-          en: 'Reliability and code quality. Sift now survives SPA navigation without a manual refresh.',
-          zh: '可靠性和代码质量提升。Sift 现在在 SPA 导航后自动恢复，无需手动刷新。',
-        },
-        changes: {
-          en: [
-            'SPA navigation fix: Sift re-activates automatically when navigating back to the feed',
-            'Shared defaults: single source of truth across all scripts',
-            'Stats batching for job scans (fewer storage writes)',
-            'Jobs panel shortcut changed from Ctrl+Shift+J to Ctrl+Shift+S (avoids DevTools conflict)',
-            'Popup stats refresh updates in-place instead of rebuilding DOM',
-            'Magic numbers extracted to named constants for easier tuning',
-          ],
-          zh: [
-            'SPA 导航修复：从其他页面返回 feed 时 Sift 自动恢复',
-            '共享默认值：所有脚本使用统一的配置源',
-            '求职扫描统计批处理（减少存储写入）',
-            '求职面板快捷键从 Ctrl+Shift+J 改为 Ctrl+Shift+S（避免 DevTools 冲突）',
-            '弹窗统计刷新改为原地更新，不再重建 DOM',
-            '魔法数字提取为命名常量，便于调优',
-          ],
-        }},
-      { version: 'v2.1',
-        why: {
-          en: 'Fewer clicks, more control. Mute and Unfollow now live right on every post.',
-          zh: '更少点击，更多掌控。Mute 和 Unfollow 按钮现在直接显示在每条帖子上。',
-        },
-        changes: {
-          en: [
-            'Inline Mute & Unfollow buttons on every post — no more hunting for the ... menu',
-            'Search your keyword rules from the popup',
-            'Simplified popup: removed float toggles, split into clearer sections',
-            'Narrowed job search scope to search results page for a more focused experience',
-            'Fixed hidden cards not reappearing when toggling hideFiltered off',
-          ],
-          zh: [
-            '每条帖子上直接显示 Mute 和 Unfollow 按钮，不用再找 ... 菜单',
-            '弹窗中可搜索关键词规则',
-            '简化弹窗：移除浮动开关，分区更清晰',
-            '收窄求职页面范围至搜索结果页，体验更聚焦',
-            '修复切换 hideFiltered 时隐藏卡片不重新显示的问题',
-          ],
-        }},
-      { version: 'v2.0',
-        why: {
-          en: 'LinkedIn isn\'t just job search — your feed is half ads too. Why not clean up both?',
-          zh: 'LinkedIn 不只有求职页面，你的 feed 也是一半广告。为什么不一起清理？',
-        },
-        changes: {
-          en: [
-            'Feed cleanup: hide ads, suggested, recommended posts; mute keywords; one-click unfollow',
-            'Popup redesign: Controls, Stats, and Data tabs replace the floating panel',
-            'Removed mute-person feature in favor of unfollow; keyword muting kept for spam filtering',
-            'Stats tracking: daily and all-time counts for all filter actions',
-          ],
-          zh: [
-            'Feed 清理：隐藏广告、推荐、建议帖子；关键词屏蔽；一键取消关注',
-            '弹窗重新设计：Controls、Stats、Data 标签页取代浮动面板',
-            '移除了屏蔽人功能，改用取消关注；保留关键词屏蔽用于过滤垃圾内容',
-            '统计追踪：所有过滤操作的每日和累计计数',
-          ],
-        }},
-      { version: 'v1.0',
-        why: {
-          en: 'LinkedIn search shows everything: reposted, applied, no-sponsor. Why not flag them automatically?',
-          zh: 'LinkedIn 搜索什么都显示：已转发、已申请、不赞助签证。为什么不自动标记呢？',
-        },
-        changes: {
-          en: [
-            'Auto-scan LinkedIn job cards and flag Reposted, Applied, No Sponsor, Unpaid',
-            'Skip lists for companies and title keywords, with batch import/export',
-            'Draggable frosted-glass panel with dim mode for filtered cards',
-          ],
-          zh: [
-            '自动扫描 LinkedIn 职位卡片，标记 Reposted、Applied、No Sponsor、Unpaid',
-            '公司和职位关键词屏蔽列表，支持批量导入导出',
-            '可拖动的毛玻璃面板，淡化模式让已标记卡片变暗',
-          ],
-        }},
-    ];
-
     const clToggle = document.getElementById('jl-changelog-toggle');
     const clPopup = document.getElementById('jl-changelog-popup');
     const clBackdrop = document.getElementById('jl-changelog-backdrop');
@@ -336,7 +233,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     function renderChangelog() {
       if (!clContent) return;
       const lang = (document.documentElement.dataset.lang as 'en' | 'zh') || 'en';
-      clContent.innerHTML = JL_CHANGELOG.map(r => `
+      clContent.innerHTML = siftChangelog.map(r => `
         <div class="jl-changelog-release">
           <div class="jl-changelog-version">${r.version}</div>
           <p class="jl-changelog-why">${r.why[lang]}</p>
@@ -349,59 +246,56 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     renderChangelog();
     document.addEventListener('lang-change', renderChangelog);
 
-    function openChangelog() {
-      if (clPopup) clPopup.style.display = '';
-      if (clBackdrop) clBackdrop.style.display = '';
+    function toggleChangelog() {
+      if (clPopup) clPopup.hidden = !clPopup.hidden;
+      if (clBackdrop) clBackdrop.hidden = !clBackdrop.hidden;
     }
     function closeChangelog() {
-      if (clPopup) clPopup.style.display = 'none';
-      if (clBackdrop) clBackdrop.style.display = 'none';
+      if (clPopup) clPopup.hidden = true;
+      if (clBackdrop) clBackdrop.hidden = true;
     }
 
-    clToggle?.addEventListener('click', () => {
-      if (clPopup?.style.display === 'none') openChangelog();
-      else closeChangelog();
-    });
+    clToggle?.addEventListener('click', toggleChangelog);
     clBackdrop?.addEventListener('click', closeChangelog);
     clClose?.addEventListener('click', closeChangelog);
 
     // --- Feedback ---
-    const toggle = document.getElementById('jl-feedback-toggle');
-    const popup = document.getElementById('jl-feedback-popup');
-    const backdrop = document.getElementById('jl-feedback-backdrop');
-    const closeBtn = document.getElementById('jl-feedback-close');
+    const fbToggle = document.getElementById('jl-feedback-toggle');
+    const fbPopup = document.getElementById('jl-feedback-popup');
+    const fbBackdrop = document.getElementById('jl-feedback-backdrop');
+    const fbClose = document.getElementById('jl-feedback-close');
     const form = document.getElementById('jl-feedback-form') as HTMLFormElement | null;
     const submitBtn = document.getElementById('jl-feedback-submit');
     const successMsg = document.getElementById('jl-feedback-success');
     const errorMsg = document.getElementById('jl-feedback-error');
 
     function openFeedback() {
-      if (!popup || !backdrop) return;
-      popup.style.display = '';
-      backdrop.style.display = '';
-      if (successMsg) successMsg.style.display = 'none';
-      if (errorMsg) errorMsg.style.display = 'none';
-      if (form) form.style.display = '';
+      if (!fbPopup || !fbBackdrop) return;
+      fbPopup.hidden = false;
+      fbBackdrop.hidden = false;
+      if (successMsg) successMsg.hidden = true;
+      if (errorMsg) errorMsg.hidden = true;
+      if (form) form.hidden = false;
     }
 
     function closeFeedback() {
-      if (popup) popup.style.display = 'none';
-      if (backdrop) backdrop.style.display = 'none';
+      if (fbPopup) fbPopup.hidden = true;
+      if (fbBackdrop) fbBackdrop.hidden = true;
     }
 
-    toggle?.addEventListener('click', () => {
-      if (popup?.style.display === 'none') openFeedback();
+    fbToggle?.addEventListener('click', () => {
+      if (fbPopup?.hidden) openFeedback();
       else closeFeedback();
     });
-    backdrop?.addEventListener('click', closeFeedback);
-    closeBtn?.addEventListener('click', closeFeedback);
+    fbBackdrop?.addEventListener('click', closeFeedback);
+    fbClose?.addEventListener('click', closeFeedback);
 
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!submitBtn || !form) return;
       submitBtn.setAttribute('disabled', '');
       submitBtn.textContent = '...';
-      if (errorMsg) errorMsg.style.display = 'none';
+      if (errorMsg) errorMsg.hidden = true;
 
       try {
         const res = await fetch('https://formspree.io/f/xreykpga', {
@@ -410,10 +304,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
           headers: { Accept: 'application/json' },
         });
         if (!res.ok) throw new Error();
-        form.style.display = 'none';
-        if (successMsg) successMsg.style.display = '';
+        form.hidden = true;
+        if (successMsg) successMsg.hidden = false;
       } catch {
-        if (errorMsg) errorMsg.style.display = '';
+        if (errorMsg) errorMsg.hidden = false;
       } finally {
         submitBtn.removeAttribute('disabled');
       }

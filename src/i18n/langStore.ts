@@ -53,12 +53,10 @@ export function subscribe(fn: (lang: Lang) => void): () => void {
 }
 
 /**
- * Convenience helper: initialise language from localStorage
- * and subscribe to future changes in one call.
+ * Convenience helper: subscribe to future language changes.
  * Returns the unsubscribe function (pass it to $effect cleanup).
  */
-export function onLangChange(callback: () => void): () => void {
-  initLang();
+export function subscribeLang(callback: () => void): () => void {
   return subscribe(callback);
 }
 
