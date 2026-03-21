@@ -60,14 +60,14 @@ export function stripState(loc: string): string {
 // --- Formatting ---
 export function formatEventRange(startIso: string, endIso: string, tz: string, lang: Lang): string {
   try {
-    const t = tz || TZ;
+    const effectiveTz = tz || TZ;
     const loc = locale(lang);
     const s = new Date(startIso);
     const e = new Date(endIso);
-    const sDate = s.toLocaleDateString(loc, { weekday: 'short', month: 'short', day: 'numeric', timeZone: t });
-    const eDate = e.toLocaleDateString(loc, { weekday: 'short', month: 'short', day: 'numeric', timeZone: t });
-    const sTime = s.toLocaleTimeString(loc, { hour: 'numeric', minute: '2-digit', timeZone: t });
-    const eTime = e.toLocaleTimeString(loc, { hour: 'numeric', minute: '2-digit', timeZone: t });
+    const sDate = s.toLocaleDateString(loc, { weekday: 'short', month: 'short', day: 'numeric', timeZone: effectiveTz });
+    const eDate = e.toLocaleDateString(loc, { weekday: 'short', month: 'short', day: 'numeric', timeZone: effectiveTz });
+    const sTime = s.toLocaleTimeString(loc, { hour: 'numeric', minute: '2-digit', timeZone: effectiveTz });
+    const eTime = e.toLocaleTimeString(loc, { hour: 'numeric', minute: '2-digit', timeZone: effectiveTz });
     if (sDate === eDate) return `${sDate}, ${sTime} – ${eTime}`;
     return `${sDate}, ${sTime} – ${eDate}, ${eTime}`;
   } catch { return startIso; }

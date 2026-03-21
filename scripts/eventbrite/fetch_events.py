@@ -89,7 +89,7 @@ def normalize_event(event: dict) -> dict:
         "calendar_name": "Eventbrite",
         "host_names": ["Eventbrite"],
         "guest_count": 0,
-        "is_free": None,
+        "is_free": False,
         "price_cents": None,
         "price_currency": None,
         "categories": [],
