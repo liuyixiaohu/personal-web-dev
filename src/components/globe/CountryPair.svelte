@@ -103,7 +103,7 @@
   <div class="panels">
     <!-- China panel -->
     <div class="panel">
-      <span class="panel-label">China</span>
+      <span class="panel-label">{t('journey.china')}</span>
       <svg viewBox={chinaVB} class="country-svg">
         <defs>
           <clipPath id="clip-china"><path d={chinaPath} /></clipPath>
@@ -128,9 +128,11 @@
       </svg>
     </div>
 
+    <hr class="panel-divider" />
+
     <!-- USA panel -->
     <div class="panel">
-      <span class="panel-label">United States</span>
+      <span class="panel-label">{t('journey.usa')}</span>
       <svg viewBox={usaVB} class="country-svg">
         <defs>
           <clipPath id="clip-usa"><path d={usaPath} /></clipPath>
@@ -254,6 +256,13 @@
 
   .map-label:hover {
     fill: var(--color-rose);
+  }
+
+  .panel-divider {
+    width: 50%;
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 auto;
   }
 
 </style>
