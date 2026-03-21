@@ -1,6 +1,13 @@
-export const VERSION = 'v1.1';
+export const VERSION = 'v1.2';
 
 export const CHANGELOG = [
+  { version: 'v1.2',
+    why: 'Now pulling from Eventbrite too. More events, same clean feed.',
+    changes: [
+      'Added Eventbrite as a second event source alongside Luma',
+      'Cross-platform dedup: if the same event is on both, we keep the richer Luma version',
+      'Covers San Francisco, San Jose, and Oakland',
+    ]},
   { version: 'v1.1',
     why: 'Sometimes you just want to hide all the happy hours.',
     changes: [
