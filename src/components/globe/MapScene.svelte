@@ -269,7 +269,6 @@
     border-radius: 4px;
     background: rgba(255, 255, 255, 0.85);
     color: var(--color-visual);
-    font-size: 1rem;
     line-height: 1;
     cursor: pointer;
     display: flex;

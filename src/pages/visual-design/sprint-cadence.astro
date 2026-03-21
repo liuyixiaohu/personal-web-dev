@@ -208,7 +208,7 @@ const area = professionalAreas.find((a) => a.slug === 'visual-design')!;
 
   .gantt-week {
     text-align: center;
-    font-size: 0.65rem;
+    font-size: var(--fs-xs);
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--text-light);
@@ -235,7 +235,7 @@ const area = professionalAreas.find((a) => a.slug === 'visual-design')!;
   .gantt-bar {
     border-radius: 4px;
     padding: 0.45rem 0.5rem;
-    font-size: 0.7rem;
+    font-size: var(--fs-xs);
     font-weight: 600;
     letter-spacing: 0.02em;
     white-space: nowrap;
@@ -272,7 +272,7 @@ const area = professionalAreas.find((a) => a.slug === 'visual-design')!;
   .gantt-overlap {
     margin-top: 0.35rem;
     padding: 0.3rem 0.5rem;
-    font-size: 0.65rem;
+    font-size: var(--fs-xs);
     color: var(--text-light);
     border-top: 1px dashed var(--border);
     text-align: center;
@@ -317,7 +317,7 @@ const area = professionalAreas.find((a) => a.slug === 'visual-design')!;
 
   .wf-table th {
     text-align: left;
-    font-size: 0.7rem;
+    font-size: var(--fs-xs);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -351,7 +351,7 @@ const area = professionalAreas.find((a) => a.slug === 'visual-design')!;
   /* ── Tags ── */
   .tag {
     display: inline-block;
-    font-size: 0.65rem;
+    font-size: var(--fs-xs);
     font-weight: 600;
     padding: 0.15rem 0.5rem;
     border-radius: 3px;
@@ -459,21 +459,21 @@ const area = professionalAreas.find((a) => a.slug === 'visual-design')!;
   @media (max-width: 52rem) {
     .gantt {
       grid-template-columns: 3rem repeat(10, 1fr);
-      font-size: 0.6rem;
+      font-size: var(--fs-xs);
     }
 
     .gantt-bar {
       padding: 0.3rem 0.25rem;
-      font-size: 0.55rem;
+      font-size: var(--fs-xs);
     }
 
     .gantt-label {
-      font-size: 0.6rem;
+      font-size: var(--fs-xs);
       padding-right: 0.3rem;
     }
 
     .gantt-day {
-      font-size: 0.6rem;
+      font-size: var(--fs-xs);
     }
   }
 </style>

@@ -467,7 +467,7 @@
 
   .exclude-chip-remove {
     font-family: inherit;
-    font-size: 0.85em;
+    font-size: var(--fs-sm);
     background: none;
     border: none;
     color: var(--text-light);
