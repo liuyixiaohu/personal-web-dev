@@ -6,6 +6,7 @@ timestamp, and the output includes a `new_event_ids` array listing events
 that did not exist in the previous run.
 """
 
+import os
 import sys
 import time
 from datetime import datetime, timezone
@@ -35,7 +36,7 @@ MAX_PAGES = 50  # effectively unlimited; stops when API returns has_more=false
 REQUEST_DELAY = 1.0
 DATA_FILE = Path(__file__).resolve().parent.parent.parent / "data" / "luma_events.json"
 
-BASE_URL = "https://api.lu.ma"
+BASE_URL = os.environ.get("LUMA_API_URL", "")
 
 
 # --- Fetch & normalize ---
