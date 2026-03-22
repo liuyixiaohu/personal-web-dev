@@ -87,7 +87,7 @@
   }
 
   .event-price--eventbrite {
-    color: #D9797B;
+    color: var(--color-rose);
     background: rgba(240, 215, 215, 0.3);
   }
 
