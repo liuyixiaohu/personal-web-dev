@@ -2,8 +2,8 @@ name: Fetch Events
 
 on:
   schedule:
-    # 02:00 UTC = 7 PM PDT (summer) / 6 PM PST (winter)
-    - cron: '0 2 * * *'
+    # 00:00 UTC = 5 PM PDT / 4 PM PST — with ~2h GitHub delay lands around 7 PM PT
+    - cron: '0 0 * * *'
   workflow_dispatch: {}
 
 permissions:
