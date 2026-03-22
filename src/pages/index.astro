@@ -143,9 +143,9 @@ import { professionalAreas } from '../data/professionalAreas';
   }
 
   .craft-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-sm);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-lg);
   }
 
   .craft-link {
