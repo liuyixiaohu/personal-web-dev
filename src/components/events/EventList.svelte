@@ -14,7 +14,6 @@
   import { VERSION, CHANGELOG } from './changelog';
   import Popup from './Popup.svelte';
   import FeedbackForm from './FeedbackForm.svelte';
-  import AnnounceModal from './AnnounceModal.svelte';
   import { track } from '../../utils/analytics';
 
   // --- State ---
@@ -206,8 +205,6 @@
     pushFilter('clear');
   }
 </script>
-
-<AnnounceModal storageKey="events.announce.v1.3" />
 
 <div class="event-list">
   <header class="event-header">
