@@ -19,6 +19,8 @@
 **Rules:**
 - Never use `#000000`. Use `--text` (`#1F2328`) for all dark text.
 - Only use colors from this approved palette. No exceptions.
+- `rgba(0, 0, 0, 0.03-0.08)` is allowed for subtle borders, dividers, and hover backgrounds.
+- `#FFFFFF` is allowed for inverse text on colored backgrounds only.
 
 ### Core Palette
 
@@ -157,6 +159,12 @@ Three content width tracks:
 - Color: `--text`
 - No underline by default
 - Hover: `opacity 0.7`
+
+### Hover States
+
+- **Text links**: opacity reduction (`0.7`)
+- **Bordered controls** (buttons, pills, cards): border-color darkens, optional subtle background
+- **Accent elements** (map labels, arrows): color changes to accent
 
 ### Transitions
 

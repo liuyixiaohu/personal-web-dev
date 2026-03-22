@@ -406,11 +406,11 @@
     width: 100%;
     max-width: 20rem;
     margin-bottom: var(--space-xs);
-    outline: none;
     transition: border-color 0.15s;
   }
 
   .search-input:focus {
+    outline: none;
     border-color: rgba(0, 0, 0, 0.25);
   }
 
@@ -434,11 +434,11 @@
     background: transparent;
     color: var(--text);
     cursor: pointer;
-    outline: none;
     transition: border-color 0.15s;
   }
 
   .time-select:focus {
+    outline: none;
     border-color: rgba(0, 0, 0, 0.25);
   }
 
