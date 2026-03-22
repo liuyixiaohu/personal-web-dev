@@ -168,7 +168,7 @@ export const translations: Record<string, Record<Lang, string>> = {
     en: 'Design Philosophy: Minimal & Warm',
     zh: '设计理念：极简与温暖',
   },
-  'brand.principles': { en: 'Design Principles', zh: '设计原则' },
+  'brand.principles': { en: 'Design Philosophy', zh: '设计哲学' },
   'brand.principleMinimal': { en: 'Minimal', zh: '极简' },
   'brand.principleMinimalDesc1': {
     en: 'Page depth ≤ 3. Dependencies in single digits. No framework where static HTML will do.',
