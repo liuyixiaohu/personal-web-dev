@@ -170,14 +170,22 @@ export const translations: Record<string, Record<Lang, string>> = {
   },
   'brand.principles': { en: 'Design Principles', zh: '设计原则' },
   'brand.principleMinimal': { en: 'Minimal', zh: '极简' },
-  'brand.principleMinimalDesc': {
-    en: 'Page depth ≤ 3. Dependencies in single digits. No framework where static HTML will do.\nIf it doesn\'t serve a purpose, it doesn\'t exist.',
-    zh: '页面层级 ≤ 3。依赖个位数。静态 HTML 能做的事不用框架。\n没有存在意义的东西，就不该存在。',
+  'brand.principleMinimalDesc1': {
+    en: 'Page depth ≤ 3. Dependencies in single digits. No framework where static HTML will do.',
+    zh: '页面层级 ≤ 3。依赖个位数。静态 HTML 能做的事不用框架。',
+  },
+  'brand.principleMinimalDesc2': {
+    en: 'If it doesn\'t serve a purpose, it doesn\'t exist.',
+    zh: '没有存在意义的东西，就不该存在。',
   },
   'brand.principleWarm': { en: 'Warm', zh: '温暖' },
-  'brand.principleWarmDesc': {
-    en: 'The palette was refined from my deeply loved character -- 小龙格林, a little dragon.\nWarm like the character itself.',
-    zh: '配色源自我深爱的角色——小龙格林，一只小龙。\n像这个角色本身一样温暖。',
+  'brand.principleWarmDesc1': {
+    en: 'The palette was refined from my deeply loved character -- 小龙格林, a little dragon.',
+    zh: '配色源自我深爱的角色——小龙格林，一只小龙。',
+  },
+  'brand.principleWarmDesc2': {
+    en: 'Warm like the character itself.',
+    zh: '像这个角色本身一样温暖。',
   },
   'brand.principlePersonal': { en: 'Personal', zh: '个人' },
   'brand.principlePersonalDesc': {
