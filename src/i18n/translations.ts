@@ -40,13 +40,10 @@ export const translations: Record<string, Record<Lang, string>> = {
   // --- Craft (professional areas) ---
   'craft.pm': { en: 'Product Marketing', zh: '产品营销' },
   'craft.pm.title': { en: 'Product Marketing', zh: '产品营销' },
-  'craft.pm.desc': { en: 'Nailed the positioning. Then the product pivoted.', zh: '产品定位找到了! 产品转型了:)' },
   'craft.ds': { en: 'Data Science', zh: '数据科学' },
   'craft.ds.title': { en: 'Data Science', zh: '数据科学' },
-  'craft.ds.desc': { en: 'Presented findings to leadership. They went with their gut.', zh: '汇报了分析结果后，领导团队最终选择相信自己的"第六感"。' },
   'craft.visual': { en: 'Visual Design', zh: '视觉设计' },
   'craft.visual.title': { en: 'Visual Design', zh: '视觉设计' },
-  'craft.visual.desc': { en: 'After spending 3 hours adjusting a gradient. The client said, "looks the same." It was not.', zh: '客户说花三小时调的渐变看起来一样。我："？"' },
 
   // --- Common ---
   'common.comingSoon': { en: 'Content coming soon...', zh: '内容即将上线…' },
@@ -96,8 +93,6 @@ export const translations: Record<string, Record<Lang, string>> = {
   'home.ingrain.desc': { en: 'Remember what you learn from AI conversations.', zh: '记住你从 AI 对话中学到的东西。' },
   'home.joblens': { en: 'Sift', zh: 'Sift' },
   'home.joblens.desc': { en: 'Take back a LinkedIn worth your time.', zh: '夺回值得你时间的 LinkedIn。' },
-  'home.dreamjob': { en: 'Dream Job Monitor', zh: '理想工作监控' },
-  'home.dreamjob.desc': { en: 'Fork it. Tell the AI your dream companies. Never miss a posting.', zh: 'Fork 后让 AI 帮你配置。再也不怕错过心仪的岗位。' },
   'home.brand': { en: 'Brand Guidelines', zh: '品牌指南' },
   'home.privacy': { en: 'Privacy', zh: '隐私政策' },
   'events.title': { en: 'Today\'s New Tech Events @Bay Area', zh: '今日湾区新增科技活动' },
@@ -166,10 +161,6 @@ export const translations: Record<string, Record<Lang, string>> = {
 
   // --- Brand Guidelines page ---
   'brand.title': { en: 'Brand Guidelines', zh: '品牌规范' },
-  'brand.subtitle': {
-    en: 'Design Philosophy: Minimal & Warm',
-    zh: '设计理念：极简与温暖',
-  },
   'brand.principles': { en: 'Design Philosophy', zh: '设计哲学' },
   'brand.principleMinimal': { en: 'Minimal', zh: '极简' },
   'brand.principleMinimalDesc1': {
@@ -261,44 +252,6 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.timeFrom': { en: 'From', zh: '从' },
   'events.timeTo': { en: 'To', zh: '到' },
   'events.timeAny': { en: 'Any', zh: '不限' },
-
-  // --- Dream Job Monitor page ---
-  'djm.title': { en: 'Dream Job Monitor', zh: '理想工作监控' },
-  'djm.subtitle': { en: 'An open-source seed you fork, then tell AI what to watch.', zh: '一个开源种子项目：fork 后让 AI 帮你配置监控。' },
-  'djm.section.what': { en: 'What Is This', zh: '这是什么' },
-  'djm.what.p1': {
-    en: 'Everyone\'s dream companies are different. Instead of editing config files, you fork this repo, open it in Claude Code or Codex, say "kickoff", and the AI sets everything up through conversation.',
-    zh: '每个人的理想公司都不一样。你只需 fork 这个仓库，在 Claude Code 或 Codex 中打开，输入「kickoff」，AI 就会通过对话帮你完成所有配置。',
-  },
-  'djm.what.p2': {
-    en: 'Once deployed, it checks career pages daily and creates a GitHub Issue whenever new matching positions appear.',
-    zh: '部署完成后，它会每天检查职位页面，一旦发现新的匹配岗位，就会自动创建 GitHub Issue 通知你。',
-  },
-  'djm.section.how': { en: 'How It Works', zh: '工作原理' },
-  'djm.pipe.fetch': { en: 'Fetch', zh: '获取' },
-  'djm.pipe.filter': { en: 'Filter', zh: '筛选' },
-  'djm.pipe.diff': { en: 'Diff', zh: '对比' },
-  'djm.pipe.notify': { en: 'Notify', zh: '通知' },
-  'djm.how.body': {
-    en: 'Pulls job listings from 9 ATS platforms via public APIs, filters by your keywords, diffs against previous snapshots, and creates a GitHub Issue with new matches. Runs daily via GitHub Actions.',
-    zh: '通过公开 API 从 9 个 ATS 平台获取职位列表，按关键词筛选，与历史快照对比找出新增岗位，然后创建 GitHub Issue。每天通过 GitHub Actions 自动运行。',
-  },
-  'djm.section.quickstart': { en: 'Quick Start', zh: '快速开始' },
-  'djm.step1': { en: 'Fork the repo on GitHub', zh: '在 GitHub 上 fork 仓库' },
-  'djm.step2': { en: 'Open in Claude Code or Codex, say "kickoff"', zh: '在 Claude Code 或 Codex 中打开，输入「kickoff」' },
-  'djm.step3': { en: 'AI asks your companies, roles, and locations', zh: 'AI 会询问你的目标公司、职位和地点' },
-  'djm.step4': { en: 'Push to GitHub. Actions runs daily at 8 PM PST', zh: '推送到 GitHub。Actions 每天太平洋时间晚 8 点自动运行' },
-  'djm.section.platforms': { en: 'Supported Platforms', zh: '支持的平台' },
-  'djm.section.example': { en: 'See It in Action', zh: '实际用例' },
-  'djm.example.intro': {
-    en: 'Here\'s my own setup: watching 18 companies for marketing intern positions in the US.',
-    zh: '这是我自己的配置：监控 18 家公司的美国市场营销实习岗位。',
-  },
-  'djm.example.watching': { en: 'Watching', zh: '监控中' },
-  'djm.example.filtering': { en: 'Filtering for', zh: '筛选条件' },
-  'djm.example.notification': { en: 'Sample Notification', zh: '通知示例' },
-  'djm.example.link': { en: 'View my setup →', zh: '查看我的配置 →' },
-  'djm.cta': { en: 'View on GitHub', zh: '在 GitHub 上查看' },
 
   // --- Sift (formerly JobLens) ---
   'joblens.subtitle': {
