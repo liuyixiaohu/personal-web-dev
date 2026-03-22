@@ -121,19 +121,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
       }
 
-      function setupSecretHeart() {
-        const heart = document.getElementById('secret-heart');
-        if (!heart) return;
-        heart.replaceWith(heart.cloneNode(true));
-        const freshHeart = document.getElementById('secret-heart')!;
-        freshHeart.addEventListener('click', () => {
-          freshHeart.classList.add('revealed');
-        });
-      }
-
       // Apply on initial load
       applyTranslations();
-      setupSecretHeart();
 
       // Apply when language changes (from LanguageToggle click)
       document.addEventListener('lang-change', applyTranslations);
@@ -141,7 +130,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       // Apply after Astro View Transition page swap
       document.addEventListener('astro:after-swap', () => {
         applyTranslations();
-        setupSecretHeart();
         window.dataLayer?.push({
           event: 'virtual_page_view',
           page_path: window.location.pathname,
