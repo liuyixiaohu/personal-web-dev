@@ -110,7 +110,13 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
     flex-direction: column;
     align-items: center;
     background: var(--bg);
-    padding-top: calc(var(--space-xl) + var(--space-lg));
+    padding: calc(var(--space-xl) + var(--space-lg)) var(--content-padding) 0;
+  }
+
+  .journey-page .back-link {
+    align-self: stretch;
+    max-width: 44rem;
+    width: 100%;
   }
 
   .country-pair {
