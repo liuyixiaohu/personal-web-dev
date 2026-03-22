@@ -9,6 +9,7 @@ first_seen_at timestamps and outputs a diff-friendly JSON file.
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 import time
@@ -26,14 +27,14 @@ CITIES = [
     {"slug": "ca--oakland", "label": "Oakland"},
 ]
 CATEGORY = "tech--events"
-URL_TEMPLATE = "https://www.eventbrite.com/d/{city}/{category}/?page={page}"
+URL_TEMPLATE = os.environ.get("EVENTBRITE_URL_TEMPLATE", "")
 MAX_PAGES = 50  # effectively unlimited; stops when no more results
 REQUEST_DELAY = 2.0
 DATA_FILE = (
     Path(__file__).resolve().parent.parent.parent / "data" / "eventbrite_events.json"
 )
 
-USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"
+USER_AGENT = os.environ.get("SCRAPE_USER_AGENT", "Mozilla/5.0")
 SERVER_DATA_RE = re.compile(r"window\.__SERVER_DATA__\s*=\s*({.+?});\s*$", re.DOTALL | re.MULTILINE)
 
 
