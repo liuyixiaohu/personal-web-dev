@@ -26,9 +26,14 @@ jobs:
 
       - name: Fetch Luma events
         run: python scripts/luma/fetch_events.py
+        env:
+          LUMA_API_URL: ${{ secrets.LUMA_API_URL }}
 
       - name: Fetch Eventbrite events
         run: python scripts/eventbrite/fetch_events.py
+        env:
+          EVENTBRITE_URL_TEMPLATE: ${{ secrets.EVENTBRITE_URL_TEMPLATE }}
+          SCRAPE_USER_AGENT: ${{ secrets.SCRAPE_USER_AGENT }}
 
       - name: Merge and deduplicate
         run: python scripts/merge_events.py
