@@ -72,7 +72,7 @@
     white-space: nowrap;
     flex-shrink: 0;
     padding: 0.15em 0.5em;
-    border-radius: 3px;
+    border-radius: var(--radius-sm);
     background: rgba(0, 0, 0, 0.03);
   }
 
