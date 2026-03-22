@@ -113,12 +113,21 @@ def main():
     new_ids = sorted(set(merged.keys()) - old_ids)
     all_events = sorted(merged.values(), key=lambda e: e.get("start_at", ""))
 
-    # Summary by source
-    source_counts = Counter(e.get("source", "unknown") for e in all_events)
-    breakdown = " + ".join(f"{c} {s}" for s, c in source_counts.most_common())
-    print(f"Merged: {len(all_events)} events ({breakdown}), {len(new_ids)} new")
+    # Strip fields not needed by the frontend to reduce file size
+    FRONTEND_FIELDS = {
+        "api_id", "name", "url", "start_at", "end_at", "timezone",
+        "location", "location_type", "calendar_name", "guest_count",
+        "is_free", "price_cents", "price_currency", "categories",
+        "first_seen_at", "source",
+    }
+    trimmed = [{k: v for k, v in e.items() if k in FRONTEND_FIELDS} for e in all_events]
 
-    save_events(OUTPUT_FILE, all_events, old_updated_at, now_iso, new_ids)
+    # Summary by source
+    source_counts = Counter(e.get("source", "unknown") for e in trimmed)
+    breakdown = " + ".join(f"{c} {s}" for s, c in source_counts.most_common())
+    print(f"Merged: {len(trimmed)} events ({breakdown}), {len(new_ids)} new")
+
+    save_events(OUTPUT_FILE, trimmed, old_updated_at, now_iso, new_ids)
 
 
 if __name__ == "__main__":
