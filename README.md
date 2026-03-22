@@ -1,34 +1,47 @@
 # kunli.co
 
-Personal portfolio website: [kunli.co](https://kunli.co)
+Personal brand site. Who I am, not what I've done.
 
-## Tech Stack
+**Live:** [kunli.co](https://kunli.co)
 
-| Layer | Technology |
-|-------|-----------|
-| Framework | [Astro](https://astro.build) |
-| UI Components | [Svelte 5](https://svelte.dev) |
-| 3D Graphics | [Three.js](https://threejs.org) / three-globe |
-| Language | TypeScript |
-| Data | ExcelJS, XLSX, TopoJSON |
-| Sitemap | @astrojs/sitemap |
+## Design Philosophy
 
-## Getting Started
+- **Minimal** -- Page depth ≤ 3. Dependencies in single digits.
+- **Warm** -- Palette refined from 小龙格林. Serif typefaces across both languages.
+- **Personal** -- Who I am, not what I've done.
 
-```bash
-npm install
-npm run dev        # localhost:4321
-npm run build      # production build → ./dist/
-npm run preview    # preview production build locally
-```
+## Stack
 
-## Project Structure
+| Layer | Tech |
+|---|---|
+| Framework | [Astro 5](https://astro.build) (static) |
+| Interactive | [Svelte 5](https://svelte.dev) (events page) |
+| Maps | [D3-geo](https://d3js.org) (journey page) |
+| i18n | Bilingual EN/ZH via `data-i18n` |
+| Deploy | Cloudflare Pages |
+
+## Structure
 
 ```
 src/
-├── pages/         # Astro page routes
-├── components/    # Svelte & Astro components
-├── layouts/       # Page layouts
-└── assets/        # Static assets
-public/            # Served as-is (fonts, images, favicons)
+  pages/          Routes (19 pages)
+  components/     Svelte + Astro components
+  i18n/           Translations + language store
+  styles/         Global CSS with design tokens
+  utils/          Analytics, journey modules
+  data/           Professional areas, changelog data
+scripts/          Daily event pipeline (Luma + Eventbrite)
+docs/             Brand guidelines
 ```
+
+## Dev
+
+```bash
+npm install
+npm run dev       # localhost:4321
+npm run build     # production → ./dist/
+```
+
+## Brand Guidelines
+
+Full design system documented at [kunli.co/brand](https://kunli.co/brand) and in [`docs/brand-guidelines.md`](docs/brand-guidelines.md).
