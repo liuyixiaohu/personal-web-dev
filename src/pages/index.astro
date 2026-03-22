@@ -16,10 +16,7 @@ import { professionalAreas } from '../data/professionalAreas';
             <span class="greeting-lead" data-i18n="greeting.lead">In case I don't see ya...</span>
             <span class="greeting-body" data-i18n="greeting.body">good afternoon, good evening, and good night.</span>
           </p>
-          <div class="greeting-source-line">
-            <p class="greeting-source" data-i18n="greeting.source">The Truman Show</p>
-            <span class="secret-heart" id="secret-heart">♥</span>
-          </div>
+          <p class="greeting-source" data-i18n="greeting.source">The Truman Show</p>
         </div>
       </div>
 
@@ -123,17 +120,11 @@ import { professionalAreas } from '../data/professionalAreas';
     display: block;
   }
 
-  .greeting-source-line {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 0.35em;
-    margin-top: var(--space-xs);
-  }
-
   .greeting-source {
     font-size: var(--fs-xs);
     color: var(--text-light);
+    text-align: center;
+    margin-top: var(--space-xs);
   }
 
   /* Scroll indicator */
@@ -142,21 +133,6 @@ import { professionalAreas } from '../data/professionalAreas';
     bottom: 2.5rem;
     left: 0;
     width: 100%;
-  }
-
-  /* Secret heart (hidden entrance) */
-  .secret-heart {
-    display: inline-block;
-    font-size: var(--fs-xs);
-    color: var(--border);
-    cursor: default;
-    user-select: none;
-    opacity: 0.4;
-  }
-
-  .secret-heart.revealed {
-    color: var(--bubble-pm);
-    opacity: 1;
   }
 
   /* ─── Zone 2: Content ─── */
