@@ -4,6 +4,16 @@ import ChangelogPopup from '../../components/ChangelogPopup.astro';
 
 const changelogEntries = [
   {
+    version: 'v0.4',
+    why: 'Font customization and architecture improvements.',
+    changes: [
+      'Font selector: choose between EB Garamond, Rethink Sans, and Poppins',
+      'Chrome extension rebuilt with ES modules and esbuild',
+      'Multi-platform AI support architecture (Claude, ChatGPT)',
+      'Codebase-wide quality improvements',
+    ],
+  },
+  {
     version: 'v0.3',
     why: 'Chrome Web Store release and quality improvements.',
     changes: [
@@ -49,7 +59,7 @@ const changelogEntries = [
         <div class="ig-title-row">
           <h1>InGrain</h1>
           <span class="ig-badge">Early Preview</span>
-          <ChangelogPopup version="v0.3" id="ig" entries={changelogEntries} />
+          <ChangelogPopup version="v0.4" id="ig" entries={changelogEntries} />
         </div>
         <p class="ig-subtitle" data-i18n="ingrain.subtitle">A memory system for your AI conversations.</p>
       </div>
@@ -94,6 +104,14 @@ const changelogEntries = [
         <li>
           <strong data-i18n="ingrain.feat.adapt">Adapts to you</strong>
           <span data-i18n="ingrain.feat.adaptDesc">The more you use it, the better it understands how you learn. The algorithm adjusts to your personal forgetting patterns. What's easy for you might be hard for someone else.</span>
+        </li>
+        <li>
+          <strong data-i18n="ingrain.feat.multiPlatform">Works with Claude and ChatGPT</strong>
+          <span data-i18n="ingrain.feat.multiPlatformDesc">Capture conversations from multiple AI platforms. The extension detects which platform you're on and adapts automatically.</span>
+        </li>
+        <li>
+          <strong data-i18n="ingrain.feat.customizable">Customizable experience</strong>
+          <span data-i18n="ingrain.feat.customizableDesc">Choose your preferred font, language (English / 中文), and learning focus. InGrain adapts to how you work.</span>
         </li>
         <li>
           <strong data-i18n="ingrain.feat.privacy">Your content is not stored on our servers</strong>
