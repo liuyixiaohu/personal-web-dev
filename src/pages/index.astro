@@ -32,8 +32,6 @@ import { professionalAreas } from '../data/professionalAreas';
         {professionalAreas.map((area) => (
           <a href={`/${area.slug}`} class="item">
             <span class="item-title" style={`color: ${area.color}`} data-i18n={area.i18n.cardTitle}>{area.title}</span>
-            <span class="item-desc" data-i18n={area.i18n.cardDesc}>{area.subtitle}</span>
-            {area.comingDate && <span class="coming-date">{area.comingDate}</span>}
           </a>
         ))}
       </section>
