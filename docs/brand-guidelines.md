@@ -7,10 +7,9 @@
 
 ## Design Principles
 
-1. **Minimal**: Less is more. No decoration for decoration's sake.
-2. **Fast**: Static HTML, zero unnecessary JS, CDN fonts.
-3. **Warm**: Cream tones, serif fonts, literary voice.
-4. **Bilingual**: Every visible text has English and Chinese.
+1. **Minimal**: Page depth ≤ 3. Dependencies in single digits. No framework where static HTML will do. If it doesn't serve a purpose, it doesn't exist.
+2. **Warm**: The palette was refined from a deeply loved character -- 小龙格林, a little dragon. Warm like the character itself.
+3. **Personal**: Who I am, not what I've done.
 
 ---
 

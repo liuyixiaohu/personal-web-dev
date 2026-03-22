@@ -171,23 +171,18 @@ export const translations: Record<string, Record<Lang, string>> = {
   'brand.principles': { en: 'Design Principles', zh: '设计原则' },
   'brand.principleMinimal': { en: 'Minimal', zh: '极简' },
   'brand.principleMinimalDesc': {
-    en: 'Less is more. No decoration for decoration\'s sake.',
-    zh: '少即是多。不为装饰而装饰。',
-  },
-  'brand.principleFast': { en: 'Fast', zh: '轻快' },
-  'brand.principleFastDesc': {
-    en: 'Static HTML, zero unnecessary JS, CDN fonts.',
-    zh: '静态 HTML，零多余 JS，CDN 字体。',
+    en: 'Page depth ≤ 3. Dependencies in single digits. No framework where static HTML will do.\nIf it doesn\'t serve a purpose, it doesn\'t exist.',
+    zh: '页面层级 ≤ 3。依赖个位数。静态 HTML 能做的事不用框架。\n没有存在意义的东西，就不该存在。',
   },
   'brand.principleWarm': { en: 'Warm', zh: '温暖' },
   'brand.principleWarmDesc': {
-    en: 'Cream tones, serif fonts, literary voice.',
-    zh: '奶油色调、衬线字体、文学气质。',
+    en: 'The palette was refined from my deeply loved character -- 小龙格林, a little dragon.\nWarm like the character itself.',
+    zh: '配色源自我深爱的角色——小龙格林，一只小龙。\n像这个角色本身一样温暖。',
   },
-  'brand.principleBilingual': { en: 'Bilingual', zh: '双语' },
-  'brand.principleBilingualDesc': {
-    en: 'Every visible text has English and Chinese.',
-    zh: '每段可见文字均有中英双语。',
+  'brand.principlePersonal': { en: 'Personal', zh: '个人' },
+  'brand.principlePersonalDesc': {
+    en: 'Who I am, not what I\'ve done.',
+    zh: '关于我是谁，而不是我做过什么。',
   },
   'brand.colors': { en: 'Color Palette', zh: '配色方案' },
   'brand.colorsCore': { en: 'Core Palette', zh: '核心色板' },
