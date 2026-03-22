@@ -7,7 +7,9 @@ export type Lang = 'en' | 'zh';
 export const translations: Record<string, Record<Lang, string>> = {
   // --- Homepage ---
   'home.specialThanks': { en: 'Special Thanks', zh: '特别感谢' },
-  'home.lifeJourney': { en: 'Journey', zh: '旅程' },
+  'home.lifeJourney': { en: 'Life Journey', zh: '人生旅程' },
+  'home.lifeJourney.desc': { en: 'From Jiaozhou to Berkeley, one city at a time.', zh: '从胶州到伯克利，一座城市一个故事。' },
+  'home.journeySection': { en: 'Journey', zh: '旅程' },
 
   // --- Greeting ---
   'greeting.lead': {
