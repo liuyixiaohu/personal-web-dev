@@ -29,11 +29,11 @@ import { professionalAreas } from '../data/professionalAreas';
       <!-- Craft -->
       <section class="section">
         <h2 class="section-label" data-i18n="pro.section.craft">Craft</h2>
-        {professionalAreas.map((area) => (
-          <a href={`/${area.slug}`} class="item">
-            <span class="item-title" style={`color: ${area.color}`} data-i18n={area.i18n.cardTitle}>{area.title}</span>
-          </a>
-        ))}
+        <div class="craft-grid">
+          {professionalAreas.map((area) => (
+            <a href={`/${area.slug}`} class="craft-link" style={`color: ${area.color}`} data-i18n={area.i18n.cardTitle}>{area.title}</a>
+          ))}
+        </div>
       </section>
 
       <!-- Touch Fish! -->
@@ -131,6 +131,23 @@ import { professionalAreas } from '../data/professionalAreas';
     bottom: 2.5rem;
     left: 0;
     width: 100%;
+  }
+
+  .craft-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-sm);
+  }
+
+  .craft-link {
+    font-size: var(--fs-md);
+    font-weight: 500;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .craft-link:hover {
+    opacity: 0.7;
   }
 
   /* ─── Zone 2: Content ─── */
