@@ -106,20 +106,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       import { initLang, getLang, t } from '../i18n/langStore';
 
       function applyTranslations() {
-        const isToolPage = window.location.pathname.startsWith('/tools/');
-        const isToolAuthenticated = isToolPage && typeof sessionStorage !== 'undefined' && sessionStorage.getItem('excel-tool-auth') === 'true';
-        const langToggle = document.querySelector('.lang-toggle') as HTMLElement | null;
-
-        if (isToolAuthenticated) {
-          // Authenticated tool pages: force Chinese, hide language toggle
-          document.documentElement.setAttribute('data-lang', 'zh');
-          if (langToggle) langToggle.style.display = 'none';
-        } else {
-          initLang();
-          if (langToggle) langToggle.style.display = '';
-        }
-
-        const lang = (isToolAuthenticated ? 'zh' : getLang()) as 'en' | 'zh';
+        initLang();
+        const lang = getLang() as 'en' | 'zh';
         document.documentElement.setAttribute('data-lang', lang);
 
         // Apply static data-i18n translations
@@ -140,10 +128,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         const freshHeart = document.getElementById('secret-heart')!;
         freshHeart.addEventListener('click', () => {
           freshHeart.classList.add('revealed');
-          window.dataLayer?.push({ event: 'easter_egg_click' });
-          setTimeout(() => {
-            window.location.href = '/tools/excel';
-          }, 600);
         });
       }
 
