@@ -11,6 +11,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   // --- Homepage ---
   'home.specialThanks': { en: 'Special Thanks', zh: '特别感谢' },
   'home.lifeJourney': { en: 'Journey', zh: '旅程' },
+  'home.journeyWip': { en: 'Still struggling with the layout of this page', zh: '依然还在纠结这个页面的排版' },
 
   // --- Greeting ---
   'greeting.lead': {
