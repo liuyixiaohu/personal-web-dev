@@ -55,7 +55,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'pin.qingdao.title': { en: 'Qingdao & Tsingtao', zh: '青岛与青岛啤酒' },
   'pin.shouguang.title': { en: 'Hometown of Chinese Vegetables', zh: '中国蔬菜之乡' },
   'pin.madison.title': { en: 'Between the lakes', zh: '湖间小城' },
-  'pin.fairfield.title': { en: 'Golden state chapter', zh: '金州篇章' },
+  'pin.fairfield.title': { en: 'Freedom and Hope', zh: '自由与希望' },
   'pin.berkeley.title': { en: 'Ideas in bloom', zh: '思想之花' },
 
   // --- Globe pin stories (placeholder) ---
