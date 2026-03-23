@@ -46,18 +46,20 @@ import { professionalAreas } from '../data/professionalAreas';
       <!-- Touch Fish! -->
       <section class="section" style="text-align: center;">
         <h2 class="section-label" data-i18n="pro.section.lab">Touch Fish!</h2>
-        <a href="/events" class="item item--events">
-          <span class="item-title" data-i18n="home.events">Today's New Tech Events @Bay Area</span>
-          <span class="item-desc" data-i18n="home.events.desc">No more doomscrolling event platforms into an existential crisis.</span>
-        </a>
-        <a href="/ingrain" class="item item--ingrain">
-          <span class="item-title" data-i18n="home.ingrain">InGrain</span>
-          <span class="item-desc" data-i18n="home.ingrain.desc">Remember what you learn from AI conversations.</span>
-        </a>
-        <a href="/sift" class="item item--joblens">
-          <span class="item-title" data-i18n="home.joblens">Sift</span>
-          <span class="item-desc" data-i18n="home.joblens.desc">Clean up your LinkedIn feed and job search.</span>
-        </a>
+        <div class="tools-list">
+          <a href="/events" class="item item--events">
+            <span class="item-title" data-i18n="home.events">Today's New Tech Events @Bay Area</span>
+            <span class="item-desc" data-i18n="home.events.desc">No more doomscrolling event platforms into an existential crisis.</span>
+          </a>
+          <a href="/ingrain" class="item item--ingrain">
+            <span class="item-title" data-i18n="home.ingrain">InGrain</span>
+            <span class="item-desc" data-i18n="home.ingrain.desc">Remember what you learn from AI conversations.</span>
+          </a>
+          <a href="/sift" class="item item--joblens">
+            <span class="item-title" data-i18n="home.joblens">Sift</span>
+            <span class="item-desc" data-i18n="home.joblens.desc">Clean up your LinkedIn feed and job search.</span>
+          </a>
+        </div>
       </section>
 
     </div>
@@ -143,6 +145,7 @@ import { professionalAreas } from '../data/professionalAreas';
   .craft-grid {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: var(--space-sm) var(--space-lg);
   }
 
@@ -161,6 +164,11 @@ import { professionalAreas } from '../data/professionalAreas';
   .home-body {
     min-height: auto;
     padding-block-start: var(--space-xl);
+  }
+
+  .tools-list {
+    max-width: 28rem;
+    margin: 0 auto;
   }
 
   /* Accent colors */
