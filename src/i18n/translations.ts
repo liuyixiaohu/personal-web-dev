@@ -22,7 +22,7 @@ export const translations: Record<string, Record<Lang, string>> = {
     en: 'good afternoon, good evening, and good night.',
     zh: '祝你早安、午安、晚安。',
   },
-  'greeting.source': { en: '\u2014 The Truman Show', zh: '\u2014\u2014《楚门的世界》' },
+  'greeting.source': { en: 'The Truman Show', zh: '《楚门的世界》' },
 
   // --- Navigation ---
   'nav.back': { en: '\u2190 Home', zh: '\u2190 首页' },
