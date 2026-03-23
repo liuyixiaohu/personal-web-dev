@@ -71,7 +71,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'pin.shouguang.title': { en: 'Every Step Counts', zh: '每一步都算数' },
   'pin.madison.title': { en: 'Between the lakes', zh: '湖间小城' },
   'pin.fairfield.title': { en: 'Freedom and Hope', zh: '自由与希望' },
-  'pin.berkeley.title': { en: 'Cheng', zh: 'cheng' },
+  'pin.berkeley.title': { en: 'Cheng', zh: '诚' },
 
   // --- Globe pin stories (placeholder) ---
   'pin.jiaozhou.story': {
