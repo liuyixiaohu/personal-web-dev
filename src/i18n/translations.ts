@@ -10,7 +10,7 @@ export const translations: Record<string, Record<Lang, string>> = {
 
   // --- Homepage ---
   'home.specialThanks': { en: 'Special Thanks', zh: '特别感谢' },
-  'home.lifeJourney': { en: 'Every Step Counts', zh: '每一步都算数' },
+  'home.lifeJourney': { en: 'Journey', zh: '旅程' },
 
   // --- Greeting ---
   'greeting.lead': {
@@ -28,7 +28,8 @@ export const translations: Record<string, Record<Lang, string>> = {
   'nav.backToTop': { en: '\u2191 Top', zh: '\u2191 顶部' },
 
   // --- Life Journey ---
-  'journey.hint': { en: 'Click a pin to read the story (all stories are still in progress)', zh: '点击图钉查看故事（所有故事均还未完成）' },
+  'journey.hint': { en: 'Click a pin to read the story', zh: '点击图钉查看故事' },
+  'journey.hintWip': { en: 'ALL stories are still in progress', zh: '所有故事均还未完成' },
   'journey.china': { en: 'China', zh: '中国' },
   'journey.usa': { en: 'United States', zh: '美国' },
   'journey.city.jiaozhou': { en: 'Jiaozhou', zh: '胶州' },
