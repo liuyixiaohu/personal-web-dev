@@ -10,8 +10,7 @@ export const translations: Record<string, Record<Lang, string>> = {
 
   // --- Homepage ---
   'home.specialThanks': { en: 'Special Thanks', zh: '特别感谢' },
-  'home.lifeJourney': { en: 'Journey', zh: '旅程' },
-  'home.lifeJourney.desc': { en: 'Every step counts.', zh: '每一步都算数。' },
+  'home.lifeJourney': { en: 'Every Step Counts', zh: '每一步都算数' },
 
   // --- Greeting ---
   'greeting.lead': {
