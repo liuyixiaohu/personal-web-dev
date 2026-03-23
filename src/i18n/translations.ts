@@ -5,6 +5,9 @@
 export type Lang = 'en' | 'zh';
 
 export const translations: Record<string, Record<Lang, string>> = {
+  // --- Navigation ---
+  'nav.back': { en: '\u2190 Back', zh: '\u2190 返回' },
+
   // --- Homepage ---
   'home.specialThanks': { en: 'Special Thanks', zh: '特别感谢' },
   'home.lifeJourney': { en: 'Life Journey', zh: '人生旅程' },
@@ -349,6 +352,10 @@ export const translations: Record<string, Record<Lang, string>> = {
   'ingrain.feat.recallDesc': { en: 'You\'re challenged to think, not just recognize. This is the difference between "I\'ve seen this before" and "I know this."', zh: '你会被要求思考，而不只是认出来。这就是"我见过这个"和"我知道这个"的区别。' },
   'ingrain.feat.adapt': { en: 'Adapts to you', zh: '适应你' },
   'ingrain.feat.adaptDesc': { en: 'The more you use it, the better it understands how you learn. The algorithm adjusts to your personal forgetting patterns. What\'s easy for you might be hard for someone else.', zh: '用得越多，它越了解你的学习方式。算法会根据你个人的遗忘模式进行调整。对你来说容易的，对别人来说可能很难。' },
+  'ingrain.feat.multiPlatform': { en: 'Works with Claude and ChatGPT', zh: '支持 Claude 和 ChatGPT' },
+  'ingrain.feat.multiPlatformDesc': { en: 'Capture conversations from multiple AI platforms. The extension detects which platform you\'re on and adapts automatically.', zh: '从多个 AI 平台捕获对话。扩展会自动检测你所在的平台并自动适配。' },
+  'ingrain.feat.customizable': { en: 'Customizable experience', zh: '可定制体验' },
+  'ingrain.feat.customizableDesc': { en: 'Choose your preferred font, language (English / 中文), and learning focus. InGrain adapts to how you work.', zh: '选择你喜欢的字体、语言（English / 中文）和学习方向。InGrain 适应你的工作方式。' },
   'ingrain.feat.privacy': { en: 'Your content is not stored on our servers', zh: '你的内容不会存储在我们的服务器上' },
   'ingrain.feat.privacyDesc': { en: 'Knowledge extraction requires a brief server-side AI call, but your conversation content is processed and discarded, never stored. Your knowledge library lives locally on your device.', zh: '知识提取需要一次简短的服务端 AI 调用，但你的对话内容处理后即丢弃，不会存储。你的知识库保存在本地设备上。' },
   'ingrain.flowTitle': { en: 'The Flow', zh: '流程' },
