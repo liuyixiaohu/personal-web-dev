@@ -28,7 +28,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'nav.backToTop': { en: '\u2191 Top', zh: '\u2191 顶部' },
 
   // --- Life Journey ---
-  'journey.hint': { en: 'Click a pin to read the story', zh: '点击图钉查看故事' },
+  'journey.hint': { en: 'Click a pin to read the story (all stories are still in progress)', zh: '点击图钉查看故事（所有故事均还未完成）' },
   'journey.china': { en: 'China', zh: '中国' },
   'journey.usa': { en: 'United States', zh: '美国' },
   'journey.city.jiaozhou': { en: 'Jiaozhou', zh: '胶州' },
