@@ -13,7 +13,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <div class="jl-title-row">
           <h1>Sift</h1>
           <div class="jl-version-wrap">
-            <button class="jl-version-btn" id="jl-changelog-toggle" aria-label="View changelog">v2.3</button>
+            <button class="jl-version-btn" id="jl-changelog-toggle" aria-label="View changelog">v2.5</button>
             <div class="jl-changelog-backdrop" id="jl-changelog-backdrop" hidden></div>
             <div class="jl-changelog-popup" id="jl-changelog-popup" hidden>
               <div class="jl-changelog-header">
@@ -68,7 +68,20 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <li data-i18n="joblens.feat.keywords"><strong>Keyword Filter</strong>: define custom keywords to hide matching posts</li>
         <li data-i18n="joblens.feat.badge"><strong>Live Badge</strong>: floating counter shows how many posts have been filtered</li>
         <li data-i18n="joblens.feat.iconBadge"><strong>Icon Badge</strong>: extension icon shows the filtered count at a glance</li>
+        <li data-i18n="joblens.feat.polls"><strong>Hide Polls</strong>: filter out LinkedIn polls from your feed</li>
         <li data-i18n="joblens.feat.pause"><strong>Shift+J</strong>: pause/resume all filters instantly</li>
+      </ul>
+    </section>
+
+    <!-- Profile & Network -->
+    <section class="section">
+      <h2 data-i18n="joblens.profileTitle">Profile & Network</h2>
+      <p data-i18n="joblens.profileDesc">Sift also cleans up your profile and My Network pages — hiding sidebar clutter, ads, analytics you don't need, and game promotions.</p>
+      <ul class="jl-features">
+        <li data-i18n="joblens.feat.profileSidebar"><strong>Hide Profile Sidebar</strong>: removes ads, "People you may know", and "You might like" panels</li>
+        <li data-i18n="joblens.feat.profileAnalytics"><strong>Hide Analytics</strong>: hides profile views, impressions, and search appearances</li>
+        <li data-i18n="joblens.feat.networkAds"><strong>Hide Network Ads</strong>: removes Promoted ads from My Network</li>
+        <li data-i18n="joblens.feat.networkGame"><strong>Hide Game Promo</strong>: removes LinkedIn game promotions</li>
       </ul>
     </section>
 

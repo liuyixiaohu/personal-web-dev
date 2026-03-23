@@ -6,6 +6,33 @@ export interface SiftChangelogEntry {
 
 export const siftChangelog: SiftChangelogEntry[] = [
   {
+    version: 'v2.5',
+    why: {
+      en: 'Sift now cleans up your profile and My Network pages too — not just the feed and job search.',
+      zh: 'Sift 现在也能清理个人主页和「我的人脉」页面，不只是 Feed 和求职搜索。',
+    },
+    changes: {
+      en: [
+        'Profile page: hide right sidebar (ads, "People you may know", "You might like")',
+        'Profile page: hide Analytics section (profile views, impressions, search appearances)',
+        'My Network page: hide Promoted ads in sidebar',
+        'My Network page: hide "Need a 30 second break?" game promotions',
+        'New "Profile Page" section in popup with dedicated toggle',
+        'Poll filter: hide LinkedIn polls from your feed',
+        'New user onboarding: welcome toast on first install',
+      ],
+      zh: [
+        '个人主页：隐藏右侧栏（广告、「你可能认识」、「你可能喜欢」）',
+        '个人主页：隐藏 Analytics 区域（主页浏览、曝光、搜索出现次数）',
+        '「我的人脉」页面：隐藏侧栏推广广告',
+        '「我的人脉」页面：隐藏「来玩 30 秒小游戏」推广',
+        '弹窗新增「Profile Page」区域，带独立开关',
+        '投票过滤：隐藏 LinkedIn 投票帖',
+        '新用户引导：首次安装后显示欢迎提示',
+      ],
+    },
+  },
+  {
     version: 'v2.3',
     why: {
       en: 'Keyword filtering, icon badge, and a proper build system. Also: Sift is now open source!',
