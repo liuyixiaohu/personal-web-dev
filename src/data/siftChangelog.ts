@@ -6,6 +6,23 @@ export interface SiftChangelogEntry {
 
 export const siftChangelog: SiftChangelogEntry[] = [
   {
+    version: 'v2.7',
+    why: {
+      en: 'Hide celebration posts and catch more feed noise. Your feed stays focused on what matters.',
+      zh: '隐藏庆祝帖和更多 Feed 噪音。让你的 Feed 只留下真正重要的内容。',
+    },
+    changes: {
+      en: [
+        'Hide Celebrations: filter out job updates, work anniversaries, birthdays, and promotions',
+        'Top applicant job cards now caught by Hide Recommended filter',
+      ],
+      zh: [
+        '隐藏庆祝帖：过滤掉职位更新、工作周年、生日和晋升帖',
+        '「你是最佳申请人」职位卡片现在被「隐藏推荐」过滤器覆盖',
+      ],
+    },
+  },
+  {
     version: 'v2.6',
     why: {
       en: 'Post age filtering and upsell removal. Your feed, your rules.',
