@@ -51,13 +51,27 @@ export const translations: Record<string, Record<Lang, string>> = {
   // --- Common ---
   'common.comingSoon': { en: 'Content coming soon...', zh: '内容即将上线…' },
 
+  // --- Globe pin locations ---
+  'pin.jiaozhou.city': { en: 'Jiaozhou', zh: '胶州' },
+  'pin.jiaozhou.country': { en: 'Shandong, China', zh: '中国山东' },
+  'pin.shouguang.city': { en: 'Shouguang', zh: '寿光' },
+  'pin.shouguang.country': { en: 'Shandong, China', zh: '中国山东' },
+  'pin.qingdao.city': { en: 'Qingdao', zh: '青岛' },
+  'pin.qingdao.country': { en: 'Shandong, China', zh: '中国山东' },
+  'pin.madison.city': { en: 'Madison', zh: '麦迪逊' },
+  'pin.madison.country': { en: 'Wisconsin, USA', zh: '美国威斯康星' },
+  'pin.fairfield.city': { en: 'Fairfield', zh: '费尔菲尔德' },
+  'pin.fairfield.country': { en: 'California, USA', zh: '美国加利福尼亚' },
+  'pin.berkeley.city': { en: 'Berkeley', zh: '伯克利' },
+  'pin.berkeley.country': { en: 'California, USA', zh: '美国加利福尼亚' },
+
   // --- Globe pin titles ---
   'pin.jiaozhou.title': { en: 'Where this wonderfully absurd life began', zh: '奇妙人生开始的地方' },
   'pin.qingdao.title': { en: 'Qingdao & Tsingtao', zh: '青岛与青岛啤酒' },
   'pin.shouguang.title': { en: 'Hometown of Chinese Vegetables', zh: '中国蔬菜之乡' },
   'pin.madison.title': { en: 'Between the lakes', zh: '湖间小城' },
   'pin.fairfield.title': { en: 'Freedom and Hope', zh: '自由与希望' },
-  'pin.berkeley.title': { en: 'Ideas in bloom', zh: '思想之花' },
+  'pin.berkeley.title': { en: 'Cheng', zh: 'Cheng' },
 
   // --- Globe pin stories (placeholder) ---
   'pin.jiaozhou.story': {

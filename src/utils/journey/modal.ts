@@ -28,10 +28,15 @@ export function initModal() {
   const modalClose = document.getElementById('modal-close')!;
 
   function openModal(pin: any) {
-    modalCity.textContent = pin.city;
-    modalCountry.textContent = pin.country;
-    const titleKey = `pin.${pin.id.replace(/-/g, '')}.title`;
-    const storyKey = `pin.${pin.id.replace(/-/g, '')}.story`;
+    const pinKey = pin.id.replace(/-/g, '');
+    const cityKey = `pin.${pinKey}.city`;
+    const countryKey = `pin.${pinKey}.country`;
+    modalCity.textContent = t(cityKey);
+    modalCity.setAttribute('data-i18n', cityKey);
+    modalCountry.textContent = t(countryKey);
+    modalCountry.setAttribute('data-i18n', countryKey);
+    const titleKey = `pin.${pinKey}.title`;
+    const storyKey = `pin.${pinKey}.story`;
     modalTitle.textContent = t(titleKey);
     modalTitle.setAttribute('data-i18n', titleKey);
     modalBody.innerHTML = toParagraphs(t(storyKey));
