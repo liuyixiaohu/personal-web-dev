@@ -6,6 +6,23 @@ export interface SiftChangelogEntry {
 
 export const siftChangelog: SiftChangelogEntry[] = [
   {
+    version: 'v2.6',
+    why: {
+      en: 'Post age filtering and upsell removal. Your feed, your rules.',
+      zh: '帖子时间过滤和推广隐藏。你的 Feed，你做主。',
+    },
+    changes: {
+      en: [
+        'Post age filter: hide posts older than 1 day / 3 days / 1 week / 2 weeks / 1 month',
+        'Hide "Try Campaign Manager" and similar upsell promotions',
+      ],
+      zh: [
+        '帖子时间过滤：隐藏超过 1 天 / 3 天 / 1 周 / 2 周 / 1 个月的帖子',
+        '隐藏「Try Campaign Manager」等推广内容',
+      ],
+    },
+  },
+  {
     version: 'v2.5',
     why: {
       en: 'Sift now cleans up your profile and My Network pages too — not just the feed and job search.',
