@@ -6,6 +6,29 @@ export interface SiftChangelogEntry {
 
 export const siftChangelog: SiftChangelogEntry[] = [
   {
+    version: 'v2.8',
+    why: {
+      en: 'LinkedIn completely restructured their DOM. Sift adapts — all filters restored and more reliable than ever.',
+      zh: 'LinkedIn 完全重构了页面结构。Sift 已适配——所有过滤器恢复且比以往更可靠。',
+    },
+    changes: {
+      en: [
+        'Full compatibility with LinkedIn 2026 DOM restructure',
+        'Continuous interval scanning replaces unreliable MutationObserver',
+        'Improved non-connection detection: excludes interaction posts (likes/reposts)',
+        'Fixed post age filter for new DOM structure',
+        'Fixed sidebar hiding for new 3-column layout',
+      ],
+      zh: [
+        '完全兼容 LinkedIn 2026 DOM 重构',
+        '持续轮询扫描取代不可靠的 MutationObserver',
+        '改进陌生人检测：排除互动帖（点赞/转发）',
+        '修复新 DOM 结构下的帖子时间过滤',
+        '修复新三栏布局下的侧栏隐藏',
+      ],
+    },
+  },
+  {
     version: 'v2.7',
     why: {
       en: 'Hide celebration posts and catch more feed noise. Your feed stays focused on what matters.',
