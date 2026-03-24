@@ -6,10 +6,14 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://kunli.co',
+  trailingSlash: 'never',
+  redirects: {
+    '/job-lens': '/sift',
+    '/dream-job-monitor': '/',
+    '/chaguan': '/',
+  },
   integrations: [
     svelte(),
-    sitemap({
-      filter: (page) => !page.startsWith('https://kunli.co/job-lens'),
-    }),
+    sitemap(),
   ]
 });
