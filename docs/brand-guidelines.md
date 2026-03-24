@@ -227,3 +227,14 @@ Colors: `--bg` (#FAF7F2) background, `--text` (#1F2328) fill.
 - **Primary approach**: Fluid scaling via `clamp()`, no breakpoints for most things.
 - **Single breakpoint**: `480px` for layout-level changes only.
 - Grid system handles responsive content width automatically.
+
+---
+
+## Analytics
+
+**Guiding principle**: Only track what answers *"Which content are people truly reading?"*
+
+- Track: content engagement (pin clicks, filter use, language toggle, craft area interest)
+- Don't track: navigation clicks, outbound links, CTA clicks, or anything GA4 already captures via page_view
+- GA4 Property ID: `523732390`
+- Service account: `claude-analytics@personal-website-491221.iam.gserviceaccount.com`

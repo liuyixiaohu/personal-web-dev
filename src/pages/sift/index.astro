@@ -216,7 +216,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <script>
-  import { track } from '../../utils/analytics';
   import { siftChangelog } from '../../data/siftChangelog';
 
   document.addEventListener('astro:page-load', () => {
@@ -233,11 +232,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       });
       dialog.addEventListener('click', () => dialog.close());
     }
-
-    // --- CTA tracking ---
-    document.querySelector('.jl-store-link')?.addEventListener('click', () => {
-      track('joblens_cta_click');
-    });
 
     // --- Changelog ---
     const clToggle = document.getElementById('jl-changelog-toggle');

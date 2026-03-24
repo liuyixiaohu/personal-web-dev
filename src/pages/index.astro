@@ -78,21 +78,6 @@ import { professionalAreas } from '../data/professionalAreas';
     });
   });
 
-  // --- Tracking: Tool link clicks (Events, JobLens, Dream Job Monitor) ---
-  document.querySelector('.item--events')?.addEventListener('click', () => {
-    track('tool_link_click', { tool_name: 'events' });
-  });
-  document.querySelector('.item--joblens')?.addEventListener('click', () => {
-    track('tool_link_click', { tool_name: 'joblens' });
-  });
-  // --- Tracking: Footer social link clicks ---
-  document.querySelectorAll('.social-link').forEach((el) => {
-    el.addEventListener('click', () => {
-      const href = (el as HTMLAnchorElement).getAttribute('href') || '';
-      const platform = href.includes('linkedin') ? 'linkedin' : href.includes('github') ? 'github' : 'other';
-      track('social_link_click', { platform });
-    });
-  });
 </script>
 
 <style>
