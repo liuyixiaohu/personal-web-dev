@@ -3,45 +3,45 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Sift" description="Clean up your LinkedIn feed. Hide ads, filter keywords, unfollow inline, and flag suspicious job listings. Open source.">
-  <main class="jl-page grid-page">
+  <main class="sift-page grid-page">
     <a href="/" class="back-link" data-i18n="nav.back">&larr; Back</a>
 
     <!-- Header -->
-    <header class="jl-header">
-      <img src="/images/joblens-icon.png" alt="Sift icon" class="jl-logo" />
+    <header class="sift-header">
+      <img src="/images/sift-icon.png" alt="Sift icon" class="sift-logo" />
       <div>
-        <div class="jl-title-row">
+        <div class="sift-title-row">
           <h1>Sift</h1>
-          <div class="jl-version-wrap">
-            <button class="jl-version-btn" id="jl-changelog-toggle" aria-label="View changelog">v2.7</button>
-            <div class="jl-changelog-backdrop" id="jl-changelog-backdrop" hidden></div>
-            <div class="jl-changelog-popup" id="jl-changelog-popup" hidden>
-              <div class="jl-changelog-header">
-                <span class="jl-changelog-title" data-i18n="joblens.changelogTitle">Changelog</span>
-                <button class="jl-changelog-close" id="jl-changelog-close" aria-label="Close changelog">&times;</button>
+          <div class="sift-version-wrap">
+            <button class="sift-version-btn" id="sift-changelog-toggle" aria-label="View changelog">v2.7</button>
+            <div class="sift-changelog-backdrop" id="sift-changelog-backdrop" hidden></div>
+            <div class="sift-changelog-popup" id="sift-changelog-popup" hidden>
+              <div class="sift-changelog-header">
+                <span class="sift-changelog-title" data-i18n="sift.changelogTitle">Changelog</span>
+                <button class="sift-changelog-close" id="sift-changelog-close" aria-label="Close changelog">&times;</button>
               </div>
-              <div id="jl-changelog-content"></div>
+              <div id="sift-changelog-content"></div>
             </div>
           </div>
-          <span class="jl-feedback-wrap">
-            <button class="jl-feedback-btn" id="jl-feedback-toggle" data-i18n="joblens.feedback" aria-label="Send feedback">Feedback</button>
-            <div class="jl-feedback-backdrop" id="jl-feedback-backdrop" hidden></div>
-            <div class="jl-feedback-popup" id="jl-feedback-popup" hidden>
-              <div class="jl-feedback-header">
-                <span class="jl-feedback-title" data-i18n="joblens.feedbackTitle">Any Suggestion? Pls!!!</span>
-                <button class="jl-feedback-close" id="jl-feedback-close" aria-label="Close feedback form">&times;</button>
+          <span class="sift-feedback-wrap">
+            <button class="sift-feedback-btn" id="sift-feedback-toggle" data-i18n="sift.feedback" aria-label="Send feedback">Feedback</button>
+            <div class="sift-feedback-backdrop" id="sift-feedback-backdrop" hidden></div>
+            <div class="sift-feedback-popup" id="sift-feedback-popup" hidden>
+              <div class="sift-feedback-header">
+                <span class="sift-feedback-title" data-i18n="sift.feedbackTitle">Any Suggestion? Pls!!!</span>
+                <button class="sift-feedback-close" id="sift-feedback-close" aria-label="Close feedback form">&times;</button>
               </div>
-              <form id="jl-feedback-form">
-                <textarea name="message" required rows="4" class="jl-feedback-textarea" id="jl-feedback-textarea" placeholder="Bugs, ideas, anything..."></textarea>
+              <form id="sift-feedback-form">
+                <textarea name="message" required rows="4" class="sift-feedback-textarea" id="sift-feedback-textarea" placeholder="Bugs, ideas, anything..."></textarea>
                 <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-                <button type="submit" class="jl-feedback-submit" id="jl-feedback-submit" data-i18n="joblens.feedbackSend">Send</button>
+                <button type="submit" class="sift-feedback-submit" id="sift-feedback-submit" data-i18n="sift.feedbackSend">Send</button>
               </form>
-              <p class="jl-feedback-success" id="jl-feedback-success" hidden data-i18n="joblens.feedbackSent">Thanks! Feedback sent.</p>
-              <p class="jl-feedback-error" id="jl-feedback-error" hidden data-i18n="joblens.feedbackError">Failed to send. Try again?</p>
+              <p class="sift-feedback-success" id="sift-feedback-success" hidden data-i18n="sift.feedbackSent">Thanks! Feedback sent.</p>
+              <p class="sift-feedback-error" id="sift-feedback-error" hidden data-i18n="sift.feedbackError">Failed to send. Try again?</p>
             </div>
           </span>
         </div>
-        <p class="jl-subtitle" data-i18n="joblens.subtitle">
+        <p class="sift-subtitle" data-i18n="sift.subtitle">
           Take back a LinkedIn worth your time.
         </p>
       </div>
@@ -49,167 +49,167 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     <!-- Inspiration -->
     <section class="section">
-      <h2 data-i18n="joblens.inspirationTitle">Inspiration</h2>
-      <p data-i18n="joblens.inspiration1">LinkedIn is great at surfacing relevant jobs and content. But the experience? Ads everywhere, "Suggested" posts from strangers, reposted job listings, no way to tell if a role sponsors visas without clicking through. Your feed is half noise, and your job search is mostly triage.</p>
-      <p data-i18n="joblens.inspiration2">Sift exists because the platform is good but the workflow is broken. It cleans up both sides of LinkedIn: your feed and your job search.</p>
+      <h2 data-i18n="sift.inspirationTitle">Inspiration</h2>
+      <p data-i18n="sift.inspiration1">LinkedIn is great at surfacing relevant jobs and content. But the experience? Ads everywhere, "Suggested" posts from strangers, reposted job listings, no way to tell if a role sponsors visas without clicking through. Your feed is half noise, and your job search is mostly triage.</p>
+      <p data-i18n="sift.inspiration2">Sift exists because the platform is good but the workflow is broken. It cleans up both sides of LinkedIn: your feed and your job search.</p>
     </section>
 
     <!-- Feed Cleanup -->
     <section class="section">
-      <h2 data-i18n="joblens.feedTitle">Feed Cleanup</h2>
-      <p data-i18n="joblens.feedDesc">Sift automatically hides ads, suggested posts, and recommended content from your LinkedIn feed. One-click Unfollow appears inline on every post — no digging through menus.</p>
-      <ul class="jl-features">
-        <li data-i18n="joblens.feat.hideAds"><strong>Hide Ads</strong>: removes Promoted posts automatically</li>
-        <li data-i18n="joblens.feat.hideSuggested"><strong>Hide Suggested & Recommended</strong>: filters non-connection noise</li>
-        <li data-i18n="joblens.feat.hideStrangers"><strong>Hide Strangers</strong>: filter posts from non-connections</li>
-        <li data-i18n="joblens.feat.unfollow"><strong>One-click Unfollow</strong>: hover any post to unfollow the author directly</li>
-        <li data-i18n="joblens.feat.autoCollapse"><strong>Auto-collapse</strong>: "You unfollowed X" confirmation cards collapse automatically</li>
-        <li data-i18n="joblens.feat.hideSidebar"><strong>Hide Sidebar</strong>: remove LinkedIn News and footer clutter</li>
-        <li data-i18n="joblens.feat.keywords"><strong>Keyword Filter</strong>: define custom keywords to hide matching posts</li>
-        <li data-i18n="joblens.feat.badge"><strong>Live Badge</strong>: floating counter shows how many posts have been filtered</li>
-        <li data-i18n="joblens.feat.iconBadge"><strong>Icon Badge</strong>: extension icon shows the filtered count at a glance</li>
-        <li data-i18n="joblens.feat.polls"><strong>Hide Polls</strong>: filter out LinkedIn polls from your feed</li>
-        <li data-i18n="joblens.feat.celebrations"><strong>Hide Celebrations</strong>: hide job updates, work anniversaries, birthdays, and promotions</li>
-        <li data-i18n="joblens.feat.postAge"><strong>Hide Old Posts</strong>: hide posts older than 1 day, 3 days, 1 week, 2 weeks, or 1 month</li>
-        <li data-i18n="joblens.feat.upsells"><strong>Hide Upsells</strong>: removes "Try Campaign Manager" and similar promotions</li>
-        <li data-i18n="joblens.feat.pause"><strong>Shift+J</strong>: pause/resume all filters instantly</li>
+      <h2 data-i18n="sift.feedTitle">Feed Cleanup</h2>
+      <p data-i18n="sift.feedDesc">Sift automatically hides ads, suggested posts, and recommended content from your LinkedIn feed. One-click Unfollow appears inline on every post — no digging through menus.</p>
+      <ul class="sift-features">
+        <li data-i18n="sift.feat.hideAds"><strong>Hide Ads</strong>: removes Promoted posts automatically</li>
+        <li data-i18n="sift.feat.hideSuggested"><strong>Hide Suggested & Recommended</strong>: filters non-connection noise</li>
+        <li data-i18n="sift.feat.hideStrangers"><strong>Hide Strangers</strong>: filter posts from non-connections</li>
+        <li data-i18n="sift.feat.unfollow"><strong>One-click Unfollow</strong>: hover any post to unfollow the author directly</li>
+        <li data-i18n="sift.feat.autoCollapse"><strong>Auto-collapse</strong>: "You unfollowed X" confirmation cards collapse automatically</li>
+        <li data-i18n="sift.feat.hideSidebar"><strong>Hide Sidebar</strong>: remove LinkedIn News and footer clutter</li>
+        <li data-i18n="sift.feat.keywords"><strong>Keyword Filter</strong>: define custom keywords to hide matching posts</li>
+        <li data-i18n="sift.feat.badge"><strong>Live Badge</strong>: floating counter shows how many posts have been filtered</li>
+        <li data-i18n="sift.feat.iconBadge"><strong>Icon Badge</strong>: extension icon shows the filtered count at a glance</li>
+        <li data-i18n="sift.feat.polls"><strong>Hide Polls</strong>: filter out LinkedIn polls from your feed</li>
+        <li data-i18n="sift.feat.celebrations"><strong>Hide Celebrations</strong>: hide job updates, work anniversaries, birthdays, and promotions</li>
+        <li data-i18n="sift.feat.postAge"><strong>Hide Old Posts</strong>: hide posts older than 1 day, 3 days, 1 week, 2 weeks, or 1 month</li>
+        <li data-i18n="sift.feat.upsells"><strong>Hide Upsells</strong>: removes "Try Campaign Manager" and similar promotions</li>
+        <li data-i18n="sift.feat.pause"><strong>Shift+J</strong>: pause/resume all filters instantly</li>
       </ul>
     </section>
 
     <!-- Profile & Network -->
     <section class="section">
-      <h2 data-i18n="joblens.profileTitle">Profile & Network</h2>
-      <p data-i18n="joblens.profileDesc">Sift also cleans up your profile and My Network pages — hiding sidebar clutter, ads, analytics you don't need, and game promotions.</p>
-      <ul class="jl-features">
-        <li data-i18n="joblens.feat.profileSidebar"><strong>Hide Profile Sidebar</strong>: removes ads, "People you may know", and "You might like" panels</li>
-        <li data-i18n="joblens.feat.profileAnalytics"><strong>Hide Analytics</strong>: hides profile views, impressions, and search appearances</li>
-        <li data-i18n="joblens.feat.networkAds"><strong>Hide Network Ads</strong>: removes Promoted ads from My Network</li>
-        <li data-i18n="joblens.feat.networkGame"><strong>Hide Game Promo</strong>: removes LinkedIn game promotions</li>
+      <h2 data-i18n="sift.profileTitle">Profile & Network</h2>
+      <p data-i18n="sift.profileDesc">Sift also cleans up your profile and My Network pages — hiding sidebar clutter, ads, analytics you don't need, and game promotions.</p>
+      <ul class="sift-features">
+        <li data-i18n="sift.feat.profileSidebar"><strong>Hide Profile Sidebar</strong>: removes ads, "People you may know", and "You might like" panels</li>
+        <li data-i18n="sift.feat.profileAnalytics"><strong>Hide Analytics</strong>: hides profile views, impressions, and search appearances</li>
+        <li data-i18n="sift.feat.networkAds"><strong>Hide Network Ads</strong>: removes Promoted ads from My Network</li>
+        <li data-i18n="sift.feat.networkGame"><strong>Hide Game Promo</strong>: removes LinkedIn game promotions</li>
       </ul>
     </section>
 
     <!-- Job Search -->
     <section class="section">
-      <h2 data-i18n="joblens.jobsTitle">Job Search Intelligence</h2>
-      <p data-i18n="joblens.jobsDesc">On LinkedIn's job search results page, Sift flags suspicious listings so you skip the ones not worth your time.</p>
-      <div class="jl-flags">
-        <div class="jl-flag">
-          <span class="jl-flag-badge" style="background:var(--color-rose)">Reposted</span>
-          <span class="jl-flag-desc" data-i18n="joblens.flag.reposted">Job has been reposted — stale listing</span>
+      <h2 data-i18n="sift.jobsTitle">Job Search Intelligence</h2>
+      <p data-i18n="sift.jobsDesc">On LinkedIn's job search results page, Sift flags suspicious listings so you skip the ones not worth your time.</p>
+      <div class="sift-flags">
+        <div class="sift-flag">
+          <span class="sift-flag-badge" style="background:var(--color-rose)">Reposted</span>
+          <span class="sift-flag-desc" data-i18n="sift.flag.reposted">Job has been reposted — stale listing</span>
         </div>
-        <div class="jl-flag">
-          <span class="jl-flag-badge" style="background:var(--color-rose)">Applied</span>
-          <span class="jl-flag-desc" data-i18n="joblens.flag.applied">You already applied to this one</span>
+        <div class="sift-flag">
+          <span class="sift-flag-badge" style="background:var(--color-rose)">Applied</span>
+          <span class="sift-flag-desc" data-i18n="sift.flag.applied">You already applied to this one</span>
         </div>
-        <div class="jl-flag">
-          <span class="jl-flag-badge" style="background:var(--color-rose)">No Sponsor</span>
-          <span class="jl-flag-desc" data-i18n="joblens.flag.noSponsor">Description says visa sponsorship not available</span>
+        <div class="sift-flag">
+          <span class="sift-flag-badge" style="background:var(--color-rose)">No Sponsor</span>
+          <span class="sift-flag-desc" data-i18n="sift.flag.noSponsor">Description says visa sponsorship not available</span>
         </div>
-        <div class="jl-flag">
-          <span class="jl-flag-badge" style="background:var(--color-rose)">Unpaid</span>
-          <span class="jl-flag-desc" data-i18n="joblens.flag.unpaid">Volunteer or unpaid position</span>
+        <div class="sift-flag">
+          <span class="sift-flag-badge" style="background:var(--color-rose)">Unpaid</span>
+          <span class="sift-flag-desc" data-i18n="sift.flag.unpaid">Volunteer or unpaid position</span>
         </div>
-        <div class="jl-flag">
-          <span class="jl-flag-badge" style="background:var(--color-rose)">Skipped Co.</span>
-          <span class="jl-flag-desc" data-i18n="joblens.flag.skippedCo">Company on your skip list</span>
+        <div class="sift-flag">
+          <span class="sift-flag-badge" style="background:var(--color-rose)">Skipped Co.</span>
+          <span class="sift-flag-desc" data-i18n="sift.flag.skippedCo">Company on your skip list</span>
         </div>
-        <div class="jl-flag">
-          <span class="jl-flag-badge" style="background:var(--color-rose)">Skipped Title</span>
-          <span class="jl-flag-desc" data-i18n="joblens.flag.skippedTitle">Title contains a keyword you're avoiding</span>
+        <div class="sift-flag">
+          <span class="sift-flag-badge" style="background:var(--color-rose)">Skipped Title</span>
+          <span class="sift-flag-desc" data-i18n="sift.flag.skippedTitle">Title contains a keyword you're avoiding</span>
         </div>
       </div>
     </section>
 
     <!-- See It in Action -->
     <section class="section">
-      <h2 data-i18n="joblens.demoTitle">See It in Action</h2>
-      <div class="jl-screenshots">
-        <figure class="jl-screenshot-figure">
-          <img src="/images/joblens-dim-off.webp" alt="Sift badges on LinkedIn job cards" class="jl-screenshot" />
-          <figcaption data-i18n="joblens.cap.badges">Badges flag issues at a glance</figcaption>
+      <h2 data-i18n="sift.demoTitle">See It in Action</h2>
+      <div class="sift-screenshots">
+        <figure class="sift-screenshot-figure">
+          <img src="/images/sift-dim-off.webp" alt="Sift badges on LinkedIn job cards" class="sift-screenshot" />
+          <figcaption data-i18n="sift.cap.badges">Badges flag issues at a glance</figcaption>
         </figure>
-        <figure class="jl-screenshot-figure">
-          <img src="/images/joblens-dim-on.webp" alt="Sift dim mode fading flagged cards" class="jl-screenshot" />
-          <figcaption data-i18n="joblens.cap.dim">Dim mode fades flagged cards</figcaption>
+        <figure class="sift-screenshot-figure">
+          <img src="/images/sift-dim-on.webp" alt="Sift dim mode fading flagged cards" class="sift-screenshot" />
+          <figcaption data-i18n="sift.cap.dim">Dim mode fades flagged cards</figcaption>
         </figure>
       </div>
     </section>
 
     <!-- Get Started -->
     <section class="section">
-      <h2 data-i18n="joblens.startTitle">Get Started</h2>
-      <ol class="jl-steps">
-        <li data-i18n="joblens.step1">Install from the <a href="https://chromewebstore.google.com/detail/ainpeagpaoafcblhcebbakofagiocooa?utm_source=kunli_website" class="jl-link" target="_blank" rel="noopener">Chrome Web Store</a></li>
-        <li data-i18n="joblens.step2">Visit <strong>LinkedIn</strong> — your feed is automatically cleaned up</li>
-        <li data-i18n="joblens.step3">Go to <strong>Jobs &rarr; Search Results</strong> — cards are auto-flagged</li>
-        <li data-i18n="joblens.step4">Click the <strong>Sift icon</strong> to adjust settings, view stats, or export data</li>
-        <li data-i18n="joblens.step5">Hover any post to <strong>Unfollow</strong> the author with one click</li>
+      <h2 data-i18n="sift.startTitle">Get Started</h2>
+      <ol class="sift-steps">
+        <li data-i18n="sift.step1">Install from the <a href="https://chromewebstore.google.com/detail/ainpeagpaoafcblhcebbakofagiocooa?utm_source=kunli_website" class="sift-link" target="_blank" rel="noopener">Chrome Web Store</a></li>
+        <li data-i18n="sift.step2">Visit <strong>LinkedIn</strong> — your feed is automatically cleaned up</li>
+        <li data-i18n="sift.step3">Go to <strong>Jobs &rarr; Search Results</strong> — cards are auto-flagged</li>
+        <li data-i18n="sift.step4">Click the <strong>Sift icon</strong> to adjust settings, view stats, or export data</li>
+        <li data-i18n="sift.step5">Hover any post to <strong>Unfollow</strong> the author with one click</li>
       </ol>
     </section>
 
     <!-- How It Works -->
     <section class="section">
-      <h2 data-i18n="joblens.howTitle">How It Works</h2>
-      <div class="jl-pipeline">
-        <div class="jl-step">
-          <span class="jl-step-icon">
+      <h2 data-i18n="sift.howTitle">How It Works</h2>
+      <div class="sift-pipeline">
+        <div class="sift-step">
+          <span class="sift-step-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </span>
-          <span class="jl-step-label" data-i18n="joblens.pipe.detect">Detect</span>
+          <span class="sift-step-label" data-i18n="sift.pipe.detect">Detect</span>
         </div>
-        <span class="jl-arrow">&rarr;</span>
-        <div class="jl-step">
-          <span class="jl-step-icon">
+        <span class="sift-arrow">&rarr;</span>
+        <div class="sift-step">
+          <span class="sift-step-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
           </span>
-          <span class="jl-step-label" data-i18n="joblens.pipe.badge">Badge</span>
+          <span class="sift-step-label" data-i18n="sift.pipe.badge">Badge</span>
         </div>
-        <span class="jl-arrow">&rarr;</span>
-        <div class="jl-step">
-          <span class="jl-step-icon">
+        <span class="sift-arrow">&rarr;</span>
+        <div class="sift-step">
+          <span class="sift-step-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
           </span>
-          <span class="jl-step-label" data-i18n="joblens.pipe.filter">Filter</span>
+          <span class="sift-step-label" data-i18n="sift.pipe.filter">Filter</span>
         </div>
-        <span class="jl-arrow">&rarr;</span>
-        <div class="jl-step">
-          <span class="jl-step-icon">
+        <span class="sift-arrow">&rarr;</span>
+        <div class="sift-step">
+          <span class="sift-step-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
           </span>
-          <span class="jl-step-label" data-i18n="joblens.pipe.focus">Focus</span>
+          <span class="sift-step-label" data-i18n="sift.pipe.focus">Focus</span>
         </div>
       </div>
-      <p data-i18n="joblens.howDesc">Reads page content directly in the browser. No external servers, no API calls. Everything runs locally. Your preferences are stored via Chrome's local storage.</p>
+      <p data-i18n="sift.howDesc">Reads page content directly in the browser. No external servers, no API calls. Everything runs locally. Your preferences are stored via Chrome's local storage.</p>
     </section>
 
     <!-- Privacy -->
     <section class="section">
-      <h2 data-i18n="joblens.privacyTitle">Privacy</h2>
-      <p data-i18n="joblens.privacyDesc">Sift runs entirely in your browser. No data is collected, transmitted, or stored externally. All preferences and stats stay on your device.</p>
-      <a href="/sift/privacy" class="jl-link" style="font-size:var(--fs-xs)" data-i18n="joblens.privacyLink">Full privacy policy &rarr;</a>
+      <h2 data-i18n="sift.privacyTitle">Privacy</h2>
+      <p data-i18n="sift.privacyDesc">Sift runs entirely in your browser. No data is collected, transmitted, or stored externally. All preferences and stats stay on your device.</p>
+      <a href="/sift/privacy" class="sift-link" style="font-size:var(--fs-xs)" data-i18n="sift.privacyLink">Full privacy policy &rarr;</a>
     </section>
 
     <!-- Open Source -->
     <section class="section">
-      <h2 data-i18n="joblens.openSourceTitle">Open Source</h2>
-      <p data-i18n="joblens.openSourceDesc">Sift is open source under the MIT license. You can read every line of code, verify the privacy claims yourself, or contribute improvements.</p>
+      <h2 data-i18n="sift.openSourceTitle">Open Source</h2>
+      <p data-i18n="sift.openSourceDesc">Sift is open source under the MIT license. You can read every line of code, verify the privacy claims yourself, or contribute improvements.</p>
     </section>
 
     <!-- CTA -->
-    <div class="jl-cta">
-      <a href="https://chromewebstore.google.com/detail/ainpeagpaoafcblhcebbakofagiocooa?utm_source=kunli_website" class="jl-store-link" target="_blank" rel="noopener">
-        <svg class="jl-store-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
+    <div class="sift-cta">
+      <a href="https://chromewebstore.google.com/detail/ainpeagpaoafcblhcebbakofagiocooa?utm_source=kunli_website" class="sift-store-link" target="_blank" rel="noopener">
+        <svg class="sift-store-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
         <span>Chrome Web Store</span>
       </a>
-      <a href="https://github.com/liuyixiaohu/sift" class="jl-github-link" target="_blank" rel="noopener">
-        <svg class="jl-store-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      <a href="https://github.com/liuyixiaohu/sift" class="sift-github-link" target="_blank" rel="noopener">
+        <svg class="sift-store-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
         <span>GitHub</span>
       </a>
     </div>
 
     <!-- Lightbox -->
-    <dialog class="jl-lightbox" id="jl-lightbox">
-      <img id="jl-lightbox-img" alt="" />
+    <dialog class="sift-lightbox" id="sift-lightbox">
+      <img id="sift-lightbox-img" alt="" />
     </dialog>
 
   </main>
@@ -220,10 +220,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   document.addEventListener('astro:page-load', () => {
     // --- Lightbox ---
-    const dialog = document.getElementById('jl-lightbox') as HTMLDialogElement | null;
-    const lbImg = document.getElementById('jl-lightbox-img') as HTMLImageElement | null;
+    const dialog = document.getElementById('sift-lightbox') as HTMLDialogElement | null;
+    const lbImg = document.getElementById('sift-lightbox-img') as HTMLImageElement | null;
     if (dialog && lbImg) {
-      document.querySelectorAll('.jl-screenshot').forEach(img => {
+      document.querySelectorAll('.sift-screenshot').forEach(img => {
         img.addEventListener('click', () => {
           lbImg.src = (img as HTMLImageElement).src;
           lbImg.alt = (img as HTMLImageElement).alt;
@@ -234,20 +234,20 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     }
 
     // --- Changelog ---
-    const clToggle = document.getElementById('jl-changelog-toggle');
-    const clPopup = document.getElementById('jl-changelog-popup');
-    const clBackdrop = document.getElementById('jl-changelog-backdrop');
-    const clClose = document.getElementById('jl-changelog-close');
-    const clContent = document.getElementById('jl-changelog-content');
+    const clToggle = document.getElementById('sift-changelog-toggle');
+    const clPopup = document.getElementById('sift-changelog-popup');
+    const clBackdrop = document.getElementById('sift-changelog-backdrop');
+    const clClose = document.getElementById('sift-changelog-close');
+    const clContent = document.getElementById('sift-changelog-content');
 
     function renderChangelog() {
       if (!clContent) return;
       const lang = (document.documentElement.dataset.lang as 'en' | 'zh') || 'en';
       clContent.innerHTML = siftChangelog.map(r => `
-        <div class="jl-changelog-release">
-          <div class="jl-changelog-version">${r.version}</div>
-          <p class="jl-changelog-why">${r.why[lang]}</p>
-          <ul class="jl-changelog-list">
+        <div class="sift-changelog-release">
+          <div class="sift-changelog-version">${r.version}</div>
+          <p class="sift-changelog-why">${r.why[lang]}</p>
+          <ul class="sift-changelog-list">
             ${r.changes[lang].map(c => `<li>${c}</li>`).join('')}
           </ul>
         </div>
@@ -270,14 +270,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     clClose?.addEventListener('click', closeChangelog);
 
     // --- Feedback ---
-    const fbToggle = document.getElementById('jl-feedback-toggle');
-    const fbPopup = document.getElementById('jl-feedback-popup');
-    const fbBackdrop = document.getElementById('jl-feedback-backdrop');
-    const fbClose = document.getElementById('jl-feedback-close');
-    const form = document.getElementById('jl-feedback-form') as HTMLFormElement | null;
-    const submitBtn = document.getElementById('jl-feedback-submit');
-    const successMsg = document.getElementById('jl-feedback-success');
-    const errorMsg = document.getElementById('jl-feedback-error');
+    const fbToggle = document.getElementById('sift-feedback-toggle');
+    const fbPopup = document.getElementById('sift-feedback-popup');
+    const fbBackdrop = document.getElementById('sift-feedback-backdrop');
+    const fbClose = document.getElementById('sift-feedback-close');
+    const form = document.getElementById('sift-feedback-form') as HTMLFormElement | null;
+    const submitBtn = document.getElementById('sift-feedback-submit');
+    const successMsg = document.getElementById('sift-feedback-success');
+    const errorMsg = document.getElementById('sift-feedback-error');
 
     function openFeedback() {
       if (!fbPopup || !fbBackdrop) return;
@@ -326,34 +326,34 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 </script>
 
 <style>
-  .jl-header {
+  .sift-header {
     display: flex;
     align-items: center;
     gap: var(--space-md);
     margin-bottom: var(--space-xl);
   }
 
-  .jl-logo {
+  .sift-logo {
     width: 64px;
     height: 64px;
     border-radius: var(--radius-lg);
   }
 
-  .jl-title-row {
+  .sift-title-row {
     display: flex;
     align-items: baseline;
     gap: 0.5rem;
     flex-wrap: wrap;
   }
 
-  .jl-header h1 {
+  .sift-header h1 {
     font-size: var(--fs-xl);
     font-weight: 500;
     line-height: 1.2;
     color: var(--color-rose);
   }
 
-  .jl-subtitle {
+  .sift-subtitle {
     color: var(--text-light);
     margin-top: var(--space-xs);
   }
@@ -388,19 +388,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   /* Flag badges */
-  .jl-flags {
+  .sift-flags {
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
   }
 
-  .jl-flag {
+  .sift-flag {
     display: flex;
     align-items: center;
     gap: var(--space-sm);
   }
 
-  .jl-flag-badge {
+  .sift-flag-badge {
     font-size: var(--fs-xs);
     font-weight: 600;
     padding: 0.15em 0.6em;
@@ -411,29 +411,29 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     text-align: center;
   }
 
-  .jl-flag-desc {
+  .sift-flag-desc {
     font-size: var(--fs-xs);
     color: var(--text-light);
   }
 
   /* Screenshots */
-  .jl-screenshots {
+  .sift-screenshots {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-md);
   }
 
   @media (max-width: 52rem) {
-    .jl-screenshots {
+    .sift-screenshots {
       grid-template-columns: 1fr;
     }
   }
 
-  .jl-screenshot-figure {
+  .sift-screenshot-figure {
     margin: 0;
   }
 
-  .jl-screenshot {
+  .sift-screenshot {
     width: 100%;
     border-radius: var(--radius-lg);
     border: 1px solid var(--border);
@@ -441,11 +441,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     transition: opacity 0.2s ease;
   }
 
-  .jl-screenshot:hover {
+  .sift-screenshot:hover {
     opacity: 0.85;
   }
 
-  .jl-screenshot-figure figcaption {
+  .sift-screenshot-figure figcaption {
     font-size: var(--fs-xs);
     color: var(--text-light);
     text-align: center;
@@ -453,7 +453,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   /* Pipeline */
-  .jl-pipeline {
+  .sift-pipeline {
     display: flex;
     align-items: center;
     gap: var(--space-sm);
@@ -461,14 +461,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     margin-bottom: var(--space-md);
   }
 
-  .jl-step {
+  .sift-step {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.3rem;
   }
 
-  .jl-step-icon {
+  .sift-step-icon {
     width: 2rem;
     height: 2rem;
     display: flex;
@@ -477,12 +477,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     color: var(--color-rose);
   }
 
-  .jl-step-icon svg {
+  .sift-step-icon svg {
     width: 1.4rem;
     height: 1.4rem;
   }
 
-  .jl-step-label {
+  .sift-step-label {
     font-size: var(--fs-xs);
     font-weight: 600;
     text-transform: uppercase;
@@ -490,72 +490,72 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     color: var(--text);
   }
 
-  .jl-arrow {
+  .sift-arrow {
     color: var(--text-light);
     font-size: var(--fs-md);
     margin-bottom: 1.2rem;
   }
 
   /* Steps */
-  .jl-steps {
+  .sift-steps {
     padding-left: 1.5rem;
   }
 
-  .jl-steps li {
+  .sift-steps li {
     margin-bottom: var(--space-xs);
     line-height: 1.6;
     color: var(--text-light);
   }
 
-  .jl-steps li::marker {
+  .sift-steps li::marker {
     color: var(--color-rose);
     font-weight: 600;
   }
 
-  .jl-steps code {
+  .sift-steps code {
     font-size: var(--fs-sm);
     background: rgba(0, 0, 0, 0.04);
     padding: 0.1em 0.4em;
     border-radius: var(--radius-sm);
   }
 
-  .jl-steps strong {
+  .sift-steps strong {
     color: var(--text);
     font-weight: 600;
   }
 
-  .jl-link {
+  .sift-link {
     color: var(--color-rose);
     text-decoration: none;
     font-weight: 500;
   }
 
-  .jl-link:hover {
+  .sift-link:hover {
     opacity: 0.7;
   }
 
   /* Features list */
-  .jl-features {
+  .sift-features {
     padding-left: 1.5rem;
     margin-top: var(--space-sm);
   }
 
-  .jl-features li {
+  .sift-features li {
     margin-bottom: var(--space-xs);
     line-height: 1.6;
     color: var(--text-light);
   }
 
-  .jl-features li::marker {
+  .sift-features li::marker {
     color: var(--color-rose);
   }
 
-  .jl-features strong {
+  .sift-features strong {
     color: var(--text);
     font-weight: 600;
   }
 
-  .jl-features code {
+  .sift-features code {
     font-size: var(--fs-sm);
     background: rgba(0, 0, 0, 0.04);
     padding: 0.1em 0.4em;
@@ -563,7 +563,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   /* CTA */
-  .jl-cta {
+  .sift-cta {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -572,7 +572,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     padding-bottom: var(--space-xl);
   }
 
-  .jl-store-link {
+  .sift-store-link {
     display: inline-flex;
     align-items: center;
     gap: 0.5em;
@@ -586,16 +586,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     transition: opacity 0.2s ease;
   }
 
-  .jl-store-link:hover {
+  .sift-store-link:hover {
     opacity: 0.85;
   }
 
-  .jl-store-icon {
+  .sift-store-icon {
     width: 1.2em;
     height: 1.2em;
   }
 
-  .jl-github-link {
+  .sift-github-link {
     display: inline-flex;
     align-items: center;
     gap: 0.5em;
@@ -610,14 +610,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     transition: border-color 0.2s ease, opacity 0.2s ease;
   }
 
-  .jl-github-link:hover {
+  .sift-github-link:hover {
     border-color: var(--text-light);
     opacity: 0.85;
   }
 
 
   /* Lightbox */
-  .jl-lightbox {
+  .sift-lightbox {
     border: none;
     background: none;
     padding: 0;
@@ -626,11 +626,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     cursor: zoom-out;
   }
 
-  .jl-lightbox::backdrop {
+  .sift-lightbox::backdrop {
     background: rgba(0, 0, 0, 0.7);
   }
 
-  .jl-lightbox img {
+  .sift-lightbox img {
     max-width: 90vw;
     max-height: 90vh;
     border-radius: var(--radius-lg);
@@ -638,11 +638,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   /* Version badge & changelog */
-  .jl-version-wrap {
+  .sift-version-wrap {
     position: relative;
   }
 
-  .jl-version-btn {
+  .sift-version-btn {
     font-family: inherit;
     font-size: var(--fs-xs);
     color: var(--text-light);
@@ -655,18 +655,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     white-space: nowrap;
   }
 
-  .jl-version-btn:hover {
+  .sift-version-btn:hover {
     border-color: rgba(0, 0, 0, 0.25);
     color: var(--text);
   }
 
-  .jl-changelog-backdrop {
+  .sift-changelog-backdrop {
     position: fixed;
     inset: 0;
     z-index: 99;
   }
 
-  .jl-changelog-popup {
+  .sift-changelog-popup {
     position: absolute;
     top: calc(100% + 0.4rem);
     left: 0;
@@ -682,7 +682,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   @media (max-width: 52rem) {
-    .jl-changelog-popup {
+    .sift-changelog-popup {
       position: fixed;
       top: auto;
       right: 1rem;
@@ -693,20 +693,20 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     }
   }
 
-  .jl-changelog-header {
+  .sift-changelog-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 0.5rem;
   }
 
-  .jl-changelog-title {
+  .sift-changelog-title {
     font-size: var(--fs-xs);
     font-weight: 600;
     color: var(--text);
   }
 
-  .jl-changelog-close {
+  .sift-changelog-close {
     font-family: inherit;
     font-size: var(--fs-md);
     color: var(--text-light);
@@ -717,25 +717,25 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     padding: 0 0.15rem;
   }
 
-  .jl-changelog-close:hover {
+  .sift-changelog-close:hover {
     color: var(--text);
   }
 
-  .jl-changelog-popup :global(.jl-changelog-release) {
+  .sift-changelog-popup :global(.sift-changelog-release) {
     margin-bottom: 0.6rem;
   }
 
-  .jl-changelog-popup :global(.jl-changelog-release:last-child) {
+  .sift-changelog-popup :global(.sift-changelog-release:last-child) {
     margin-bottom: 0;
   }
 
-  .jl-changelog-popup :global(.jl-changelog-version) {
+  .sift-changelog-popup :global(.sift-changelog-version) {
     font-size: var(--fs-xs);
     font-weight: 600;
     color: var(--text);
   }
 
-  .jl-changelog-popup :global(.jl-changelog-why) {
+  .sift-changelog-popup :global(.sift-changelog-why) {
     font-size: var(--fs-xs);
     color: var(--text-light);
     font-style: italic;
@@ -743,7 +743,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     line-height: 1.4;
   }
 
-  .jl-changelog-popup :global(.jl-changelog-list) {
+  .sift-changelog-popup :global(.sift-changelog-list) {
     margin: 0.2rem 0 0 1rem;
     padding: 0;
     font-size: var(--fs-xs);
@@ -751,17 +751,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     line-height: 1.5;
   }
 
-  .jl-changelog-popup :global(.jl-changelog-list li) {
+  .sift-changelog-popup :global(.sift-changelog-list li) {
     margin-bottom: 0.1rem;
   }
 
   /* Feedback button & popup */
-  .jl-feedback-wrap {
+  .sift-feedback-wrap {
     position: relative;
     display: inline-block;
   }
 
-  .jl-feedback-btn {
+  .sift-feedback-btn {
     font-family: inherit;
     font-size: var(--fs-xs);
     color: var(--text-light);
@@ -774,18 +774,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     white-space: nowrap;
   }
 
-  .jl-feedback-btn:hover {
+  .sift-feedback-btn:hover {
     border-color: rgba(0, 0, 0, 0.25);
     color: var(--text);
   }
 
-  .jl-feedback-backdrop {
+  .sift-feedback-backdrop {
     position: fixed;
     inset: 0;
     z-index: 99;
   }
 
-  .jl-feedback-popup {
+  .sift-feedback-popup {
     position: absolute;
     top: calc(100% + 0.4rem);
     right: 0;
@@ -799,7 +799,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   @media (max-width: 52rem) {
-    .jl-feedback-popup {
+    .sift-feedback-popup {
       position: fixed;
       top: auto;
       right: 1rem;
@@ -809,20 +809,20 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     }
   }
 
-  .jl-feedback-header {
+  .sift-feedback-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 0.5rem;
   }
 
-  .jl-feedback-title {
+  .sift-feedback-title {
     font-size: var(--fs-xs);
     font-weight: 500;
     color: var(--text);
   }
 
-  .jl-feedback-close {
+  .sift-feedback-close {
     font-family: inherit;
     font-size: var(--fs-md);
     background: none;
@@ -833,11 +833,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     line-height: 1;
   }
 
-  .jl-feedback-close:hover {
+  .sift-feedback-close:hover {
     color: var(--text);
   }
 
-  .jl-feedback-textarea {
+  .sift-feedback-textarea {
     width: 100%;
     font-family: inherit;
     font-size: var(--fs-xs);
@@ -850,12 +850,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     box-sizing: border-box;
   }
 
-  .jl-feedback-textarea:focus {
+  .sift-feedback-textarea:focus {
     outline: none;
     border-color: var(--text-light);
   }
 
-  .jl-feedback-submit {
+  .sift-feedback-submit {
     margin-top: 0.5rem;
     font-family: inherit;
     font-size: var(--fs-xs);
@@ -868,22 +868,22 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     transition: border-color 0.15s;
   }
 
-  .jl-feedback-submit:hover {
+  .sift-feedback-submit:hover {
     border-color: rgba(0, 0, 0, 0.25);
   }
 
-  .jl-feedback-submit:disabled {
+  .sift-feedback-submit:disabled {
     opacity: 0.5;
     cursor: default;
   }
 
-  .jl-feedback-success {
+  .sift-feedback-success {
     color: var(--color-ds-mid);
     font-size: var(--fs-xs);
     margin: 0.5rem 0 0;
   }
 
-  .jl-feedback-error {
+  .sift-feedback-error {
     color: var(--color-pm);
     font-size: var(--fs-xs);
     margin: 0.4rem 0 0;
