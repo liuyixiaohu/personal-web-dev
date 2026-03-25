@@ -6,6 +6,25 @@ export interface SiftChangelogEntry {
 
 export const siftChangelog: SiftChangelogEntry[] = [
   {
+    version: 'v2.9',
+    why: {
+      en: 'New ways to control your feed — right-click to mute keywords, and unfollow directly from interaction posts.',
+      zh: '更多 Feed 掌控方式——右键屏蔽关键词，直接从互动帖中取消关注。',
+    },
+    changes: {
+      en: [
+        'Right-click "Mute keyword": select any text on LinkedIn → right-click → instantly add to keyword filter',
+        'Unfollow on interaction posts: "XXX likes this" / "XXX reposted" now shows Unfollow for 1st-degree connections',
+        'Code quality: DRY refactoring, removed dead code, simplified matching logic',
+      ],
+      zh: [
+        '右键「屏蔽关键词」：选中 LinkedIn 上任意文字 → 右键 → 即时加入关键词过滤',
+        '互动帖取消关注：「XXX 赞了此帖」/「XXX 转发了此帖」现在为一度人脉显示 Unfollow 按钮',
+        '代码质量：DRY 重构、移除死代码、简化匹配逻辑',
+      ],
+    },
+  },
+  {
     version: 'v2.8',
     why: {
       en: 'LinkedIn completely restructured their DOM. Sift adapts — all filters restored and more reliable than ever.',
