@@ -19,7 +19,6 @@ export interface LumaEvent {
   price_currency: string | null;
   categories: string[];
   first_seen_at?: string;
-  source?: string;
   // Pre-computed (set by enrichEvents)
   _startMs?: number;
   _dayOfWeek?: number;    // 0=Sun..6=Sat, in LA timezone
@@ -89,7 +88,6 @@ export function formatPrice(event: LumaEvent): string {
     if (currency === 'USD') return `$${dollars.toFixed(0)}`;
     return `${dollars.toFixed(0)} ${currency}`;
   }
-  if (event.source === 'eventbrite') return t('events.seeEventbrite');
   return t('events.approval');
 }
 

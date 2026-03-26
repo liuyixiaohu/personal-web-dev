@@ -16,7 +16,7 @@
       >
       {event.name}
     </a>
-    <span class="event-price" class:event-price--free={event.is_free} class:event-price--eventbrite={event.source === 'eventbrite' && event.price_cents == null} class:event-price--approval={event.source !== 'eventbrite' && !event.is_free && event.price_cents == null} class:event-price--paid={!event.is_free && event.price_cents != null}>
+    <span class="event-price" class:event-price--free={event.is_free} class:event-price--approval={!event.is_free && event.price_cents == null} class:event-price--paid={!event.is_free && event.price_cents != null}>
       {formatPrice(event)}
     </span>
   </div>
@@ -82,11 +82,6 @@
   .event-price--approval {
     color: var(--color-journey);
     background: rgba(127, 182, 221, 0.1);
-  }
-
-  .event-price--eventbrite {
-    color: var(--color-rose);
-    background: rgba(240, 215, 215, 0.3);
   }
 
   .event-price--paid {
