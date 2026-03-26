@@ -8,10 +8,12 @@ import BackToTop from '../components/BackToTop.astro';
 interface Props {
   title?: string;
   description?: string;
+  ogDescription?: string;
   hideFooter?: boolean;
 }
 
-const { title = "Kun Li | Product Marketing, Data Science & Design", description = "I wasn't great at math or English, yet somehow I ended up a data scientist in the U.S., and eventually found my way back to expression.", hideFooter = false } = Astro.props;
+const { title = "Kun Li | Product Marketing, Data Science & Design", description = "Given the SEO Principals, I'm genuinely surprised you found this page. Welcome, I guess.", ogDescription, hideFooter = false } = Astro.props;
+const socialDescription = ogDescription || description;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -31,7 +33,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+    <meta property="og:description" content={socialDescription} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Kun Li" />
@@ -44,7 +46,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:description" content={socialDescription} />
     <meta name="twitter:image" content="https://kunli.co/og-image.png" />
 
     <!-- Fonts -->
@@ -83,9 +85,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Kun Li",
-        "url": "https://kunli.co",
-        "jobTitle": "Data Scientist & Designer",
-        "knowsAbout": ["Product Marketing", "Data Science", "Visual Design"]
+        "url": "https://kunli.co"
       })} />
     )}
 
