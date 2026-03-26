@@ -410,7 +410,6 @@
   }
 
   .search-input:focus {
-    outline: none;
     border-color: rgba(0, 0, 0, 0.25);
   }
 
@@ -438,7 +437,6 @@
   }
 
   .time-select:focus {
-    outline: none;
     border-color: rgba(0, 0, 0, 0.25);
   }
 
