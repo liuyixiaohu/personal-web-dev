@@ -28,6 +28,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   // --- Life Journey ---
   'journey.hint': { en: 'Click a pin to read the story', zh: '点击图钉查看故事' },
   'journey.hintWip': { en: 'ALL stories are still in progress', zh: '所有故事均还未完成' },
+  'journey.hintDeadline': { en: 'Trying to finish before April Fools\u2019 Day. No joke.', zh: '努力在四月一号之前完成，愚人节但不愚人' },
   'journey.china': { en: 'China', zh: '中国' },
   'journey.usa': { en: 'United States', zh: '美国' },
   'journey.city.jiaozhou': { en: 'Jiaozhou', zh: '胶州' },
