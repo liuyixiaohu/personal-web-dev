@@ -61,7 +61,6 @@
   }
 
   .feedback-textarea:focus {
-    outline: none;
     border-color: var(--text-light);
   }
 

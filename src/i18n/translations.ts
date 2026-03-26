@@ -5,9 +5,6 @@
 export type Lang = 'en' | 'zh';
 
 export const translations: Record<string, Record<Lang, string>> = {
-  // --- Navigation ---
-  'nav.back': { en: '\u2190 Back', zh: '\u2190 返回' },
-
   // --- Homepage ---
   'home.specialThanks': { en: 'Special Thanks', zh: '特别感谢' },
   'home.lifeJourney': { en: 'Journey', zh: '旅程' },
