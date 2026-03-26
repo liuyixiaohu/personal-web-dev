@@ -100,6 +100,10 @@ export const translations: Record<string, Record<Lang, string>> = {
   // --- Professional section headings ---
   'pro.section.craft': { en: 'Craft', zh: '吃饭的手艺' },
   'pro.section.lab': { en: 'Touch Fish!', zh: '摸鱼万岁！' },
+  'pro.section.explain': {
+    en: '"Touch Fish" (\u6478\u9c7c, m\u014d y\u00fa) is Chinese internet slang for slacking off during work hours \u2014 taking advantage of quiet moments to do your own thing. These are side projects built in that spirit.',
+    zh: '\u201c\u6478\u9c7c\u201d\u6e90\u81ea\u201c\u6d51\u6c34\u6478\u9c7c\u201d\uff0c\u6307\u5728\u5de5\u4f5c\u95f4\u9699\u5077\u5077\u505a\u81ea\u5df1\u7684\u4e8b\u3002\u4ee5\u4e0b\u662f\u6478\u9c7c\u65f6\u505a\u7684\u9879\u76ee\u3002',
+  },
 
   // --- Events page ---
   'home.events': { en: 'Today\'s New Tech Events @Bay Area', zh: '今日湾区新增科技活动' },

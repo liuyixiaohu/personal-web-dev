@@ -46,7 +46,11 @@ import { professionalAreas } from '../data/professionalAreas';
 
       <!-- Touch Fish! -->
       <section class="section" style="text-align: center;">
-        <h2 class="section-label" data-i18n="pro.section.lab">Touch Fish!</h2>
+        <div class="section-label-row">
+          <h2 class="section-label" data-i18n="pro.section.lab">Touch Fish!</h2>
+          <button class="explain-toggle" aria-expanded="false" aria-controls="touchfish-explain">?</button>
+        </div>
+        <p class="explain-text" id="touchfish-explain" hidden data-i18n="pro.section.explain">"Touch Fish" (摸鱼, mō yú) is Chinese internet slang for slacking off during work hours — taking advantage of quiet moments to do your own thing. These are side projects built in that spirit.</p>
         <div class="tools-list">
           <a href="/events" class="item item--events">
             <span class="item-title" data-i18n="home.events">Today's New Tech Events @Bay Area</span>
@@ -76,6 +80,15 @@ import { professionalAreas } from '../data/professionalAreas';
       const slug = (el as HTMLAnchorElement).getAttribute('href')?.replace(/^\//, '') || '';
       track('craft_card_click', { craft_area: slug });
     });
+  });
+
+  // --- Touch Fish explain toggle ---
+  const explainBtn = document.querySelector('.explain-toggle');
+  const explainText = document.getElementById('touchfish-explain');
+  explainBtn?.addEventListener('click', () => {
+    const isOpen = explainText?.hidden === false;
+    if (explainText) explainText.hidden = !explainText.hidden;
+    explainBtn.setAttribute('aria-expanded', String(!isOpen));
   });
 
 </script>
@@ -160,5 +173,48 @@ import { professionalAreas } from '../data/professionalAreas';
   /* Accent colors */
   .item--events .item-title { color: var(--color-rose); }
   .item--sift .item-title { color: var(--color-ds); }
+
+  /* Touch Fish explain toggle */
+  .section-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em;
+  }
+
+  .section-label-row .section-label {
+    margin-bottom: 0;
+  }
+
+  .explain-toggle {
+    width: 1.4em;
+    height: 1.4em;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border);
+    background: none;
+    color: var(--text-light);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+    line-height: 1;
+    padding: 0;
+  }
+
+  .explain-toggle:hover {
+    color: var(--text);
+    border-color: var(--text-light);
+  }
+
+  .explain-text {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    max-width: 28rem;
+    margin: var(--space-xs) auto var(--space-sm);
+    line-height: 1.6;
+  }
 
 </style>
