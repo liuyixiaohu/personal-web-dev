@@ -28,7 +28,6 @@ import { professionalAreas } from '../data/professionalAreas';
 
       <!-- Journey -->
       <section class="section" style="text-align: center;">
-        <p class="item-desc" data-i18n="home.journeyWip">Still struggling with the layout of this page</p>
         <a href="/life-journey" class="item">
           <span class="item-title" style="color: var(--color-rose);" data-i18n="home.lifeJourney">Journey</span>
         </a>
@@ -143,13 +142,13 @@ import { professionalAreas } from '../data/professionalAreas';
 
   .craft-grid {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-xs);
+    justify-content: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
   }
 
   .craft-link {
-    font-size: var(--fs-md);
+    font-size: var(--fs-sm);
     font-weight: 500;
     text-decoration: none;
     transition: opacity 0.2s ease;
@@ -173,6 +172,11 @@ import { professionalAreas } from '../data/professionalAreas';
   /* Accent colors */
   .item--events .item-title { color: var(--color-rose); }
   .item--sift .item-title { color: var(--color-ds); }
+
+  /* Shrink Touch Fish item titles to de-emphasize vs Journey */
+  .tools-list .item-title {
+    font-size: var(--fs-sm);
+  }
 
   /* Touch Fish explain toggle */
   .section-label-row {
