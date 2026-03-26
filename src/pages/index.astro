@@ -46,6 +46,7 @@ import { professionalAreas } from '../data/professionalAreas';
       <!-- Touch Fish! -->
       <section class="section" style="text-align: center;">
         <div class="section-label-row">
+          <span class="explain-spacer" aria-hidden="true"></span>
           <h2 class="section-label" data-i18n="pro.section.lab">Touch Fish!</h2>
           <button class="explain-toggle" aria-expanded="false" aria-controls="touchfish-explain">?</button>
         </div>
@@ -152,6 +153,8 @@ import { professionalAreas } from '../data/professionalAreas';
     font-weight: 500;
     text-decoration: none;
     transition: opacity 0.2s ease;
+    min-width: 9em;
+    text-align: center;
   }
 
   .craft-link:hover {
@@ -183,20 +186,23 @@ import { professionalAreas } from '../data/professionalAreas';
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
+    gap: 0.4em;
   }
 
   .section-label-row .section-label {
     margin-bottom: 0;
   }
 
+  /* Invisible spacer mirrors the ? button width to keep label centered */
+  .explain-spacer {
+    width: 1.4em;
+    flex-shrink: 0;
+  }
+
   .explain-toggle {
-    position: absolute;
-    right: -1.8em;
-    top: 50%;
-    transform: translateY(-50%);
     width: 1.4em;
     height: 1.4em;
+    flex-shrink: 0;
     border-radius: var(--radius-full);
     border: 1px solid var(--border);
     background: none;
