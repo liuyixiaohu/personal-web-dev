@@ -183,7 +183,7 @@ import { professionalAreas } from '../data/professionalAreas';
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.4em;
+    position: relative;
   }
 
   .section-label-row .section-label {
@@ -191,6 +191,10 @@ import { professionalAreas } from '../data/professionalAreas';
   }
 
   .explain-toggle {
+    position: absolute;
+    right: -1.8em;
+    top: 50%;
+    transform: translateY(-50%);
     width: 1.4em;
     height: 1.4em;
     border-radius: var(--radius-full);
