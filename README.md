@@ -30,7 +30,7 @@ src/
   styles/         Global CSS with design tokens
   utils/          Analytics, journey modules
   data/           Professional areas, changelog data
-scripts/          Daily event pipeline (Luma + Eventbrite)
+scripts/          Daily event pipeline (Luma)
 docs/             Brand guidelines
 ```
 
