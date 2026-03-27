@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Touch Fish | Kun Li" description="Side projects built in the spirit of slacking off.">
+  <main class="touchfish-page grid-page">
+    <a href="/" class="back-link" data-i18n="nav.back">&larr; Home</a>
+
+    <header class="touchfish-header">
+      <div class="section-label-row">
+        <h1 data-i18n="pro.section.lab">Touch Fish!</h1>
+        <button class="explain-toggle" aria-expanded="false" aria-controls="touchfish-explain">?</button>
+      </div>
+      <p class="explain-text" id="touchfish-explain" hidden data-i18n="pro.section.explain">"Touch Fish" (摸鱼, mō yú) is Chinese internet slang for slacking off during work hours — taking advantage of quiet moments to do your own thing. These are side projects built in that spirit.</p>
+    </header>
+
+    <section class="projects">
+      <a href="/events" class="item item--events">
+        <span class="item-title" data-i18n="home.events">Today's New Tech Events @Bay Area</span>
+        <span class="item-desc" data-i18n="home.events.desc">No more doomscrolling event platforms into an existential crisis.</span>
+      </a>
+      <a href="/ingrain" class="item item--ingrain">
+        <span class="item-title" data-i18n="home.ingrain">InGrain</span>
+        <span class="item-desc" data-i18n="home.ingrain.desc">Remember what you learn from AI conversations.</span>
+      </a>
+      <a href="/sift" class="item item--sift">
+        <span class="item-title" data-i18n="home.sift">Sift</span>
+        <span class="item-desc" data-i18n="home.sift.desc">Clean up your LinkedIn feed and job search.</span>
+      </a>
+    </section>
+
+  </main>
+</BaseLayout>
+
+<script>
+  const explainBtn = document.querySelector('.explain-toggle');
+  const explainText = document.getElementById('touchfish-explain');
+  explainBtn?.addEventListener('click', () => {
+    const isOpen = explainText?.hidden === false;
+    if (explainText) explainText.hidden = !explainText.hidden;
+    explainBtn.setAttribute('aria-expanded', String(!isOpen));
+  });
+</script>
+
+<style>
+  .touchfish-page {
+    padding-block: clamp(4rem, 8vh, 6rem) 4rem;
+  }
+
+  .touchfish-header {
+    margin-bottom: var(--space-lg);
+  }
+
+  .touchfish-header h1 {
+    font-size: var(--fs-xl);
+    font-weight: 500;
+  }
+
+  .section-label-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+  }
+
+  .explain-toggle {
+    width: 1.3rem;
+    height: 1.3rem;
+    flex-shrink: 0;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border);
+    background: none;
+    color: var(--text-light);
+    font-size: 0.65rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+    line-height: 1;
+    padding: 0;
+  }
+
+  .explain-toggle:hover {
+    color: var(--text);
+    border-color: var(--text-light);
+  }
+
+  .explain-text {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    max-width: 28rem;
+    margin-top: var(--space-xs);
+    line-height: 1.6;
+  }
+
+  .projects {
+    max-width: 28rem;
+  }
+
+  .item--events .item-title { color: var(--color-rose); }
+  .item--sift .item-title { color: var(--color-ds); }
+</style>
