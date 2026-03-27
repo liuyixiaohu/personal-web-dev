@@ -1,14 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ScrollArrow from '../components/ScrollArrow.astro';
-import { professionalAreas } from '../data/professionalAreas';
 ---
 
 <BaseLayout title="Kun Li" description="Given the SEO Principals, I'm genuinely surprised you found this page. Welcome, I guess." ogDescription="Some stories off the record.">
   <main>
     <h1 class="sr-only">Kun Li</h1>
 
-    <!-- Zone 1: Hero — full first viewport -->
     <section class="home-hero">
       <div class="home-content">
         <div class="home-tagline">
@@ -18,91 +15,38 @@ import { professionalAreas } from '../data/professionalAreas';
           </p>
           <p class="greeting-source" data-i18n="greeting.source">The Truman Show</p>
         </div>
-      </div>
 
-      <ScrollArrow />
+        <nav class="home-nav">
+          <a href="/life-journey" class="nav-link" style="color: var(--color-rose);" data-i18n="home.lifeJourney">Journey</a>
+          <span class="nav-dot">&middot;</span>
+          <a href="/craft" class="nav-link" style="color: var(--color-pm);" data-i18n="pro.section.craft">Craft</a>
+          <span class="nav-dot">&middot;</span>
+          <a href="/touch-fish" class="nav-link" data-i18n="pro.section.lab">Touch Fish!</a>
+        </nav>
+      </div>
     </section>
 
-    <!-- Zone 2: Content — uses grid-page for 36rem content track -->
-    <div id="content" class="home-body grid-page">
-
-      <!-- Journey -->
-      <section class="section" style="text-align: center;">
-        <a href="/life-journey" class="item">
-          <span class="item-title" style="color: var(--color-rose);" data-i18n="home.lifeJourney">Journey</span>
-        </a>
-      </section>
-
-      <!-- Craft -->
-      <section class="section" style="text-align: center;">
-        <h2 class="section-label" data-i18n="pro.section.craft">Craft</h2>
-        <div class="craft-grid">
-          {professionalAreas.map((area) => (
-            <a href={`/${area.slug}`} class="craft-link" style={`color: ${area.color}`} data-i18n={area.i18n.cardTitle}>{area.title}</a>
-          ))}
-        </div>
-      </section>
-
-      <!-- Touch Fish! -->
-      <section class="section" style="text-align: center;">
-        <div class="section-label-row">
-          <span class="explain-spacer" aria-hidden="true"></span>
-          <h2 class="section-label" data-i18n="pro.section.lab">Touch Fish!</h2>
-          <button class="explain-toggle" aria-expanded="false" aria-controls="touchfish-explain">?</button>
-        </div>
-        <p class="explain-text" id="touchfish-explain" hidden data-i18n="pro.section.explain">"Touch Fish" (摸鱼, mō yú) is Chinese internet slang for slacking off during work hours, meaning taking advantage of quiet moments to do your own thing. The side projects below were built in that spirit :P</p>
-        <div class="tools-list">
-          <a href="/events" class="item item--events">
-            <span class="item-title" data-i18n="home.events">Today's New Tech Events @Bay Area</span>
-            <span class="item-desc" data-i18n="home.events.desc">No more doomscrolling event platforms into an existential crisis.</span>
-          </a>
-          <a href="/ingrain" class="item item--ingrain">
-            <span class="item-title" data-i18n="home.ingrain">InGrain</span>
-            <span class="item-desc" data-i18n="home.ingrain.desc">Remember what you learn from AI conversations.</span>
-          </a>
-          <a href="/sift" class="item item--sift">
-            <span class="item-title" data-i18n="home.sift">Sift</span>
-            <span class="item-desc" data-i18n="home.sift.desc">Clean up your LinkedIn feed and job search.</span>
-          </a>
-        </div>
-      </section>
-
-    </div>
   </main>
 </BaseLayout>
 
 <script>
   import { track } from '../utils/analytics';
 
-  // --- Tracking: Craft card clicks ---
-  document.querySelectorAll('.section:first-of-type .item').forEach((el) => {
+  document.querySelectorAll('.nav-link').forEach((el) => {
     el.addEventListener('click', () => {
       const slug = (el as HTMLAnchorElement).getAttribute('href')?.replace(/^\//, '') || '';
-      track('craft_card_click', { craft_area: slug });
+      track('nav_click', { destination: slug });
     });
   });
-
-  // --- Touch Fish explain toggle ---
-  const explainBtn = document.querySelector('.explain-toggle');
-  const explainText = document.getElementById('touchfish-explain');
-  explainBtn?.addEventListener('click', () => {
-    const isOpen = explainText?.hidden === false;
-    if (explainText) explainText.hidden = !explainText.hidden;
-    explainBtn.setAttribute('aria-expanded', String(!isOpen));
-  });
-
 </script>
 
 <style>
-  /* ─── Zone 1: Hero ─── */
   .home-hero {
-    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100dvh;
     padding: var(--content-padding);
-    padding-bottom: 10vh;
   }
 
   .home-content {
@@ -111,7 +55,7 @@ import { professionalAreas } from '../data/professionalAreas';
   }
 
   .home-tagline {
-    margin-bottom: clamp(1rem, 2vw, 2rem);
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
   }
 
   .greeting-quote {
@@ -133,102 +77,27 @@ import { professionalAreas } from '../data/professionalAreas';
     margin-top: var(--space-xs);
   }
 
-  /* Scroll indicator */
-  .home-hero :global(.scroll-arrow) {
-    position: absolute;
-    bottom: 2.5rem;
-    left: 0;
-    width: 100%;
-  }
-
-  .craft-grid {
+  .home-nav {
     display: flex;
+    align-items: baseline;
     justify-content: center;
-    gap: var(--space-md);
-    flex-wrap: wrap;
+    gap: 1.2em;
   }
 
-  .craft-link {
-    font-size: var(--fs-sm);
+  .nav-link {
+    font-size: var(--fs-md);
     font-weight: 500;
     text-decoration: none;
     transition: opacity 0.2s ease;
-    min-width: 9em;
-    text-align: center;
   }
 
-  .craft-link:hover {
-    opacity: 0.7;
+  .nav-link:hover {
+    opacity: 0.6;
   }
 
-  /* ─── Zone 2: Content ─── */
-  .home-body {
-    min-height: auto;
-    padding-block-start: var(--space-xl);
-  }
-
-  .tools-list {
-    max-width: 28rem;
-    margin: 0 auto;
-  }
-
-  /* Accent colors */
-  .item--events .item-title { color: var(--color-rose); }
-  .item--sift .item-title { color: var(--color-ds); }
-
-  /* Shrink Touch Fish item titles to de-emphasize vs Journey */
-  .tools-list .item-title {
-    font-size: var(--fs-sm);
-  }
-
-  /* Touch Fish explain toggle */
-  .section-label-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.3em;
-  }
-
-  .section-label-row .section-label {
-    margin-bottom: 0 !important;
-  }
-
-  /* Invisible spacer mirrors the ? button width to keep label centered */
-  .explain-spacer {
-    width: 1.1rem;
-    flex-shrink: 0;
-  }
-
-  .explain-toggle {
-    width: 1.1rem;
-    height: 1.1rem;
-    flex-shrink: 0;
-    border-radius: var(--radius-full);
-    border: 1px solid var(--border);
-    background: none;
+  .nav-dot {
     color: var(--text-light);
-    font-size: 0.6rem;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.15s ease;
-    line-height: 1;
-    padding: 0;
+    font-size: var(--fs-md);
+    user-select: none;
   }
-
-  .explain-toggle:hover {
-    color: var(--text);
-    border-color: var(--text-light);
-  }
-
-  .explain-text {
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    max-width: 28rem;
-    margin: var(--space-xs) auto var(--space-sm);
-    line-height: 1.6;
-  }
-
 </style>
