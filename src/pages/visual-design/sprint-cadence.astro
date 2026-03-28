@@ -1,15 +1,12 @@
 ---
 import ProfessionalDetail from '../../layouts/ProfessionalDetail.astro';
-import { professionalAreas } from '../../data/professionalAreas';
-
-const area = professionalAreas.find((a) => a.slug === 'visual-design')!;
 ---
 
 <ProfessionalDetail
-  title={area.title}
-  description={area.description}
-  color={area.color}
-  i18nKey={area.i18n.title}
+  title="Visual Design"
+  description="Kun Li's visual design work: UI, branding, and creative direction."
+  color="var(--color-visual)"
+  i18nKey="craft.visual.title"
 >
 
   <!-- ═══════ Gantt Chart ═══════ -->
