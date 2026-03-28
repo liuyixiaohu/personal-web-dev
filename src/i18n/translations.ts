@@ -10,15 +10,11 @@ export const translations: Record<string, Record<Lang, string>> = {
   'home.lifeJourney': { en: 'Journey', zh: '旅程' },
 
   // --- Greeting ---
-  'greeting.lead': {
-    en: 'In case I don\u2019t see ya...',
-    zh: '假如很难再次遇见你... ',
+  'greeting.quote': {
+    en: 'Where\u2019s your Negative #25?',
+    zh: '你的25号底片在哪？',
   },
-  'greeting.body': {
-    en: 'good afternoon, good evening, and good night.',
-    zh: '祝你早安、午安、晚安。',
-  },
-  'greeting.source': { en: 'The Truman Show', zh: '《楚门的世界》' },
+  'greeting.source': { en: 'The Secret Life of Walter Mitty', zh: '《白日梦想家》' },
 
   // --- Navigation ---
   'nav.back': { en: '\u2190 Home', zh: '\u2190 首页' },
@@ -147,8 +143,8 @@ export const translations: Record<string, Record<Lang, string>> = {
   'pro.section.craft': { en: 'Craft', zh: '吃饭的手艺' },
   'pro.section.lab': { en: 'Touch Fish!', zh: '摸鱼万岁！' },
   'pro.section.explain': {
-    en: '"Touch Fish" (\u6478\u9c7c, m\u014d y\u00fa) is Chinese internet slang for slacking off during work hours \u2014 taking advantage of quiet moments to do your own thing. These are side projects built in that spirit.',
-    zh: '\u201c\u6478\u9c7c\u201d\u6e90\u81ea\u201c\u6d51\u6c34\u6478\u9c7c\u201d\uff0c\u6307\u5728\u5de5\u4f5c\u95f4\u9699\u5077\u5077\u505a\u81ea\u5df1\u7684\u4e8b\u3002\u4ee5\u4e0b\u662f\u6478\u9c7c\u65f6\u505a\u7684\u9879\u76ee\u3002',
+    en: '\u201cTouch Fish\u201d (\u6478\u9c7c, m\u014d y\u00fa) is Chinese internet slang for slacking off when you\u2019re supposed to be doing real work. These tools were built in that spirit.',
+    zh: '\u4e3a\u4e86\u66f4\u597d\u7684\u6478\u9c7c',
   },
 
   // --- Events page ---
