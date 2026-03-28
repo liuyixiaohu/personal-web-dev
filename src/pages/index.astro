@@ -9,19 +9,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <section class="home-hero">
       <div class="home-content">
         <div class="home-tagline">
-          <p class="greeting-quote">
-            <span class="greeting-lead" data-i18n="greeting.lead">In case I don't see ya...</span>
-            <span class="greeting-body" data-i18n="greeting.body">good afternoon, good evening, and good night.</span>
-          </p>
-          <p class="greeting-source" data-i18n="greeting.source">The Truman Show</p>
+          <p class="greeting-quote" data-i18n="greeting.quote">Where's your Negative #25?</p>
         </div>
 
         <nav class="home-nav">
-          <a href="/life-journey" class="nav-link" style="color: var(--color-rose);" data-i18n="home.lifeJourney">Journey</a>
+          <a href="/life-journey" class="nav-link" style="color: #D9797B;" data-i18n="home.lifeJourney">Journey</a>
           <span class="nav-dot">&middot;</span>
-          <a href="/craft" class="nav-link" style="color: var(--color-pm);" data-i18n="pro.section.craft">Craft</a>
+          <a href="/craft" class="nav-link" style="color: #A8D7C6;" data-i18n="pro.section.craft">Craft</a>
           <span class="nav-dot">&middot;</span>
-          <a href="/touch-fish" class="nav-link" data-i18n="pro.section.lab">Touch Fish!</a>
+          <a href="/touch-fish" class="nav-link" style="color: #7FB6DD;" data-i18n="pro.section.lab">Touch Fish!</a>
         </nav>
       </div>
     </section>
@@ -62,6 +58,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .home-hero {
     flex: 1;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -71,10 +68,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .home-content {
     text-align: center;
     max-width: 40rem;
+    width: 100%;
   }
 
   .home-tagline {
-    margin-bottom: clamp(2rem, 4vw, 3.5rem);
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .greeting-quote {
@@ -84,10 +85,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     line-height: 1.7;
   }
 
-  .greeting-lead,
-  .greeting-body {
-    display: block;
-  }
 
   .greeting-source {
     font-size: var(--fs-xs);
@@ -97,6 +94,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   .home-nav {
+    position: absolute;
+    top: 64%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
     display: flex;
     align-items: baseline;
     justify-content: center;
