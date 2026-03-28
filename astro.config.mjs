@@ -21,7 +21,10 @@ export default defineConfig({
     '/tools': '/',
     '/tool': '/',
 
-    // Old /professional/* structure → homepage (craft section)
+    // Removed pages
+    '/craft': '/',
+
+    // Old /professional/* structure → homepage
     '/professional': '/',
     '/professional/product-marketing': '/',
     '/professional/data-science': '/',
