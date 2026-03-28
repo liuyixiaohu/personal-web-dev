@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Kun Li" description="Given the SEO Principals, I'm genuinely surprised you found this page. Welcome, I guess." ogDescription="Some stories off the record.">
+<BaseLayout title="Kun Li" description="Given the SEO Principals, I'm genuinely surprised you found this page. Welcome, I guess." ogDescription="Some stories off the record." bodyClass="home">
   <main>
     <h1 class="sr-only">Kun Li</h1>
 
@@ -41,11 +41,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </script>
 
 <style>
+  /* Single-screen flex layout: body is the column, hero fills remaining space */
+  :global(body.home) {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  :global(body.home > main) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  :global(body.home .site-footer) {
+    margin-top: 0;
+    padding-bottom: var(--space-md);
+  }
+
   .home-hero {
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100dvh;
     padding: var(--content-padding);
   }
 
