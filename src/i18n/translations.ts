@@ -33,60 +33,8 @@ export const translations: Record<string, Record<Lang, string>> = {
   'journey.city.fairfield': { en: 'Fairfield', zh: '费尔菲尔德' },
   'journey.city.berkeley': { en: 'Berkeley', zh: '伯克利' },
 
-  // --- Craft (professional areas) ---
-  'craft.pm': { en: 'Product Marketing', zh: '产品营销' },
-  'craft.pm.title': { en: 'Product Marketing', zh: '产品营销' },
-  'craft.ds': { en: 'Data Science', zh: '数据科学' },
-  'craft.ds.title': { en: 'Data Science', zh: '数据科学' },
-  'craft.visual': { en: 'Visual Design', zh: '视觉设计' },
+  // --- Visual Design ---
   'craft.visual.title': { en: 'Visual Design', zh: '视觉设计' },
-
-  // --- Craft narrative page ---
-  'craft.page.title': { en: 'Craft', zh: '手艺' },
-  'craft.page.lede': {
-    en: 'I didn\u2019t plan this path. Each turn made sense only after I\u2019d already taken it.',
-    zh: '我没有规划过这条路。每个转弯，都是走过之后才觉得合理。',
-  },
-  'craft.ch.marketing': { en: 'Marketing', zh: '营销' },
-  'craft.ch.marketing.p1': {
-    en: 'I studied Marketing in a small city most people have never heard of. Back then I thought the job was about making things sound good. It took me a while to realize it\u2019s really about understanding why people care \u2014 and building around that.',
-    zh: '我在一个大多数人没听说过的小城市学了市场营销。那时候我以为这份工作就是把东西说得好听。后来才明白，它真正的核心是理解人们为什么在乎——然后围绕这件事去构建一切。',
-  },
-  'craft.ch.marketing.p2': {
-    en: 'At Haier, I spent two years across Southeast Asia learning that the same refrigerator means entirely different things in Manila and Jakarta. A voltage-resistant compressor isn\u2019t a spec \u2014 it\u2019s a promise that your food won\u2019t spoil during a brownout. That was the first time I saw how a product story could be true and useful at the same time.',
-    zh: '在海尔，我花了两年穿梭于东南亚，学到了同一台冰箱在马尼拉和雅加达意味着完全不同的东西。耐压压缩机不是一个参数——它是"停电时你的食物不会坏"的承诺。那是我第一次看到，一个产品故事可以同时是真实的和有用的。',
-  },
-  'craft.ch.data': { en: 'Data', zh: '数据' },
-  'craft.ch.data.p1': {
-    en: 'Marketing kept giving me questions that gut feeling couldn\u2019t answer, so I went back to school for analytics. At Driven Brands I built lead-scoring models and pricing algorithms \u2014 the kind of work where you stare at a confusion matrix until the confusion is your own.',
-    zh: '做营销时总有直觉回答不了的问题，于是我回学校学了分析。在 Driven Brands，我做 lead-scoring 模型和定价算法——就是那种盯着混淆矩阵看，直到混淆的是自己的工作。',
-  },
-  'craft.ch.data.p2': {
-    en: 'But the most useful thing I learned wasn\u2019t technical. It was that a dashboard nobody opens is worse than no dashboard at all. Aligning 30 stakeholders on one screen taught me more about communication than any course ever did.',
-    zh: '但我学到最有用的东西不是技术。而是一个没人打开的 dashboard 比没有 dashboard 更糟。让 30 个人看同一块屏幕，教会我的沟通比任何课程都多。',
-  },
-  'craft.ch.design': { en: 'Design', zh: '设计' },
-  'craft.ch.design.p1': {
-    en: 'I never called myself a designer until someone at Zendar pointed out that I\u2019d spent three weeks refining spacing, color, and typography for a site nobody asked me to redesign. I just couldn\u2019t stop. The gap between \u201Cthis works\u201D and \u201Cthis feels right\u201D turns out to be where I lose track of time.',
-    zh: '我从来没叫过自己设计师，直到 Zendar 有人指出我花了三周调间距、颜色和字体——而且没人让我重新设计那个网站。我就是停不下来。"能用"和"对味"之间的那道缝，恰好是我会忘记时间的地方。',
-  },
-  'craft.ch.design.p2': {
-    en: 'Zach \u2014 my \u201CAndrew Ng\u201D in visual design \u2014 showed me that design is decision-making made visible. Every pixel is an opinion. I\u2019m still learning to have better opinions.',
-    zh: 'Zach——我视觉设计领域的"吴恩达"——让我明白设计就是让决策变得可见。每个像素都是一个观点。我还在学习如何拥有更好的观点。',
-  },
-  'craft.ch.engineering': { en: 'Engineering', zh: '工程' },
-  'craft.ch.engineering.p1': {
-    en: 'I started writing code because I got tired of waiting. If I could design it and I knew what it should do, why hand it off? React components, CSS Grid systems, Chrome extensions, this very website \u2014 I build things now because the distance between idea and artifact is the most exciting part.',
-    zh: '我开始写代码是因为等不及了。如果我能设计它，也知道它该做什么，为什么要交给别人？React 组件、CSS Grid 系统、Chrome 扩展、这个网站本身——我现在自己造东西，因为从想法到成品之间的距离是最让人兴奋的部分。',
-  },
-  'craft.ch.engineering.p2': {
-    en: 'I\u2019m not a computer science graduate. I don\u2019t have years of engineering on my resume. But I ship, and I learn fast \u2014 and I\u2019ve come to believe that the best work happens when one person can see the whole picture, from the pitch to the pixel to the pull request.',
-    zh: '我不是计算机科学毕业的，简历上也没有多年的工程经验。但我能交付，学得快——而且我越来越相信，最好的工作发生在一个人能看到全貌的时候：从提案到像素到 Pull Request。',
-  },
-  'craft.coda': {
-    en: 'So that\u2019s the shape of it. Marketing taught me empathy. Data taught me rigor. Design taught me taste. Engineering taught me agency. I\u2019m still figuring out what comes next \u2014 but if the pattern holds, it\u2019ll probably be something I haven\u2019t heard of yet.',
-    zh: '大概就是这么回事。营销教了我共情，数据教了我严谨，设计教了我品味，工程教了我行动力。下一步是什么我还不知道——但如果规律成立的话，大概是某个我现在还没听说过的东西。',
-  },
 
   // --- Common ---
   'common.comingSoon': { en: 'Content coming soon...', zh: '内容即将上线…' },
@@ -140,7 +88,6 @@ export const translations: Record<string, Record<Lang, string>> = {
   },
 
   // --- Professional section headings ---
-  'pro.section.craft': { en: 'Craft', zh: '吃饭的手艺' },
   'pro.section.lab': { en: 'Touch Fish!', zh: '摸鱼万岁！' },
   'pro.section.explain': {
     en: '\u201cTouch Fish\u201d (\u6478\u9c7c, m\u014d y\u00fa) is Chinese internet slang for slacking off when you\u2019re supposed to be doing real work. These tools were built in that spirit.',
