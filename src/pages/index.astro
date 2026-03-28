@@ -13,11 +13,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
 
         <nav class="home-nav">
-          <a href="/life-journey" class="nav-link" style="color: #D9797B;" data-i18n="home.lifeJourney">Journey</a>
+          <a href="/life-journey" class="nav-link nav-link--journey" data-i18n="home.lifeJourney">Journey</a>
           <span class="nav-dot">&middot;</span>
-          <a href="/craft" class="nav-link" style="color: #A8D7C6;" data-i18n="pro.section.craft">Craft</a>
+          <a href="/craft" class="nav-link nav-link--craft" data-i18n="pro.section.craft">Craft</a>
           <span class="nav-dot">&middot;</span>
-          <a href="/touch-fish" class="nav-link" style="color: #7FB6DD;" data-i18n="pro.section.lab">Touch Fish!</a>
+          <a href="/touch-fish" class="nav-link nav-link--fish" data-i18n="pro.section.lab">Touch Fish!</a>
         </nav>
       </div>
     </section>
@@ -85,14 +85,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     line-height: 1.7;
   }
 
-
-  .greeting-source {
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    text-align: center;
-    margin-top: var(--space-xs);
-  }
-
   .home-nav {
     position: absolute;
     top: 64%;
@@ -115,6 +107,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .nav-link:hover {
     opacity: 0.6;
   }
+
+  .nav-link--journey { color: #c96b6d; }
+  .nav-link--craft { color: #3a9b6e; }
+  .nav-link--fish { color: #4a8db8; }
 
   .nav-dot {
     color: var(--text-light);
