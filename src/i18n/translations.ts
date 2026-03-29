@@ -89,8 +89,8 @@ export const translations: Record<string, Record<Lang, string>> = {
     zh: '关于费尔菲尔德的故事。中央谷地与海岸丘陵在此交汇。',
   },
   'pin.berkeley.story': {
-    en: 'Come with me to <a href="https://maps.app.goo.gl/AJMEjizHQyYtX2Kw5" target="_blank" rel="noopener"><u>Grizzly Peak</u></a> -- the Bay Area lights up beautifully at night.',
-    zh: '一起去 <a href="https://maps.app.goo.gl/AJMEjizHQyYtX2Kw5" target="_blank" rel="noopener"><u>Grizzly Peak</u></a> 看看湾区夜景吧。',
+    en: 'Come with me to <a href="https://maps.app.goo.gl/AJMEjizHQyYtX2Kw5" target="_blank" rel="noopener"><u>Grizzly Peak</u></a> -- the Bay Area lights up beautifully at night.\n\n<img class="story-photo" src="/images/journey/berkeley-grizzly-peak.webp" alt="Bay Area night view from Grizzly Peak" />',
+    zh: '一起去 <a href="https://maps.app.goo.gl/AJMEjizHQyYtX2Kw5" target="_blank" rel="noopener"><u>Grizzly Peak</u></a> 看看湾区夜景吧。\n\n<img class="story-photo" src="/images/journey/berkeley-grizzly-peak.webp" alt="从 Grizzly Peak 俯瞰湾区夜景" />',
   },
 
   // --- Professional section headings ---
