@@ -23,15 +23,21 @@ export default defineConfig({
 
     // Removed pages
     '/craft': '/',
+    '/special-thanks': '/',
+    '/special-thanks/yan-zhang': '/',
+    '/special-thanks/zach-beasley': '/',
+    '/visual-design': '/',
+    '/visual-design/sprint-cadence': '/',
+    '/privacy': '/',
 
     // Old /professional/* structure → homepage
     '/professional': '/',
     '/professional/product-marketing': '/',
     '/professional/data-science': '/',
-    '/professional/visual-design': '/visual-design',
+    '/professional/visual-design': '/',
     '/professional/brand-narrative': '/brand',
     '/professional/quant-insights': '/',
-    '/professional/information-design': '/visual-design',
+    '/professional/information-design': '/',
 
     // Old map demos
     '/map-demo-leaflet': '/life-journey',
