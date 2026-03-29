@@ -14,6 +14,13 @@ export const translations: Record<string, Record<Lang, string>> = {
     en: 'Where\u2019s your Negative #25?',
     zh: '你的25号底片在哪？',
   },
+  'greeting.prefix': { en: 'Where\u2019s your ', zh: '你的 ' },
+  'greeting.keyword': { en: 'Negative #25', zh: '25 号底片' },
+  'greeting.suffix': { en: '?', zh: '在哪里呢？' },
+  'greeting.popup': {
+    en: 'From <a href="https://www.imdb.com/title/tt0359950/" target="_blank">The Secret Life of Walter Mitty</a>, a film that inspires me to explore the world, find myself.',
+    zh: '\u51fa\u81ea<a href="https://www.imdb.com/title/tt0359950/" target="_blank">\u300a\u767d\u65e5\u68a6\u60f3\u5bb6\u300b</a>\u3002\u8fd9\u90e8\u7535\u5f71\u4e00\u76f4\u6fc0\u52b1\u7740\u6211\u63a2\u7d22\u4e16\u754c\uff0c\u627e\u5230\u81ea\u5df1\u3002',
+  },
   'greeting.source': { en: 'The Secret Life of Walter Mitty', zh: '《白日梦想家》' },
 
   // --- Navigation ---
