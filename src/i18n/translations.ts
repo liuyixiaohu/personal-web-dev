@@ -18,7 +18,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'greeting.keyword': { en: 'Negative #25', zh: '25 号底片' },
   'greeting.suffix': { en: '?', zh: '在哪里呢？' },
   'greeting.popup': {
-    en: 'From <a href="https://www.imdb.com/title/tt0359950/" target="_blank">The Secret Life of Walter Mitty</a>, a film that inspires me to explore the world, find myself.',
+    en: 'From <a href="https://www.imdb.com/title/tt0359950/" target="_blank">The Secret Life of Walter Mitty</a>, a film that has been encouraging me to explore the world, find myself.',
     zh: '\u51fa\u81ea<a href="https://www.imdb.com/title/tt0359950/" target="_blank">\u300a\u767d\u65e5\u68a6\u60f3\u5bb6\u300b</a>\u3002\u8fd9\u90e8\u7535\u5f71\u4e00\u76f4\u6fc0\u52b1\u7740\u6211\u63a2\u7d22\u4e16\u754c\uff0c\u627e\u5230\u81ea\u5df1\u3002',
   },
   'greeting.source': { en: 'The Secret Life of Walter Mitty', zh: '《白日梦想家》' },
@@ -66,7 +66,7 @@ export const translations: Record<string, Record<Lang, string>> = {
   'pin.shouguang.title': { en: 'Every Step Counts', zh: '每一步都算数' },
   'pin.madison.title': { en: 'Between the lakes', zh: '湖间小城' },
   'pin.fairfield.title': { en: 'Freedom and Hope', zh: '自由与希望' },
-  'pin.berkeley.title': { en: 'Cheng', zh: '诚' },
+  'pin.berkeley.title': { en: 'Stories here are still unfolding...', zh: '在伯克利的故事还在展开...' },
 
   // --- Globe pin stories (placeholder) ---
   'pin.jiaozhou.story': {
@@ -90,8 +90,8 @@ export const translations: Record<string, Record<Lang, string>> = {
     zh: '关于费尔菲尔德的故事。中央谷地与海岸丘陵在此交汇。',
   },
   'pin.berkeley.story': {
-    en: 'Placeholder story about Berkeley. Where free thinking and the Bay breeze go hand in hand.',
-    zh: '关于伯克利的故事。自由思想与海湾微风相伴而行。',
+    en: 'Come with me to <a href="https://maps.app.goo.gl/AJMEjizHQyYtX2Kw5" target="_blank" rel="noopener"><u>Grizzly Peak</u></a> -- the Bay Area lights up beautifully at night.',
+    zh: '一起去 <a href="https://maps.app.goo.gl/AJMEjizHQyYtX2Kw5" target="_blank" rel="noopener"><u>Grizzly Peak</u></a> 看看湾区夜景吧。',
   },
 
   // --- Professional section headings ---
