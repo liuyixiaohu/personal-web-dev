@@ -12,7 +12,7 @@
 
 <li class="event-card" id="event-{event.api_id}">
   <div class="event-card-header">
-    <a href={event.url} target="_blank" rel="noopener noreferrer" class="event-name"
+    <a href={event.url || '#'} target="_blank" rel="noopener noreferrer" class="event-name"
       >
       {event.name}
     </a>
