@@ -95,6 +95,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
     <!-- Google Tag Manager -->
     <script is:inline>
+      /* Strip trailing slash so GA4 reports /events and /events/ as one page */
+      function __normPath(p){return p.length>1?p.replace(/\/$/,''):p;}
       (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
       new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
       j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -140,7 +142,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         applyTranslations();
         window.dataLayer?.push({
           event: 'virtual_page_view',
-          page_path: window.location.pathname,
+          page_path: (window as any).__normPath(window.location.pathname),
           page_title: document.title,
         });
       });
