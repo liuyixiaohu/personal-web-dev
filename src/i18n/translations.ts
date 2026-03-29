@@ -6,7 +6,6 @@ export type Lang = 'en' | 'zh';
 
 export const translations: Record<string, Record<Lang, string>> = {
   // --- Homepage ---
-  'home.specialThanks': { en: 'Special Thanks', zh: '特别感谢' },
   'home.lifeJourney': { en: 'Journey', zh: '旅程' },
 
   // --- Greeting ---
@@ -70,8 +69,8 @@ export const translations: Record<string, Record<Lang, string>> = {
 
   // --- Globe pin stories (placeholder) ---
   'pin.jiaozhou.story': {
-    en: '<a href="https://baike.baidu.com/en/item/Jiaozhou%20City/997960" target="_blank" rel="noopener">Jiaozhou</a> is my real hometown, a place famously known for not being known... Which is why, if someone asks me where I\'m from, I always say Qingdao. (Technically, Jiaozhou is part of Qingdao. So it\'s not entirely a lie.)\n\nOne day in the last century, a person who was bad at English and absolutely terrible at math, even through high school, yet somehow ended up working as a Data Scientist in the USA was born.\n\n<strong>That\'s me.</strong>\n\n<img src="/images/journey/jiaozhou-baby.jpg" alt="Baby Kun with mom in Jiaozhou" class="story-photo" />',
-    zh: '<a href="https://baike.baidu.com/en/item/Jiaozhou%20City/997960" target="_blank" rel="noopener">胶州</a>是我真正的家乡，尽管有 5000 年的历史，但是很少有人听说过，所以有人问我是哪里人的时候，我总是说青岛的。（好在胶州确实属于青岛，所以也不全错。）\n\n上世纪某一天，一个不怎么擅长英语、数学也有些烂，结果最终跑到一个说英文的国家做数据科学的我诞生了。\n\n<strong>就是我。</strong>\n\n<img src="/images/journey/jiaozhou-baby.jpg" alt="婴儿时期的坤和妈妈在胶州" class="story-photo" />',
+    en: '<a href="https://baike.baidu.com/en/item/Jiaozhou%20City/997960" target="_blank" rel="noopener">Jiaozhou</a> is my real hometown, a place famously known for not being known... Which is why, if someone asks me where I\'m from, I always say Qingdao. (Technically, Jiaozhou is part of Qingdao. So it\'s not entirely a lie.)\n\nOne day in the last century, a person who was bad at English and absolutely terrible at math, even through high school, yet somehow ended up working as a Data Scientist in the USA was born.\n\n<strong>That\'s me.</strong>\n\n<img src="/images/journey/jiaozhou-baby.webp" alt="Baby Kun with mom in Jiaozhou" class="story-photo" />',
+    zh: '<a href="https://baike.baidu.com/en/item/Jiaozhou%20City/997960" target="_blank" rel="noopener">胶州</a>是我真正的家乡，尽管有 5000 年的历史，但是很少有人听说过，所以有人问我是哪里人的时候，我总是说青岛的。（好在胶州确实属于青岛，所以也不全错。）\n\n上世纪某一天，一个不怎么擅长英语、数学也有些烂，结果最终跑到一个说英文的国家做数据科学的我诞生了。\n\n<strong>就是我。</strong>\n\n<img src="/images/journey/jiaozhou-baby.webp" alt="婴儿时期的坤和妈妈在胶州" class="story-photo" />',
   },
   'pin.qingdao.story': {
     en: '"I\'m from a seaside city known for beer and tourism, but I don\'t drink, don\'t like seafood, and don\'t know how to swim" is one of my classic ice breakers.\n\nThe most famous thing about <a href="https://baike.baidu.com/en/item/Qingdao%20City/985933" target="_blank" rel="noopener">Qingdao</a> is probably Tsingtao Beer, the green bottle that you can find at 99 Ranch and most Asian supermarkets.',
@@ -383,52 +382,6 @@ export const translations: Record<string, Record<Lang, string>> = {
   'ingrain.privacyTitle': { en: 'Privacy', zh: '隐私' },
   'ingrain.privacyDesc': { en: 'Your knowledge stays on your device. When AI processing is needed, content passes through our server but is never stored. Optional telemetry collects only behavioral data, never conversation content.', zh: '你的知识留在你的设备上。需要 AI 处理时，内容会经过我们的服务器但不会被存储。可选的遥测仅收集行为数据，不收集对话内容。' },
   'ingrain.privacyLink': { en: 'Full privacy policy \u2192', zh: '完整隐私政策 \u2192' },
-
-  // --- Workflow (visual-design page) ---
-  'workflow.sprintCadence': { en: 'Sprint Cadence', zh: 'Sprint Cadence' },
-  'workflow.gantt': { en: 'Gantt Chart', zh: '甘特图' },
-  'workflow.week1': { en: 'Week 1', zh: '第一周' },
-  'workflow.week2': { en: 'Week 2', zh: '第二周' },
-  'workflow.cycleA': { en: 'Cycle A', zh: '周期 A' },
-  'workflow.cycleB': { en: 'Cycle B', zh: '周期 B' },
-  'workflow.brainstorm': { en: 'Brainstorm', zh: '头脑风暴' },
-  'workflow.decide': { en: 'Decide', zh: '决策' },
-  'workflow.dev': { en: 'Dev', zh: '开发' },
-  'workflow.release': { en: 'Release', zh: '发布' },
-  'workflow.overlap': { en: '⚡ Overlap zone', zh: '⚡ 重叠区间' },
-  'workflow.phasePlan': { en: 'Planning', zh: '规划' },
-  'workflow.phaseBrain': { en: 'Brainstorm', zh: '头脑风暴' },
-  'workflow.phaseDecide': { en: 'Decision', zh: '决策会议' },
-  'workflow.phaseDev': { en: 'Development', zh: '开发' },
-  'workflow.phaseRelease': { en: 'Release & Test', zh: '发布测试' },
-  'workflow.week1Design': { en: 'Week 1 : Design Phase', zh: '第一周：设计阶段' },
-  'workflow.day': { en: 'Day', zh: '天' },
-  'workflow.phase': { en: 'Phase', zh: '阶段' },
-  'workflow.details': { en: 'Details', zh: '详情' },
-  'workflow.tue': { en: 'Tue', zh: '周二' },
-  'workflow.wed': { en: 'Wed', zh: '周三' },
-  'workflow.thu': { en: 'Thu', zh: '周四' },
-  'workflow.fri': { en: 'Fri', zh: '周五' },
-  'workflow.mon': { en: 'Mon', zh: '周一' },
-  'workflow.w1mon.desc': { en: 'Set 2-week plan, begin design ideation', zh: '制定两周计划，开始构思设计方案' },
-  'workflow.w1tue.desc': { en: 'Explore design options, target ≥ 3', zh: '继续探索设计方案，目标 ≥ 3 种' },
-  'workflow.w1wed.desc': { en: 'Refine details, prepare for Thursday review', zh: '完善方案细节，准备周四汇报' },
-  'workflow.w1thu.desc': { en: 'Review options, finalize the approach', zh: '评审方案，确定最终方案' },
-  'workflow.w1fri.desc': { en: 'Begin development', zh: '开始开发' },
-  'workflow.week2Exec': { en: 'Week 2 : Execution (also new cycle\'s Week 1)', zh: '第二周：执行阶段（同时也是新周期的第一周）' },
-  'workflow.current': { en: 'Current Cycle', zh: '当前周期' },
-  'workflow.new': { en: 'New Cycle', zh: '新周期' },
-  'workflow.overlapTitle': { en: '⚡ Overlap Zone', zh: '⚡ 重叠区间' },
-  'workflow.overlapDesc': { en: 'From Monday to Thursday of Week 2, you\'re in two cycles simultaneously:', zh: '第二周的周一到周四，你同时身处两个周期：' },
-  'workflow.overlapA': { en: 'Mon–Tue: Current cycle dev + New cycle brainstorm', zh: '周一~周二：当前周期开发 + 新周期头脑风暴' },
-  'workflow.overlapB': { en: 'Wed–Thu: Current cycle release/test + New cycle brainstorm/decision', zh: '周三~周四：当前周期发布测试 + 新周期头脑风暴/决策' },
-  'workflow.mnemonicLabel': { en: 'Mnemonic', zh: '记忆口诀' },
-  'workflow.mnemonic': { en: 'Plan-Storm-Decide-Build-Ship', zh: '一规三想，四决三开，三四发布' },
-  'workflow.m1': { en: 'Mon: start planning', zh: '周一开始规划' },
-  'workflow.m2': { en: '3 days brainstorm (Mon–Wed)', zh: '连续想三天（周一二三）' },
-  'workflow.m3': { en: 'Thu: decide', zh: '周四做决定' },
-  'workflow.m4': { en: '3 days dev (Fri–Tue)', zh: '三天开发（周五~周二）' },
-  'workflow.m5': { en: 'Wed–Thu: release & test', zh: '周三四发布测试' },
 
   // --- 404 page ---
   '404.message': { en: 'This page doesn\'t exist or has been moved.', zh: '页面不存在或已迁移。' },
