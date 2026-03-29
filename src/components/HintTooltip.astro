@@ -1,0 +1,75 @@
+---
+/**
+ * HintTooltip: inline tooltip with dashed underline hint.
+ * Hover to reveal popup content; stays visible while mouse is on popup.
+ *
+ * Usage:
+ *   <HintTooltip>
+ *     <span data-i18n="greeting.keyword">Negative #25</span>
+ *     <Fragment slot="popup">
+ *       <span data-i18n="greeting.popup">From The Secret Life...</span>
+ *     </Fragment>
+ *   </HintTooltip>
+ */
+---
+
+<span class="hint-trigger"><slot /><span class="hint-popup"><slot name="popup" /></span></span>
+
+<style>
+  .hint-trigger {
+    position: relative;
+    cursor: help;
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: #8A939B;
+  }
+
+  .hint-popup {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: max-content;
+    max-width: 360px;
+    padding: var(--space-xs) var(--space-sm);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: var(--fs-sm);
+    font-weight: 400;
+    color: #8A939B;
+    line-height: 1.6;
+    white-space: normal;
+    text-align: left;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .hint-popup::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 0;
+    right: 0;
+    height: 8px;
+  }
+
+  .hint-popup :global(a) {
+    font-weight: 600;
+    color: var(--text-light);
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
+  }
+
+  .hint-trigger:hover .hint-popup {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+</style>
