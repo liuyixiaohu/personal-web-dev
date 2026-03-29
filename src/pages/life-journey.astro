@@ -111,12 +111,18 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
     flex-direction: column;
     align-items: center;
     background: var(--bg);
-    padding: calc(var(--space-xl) + var(--space-lg)) var(--content-padding) 0;
+    padding: clamp(4rem, 8vh, 6rem) var(--content-padding) 0;
+  }
+
+  @media (max-width: 52rem) {
+    .journey-page {
+      padding-block-start: 3rem;
+    }
   }
 
   .journey-page .back-link {
     align-self: stretch;
-    max-width: 44rem;
+    max-width: var(--grid-content);
     width: 100%;
   }
 
@@ -184,9 +190,7 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(250, 247, 242, 0.8);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(250, 247, 242, 0.45);
     padding: 1.5rem;
     opacity: 0;
     pointer-events: none;
@@ -199,11 +203,13 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
   }
 
   .modal-card {
-    background: rgba(255, 255, 255, 0.85);
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-    max-width: 44rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+    max-width: 42rem;
     max-height: 80vh;
     overflow-y: auto;
     width: 100%;
