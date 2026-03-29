@@ -201,7 +201,7 @@ a:hover {
   margin-bottom: 0;
 }
 
-/* Item list : used in professional + special-thanks index pages */
+/* Item list : used in touch-fish index page */
 .item {
   display: block;
   text-decoration: none;
@@ -232,15 +232,6 @@ a:hover {
   color: var(--text-light);
   line-height: 1.5;
   margin-top: 0.15rem;
-}
-
-.coming-date {
-  display: block;
-  font-size: var(--fs-xs);
-  color: var(--text-light);
-  opacity: 0.6;
-  margin-top: 0.15rem;
-  font-style: italic;
 }
 
 /* Section : reusable content grouping */
