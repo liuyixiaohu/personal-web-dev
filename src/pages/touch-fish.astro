@@ -32,11 +32,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <style>
   .touchfish-page {
-    padding-block: clamp(4rem, 8vh, 6rem) 4rem;
+    min-height: auto;
+    padding-block: clamp(3rem, 5vh, 4rem) 2rem;
+  }
+
+  .touchfish-page ~ :global(.site-footer) {
+    margin-top: var(--space-lg);
+    padding-bottom: var(--space-md);
   }
 
   .touchfish-header {
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
   }
 
   .touchfish-header h1 {
