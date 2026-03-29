@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import HintTooltip from '../components/HintTooltip.astro';
 ---
 
 <BaseLayout title="Kun Li" description="Given the SEO Principals, I'm genuinely surprised you found this page. Welcome, I guess." ogDescription="Some stories off the record." bodyClass="home">
@@ -9,7 +10,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <section class="home-hero">
       <div class="home-content">
         <div class="home-tagline">
-          <p class="greeting-quote" data-i18n="greeting.quote">Where's your Negative #25?</p>
+          <p class="greeting-quote"><span data-i18n="greeting.prefix">Where&#8217;s your </span><HintTooltip><span data-i18n="greeting.keyword">Negative #25</span><span slot="popup" data-i18n="greeting.popup">From The Secret Life of Walter Mitty, a film that inspires me to explore the world, find myself.</span></HintTooltip><span data-i18n="greeting.suffix">?</span></p>
         </div>
 
         <nav class="home-nav">
