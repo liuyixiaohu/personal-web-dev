@@ -185,6 +185,12 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
     margin-top: -1.5em;
   }
 
+  @media (max-width: 32rem) {
+    .panels .panel:first-child {
+      margin-top: 0;
+    }
+  }
+
   .panels {
     display: flex;
     flex-direction: column;
