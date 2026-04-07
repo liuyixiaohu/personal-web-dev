@@ -2,18 +2,18 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Job Dashboard" description="Personal job position tracker across multiple companies.">
-  <main class="jobs-page">
+<BaseLayout title="Console" description="Personal dashboard.">
+  <main class="console-page">
     <a href="/" class="back-link">&larr; Back</a>
     <div class="placeholder">
-      <h1>Job Dashboard</h1>
-      <p>Coming soon — tracking new positions across multiple companies.</p>
+      <h1>Console</h1>
+      <p>Coming soon.</p>
     </div>
   </main>
 </BaseLayout>
 
 <style>
-  .jobs-page {
+  .console-page {
     max-width: 42rem;
     margin: 0 auto;
     padding: clamp(4rem, 8vh, 6rem) var(--content-padding) 4rem;
@@ -36,7 +36,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   @media (max-width: 32rem) {
-    .jobs-page {
+    .console-page {
       padding-top: 3rem;
     }
   }
