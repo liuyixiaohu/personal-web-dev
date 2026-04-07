@@ -25,6 +25,7 @@
   let selectedLocations = $state<Set<string>>(new Set(loadPref(`${PFX}.locations`, [] as string[])));
   let sortBy = $state(loadPref(`${PFX}.sort`, 'company-asc'));
   let searchQuery = $state(loadPref(`${PFX}.search`, ''));
+  let excludeKeywords = $state<string[]>(loadPref<string[]>(`${PFX}.exclude`, []));
 
   // Indexes (built once after fetch)
   let companyIndex = $state<{ sorted: string[]; counts: Map<string, number> }>({ sorted: [], counts: new Map() });
@@ -59,13 +60,25 @@
     savePref(`${PFX}.search`, q);
   }
 
+  function addExclude(kw: string) {
+    excludeKeywords = [...excludeKeywords, kw];
+    savePref(`${PFX}.exclude`, excludeKeywords);
+  }
+
+  function removeExclude(kw: string) {
+    excludeKeywords = excludeKeywords.filter(k => k !== kw);
+    savePref(`${PFX}.exclude`, excludeKeywords);
+  }
+
   function clearFilters() {
     selectedCompanies = new Set();
     selectedLocations = new Set();
     searchQuery = '';
+    excludeKeywords = [];
     savePref(`${PFX}.companies`, []);
     savePref(`${PFX}.locations`, []);
     savePref(`${PFX}.search`, '');
+    savePref(`${PFX}.exclude`, []);
   }
 
   // --- Derived: filtered + sorted ---
@@ -94,6 +107,18 @@
         (j._titleLower?.includes(q)) ||
         (j._companyLower?.includes(q)) ||
         (j._locationLower?.includes(q))
+      );
+    }
+
+    // Exclude keywords (case-insensitive, matches against title, company, location, department)
+    if (excludeKeywords.length > 0) {
+      result = result.filter(j =>
+        !excludeKeywords.some(kw =>
+          j._titleLower?.includes(kw) ||
+          j._companyLower?.includes(kw) ||
+          j._locationLower?.includes(kw) ||
+          j.department.toLowerCase().includes(kw)
+        )
       );
     }
 
@@ -186,10 +211,13 @@
         {selectedLocations}
         {sortBy}
         {searchQuery}
+        {excludeKeywords}
         onCompanyToggle={toggleCompany}
         onLocationToggle={toggleLocation}
         onSortChange={changeSort}
         onSearchChange={changeSearch}
+        onAddExclude={addExclude}
+        onRemoveExclude={removeExclude}
         onClear={clearFilters}
       />
     {/if}

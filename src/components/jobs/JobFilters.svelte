@@ -8,10 +8,13 @@
     selectedLocations: Set<string>;
     sortBy: string;
     searchQuery: string;
+    excludeKeywords: string[];
     onCompanyToggle: (company: string) => void;
     onLocationToggle: (loc: string) => void;
     onSortChange: (sort: string) => void;
     onSearchChange: (query: string) => void;
+    onAddExclude: (keyword: string) => void;
+    onRemoveExclude: (keyword: string) => void;
     onClear: () => void;
   }
 
@@ -24,10 +27,13 @@
     selectedLocations,
     sortBy,
     searchQuery,
+    excludeKeywords,
     onCompanyToggle,
     onLocationToggle,
     onSortChange,
     onSearchChange,
+    onAddExclude,
+    onRemoveExclude,
     onClear,
   }: Props = $props();
 
@@ -53,9 +59,22 @@
     }
   });
 
+  let excludeInput = $state('');
+
+  function handleExcludeKeydown(e: KeyboardEvent) {
+    if (e.key === 'Enter' && excludeInput.trim()) {
+      e.preventDefault();
+      const kw = excludeInput.trim().toLowerCase();
+      if (!excludeKeywords.includes(kw)) {
+        onAddExclude(kw);
+      }
+      excludeInput = '';
+    }
+  }
+
   let hasActiveFilters = $derived(
     selectedCompanies.size > 0 || selectedLocations.size > 0 ||
-    searchQuery.trim() !== ''
+    searchQuery.trim() !== '' || excludeKeywords.length > 0
   );
 </script>
 
@@ -148,6 +167,28 @@
       value={searchQuery}
       oninput={(e) => onSearchChange((e.target as HTMLInputElement).value)}
     />
+  </div>
+
+  <!-- Exclude keywords -->
+  <div class="filter-row filter-row--stacked">
+    <span class="filter-label">Exclude</span>
+    <input
+      class="search-input"
+      type="text"
+      placeholder="Type keyword and press Enter to exclude..."
+      bind:value={excludeInput}
+      onkeydown={handleExcludeKeydown}
+    />
+    {#if excludeKeywords.length > 0}
+      <div class="exclude-chips">
+        {#each excludeKeywords as kw}
+          <span class="exclude-chip">
+            {kw}
+            <button class="exclude-chip-remove" onclick={() => onRemoveExclude(kw)}>&times;</button>
+          </span>
+        {/each}
+      </div>
+    {/if}
   </div>
 </div>
 
@@ -289,5 +330,39 @@
   .search-input::placeholder {
     color: var(--text-light);
     opacity: 0.5;
+  }
+
+  .exclude-chips {
+    display: flex;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+  }
+
+  .exclude-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25em;
+    font-size: var(--fs-xs);
+    padding: 0.15em 0.45em;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.03);
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .exclude-chip-remove {
+    font-family: inherit;
+    font-size: var(--fs-sm);
+    background: none;
+    border: none;
+    color: var(--text-light);
+    cursor: pointer;
+    padding: 0 0.1em;
+    line-height: 1;
+  }
+
+  .exclude-chip-remove:hover {
+    color: var(--text);
   }
 </style>
