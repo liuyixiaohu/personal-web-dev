@@ -5,10 +5,18 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 <BaseLayout title="Console" description="Personal dashboard.">
   <main class="console-page">
     <a href="/" class="back-link">&larr; Back</a>
-    <div class="placeholder">
-      <h1>Console</h1>
-      <p>Coming soon.</p>
-    </div>
+    <h1 class="console-title">Console</h1>
+
+    <nav class="console-nav">
+      <a href="/console/events" class="console-card">
+        <span class="console-card-title">All Events</span>
+        <span class="console-card-desc">All upcoming Bay Area tech & AI events</span>
+      </a>
+      <a href="/console/jobs" class="console-card">
+        <span class="console-card-title">New Jobs</span>
+        <span class="console-card-desc">Newly discovered positions from latest refresh</span>
+      </a>
+    </nav>
   </main>
 </BaseLayout>
 
@@ -20,19 +28,44 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     min-height: 100dvh;
   }
 
-  .placeholder {
-    margin-top: 4rem;
-    text-align: center;
-  }
-
-  .placeholder h1 {
+  .console-title {
     font-size: var(--fs-lg);
-    margin-bottom: 1rem;
+    font-weight: 500;
+    margin-bottom: var(--space-md);
   }
 
-  .placeholder p {
-    color: #8A939B;
-    font-size: var(--fs-sm);
+  .console-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .console-card {
+    display: block;
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .console-card:hover {
+    border-color: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.015);
+  }
+
+  .console-card-title {
+    display: block;
+    font-size: var(--fs-base);
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+  }
+
+  .console-card-desc {
+    display: block;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
   }
 
   @media (max-width: 32rem) {
