@@ -42,7 +42,7 @@ NPM_COMPANIES = [
     ("rivian", "Rivian", "icims_rivian.json"),
 ]
 
-TESLA_REPO = "liuyixiaohu/Tesla-Monitor"
+TESLA_REPO = "liuyixiaohu/tesla_career_monitor"
 TESLA_SLUG = "tesla"
 TESLA_COMPANY = "Tesla"
 TESLA_FILE = "data/tesla/latest.json"
