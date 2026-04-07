@@ -16,6 +16,14 @@
   import FeedbackForm from './FeedbackForm.svelte';
   import { track } from '../../utils/analytics';
 
+  // --- Props ---
+  interface Props {
+    mode?: 'public' | 'console';
+  }
+  let { mode = 'public' }: Props = $props();
+  const isConsole = mode === 'console';
+  const pfx = isConsole ? 'console.events' : 'events';  // localStorage namespace
+
   // --- State ---
   let lang = $state<Lang>('en');
   let events = $state<LumaEvent[]>([]);
@@ -25,14 +33,14 @@
   let isStale = $state(false);
 
   // --- Filter & Sort State (persisted via localStorage) ---
-  let selectedLocations = $state<Set<string>>(new Set(loadPref<string[]>('events.locations', [])));
-  let selectedPrice = $state<string | null>(loadPref('events.price', null));
-  let selectedDays = $state<Set<number>>(new Set(loadPref<number[]>('events.days', [])));
-  let selectedTimeStart = $state<string>(loadPref('events.timeStart', ''));
-  let selectedTimeEnd = $state<string>(loadPref('events.timeEnd', ''));
-  let sortBy = $state<string>(loadPref('events.sort', 'time-asc'));
+  let selectedLocations = $state<Set<string>>(new Set(loadPref<string[]>(`${pfx}.locations`, [])));
+  let selectedPrice = $state<string | null>(loadPref(`${pfx}.price`, null));
+  let selectedDays = $state<Set<number>>(new Set(loadPref<number[]>(`${pfx}.days`, [])));
+  let selectedTimeStart = $state<string>(loadPref(`${pfx}.timeStart`, ''));
+  let selectedTimeEnd = $state<string>(loadPref(`${pfx}.timeEnd`, ''));
+  let sortBy = $state<string>(loadPref(`${pfx}.sort`, 'time-asc'));
   let searchQuery = $state<string>('');
-  let excludeKeywords = $state<string[]>(loadPref<string[]>('events.exclude', []));
+  let excludeKeywords = $state<string[]>(loadPref<string[]>(`${pfx}.exclude`, []));
 
   let changelogOpen = $state(false);
   let whyOpen = $state(false);
@@ -45,13 +53,13 @@
 
   // --- Persist filter/sort to localStorage ---
   $effect(() => {
-    localStorage.setItem('events.price', JSON.stringify(selectedPrice));
-    localStorage.setItem('events.sort', JSON.stringify(sortBy));
-    localStorage.setItem('events.locations', JSON.stringify([...selectedLocations]));
-    localStorage.setItem('events.days', JSON.stringify([...selectedDays]));
-    localStorage.setItem('events.timeStart', JSON.stringify(selectedTimeStart));
-    localStorage.setItem('events.timeEnd', JSON.stringify(selectedTimeEnd));
-    localStorage.setItem('events.exclude', JSON.stringify(excludeKeywords));
+    localStorage.setItem(`${pfx}.price`, JSON.stringify(selectedPrice));
+    localStorage.setItem(`${pfx}.sort`, JSON.stringify(sortBy));
+    localStorage.setItem(`${pfx}.locations`, JSON.stringify([...selectedLocations]));
+    localStorage.setItem(`${pfx}.days`, JSON.stringify([...selectedDays]));
+    localStorage.setItem(`${pfx}.timeStart`, JSON.stringify(selectedTimeStart));
+    localStorage.setItem(`${pfx}.timeEnd`, JSON.stringify(selectedTimeEnd));
+    localStorage.setItem(`${pfx}.exclude`, JSON.stringify(excludeKeywords));
   });
 
   // --- Data fetching ---
@@ -61,29 +69,34 @@
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const data: EventData = await resp.json();
 
-      // Only show events starting tomorrow or later (user's local midnight)
-      const tomorrow = new Date();
-      tomorrow.setHours(0, 0, 0, 0);
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      const tomorrowMs = tomorrow.getTime();
-      const isFuture = (e: LumaEvent) => new Date(e.start_at).getTime() >= tomorrowMs;
-
-      // Use first_seen_at timestamps (survives back-to-back runs)
-      // instead of new_event_ids (gets reset to [] on consecutive runs)
-      const prevCheck = data.previous_updated_at
-        ? new Date(data.previous_updated_at).getTime()
-        : 0;
-      const isNew = (e: LumaEvent) =>
-        prevCheck > 0 && e.first_seen_at
-          ? new Date(e.first_seen_at).getTime() > prevCheck
-          : false;
+      // Future cutoff: console includes today, public starts from tomorrow
+      const cutoff = new Date();
+      cutoff.setHours(0, 0, 0, 0);
+      if (!isConsole) cutoff.setDate(cutoff.getDate() + 1);
+      const cutoffMs = cutoff.getTime();
+      const isFuture = (e: LumaEvent) => new Date(e.start_at).getTime() >= cutoffMs;
 
       const notBlocked = (e: LumaEvent) =>
         !BLOCKED_CALENDARS.has(e.calendar_name) &&
         !BLOCKED_NAME_KEYWORDS.some(kw => e.name.includes(kw));
-      const filtered = prevCheck > 0
-        ? data.events.filter(e => notBlocked(e) && isNew(e) && isFuture(e))
-        : data.events.filter(e => notBlocked(e) && isFuture(e));
+
+      let filtered: LumaEvent[];
+      if (isConsole) {
+        // Console: show ALL future events regardless of when first seen
+        filtered = data.events.filter(e => notBlocked(e) && isFuture(e));
+      } else {
+        // Public: show only newly discovered future events
+        const prevCheck = data.previous_updated_at
+          ? new Date(data.previous_updated_at).getTime()
+          : 0;
+        const isNew = (e: LumaEvent) =>
+          prevCheck > 0 && e.first_seen_at
+            ? new Date(e.first_seen_at).getTime() > prevCheck
+            : false;
+        filtered = prevCheck > 0
+          ? data.events.filter(e => notBlocked(e) && isNew(e) && isFuture(e))
+          : data.events.filter(e => notBlocked(e) && isFuture(e));
+      }
       enrichEvents(filtered);
       events = filtered;
       updatedAt = data.updated_at;
@@ -206,46 +219,50 @@
 
 <div class="event-list">
   <header class="event-header">
-    <div class="event-title-row">
-      <h2 class="event-title">{t('events.title')}</h2>
-      <div class="version-wrap">
-        <button class="version-btn" onclick={() => changelogOpen = !changelogOpen}>
-          {VERSION}
-        </button>
-        <Popup open={changelogOpen} title="Changelog" onClose={() => changelogOpen = false}>
-          {#each CHANGELOG as release}
-            <div class="changelog-release">
-              <div class="changelog-version">{release.version}</div>
-              <p class="changelog-why">{release.why}</p>
-              <ul class="changelog-list">
-                {#each release.changes as change}
-                  <li>{change}</li>
-                {/each}
-              </ul>
-            </div>
-          {/each}
-        </Popup>
+    {#if isConsole}
+      <h2 class="event-title">All Upcoming Events</h2>
+    {:else}
+      <div class="event-title-row">
+        <h2 class="event-title">{t('events.title')}</h2>
+        <div class="version-wrap">
+          <button class="version-btn" onclick={() => changelogOpen = !changelogOpen}>
+            {VERSION}
+          </button>
+          <Popup open={changelogOpen} title="Changelog" onClose={() => changelogOpen = false}>
+            {#each CHANGELOG as release}
+              <div class="changelog-release">
+                <div class="changelog-version">{release.version}</div>
+                <p class="changelog-why">{release.why}</p>
+                <ul class="changelog-list">
+                  {#each release.changes as change}
+                    <li>{change}</li>
+                  {/each}
+                </ul>
+              </div>
+            {/each}
+          </Popup>
+        </div>
+        <span class="feedback-wrap">
+          <button class="why-btn" onclick={() => { feedbackOpen = !feedbackOpen; feedbackFormRef?.reset(); }}>
+            {t('events.feedback')}
+          </button>
+          <Popup open={feedbackOpen} title={t('events.feedbackTitle')} onClose={() => feedbackOpen = false} width="18rem">
+            <FeedbackForm bind:this={feedbackFormRef} />
+          </Popup>
+        </span>
       </div>
-      <span class="feedback-wrap">
-        <button class="why-btn" onclick={() => { feedbackOpen = !feedbackOpen; feedbackFormRef?.reset(); }}>
-          {t('events.feedback')}
-        </button>
-        <Popup open={feedbackOpen} title={t('events.feedbackTitle')} onClose={() => feedbackOpen = false} width="18rem">
-          <FeedbackForm bind:this={feedbackFormRef} />
-        </Popup>
-      </span>
-    </div>
 
-    <p class="event-subtitle">
-      {t('events.subtitlePre')}<span class="newly-highlight">{t('events.subtitleHighlight')}</span>{t('events.subtitlePost')}
-      <span class="why-wrap">
-        <button class="why-btn" onclick={() => whyOpen = !whyOpen}>Why?</button>
-        <Popup open={whyOpen} title={t('events.whyTitle')} onClose={() => whyOpen = false}>
-          <p class="why-point">{t('events.whyPoint1')}</p>
-          <p class="why-point">{t('events.whyPoint2')}</p>
-        </Popup>
-      </span>
-    </p>
+      <p class="event-subtitle">
+        {t('events.subtitlePre')}<span class="newly-highlight">{t('events.subtitleHighlight')}</span>{t('events.subtitlePost')}
+        <span class="why-wrap">
+          <button class="why-btn" onclick={() => whyOpen = !whyOpen}>Why?</button>
+          <Popup open={whyOpen} title={t('events.whyTitle')} onClose={() => whyOpen = false}>
+            <p class="why-point">{t('events.whyPoint1')}</p>
+            <p class="why-point">{t('events.whyPoint2')}</p>
+          </Popup>
+        </span>
+      </p>
+    {/if}
   </header>
 
   {#if loading}
@@ -313,11 +330,13 @@
       </ul>
     {/each}
 
+    {#if !isConsole}
     <section class="privacy-section">
       <h2 class="privacy-heading">{t('events.privacyTitle')}</h2>
       <p class="privacy-desc">{t('events.privacyDesc')}</p>
       <a href="/events/privacy" class="privacy-link">{t('events.privacyLink')}</a>
     </section>
+    {/if}
 
   {/if}
 </div>
