@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Job Dashboard" description="Personal job position tracker across multiple companies.">
+  <main class="jobs-page">
+    <a href="/" class="back-link">&larr; Back</a>
+    <div class="placeholder">
+      <h1>Job Dashboard</h1>
+      <p>Coming soon — tracking new positions across multiple companies.</p>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .jobs-page {
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: clamp(4rem, 8vh, 6rem) var(--content-padding) 4rem;
+    min-height: 100dvh;
+  }
+
+  .placeholder {
+    margin-top: 4rem;
+    text-align: center;
+  }
+
+  .placeholder h1 {
+    font-size: var(--fs-lg);
+    margin-bottom: 1rem;
+  }
+
+  .placeholder p {
+    color: #8A939B;
+    font-size: var(--fs-sm);
+  }
+
+  @media (max-width: 32rem) {
+    .jobs-page {
+      padding-top: 3rem;
+    }
+  }
+</style>
