@@ -47,7 +47,7 @@ TESLA_SLUG = "tesla"
 TESLA_COMPANY = "Tesla"
 TESLA_FILE = "data/tesla/latest.json"
 
-OUTPUT = Path(__file__).resolve().parent.parent / "public" / "data" / "jobs.json"
+OUTPUT = Path(__file__).resolve().parent.parent / "public" / "console" / "data" / "jobs.json"
 
 
 def gh_headers() -> dict:

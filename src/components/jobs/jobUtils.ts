@@ -22,7 +22,7 @@ export interface JobData {
 }
 
 // --- Constants ---
-export const JOBS_DATA_URL = '/data/jobs.json';
+export const JOBS_DATA_URL = '/console/data/jobs.json';
 
 // --- Helpers ---
 export function loadPref<T>(key: string, fallback: T): T {
