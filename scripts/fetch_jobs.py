@@ -1,7 +1,7 @@
 """Fetch job data from monitor repos and write public/data/jobs.json.
 
 Pulls latest snapshots from:
-  - new-position-monitor (17 companies, legacy flat files OR new directory format)
+  - new-position-monitor (47 companies, legacy flat files OR new directory format)
   - tesla_career_monitor (Tesla, directory format with dict-keyed jobs)
 
 Requires GITHUB_TOKEN env var with read access to both repos.
@@ -24,6 +24,7 @@ TOKEN = os.environ.get("GITHUB_TOKEN", "")
 # --- Source config ---
 NPM_REPO = "liuyixiaohu/new-position-monitor"
 NPM_COMPANIES = [
+    # Greenhouse
     ("airbnb", "Airbnb", "greenhouse_airbnb.json"),
     ("waymo", "Waymo", "greenhouse_waymo.json"),
     ("nuro", "Nuro", "greenhouse_nuro.json"),
@@ -31,15 +32,68 @@ NPM_COMPANIES = [
     ("agilityrobotics", "Agility Robotics", "greenhouse_agilityrobotics.json"),
     ("locusrobotics", "Locus Robotics", "greenhouse_locusrobotics.json"),
     ("fetch", "Fetch Robotics", "greenhouse_fetch.json"),
+    ("aurorainnovation", "Aurora Innovation", "greenhouse_aurorainnovation.json"),
+    ("appliedintuition", "Applied Intuition", "greenhouse_appliedintuition.json"),
+    ("andurilindustries", "Anduril Industries", "greenhouse_andurilindustries.json"),
+    ("skydio", "Skydio", "greenhouse_skydio.json"),
+    ("anthropic", "Anthropic", "greenhouse_anthropic.json"),
+    ("xai", "xAI", "greenhouse_xai.json"),
+    ("Databricks", "Databricks", "greenhouse_Databricks.json"),
+    ("samsara", "Samsara", "greenhouse_samsara.json"),
+    ("archer56", "Archer Aviation", "greenhouse_archer56.json"),
+    ("flyzipline", "Zipline", "greenhouse_flyzipline.json"),
+    ("gatikaiinc", "Gatik AI", "greenhouse_gatikaiinc.json"),
+    ("scaleai", "Scale AI", "greenhouse_scaleai.json"),
+    ("deepmind", "DeepMind", "greenhouse_deepmind.json"),
+    ("torcrobotics", "Torc Robotics", "greenhouse_torcrobotics.json"),
+    ("motional", "Motional", "greenhouse_motional.json"),
+    ("kodiak", "Kodiak Robotics", "greenhouse_kodiak.json"),
+    ("apptronik", "Apptronik", "greenhouse_apptronik.json"),
+    ("formlabs", "Formlabs", "greenhouse_formlabs.json"),
+    ("relativity", "Relativity Space", "greenhouse_relativity.json"),
+    # Ashby
     ("figure", "Figure AI", "ashby_figure.json"),
+    ("openai", "OpenAI", "ashby_openai.json"),
+    ("physicalintelligence", "Physical Intelligence", "ashby_physicalintelligence.json"),
+    ("reliable-robotics", "Reliable Robotics", "ashby_reliable-robotics.json"),
+    ("serverobotics", "Serve Robotics", "ashby_serverobotics.json"),
+    ("cohere", "Cohere", "ashby_cohere.json"),
+    ("perplexity", "Perplexity AI", "ashby_perplexity.json"),
+    ("character", "Character AI", "ashby_character.json"),
+    ("hadrian-automation", "Hadrian", "ashby_hadrian-automation.json"),
+    # Lever
+    ("zoox", "Zoox", "lever_zoox.json"),
+    ("shieldai", "Shield AI", "lever_shieldai.json"),
+    ("tri", "Toyota Research Institute", "lever_tri.json"),
+    ("sanctuary", "Sanctuary AI", "lever_sanctuary.json"),
+    ("mistral", "Mistral AI", "lever_mistral.json"),
+    ("woven-by-toyota", "Woven by Toyota", "lever_woven-by-toyota.json"),
+    ("plus-2", "Plus", "lever_plus-2.json"),
+    ("MachinaLabs", "Machina Labs", "lever_MachinaLabs.json"),
+    ("brightmachines", "Bright Machines", "lever_brightmachines.json"),
+    # Amazon
     ("amazon", "Amazon", "amazon_amazon.json"),
+    # Workday
     ("intel", "Intel", "workday_intel.json"),
     ("bostondynamics", "Boston Dynamics", "workday_bostondynamics.json"),
     ("nvidia", "NVIDIA", "workday_nvidia.json"),
     ("rockwellautomation", "Rockwell Automation", "workday_rockwellautomation.json"),
+    ("wisk", "Wisk Aero", "workday_wisk.json"),
+    # ("symbotic", "Symbotic", "workday_symbotic.json"),  # Workday 422 — skipped
+    # SmartRecruiters
     ("intuitive", "Intuitive Surgical", "smartrecruiters_intuitive.json"),
+    # Phenom
     ("adobe", "Adobe", "phenom_adobe.json"),
+    # iCIMS
     ("rivian", "Rivian", "icims_rivian.json"),
+    # Joby Aviation: raw iCIMS (HTML only) — skipped for now
+    # Workable
+    ("pony-dot-ai", "Pony.ai", "workable_pony-dot-ai.json"),
+    ("huggingface", "Hugging Face", "workable_huggingface.json"),
+    # Recruitee
+    ("1x", "1X Technologies", "recruitee_1x.json"),
+    # Mobileye (custom)
+    ("mobileye", "Mobileye", "mobileye_mobileye.json"),
 ]
 
 TESLA_REPO = "liuyixiaohu/tesla_career_monitor"
