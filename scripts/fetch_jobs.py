@@ -169,8 +169,8 @@ def main() -> None:
     all_jobs = npm_jobs + tesla_jobs
     print(f"\nTotal: {len(all_jobs)} jobs")
 
-    # Stamp first_seen_at
-    new_ids: list[str] = []
+    # Stamp first_seen_at and collect today's new jobs
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     for job in all_jobs:
         jid = job["id"]
         old = old_map.get(jid)
@@ -178,7 +178,9 @@ def main() -> None:
             job["first_seen_at"] = old["first_seen_at"]
         else:
             job["first_seen_at"] = now_iso
-            new_ids.append(jid)
+
+    # new_job_ids = all jobs first seen today (survives multiple runs per day)
+    new_ids = [j["id"] for j in all_jobs if j.get("first_seen_at", "")[:10] == today]
 
     # Safety check: don't overwrite non-empty file with 0 jobs
     if len(all_jobs) == 0 and OUTPUT.exists():

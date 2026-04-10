@@ -85,10 +85,8 @@
   let filteredJobs = $derived.by(() => {
     let result = allJobs;
 
-    // Only show new jobs
-    if (newIdSet.size > 0) {
-      result = result.filter(j => newIdSet.has(j.id));
-    }
+    // Only show new jobs (filter always applies — empty newIdSet means no new jobs)
+    result = result.filter(j => newIdSet.has(j.id));
 
     // Company filter
     if (selectedCompanies.size > 0) {
