@@ -167,7 +167,7 @@
 
   .filter-pills {
     display: flex;
-    gap: 0.3rem;
+    gap: 0.1rem 0.15rem;
     flex-wrap: wrap;
     align-items: center;
   }
@@ -175,29 +175,29 @@
   .pill {
     font-family: inherit;
     font-size: var(--fs-xs);
-    padding: 0.2em 0.55em;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: var(--radius-sm);
+    padding: 0.15em 0.3em;
+    border: none;
     background: transparent;
     color: var(--text-light);
     cursor: pointer;
     white-space: nowrap;
-    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    transition: color 0.15s;
     line-height: 1.4;
   }
 
   .pill:hover {
-    border-color: rgba(0, 0, 0, 0.2);
+    color: var(--text);
   }
 
   .pill--active {
-    background: rgba(0, 0, 0, 0.06);
     color: var(--text);
-    border-color: rgba(0, 0, 0, 0.18);
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
 
   .pill-count {
     font-size: var(--fs-xs);
+    opacity: 0.5;
   }
 
   .show-more-btn {
