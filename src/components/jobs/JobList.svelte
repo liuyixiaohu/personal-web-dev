@@ -230,7 +230,7 @@
         <section class="job-group">
           <h3 class="job-group-heading">{company} <span class="job-group-count">({jobs.length})</span></h3>
           <ul class="job-group-list">
-            {#each jobs as job (job.id)}
+            {#each jobs as job, i (job.id + '_' + i)}
               <JobCard {job} />
             {/each}
           </ul>

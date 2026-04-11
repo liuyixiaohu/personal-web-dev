@@ -220,7 +220,16 @@ def main() -> None:
     print(f"\nFetching from Tesla Monitor...")
     tesla_jobs = fetch_tesla_jobs()
 
-    all_jobs = npm_jobs + tesla_jobs
+    all_jobs_raw = npm_jobs + tesla_jobs
+    # Deduplicate by ID (some ATS return duplicate req_ids for multi-location postings)
+    seen = set()
+    all_jobs = []
+    for j in all_jobs_raw:
+        if j["id"] not in seen:
+            seen.add(j["id"])
+            all_jobs.append(j)
+    if len(all_jobs) < len(all_jobs_raw):
+        print(f"  Deduplicated: {len(all_jobs_raw)} → {len(all_jobs)} jobs")
     print(f"\nTotal: {len(all_jobs)} jobs")
 
     # Stamp first_seen_at and collect today's new jobs
