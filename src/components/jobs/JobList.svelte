@@ -204,16 +204,12 @@
 
     {#if showFilters}
       <JobFilters
-        allCompanies={companyIndex.sorted}
-        companyCounts={companyIndex.counts}
         allLocations={locationIndex.sorted}
         locationCounts={locationIndex.counts}
-        {selectedCompanies}
         {selectedLocations}
         {sortBy}
         {searchQuery}
         {excludeKeywords}
-        onCompanyToggle={toggleCompany}
         onLocationToggle={toggleLocation}
         onSortChange={changeSort}
         onSearchChange={changeSearch}
