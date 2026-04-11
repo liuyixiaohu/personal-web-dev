@@ -1,4 +1,5 @@
 <script lang="ts">
+  import '../../styles/filters.css';
   import { t } from '../../i18n/langStore';
 
   interface Props {
@@ -260,145 +261,7 @@
 </div>
 
 <style>
-  .filter-controls {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    font-size: var(--fs-xs);
-  }
-
-  .filter-row {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .filter-row--stacked {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .filter-label {
-    color: var(--text-light);
-    font-size: var(--fs-xs);
-    min-width: 3rem;
-    flex-shrink: 0;
-  }
-
-  .filter-pills {
-    display: flex;
-    gap: 0.3rem;
-    flex-wrap: wrap;
-  }
-
-  .pill {
-    font-family: inherit;
-    font-size: var(--fs-xs);
-    padding: 0.2em 0.55em;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: var(--radius-sm);
-    background: transparent;
-    color: var(--text-light);
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background 0.15s, color 0.15s, border-color 0.15s;
-    line-height: 1.4;
-  }
-
-  .pill:hover {
-    border-color: rgba(0, 0, 0, 0.2);
-  }
-
-  .pill--active {
-    background: rgba(0, 0, 0, 0.06);
-    color: var(--text);
-    border-color: rgba(0, 0, 0, 0.18);
-  }
-
-  .pill-count {
-    font-size: var(--fs-xs);
-  }
-
-  .location-pills-wrap {
-    flex: 1;
-    min-width: 0;
-    position: relative;
-  }
-
-  .filter-pills--collapsed {
-    max-height: 3.6rem;
-    overflow: hidden;
-  }
-
-  .filter-pills--wrap {
-    flex-wrap: wrap;
-  }
-
-  .show-more-btn {
-    font-family: inherit;
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    background: var(--bg);
-    border: none;
-    padding: 0.2em 0 0.2em 0.4em;
-    cursor: pointer;
-    text-decoration: underline;
-    white-space: nowrap;
-    line-height: 1.4;
-  }
-
-  .show-more-btn:hover {
-    color: var(--text);
-  }
-
-  .show-more-btn--collapsed {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-  }
-
-  .clear-filters {
-    font-family: inherit;
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    text-decoration: underline;
-    align-self: flex-start;
-  }
-
-  .clear-filters:hover {
-    color: var(--text);
-  }
-
-  .search-input {
-    font-family: inherit;
-    font-size: var(--fs-xs);
-    padding: 0.35em 0.6em;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: var(--radius-sm);
-    background: transparent;
-    color: var(--text);
-    width: 100%;
-    max-width: 20rem;
-    margin-bottom: var(--space-xs);
-    transition: border-color 0.15s;
-  }
-
-  .search-input:focus {
-    border-color: rgba(0, 0, 0, 0.25);
-  }
-
-  .search-input::placeholder {
-    color: var(--text-light);
-    opacity: 0.5;
-  }
-
+  /* Event-specific styles only — shared styles come from filters.css */
   .time-range {
     display: flex;
     align-items: center;
@@ -425,41 +288,6 @@
     color: var(--text-light);
   }
 
-  .exclude-chips {
-    display: flex;
-    gap: 0.3rem;
-    flex-wrap: wrap;
-  }
-
-  .exclude-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25em;
-    font-size: var(--fs-xs);
-    padding: 0.15em 0.45em;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: var(--radius-sm);
-    background: rgba(0, 0, 0, 0.03);
-    color: var(--text);
-    line-height: 1.4;
-  }
-
-  .exclude-chip-remove {
-    font-family: inherit;
-    font-size: var(--fs-sm);
-    background: none;
-    border: none;
-    color: var(--text-light);
-    cursor: pointer;
-    padding: 0 0.1em;
-    line-height: 1;
-  }
-
-  .exclude-chip-remove:hover {
-    color: var(--text);
-  }
-
-  /* Chinese font overrides */
   :global(html[data-lang="zh"]) .filter-controls {
     font-family: var(--font-zh);
     font-style: normal;
