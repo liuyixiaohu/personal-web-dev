@@ -153,8 +153,10 @@
 
   // --- Fetch ---
   onMount(async () => {
+    console.log('[jobs] fetching', JOBS_DATA_URL);
     try {
-      const resp = await fetch(JOBS_DATA_URL);
+      const resp = await fetch(JOBS_DATA_URL, { credentials: 'same-origin' });
+      console.log('[jobs] response', resp.status, resp.headers.get('content-type'));
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const data: JobData = await resp.json();
 
@@ -170,6 +172,7 @@
       companyIndex = buildCompanyIndex(newJobs);
       locationIndex = buildLocationIndex(newJobs);
     } catch (e) {
+      console.error('[jobs] fetch error', e);
       error = e instanceof Error ? e.message : 'Failed to load jobs';
     } finally {
       loading = false;

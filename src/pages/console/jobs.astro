@@ -6,7 +6,7 @@ import JobList from '../../components/jobs/JobList.svelte';
 <BaseLayout title="New Jobs — Console" description="Newly discovered job positions.">
   <main class="jobs-page">
     <a href="/console" class="back-link">&larr; Console</a>
-    <JobList client:only="svelte" />
+    <JobList client:load />
   </main>
 </BaseLayout>
 
