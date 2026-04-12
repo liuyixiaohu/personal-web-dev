@@ -18,12 +18,9 @@ const SITEMAP_URLS = [
   'https://kunli.co/',
   'https://kunli.co/brand',
   'https://kunli.co/events',
-  'https://kunli.co/events/privacy',
   'https://kunli.co/ingrain',
-  'https://kunli.co/ingrain/privacy',
   'https://kunli.co/life-journey',
   'https://kunli.co/sift',
-  'https://kunli.co/sift/privacy',
   'https://kunli.co/touch-fish',
 ];
 
