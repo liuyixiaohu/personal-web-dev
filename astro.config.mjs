@@ -39,6 +39,10 @@ export default defineConfig({
     '/professional/quant-insights': '/',
     '/professional/information-design': '/',
 
+    // Removed products
+    '/ingrain': '/',
+    '/ingrain/privacy': '/',
+
     // Old map demos
     '/map-demo-leaflet': '/life-journey',
     '/map-demo-d3': '/life-journey',

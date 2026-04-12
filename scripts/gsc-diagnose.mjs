@@ -21,7 +21,6 @@ const SITEMAP_URLS = [
   'https://kunli.co/',
   'https://kunli.co/brand',
   'https://kunli.co/events',
-  'https://kunli.co/ingrain',
   'https://kunli.co/life-journey',
   'https://kunli.co/sift',
   'https://kunli.co/touch-fish',
