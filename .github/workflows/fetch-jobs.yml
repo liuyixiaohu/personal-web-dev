@@ -2,8 +2,8 @@ name: Fetch Jobs
 
 on:
   schedule:
-    # 06:00 UTC — after Tesla (2 AM UTC) and NPM (4 AM UTC) monitors complete
-    - cron: '0 6 * * *'
+    # 9:00 PM Pacific daily (UTC 04:00) — fallback after Tesla (2:30) and NPM (3:00)
+    - cron: '0 4 * * *'
   workflow_dispatch: {}
 
 permissions:
