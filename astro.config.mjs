@@ -46,6 +46,8 @@ export default defineConfig({
   },
   integrations: [
     svelte(),
-    sitemap(),
+    sitemap({
+      filter: (page) => !page.includes('/privacy') && !page.includes('/console'),
+    }),
   ]
 });
