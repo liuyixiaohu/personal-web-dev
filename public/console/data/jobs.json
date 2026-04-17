@@ -1,7 +1,15 @@
 {
-  "updated_at": "2026-04-17T05:15:53Z",
-  "previous_updated_at": "2026-04-16T06:03:52Z",
+  "updated_at": "2026-04-17T05:23:10Z",
+  "previous_updated_at": "2026-04-17T05:15:53Z",
   "new_job_ids": [
+    "zoox_f318f39e-c089-4240-b341-ebb021d86b4f",
+    "zoox_15aa4a31-81e0-4f7a-b9d9-5bc64eb2afb8",
+    "amazon_10394278",
+    "amazon_10394268",
+    "amazon_10394230",
+    "amazon_10394156",
+    "amazon_10394194",
+    "adobe_R161485",
     "tesla_268236"
   ],
   "jobs": [
@@ -14,26 +22,6 @@
       "url": "https://1x.recruitee.com/o/cnc-machine-park-internship",
       "posted_date": "2026-03-03 01:32:14 UTC",
       "first_seen_at": "2026-04-10T23:08:14Z"
-    },
-    {
-      "id": "adobe_R158493",
-      "title": "2026 AI/ML Intern - Machine Learning Engineer",
-      "company": "Adobe",
-      "location": "San Jose, California, United States of America",
-      "department": "Other",
-      "url": "https://adobe.wd5.myworkdayjobs.com/external_experienced/job/San-Jose/XMLNAME-2026-AI-ML-Intern---Machine-Learning-Engineer_R158493/apply",
-      "posted_date": "2026-03-16T00:00:00.000+0000",
-      "first_seen_at": "2026-04-11T05:24:34Z"
-    },
-    {
-      "id": "adobe_R160469",
-      "title": "2026 AI/ML Intern - Machine Learning Engineer Intern",
-      "company": "Adobe",
-      "location": "San Jose, California, United States of America",
-      "department": "Other",
-      "url": "https://adobe.wd5.myworkdayjobs.com/external_experienced/job/San-Jose/XMLNAME-2026-AI-ML-Intern---Machine-Learning-Engineer-Intern_R160469/apply",
-      "posted_date": "2026-03-16T00:00:00.000+0000",
-      "first_seen_at": "2026-04-13T05:34:29Z"
     },
     {
       "id": "adobe_R160706",
@@ -54,16 +42,6 @@
       "url": "https://adobe.wd5.myworkdayjobs.com/external_experienced/job/New-York/XMLNAME-2026-Digital-Academy-Intern---Digital-Strategy-Analyst_R166611/apply",
       "posted_date": "2026-04-06T00:00:00.000+0000",
       "first_seen_at": "2026-04-10T23:08:14Z"
-    },
-    {
-      "id": "adobe_R159281",
-      "title": "2026 Digital Academy Intern - Enterprise Architecture Analyst",
-      "company": "Adobe",
-      "location": "New York, New York, United States of America",
-      "department": "Other",
-      "url": "https://adobe.wd5.myworkdayjobs.com/external_experienced/job/New-York/XMLNAME-2026-Digital-Academy-Intern---Enterprise-Architecture-Analyst_R159281/apply",
-      "posted_date": "2026-03-16T00:00:00.000+0000",
-      "first_seen_at": "2026-04-13T05:34:29Z"
     },
     {
       "id": "adobe_R159283",
@@ -104,6 +82,16 @@
       "url": "https://adobe.wd5.myworkdayjobs.com/external_experienced/job/San-Jose/XMLNAME-2026-Intern---Research-Scientist-Engineer_R160317/apply",
       "posted_date": "2026-03-16T00:00:00.000+0000",
       "first_seen_at": "2026-04-16T05:26:08Z"
+    },
+    {
+      "id": "adobe_R161485",
+      "title": "2026 Intern - Security Engineer",
+      "company": "Adobe",
+      "location": "San Jose, California, United States of America",
+      "department": "Other",
+      "url": "https://adobe.wd5.myworkdayjobs.com/external_experienced/job/San-Jose/XMLNAME-2026-Intern---Security-Engineer_R161485/apply",
+      "posted_date": "2026-04-15T00:00:00.000+0000",
+      "first_seen_at": "2026-04-17T05:23:10Z"
     },
     {
       "id": "adobe_R160473",
@@ -206,62 +194,12 @@
       "first_seen_at": "2026-04-15T05:19:20Z"
     },
     {
-      "id": "amazon_3127847",
-      "title": "2026 Applied Science Internship - Automated Reasoning - United States, PhD Student Science Recruiting",
-      "company": "Amazon",
-      "location": "Seattle, Washington, USA",
-      "department": "Machine Learning Science",
-      "url": "https://www.amazon.jobs/en/jobs/3127847/2026-applied-science-internship-automated-reasoning-united-states-phd-student-science-recruiting",
-      "posted_date": "November 17, 2025",
-      "first_seen_at": "2026-04-10T23:08:14Z"
-    },
-    {
-      "id": "amazon_3127856",
-      "title": "2026 Applied Science Internship - Computer Vision - United States, PhD Student Science Recruiting",
-      "company": "Amazon",
-      "location": "Seattle, Washington, USA",
-      "department": "Machine Learning Science",
-      "url": "https://www.amazon.jobs/en/jobs/3127856/2026-applied-science-internship-computer-vision-united-states-phd-student-science-recruiting",
-      "posted_date": "November 17, 2025",
-      "first_seen_at": "2026-04-10T23:08:14Z"
-    },
-    {
       "id": "amazon_3127849",
       "title": "2026 Applied Science Internship - Gen AI & Large Language Models - United States, PhD Student Science Recruiting",
       "company": "Amazon",
       "location": "Seattle, Washington, USA",
       "department": "Machine Learning Science",
       "url": "https://www.amazon.jobs/en/jobs/3127849/2026-applied-science-internship-gen-ai-large-language-models-united-states-phd-student-science-recruiting",
-      "posted_date": "November 17, 2025",
-      "first_seen_at": "2026-04-10T23:08:14Z"
-    },
-    {
-      "id": "amazon_3127862",
-      "title": "2026 Applied Science Internship - Information & Knowledge Management (Machine Learning) - United States, PhD Student Science Recruiting",
-      "company": "Amazon",
-      "location": "Seattle, Washington, USA",
-      "department": "Machine Learning Science",
-      "url": "https://www.amazon.jobs/en/jobs/3127862/2026-applied-science-internship-information-knowledge-management-machine-learning-united-states-phd-student-science-recruiting",
-      "posted_date": "November 17, 2025",
-      "first_seen_at": "2026-04-10T23:08:14Z"
-    },
-    {
-      "id": "amazon_3127852",
-      "title": "2026 Applied Science Internship - Natural Language Processing and Speech Technologies - United States, PhD Student Science Recruiting",
-      "company": "Amazon",
-      "location": "Seattle, Washington, USA",
-      "department": "Machine Learning Science",
-      "url": "https://www.amazon.jobs/en/jobs/3127852/2026-applied-science-internship-natural-language-processing-and-speech-technologies-united-states-phd-student-science-recruiting",
-      "posted_date": "November 17, 2025",
-      "first_seen_at": "2026-04-10T23:08:14Z"
-    },
-    {
-      "id": "amazon_3127851",
-      "title": "2026 Applied Science Internship - Reinforcement Learning & Optimization (Machine Learning) - United States, PhD Student Science Recruiting",
-      "company": "Amazon",
-      "location": "Seattle, Washington, USA",
-      "department": "Machine Learning Science",
-      "url": "https://www.amazon.jobs/en/jobs/3127851/2026-applied-science-internship-reinforcement-learning-optimization-machine-learning-united-states-phd-student-science-recruiting",
       "posted_date": "November 17, 2025",
       "first_seen_at": "2026-04-10T23:08:14Z"
     },
@@ -316,6 +254,16 @@
       "first_seen_at": "2026-04-10T23:08:14Z"
     },
     {
+      "id": "amazon_10394156",
+      "title": "2026 Fall Applied Science Internship - Automated Reasoning - United States, PhD Student Science Recruiting",
+      "company": "Amazon",
+      "location": "Seattle, Washington, USA",
+      "department": "Machine Learning Science",
+      "url": "https://www.amazon.jobs/en/jobs/10394156/2026-fall-applied-science-internship-automated-reasoning-united-states-phd-student-science-recruiting",
+      "posted_date": "April 16, 2026",
+      "first_seen_at": "2026-04-17T05:23:10Z"
+    },
+    {
       "id": "amazon_10391901",
       "title": "2026 Fall Applied Science Internship - Computer Vision - United States, PhD Student Science Recruiting",
       "company": "Amazon",
@@ -324,6 +272,36 @@
       "url": "https://www.amazon.jobs/en/jobs/10391901/2026-fall-applied-science-internship-computer-vision-united-states-phd-student-science-recruiting",
       "posted_date": "April 14, 2026",
       "first_seen_at": "2026-04-15T05:19:20Z"
+    },
+    {
+      "id": "amazon_10394230",
+      "title": "2026 Fall Applied Science Internship - Information & Knowledge Management (Machine Learning) - United States, PhD Student Science Recruiting",
+      "company": "Amazon",
+      "location": "Seattle, Washington, USA",
+      "department": "Machine Learning Science",
+      "url": "https://www.amazon.jobs/en/jobs/10394230/2026-fall-applied-science-internship-information-knowledge-management-machine-learning-united-states-phd-student-science-recruiting",
+      "posted_date": "April 16, 2026",
+      "first_seen_at": "2026-04-17T05:23:10Z"
+    },
+    {
+      "id": "amazon_10394268",
+      "title": "2026 Fall Applied Science Internship - Natural Language Processing and Speech Technologies - United States, PhD Student Science Recruiting",
+      "company": "Amazon",
+      "location": "Seattle, Washington, USA",
+      "department": "Machine Learning Science",
+      "url": "https://www.amazon.jobs/en/jobs/10394268/2026-fall-applied-science-internship-natural-language-processing-and-speech-technologies-united-states-phd-student-science-recruiting",
+      "posted_date": "April 16, 2026",
+      "first_seen_at": "2026-04-17T05:23:10Z"
+    },
+    {
+      "id": "amazon_10394278",
+      "title": "2026 Fall Applied Science Internship - Reinforcement Learning & Optimization (Machine Learning) - United States, PhD Student Science Recruiting",
+      "company": "Amazon",
+      "location": "Seattle, Washington, USA",
+      "department": "Machine Learning Science",
+      "url": "https://www.amazon.jobs/en/jobs/10394278/2026-fall-applied-science-internship-reinforcement-learning-optimization-machine-learning-united-states-phd-student-science-recruiting",
+      "posted_date": "April 16, 2026",
+      "first_seen_at": "2026-04-17T05:23:10Z"
     },
     {
       "id": "amazon_3127859",
@@ -596,6 +574,16 @@
       "first_seen_at": "2026-04-10T23:08:14Z"
     },
     {
+      "id": "amazon_10394194",
+      "title": "Intern - Economics, Navigator Analytics",
+      "company": "Amazon",
+      "location": "Seattle, Washington, USA",
+      "department": "Economics",
+      "url": "https://www.amazon.jobs/en/jobs/10394194/intern-economics-navigator-analytics",
+      "posted_date": "April 16, 2026",
+      "first_seen_at": "2026-04-17T05:23:10Z"
+    },
+    {
       "id": "amazon_10386675",
       "title": "Intern - Economics, Private Brands - Intelligence",
       "company": "Amazon",
@@ -633,16 +621,6 @@
       "department": "Economics",
       "url": "https://www.amazon.jobs/en/jobs/3204862/intern-economics-stores-economics-and-science",
       "posted_date": "March 14, 2026",
-      "first_seen_at": "2026-04-10T23:08:14Z"
-    },
-    {
-      "id": "amazon_10385432",
-      "title": "Intern - Economics, Worldwide Installments Science & Engineering",
-      "company": "Amazon",
-      "location": "Arlington, Virginia, USA",
-      "department": "Economics",
-      "url": "https://www.amazon.jobs/en/jobs/10385432/intern-economics-worldwide-installments-science-engineering",
-      "posted_date": "April  7, 2026",
       "first_seen_at": "2026-04-10T23:08:14Z"
     },
     {
@@ -763,16 +741,6 @@
       "department": "Data Science",
       "url": "https://www.amazon.jobs/en/jobs/3137707/robotics-data-science-intern-co-op-2026",
       "posted_date": "December  4, 2025",
-      "first_seen_at": "2026-04-10T23:08:14Z"
-    },
-    {
-      "id": "amazon_3145033",
-      "title": "Robotics - Hardware Development Engineer Intern/Co-op - 2026 (Robotics, Mechanical, Electrical, Hardware Test, Reliability, Failure Analysis, Operations, and more)",
-      "company": "Amazon",
-      "location": "Westboro, Wisconsin, USA",
-      "department": "Hardware Development",
-      "url": "https://www.amazon.jobs/en/jobs/3145033/robotics-hardware-development-engineer-intern-co-op-2026-robotics-mechanical-electrical-hardware-test-reliability-failure-analysis-operations-and-more",
-      "posted_date": "December 17, 2025",
       "first_seen_at": "2026-04-10T23:08:14Z"
     },
     {
@@ -933,16 +901,6 @@
       "department": "",
       "url": "https://boards.greenhouse.io/apptronik/jobs/5828414004?gh_jid=5828414004",
       "posted_date": "2026-03-16T09:59:50-04:00",
-      "first_seen_at": "2026-04-10T23:08:14Z"
-    },
-    {
-      "id": "archer56_7637485003",
-      "title": "Landing Gear Intern",
-      "company": "Archer Aviation",
-      "location": "San Jose, California, United States",
-      "department": "",
-      "url": "https://job-boards.greenhouse.io/archer56/jobs/7637485003",
-      "posted_date": "2026-02-24T02:05:45-05:00",
       "first_seen_at": "2026-04-10T23:08:14Z"
     },
     {
@@ -1146,16 +1104,6 @@
       "first_seen_at": "2026-04-14T05:17:43Z"
     },
     {
-      "id": "intuitive_744000115534863",
-      "title": "FPGA Engineering Intern",
-      "company": "Intuitive Surgical",
-      "location": "Sunnyvale, CA, United States",
-      "department": "",
-      "url": "https://api.smartrecruiters.com/v1/companies/intuitive/postings/744000115534863",
-      "posted_date": "2026-03-18T21:44:46.909Z",
-      "first_seen_at": "2026-04-10T23:08:14Z"
-    },
-    {
       "id": "kodiak_4174469009",
       "title": "Fall 2026 Intern, Artificial Intelligence/Machine Learning",
       "company": "Kodiak Robotics",
@@ -1326,16 +1274,6 @@
       "first_seen_at": "2026-04-10T23:08:14Z"
     },
     {
-      "id": "motional_7570001003",
-      "title": "2026 Summer Intern – MS/PhD – Perception",
-      "company": "Motional",
-      "location": "Boston, Massachusetts, United States; Pittsburgh, Pennsylvania, United States",
-      "department": "",
-      "url": "https://motional.com/open-positions/?gh_jid=7570001003#/7570001003",
-      "posted_date": "2025-12-23T09:17:34-05:00",
-      "first_seen_at": "2026-04-10T23:08:14Z"
-    },
-    {
       "id": "motional_7646487003",
       "title": "2026 Summer Intern – PhD – Research Engineering Intern, Generative Simulation Validation",
       "company": "Motional",
@@ -1383,26 +1321,6 @@
       "department": "Engineering - Software",
       "url": "https://apply.workable.com/j/4C1F53EF5D",
       "posted_date": "2026-02-06",
-      "first_seen_at": "2026-04-10T23:08:14Z"
-    },
-    {
-      "id": "rivian_27487",
-      "title": "Software Engineering Intern, Embedded Platforms - Summer 2026",
-      "company": "Rivian",
-      "location": "Palo Alto, California",
-      "department": "Internships",
-      "url": "https://ca-careers-rivianvwtech.icims.com/jobs/27487/login",
-      "posted_date": "2025-11-13T17:02:00+0000",
-      "first_seen_at": "2026-04-10T23:08:14Z"
-    },
-    {
-      "id": "rivian_29769",
-      "title": "UIUC Research Park Intern - Computational Methods Development",
-      "company": "Rivian",
-      "location": "Champaign, Illinois",
-      "department": "Internships",
-      "url": "https://us-careers-rivian.icims.com/jobs/29769/login",
-      "posted_date": "2026-03-18T14:12:00+0000",
       "first_seen_at": "2026-04-10T23:08:14Z"
     },
     {
@@ -3894,6 +3812,26 @@
       "url": "https://jobs.lever.co/zoox/f24a2d0c-bda7-48ff-9c83-9a96900128b7",
       "posted_date": "2025-11-18T22:26:39.414000+00:00",
       "first_seen_at": "2026-04-10T23:08:14Z"
+    },
+    {
+      "id": "zoox_f318f39e-c089-4240-b341-ebb021d86b4f",
+      "title": "PhD Research Intern, Mapping Software",
+      "company": "Zoox",
+      "location": "Foster City, CA",
+      "department": "Zoox Internships",
+      "url": "https://jobs.lever.co/zoox/f318f39e-c089-4240-b341-ebb021d86b4f",
+      "posted_date": "2025-11-03T22:12:08.729000+00:00",
+      "first_seen_at": "2026-04-17T05:23:10Z"
+    },
+    {
+      "id": "zoox_15aa4a31-81e0-4f7a-b9d9-5bc64eb2afb8",
+      "title": "Software Engineer Intern, Perception Data",
+      "company": "Zoox",
+      "location": "Foster City, CA",
+      "department": "Zoox Internships",
+      "url": "https://jobs.lever.co/zoox/15aa4a31-81e0-4f7a-b9d9-5bc64eb2afb8",
+      "posted_date": "2026-04-16T23:01:59.419000+00:00",
+      "first_seen_at": "2026-04-17T05:23:10Z"
     }
   ]
 }
