@@ -3,6 +3,9 @@ dist/
 # generated types
 .astro/
 
+# git worktrees
+.worktrees/
+
 # dependencies
 node_modules/
 
