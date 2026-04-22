@@ -1074,7 +1074,7 @@ async function makeSetB() {
       ? new Date(2026, 3, (i % 28) + 1)
       : (i % 3 === 1
           ? `2026-04-${String((i % 28) + 1).padStart(2, '0')} 09:00:00`
-          : 43922 + (i % 28));  // Excel serial for 2026-04
+          : 46113 + (i % 28));  // Excel serial for 2026-04 (46113 = 2026-04-01)
     ws1.addRow([companies[i], amt, dateValue]);
   }
   await writeFixture('优米-2026-04-stress.xlsx', b1);
