@@ -167,13 +167,194 @@
 </div>
 
 <style>
-  /* CSS copied in Task 12 */
-  .workbench { display: flex; gap: 2rem; }
-  .task-selector { min-width: 12rem; }
-  .workspace { flex: 1; }
-  .drop-zone { border: 2px dashed #ccc; padding: 2rem; text-align: center; }
-  .drop-zone.active { border-color: #333; background: #f5f5f5; }
-  .file-list { list-style: none; padding: 0; }
-  .error-banner { background: #c33; color: white; padding: 0.5rem 1rem; margin: 1rem 0; }
-  .process-btn { padding: 0.5rem 1.5rem; }
+  /* --- Workbench (task selector + workspace side-by-side) --- */
+  .workbench {
+    display: flex;
+    gap: 1.2rem;
+    align-items: stretch;
+  }
+
+  .task-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 10rem;
+  }
+
+  .task-selector h2 {
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-light);
+    margin: 0 0 0.2rem;
+    font-weight: 500;
+  }
+
+  .task-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.45rem 0.7rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.15s;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+  }
+
+  .task-option:hover {
+    background: rgba(0, 0, 0, 0.025);
+  }
+
+  .task-option input[type="radio"] {
+    appearance: none;
+    width: 0.55rem;
+    height: 0.55rem;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-full);
+    flex-shrink: 0;
+    transition: border-color 0.15s, background 0.15s;
+    margin: 0;
+  }
+
+  .task-option input[type="radio"]:checked {
+    border-color: var(--text);
+    background: var(--text);
+  }
+
+  .task-option:has(input[type="radio"]:checked) {
+    color: var(--text);
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  /* --- Workspace (drop zone + file list + actions stacked) --- */
+  .workspace {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* --- Drop zone --- */
+  .drop-zone {
+    flex: 0 0 auto;
+    border: 2px dashed var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .drop-zone:hover,
+  .drop-zone.active {
+    border-color: var(--text-light);
+    background: rgba(0, 0, 0, 0.015);
+  }
+
+  .drop-zone p {
+    font-size: var(--fs-base);
+    color: var(--text);
+    margin: 0;
+  }
+
+  /* --- File list --- */
+  .file-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.8rem;
+  }
+
+  .file-list li {
+    display: flex;
+    align-items: center;
+    padding: 0.45rem 0.6rem;
+    border-radius: var(--radius-sm);
+    transition: background 0.15s;
+  }
+
+  .file-name {
+    flex: 1;
+    text-align: left;
+    font-size: var(--fs-xs);
+    color: var(--text);
+  }
+
+  .role-tag {
+    display: inline-block;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    background: rgba(0, 0, 0, 0.04);
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--radius-sm);
+    margin-right: 0.5em;
+    vertical-align: middle;
+  }
+
+  .file-list button {
+    background: none;
+    border: none;
+    font-size: var(--fs-xs);
+    font-family: inherit;
+    color: var(--text-light);
+    cursor: pointer;
+    padding: 0 0.3rem;
+    line-height: 1;
+    transition: color 0.15s;
+  }
+
+  .file-list button:hover {
+    color: var(--color-pm);
+  }
+
+  /* --- Error banner --- */
+  .error-banner {
+    font-size: var(--fs-xs);
+    color: var(--color-pm);
+    margin-top: 0.8rem;
+  }
+
+  /* --- Process button --- */
+  .process-btn {
+    margin-top: 1.5rem;
+    align-self: flex-start;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--text);
+    border-radius: var(--radius-sm);
+    background: var(--text);
+    color: var(--bg);
+    font-size: var(--fs-xs);
+    font-family: inherit;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+
+  .process-btn:hover {
+    opacity: 0.85;
+  }
+
+  .process-btn:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  /* --- Mobile --- */
+  @media (max-width: 480px) {
+    .workbench {
+      flex-direction: column;
+    }
+
+    .task-selector {
+      flex-direction: row;
+      flex-wrap: wrap;
+      min-width: 0;
+    }
+
+    .drop-zone {
+      padding: 1.8rem 0.8rem;
+    }
+  }
 </style>
