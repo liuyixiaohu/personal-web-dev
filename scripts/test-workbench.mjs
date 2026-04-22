@@ -104,6 +104,56 @@ async function makeSetA() {
   await writeFixture('优米-混乱.xlsx', badWb);
 }
 
+async function makeSetB() {
+  // B1: youmi with 25 companies, mixed date formats, full-width parens in header
+  const b1 = new ExcelJS.Workbook();
+  const ws1 = b1.addWorksheet('Sheet1');
+  ws1.addRow(['被派遣单位', '费用（元）', '保险起期']);  // full-width parens
+  const companies = [
+    '阿里巴巴（中国）有限公司', '腾讯·深圳', '字节·跳动，北京',
+    '小米科技', '美团', '京东', '百度', '网易', '搜狐', '新浪',
+    '滴滴', '快手', 'B站', '知乎', '豆瓣', '虎扑', '雪球',
+    '携程', '去哪儿', '马蜂窝', '大众点评', '饿了么', '58同城',
+    '赶集网', '智联招聘',
+  ];
+  for (let i = 0; i < companies.length; i++) {
+    const amt = [0.01, 99999999.99, 1234.56, 0.0001, 500][i % 5];
+    // Cycle through 3 date representations: Date object, string, Excel serial
+    const dateValue = i % 3 === 0
+      ? new Date(2026, 3, (i % 28) + 1)
+      : (i % 3 === 1
+          ? `2026-04-${String((i % 28) + 1).padStart(2, '0')} 09:00:00`
+          : 43922 + (i % 28));  // Excel serial for 2026-04
+    ws1.addRow([companies[i], amt, dateValue]);
+  }
+  await writeFixture('优米-2026-04-stress.xlsx', b1);
+
+  // B2: renBao short-term with whitespace company names + blank rows + date alias
+  //     Use '参保时间' instead of '打卡时间' to test the fallback
+  //     Amounts in 分 (will ÷100). Header uses half-width parens this time.
+  const b2 = new ExcelJS.Workbook();
+  const ws2 = b2.addWorksheet('Sheet1');
+  ws2.addRow(['场地名称', '保费(分)', '参保时间']);  // half-width; date alias
+  ws2.addRow(['  前空格公司', 10000, new Date(2026, 3, 1)]);   // 100元
+  ws2.addRow([]);  // blank row
+  ws2.addRow(['后空格公司  ', 20000, new Date(2026, 3, 2)]);   // 200元
+  ws2.addRow([]);
+  ws2.addRow(['正常公司', 30000, new Date(2026, 3, 3)]);       // 300元
+  await writeFixture('人保-短期-spaces.xlsx', b2);
+
+  // B3: renBao long-term with '生效时间' alias (not '投保时间'), multi-sheet
+  //     First sheet has required columns, second sheet does NOT → should be skipped
+  const b3 = new ExcelJS.Workbook();
+  const ws3a = b3.addWorksheet('主表');
+  ws3a.addRow(['分组', '保费（分）', '生效时间']);  // '生效时间' alias
+  ws3a.addRow(['A组', 5000, new Date(2026, 3, 5)]);   // 50元
+  ws3a.addRow(['B组', 7500, new Date(2026, 3, 6)]);   // 75元
+  const ws3b = b3.addWorksheet('说明');
+  ws3b.addRow(['无关列1', '无关列2']);
+  ws3b.addRow(['这个 sheet 应被跳过', '不报错']);
+  await writeFixture('人保-长期-multi-sheet.xlsx', b3);
+}
+
 // ============ Reference xlsx-based parser (matches 747fb7a^) ============
 
 function normalizeHeader(s) {
@@ -246,6 +296,21 @@ async function testParse() {
     const actual = await parseExceljs(buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength), f);
     assertEqual(`parse ${f}`, actual, expected);
   }
+
+  const setBFiles = [
+    '优米-2026-04-stress.xlsx',
+    '人保-短期-spaces.xlsx',
+    '人保-长期-multi-sheet.xlsx',
+  ];
+  for (const f of setBFiles) {
+    const buf = readFileSync(join(FIXTURE_DIR, f));
+    const expected = parseRawFileXlsx(buf, f);
+    const actual = await parseExceljs(
+      buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength),
+      f,
+    );
+    assertEqual(`parse-B ${f}`, actual, expected);
+  }
 }
 
 // ============ Scenario: aggregate.ts ============
@@ -358,6 +423,7 @@ async function main() {
   console.log('\n=== Workbench test harness ===\n');
   setupFixtures();
   await makeSetA();
+  await makeSetB();
 
   // Test blocks added task-by-task below this line.
   await testParse();
