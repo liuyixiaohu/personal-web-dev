@@ -248,6 +248,60 @@ async function testParse() {
   }
 }
 
+// ============ Scenario: aggregate.ts ============
+async function testAggregate() {
+  console.log('\n--- aggregate.ts ---');
+  let aggregate;
+  try {
+    const mod = await import('../src/utils/workbench/aggregate.ts');
+    aggregate = mod.aggregate;
+  } catch (e) {
+    console.log('  SKIP: aggregate.ts not yet implemented');
+    return;
+  }
+
+  // Scenario: two files, same month, different insurance types
+  const raws = [
+    { name: 'y', insuranceType: 'youmi', records: [
+      { company: '阿里', amount: 100, month: 2, year: 2026 },
+      { company: '腾讯', amount: 200, month: 2, year: 2026 },
+    ]},
+    { name: 'r', insuranceType: 'renBao', records: [
+      { company: '阿里', amount: 50, month: 2, year: 2026 },
+      { company: '字节', amount: 75, month: 2, year: 2026 },
+    ]},
+  ];
+  const result = aggregate(raws);
+  assertEqual('agg year', result.year, 2026);
+  assertEqual('agg month', result.month, 2);
+  assertEqual('agg columns', result.insuranceColumns, ['优米', '人保']);
+  assertEqual('agg row count', result.rows.length, 3);
+  assertEqual('agg 阿里 youmi', result.rows.find(r => r.company === '阿里').amounts['优米'], 100);
+  assertEqual('agg 阿里 renBao', result.rows.find(r => r.company === '阿里').amounts['人保'], 50);
+  assertEqual('agg grand total', result.grandTotal, 100 + 200 + 50 + 75);
+
+  // Scenario: cross-month should throw with exact message
+  try {
+    aggregate([{ name: 'x', insuranceType: 'youmi', records: [
+      { company: 'A', amount: 10, month: 2, year: 2026 },
+      { company: 'A', amount: 20, month: 3, year: 2026 },
+    ]}]);
+    assertEqual('cross-month should throw', 'no throw', 'WorkbenchError');
+  } catch (e) {
+    assertEqual('cross-month exact msg', e.message, '检测到 2026年2月、2026年3月，一次只能处理一个月份的');
+  }
+
+  // Scenario: no valid dates
+  try {
+    aggregate([{ name: 'x', insuranceType: 'youmi', records: [
+      { company: 'A', amount: 10, month: 0, year: 0 },
+    ]}]);
+    assertEqual('no-date should throw', 'no throw', 'WorkbenchError');
+  } catch (e) {
+    assertEqual('no-date exact msg', e.message, '无法从数据中检测到日期信息');
+  }
+}
+
 // ============ Main ============
 async function main() {
   console.log('\n=== Workbench test harness ===\n');
@@ -256,6 +310,7 @@ async function main() {
 
   // Test blocks added task-by-task below this line.
   await testParse();
+  await testAggregate();
 
   console.log(`\n=== ${passed} passed, ${failed} failed ===\n`);
   process.exit(failed > 0 ? 1 : 0);
