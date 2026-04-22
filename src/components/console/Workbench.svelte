@@ -26,24 +26,82 @@
     errorMessage = '';
     const arr = Array.from(files);
     const added: UploadedFile[] = [];
+    const rejected: string[] = [];
     for (const f of arr) {
       const cls = classifyFile(f.name);
       if (!cls) {
-        errorMessage = `无法识别文件：${f.name}。请检查文件名是否包含'保险登记'、'人保'、'优米'或'安淇瑞'`;
-        return;
+        rejected.push(f.name);
+        continue;
       }
       const buf = await f.arrayBuffer();
       added.push({ name: f.name, role: cls.role, roleLabel: cls.label, buffer: buf });
     }
     uploadedFiles = [...uploadedFiles, ...added];
+    if (rejected.length > 0) {
+      errorMessage = `无法识别文件：${rejected.join('、')}。请检查文件名是否包含'保险登记'、'人保'、'优米'或'安淇瑞'`;
+    }
   }
 
   function removeFile(idx: number) {
     uploadedFiles = uploadedFiles.filter((_, i) => i !== idx);
+    errorMessage = '';
   }
 
   async function handleProcess() {
-    // Implemented in Task 11
+    errorMessage = '';
+    const outputs = uploadedFiles.filter((f) => f.role === 'output');
+    const raws = uploadedFiles.filter((f) => f.role !== 'output');
+
+    if (selectedTask !== 'supernova') {
+      const task = TASKS.find((t) => t.id === selectedTask);
+      errorMessage = `${task?.label ?? selectedTask} 暂未实现`;
+      return;
+    }
+
+    if (outputs.length === 0) {
+      errorMessage = "请至少上传一个输出文件（文件名包含'保险登记'）";
+      return;
+    }
+    if (outputs.length > 1) {
+      errorMessage = `只能上传一个输出文件，当前检测到 ${outputs.length} 个`;
+      return;
+    }
+    if (raws.length === 0) {
+      errorMessage = '请至少上传一个原始数据文件';
+      return;
+    }
+
+    processing = true;
+    try {
+      track('workbench_run', { task: selectedTask, raw_count: raws.length });
+      const rawDatas = [];
+      for (const r of raws) {
+        rawDatas.push(await parseRawFile(r.buffer, r.name));
+      }
+      const result = aggregate(rawDatas);
+      const blob = await updateOutputWorkbook(outputs[0].buffer, result);
+
+      // Trigger download. Timestamp uses local YYYY-MM-DD-HHmm so successive
+      // runs produce distinct, sortable filenames without the 13-digit epoch.
+      const now = new Date();
+      const pad = (n: number) => String(n).padStart(2, '0');
+      const stamp = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}`;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = outputs[0].name.replace(/\.xlsx$/, `-${stamp}.xlsx`);
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      if (e instanceof WorkbenchError) {
+        errorMessage = e.message;
+      } else {
+        console.error(e);
+        errorMessage = `处理时出错：${(e as Error).message}`;
+      }
+    } finally {
+      processing = false;
+    }
   }
 
   // Drag state
