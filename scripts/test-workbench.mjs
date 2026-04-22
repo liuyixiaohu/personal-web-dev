@@ -302,6 +302,57 @@ async function testAggregate() {
   }
 }
 
+// ============ Scenario: write.ts round-trip ============
+async function testWrite() {
+  console.log('\n--- write.ts ---');
+  let updateOutputWorkbook;
+  try {
+    const mod = await import('../src/utils/workbench/write.ts');
+    updateOutputWorkbook = mod.updateOutputWorkbook;
+  } catch (e) {
+    console.log('  SKIP: write.ts not yet implemented');
+    return;
+  }
+
+  // Build an AggregatedResult directly
+  const result = {
+    year: 2026, month: 2,
+    insuranceColumns: ['优米', '人保'],
+    rows: [
+      { company: '阿里', amounts: { '优米': 100, '人保': 50 } },
+      { company: '腾讯', amounts: { '优米': 200 } },
+    ],
+    totals: { '优米': 300, '人保': 50 },
+    grandTotal: 350,
+  };
+
+  const outputBuf = readFileSync(join(FIXTURE_DIR, '保险登记-2026.xlsx'));
+  const blob = await updateOutputWorkbook(
+    outputBuf.buffer.slice(outputBuf.byteOffset, outputBuf.byteOffset + outputBuf.byteLength),
+    result,
+  );
+  const outPath = join(FIXTURE_DIR, '保险登记-updated.xlsx');
+  writeFileSync(outPath, Buffer.from(await blob.arrayBuffer()));
+
+  // Re-read and verify
+  const wb = new ExcelJS.Workbook();
+  await wb.xlsx.readFile(outPath);
+  const ws = wb.getWorksheet('26年');
+
+  // Scan rows for expected content
+  let foundMonth = false, foundAli = false, foundTotal = false;
+  ws.eachRow((row) => {
+    const vals = row.values.map((v) => String(v ?? ''));
+    if (vals.includes('月份')) foundMonth = true;
+    if (vals.includes('阿里')) foundAli = true;
+    if (vals.some((v) => v.includes('350'))) foundTotal = true;
+  });
+
+  assertEqual('write month header', foundMonth, true);
+  assertEqual('write 阿里 row', foundAli, true);
+  assertEqual('write grand total', foundTotal, true);
+}
+
 // ============ Main ============
 async function main() {
   console.log('\n=== Workbench test harness ===\n');
@@ -311,6 +362,7 @@ async function main() {
   // Test blocks added task-by-task below this line.
   await testParse();
   await testAggregate();
+  await testWrite();
 
   console.log(`\n=== ${passed} passed, ${failed} failed ===\n`);
   process.exit(failed > 0 ? 1 : 0);
