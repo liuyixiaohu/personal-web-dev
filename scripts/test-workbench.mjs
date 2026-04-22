@@ -418,6 +418,96 @@ async function testWrite() {
   assertEqual('write grand total', foundTotal, true);
 }
 
+// ============ Scenario: output cell-by-cell equivalence ============
+// Runs the full parse → aggregate → write pipeline with both readers over the
+// same fixture buffers and compares the resulting .xlsx files cell-by-cell.
+// Style comparison covers border, fill, numFmt (per plan). Font/alignment are
+// not compared — the writer only touches font.bold in header cells and
+// exceljs round-trips these consistently, so adding them risks false positives
+// for properties that serialize with minor variation.
+async function testOutputEquivalence(label, rawFiles) {
+  console.log(`\n--- output equivalence (${label}) ---`);
+  const { parseRawFile } = await import('../src/utils/workbench/parse.ts');
+  const { aggregate } = await import('../src/utils/workbench/aggregate.ts');
+  const { updateOutputWorkbook } = await import('../src/utils/workbench/write.ts');
+
+  const outputBuf = readFileSync(join(FIXTURE_DIR, '保险登记-2026.xlsx'));
+
+  // Pipeline X: xlsx reader → aggregate → write
+  const rawsX = rawFiles.map((f) => {
+    const b = readFileSync(join(FIXTURE_DIR, f));
+    return parseRawFileXlsx(b, f);
+  });
+  const resultX = aggregate(rawsX);
+  // Slice buffer to isolate from pipeline E (updateOutputWorkbook may mutate).
+  const blobX = await updateOutputWorkbook(outputBuf.buffer.slice(0), resultX);
+  const pathX = join(FIXTURE_DIR, `out-xlsx-${label}.xlsx`);
+  writeFileSync(pathX, Buffer.from(await blobX.arrayBuffer()));
+
+  // Pipeline E: exceljs reader → aggregate → write
+  const rawsE = [];
+  for (const f of rawFiles) {
+    const b = readFileSync(join(FIXTURE_DIR, f));
+    rawsE.push(
+      await parseRawFile(
+        b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength),
+        f,
+      ),
+    );
+  }
+  const resultE = aggregate(rawsE);
+  const blobE = await updateOutputWorkbook(outputBuf.buffer.slice(0), resultE);
+  const pathE = join(FIXTURE_DIR, `out-exceljs-${label}.xlsx`);
+  writeFileSync(pathE, Buffer.from(await blobE.arrayBuffer()));
+
+  // Re-read both, cell-by-cell compare across all worksheets.
+  const wbX = new ExcelJS.Workbook();
+  const wbE = new ExcelJS.Workbook();
+  await wbX.xlsx.readFile(pathX);
+  await wbE.xlsx.readFile(pathE);
+
+  const diffs = [];
+  for (let s = 0; s < wbX.worksheets.length; s++) {
+    const wsX = wbX.worksheets[s];
+    const wsE = wbE.worksheets[s];
+    if (!wsE) {
+      diffs.push({ at: `sheet[${s}] missing in exceljs output`, x: wsX.name, e: null });
+      continue;
+    }
+    wsX.eachRow({ includeEmpty: true }, (rowX, rowNum) => {
+      const rowE = wsE.getRow(rowNum);
+      rowX.eachCell({ includeEmpty: true }, (cellX, colNum) => {
+        const cellE = rowE.getCell(colNum);
+        if (JSON.stringify(cellX.value) !== JSON.stringify(cellE.value)) {
+          diffs.push({
+            at: `${wsX.name}!${rowNum},${colNum}`,
+            x: cellX.value,
+            e: cellE.value,
+          });
+        }
+        // Style comparison (border, fill, numFmt)
+        const sx = JSON.stringify({ b: cellX.border, f: cellX.fill, n: cellX.numFmt });
+        const se = JSON.stringify({ b: cellE.border, f: cellE.fill, n: cellE.numFmt });
+        if (sx !== se) {
+          diffs.push({
+            at: `${wsX.name}!${rowNum},${colNum} STYLE`,
+            x: sx,
+            e: se,
+          });
+        }
+      });
+    });
+  }
+
+  if (diffs.length > 0) {
+    console.log('  DIFF details (first 10):');
+    for (const d of diffs.slice(0, 10)) {
+      console.log(`    ${d.at}: xlsx=${JSON.stringify(d.x)} exceljs=${JSON.stringify(d.e)}`);
+    }
+  }
+  assertEqual(`output file diffs (${label})`, diffs, []);
+}
+
 // ============ Main ============
 async function main() {
   console.log('\n=== Workbench test harness ===\n');
@@ -429,6 +519,15 @@ async function main() {
   await testParse();
   await testAggregate();
   await testWrite();
+  // Set A is the acceptance bar — plan's baseline fixtures.
+  await testOutputEquivalence('setA', ['优米-2026-02.xlsx', '人保-短期-2026-02.xlsx']);
+  // Set B is supplementary stress coverage; runs after Set A so any failure
+  // here is localized and does not mask the acceptance check.
+  await testOutputEquivalence('setB', [
+    '优米-2026-04-stress.xlsx',
+    '人保-短期-spaces.xlsx',
+    '人保-长期-multi-sheet.xlsx',
+  ]);
 
   console.log(`\n=== ${passed} passed, ${failed} failed ===\n`);
   process.exit(failed > 0 ? 1 : 0);
