@@ -4,7 +4,7 @@
 
 import ExcelJS from 'exceljs';
 import XLSX from 'xlsx';
-import { writeFileSync, mkdirSync, rmSync } from 'node:fs';
+import { writeFileSync, mkdirSync, rmSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -104,6 +104,108 @@ async function makeSetA() {
   await writeFixture('优米-混乱.xlsx', badWb);
 }
 
+// ============ Reference xlsx-based parser (matches 747fb7a^) ============
+
+function normalizeHeader(s) {
+  if (s == null) return '';
+  return String(s).trim().replace(/\s+/g, '').replace(/（/g, '(').replace(/）/g, ')');
+}
+
+function findColumnIndex(headers, ...names) {
+  const normalized = headers.map(h => h ? normalizeHeader(h) : '');
+  for (const name of names) {
+    const target = normalizeHeader(name);
+    const idx = normalized.findIndex(h => h === target);
+    if (idx >= 0) return idx;
+  }
+  return -1;
+}
+
+function parseDate(value) {
+  if (!value) return null;
+  if (value instanceof Date) {
+    return { month: value.getMonth() + 1, year: value.getFullYear() };
+  }
+  const str = String(value);
+  const match = str.match(/(\d{4})-(\d{2})-(\d{2})/);
+  if (match) {
+    return { month: parseInt(match[2], 10), year: parseInt(match[1], 10) };
+  }
+  if (typeof value === 'number' && value > 25000) {
+    const d = new Date((value - 25569) * 86400 * 1000);
+    if (!isNaN(d.getTime())) {
+      return { month: d.getMonth() + 1, year: d.getFullYear() };
+    }
+  }
+  return null;
+}
+
+function detectInsuranceType(filename) {
+  if (filename.includes('人保')) return 'renBao';
+  if (filename.includes('优米') || filename.includes('安淇瑞')) return 'youmi';
+  throw new Error(`无法分类：${filename}`);
+}
+
+function parseRawFileXlsx(buffer, filename) {
+  const insuranceType = detectInsuranceType(filename);
+  const wb = XLSX.read(buffer, { type: 'buffer', cellDates: true });
+  const records = [];
+
+  for (const sheetName of wb.SheetNames) {
+    const ws = wb.Sheets[sheetName];
+    const data = XLSX.utils.sheet_to_json(ws, { header: 1, defval: null });
+    if (data.length < 2) continue;
+    const headers = data[0];
+
+    if (insuranceType === 'youmi') {
+      const companyCol = findColumnIndex(headers, '被派遣单位');
+      const amountCol = findColumnIndex(headers, '费用（元）');
+      const dateCol = findColumnIndex(headers, '保险起期');
+      if (companyCol < 0 || amountCol < 0) continue;
+
+      for (let i = 1; i < data.length; i++) {
+        const row = data[i];
+        if (!row || !row[companyCol]) continue;
+        const amount = parseFloat(String(row[amountCol])) || 0;
+        const dateInfo = dateCol >= 0 ? parseDate(row[dateCol]) : null;
+        records.push({
+          company: String(row[companyCol]).trim(),
+          amount,
+          month: dateInfo?.month || 0,
+          year: dateInfo?.year || 0,
+        });
+      }
+    } else {
+      // renBao
+      const amountCol = findColumnIndex(headers, '保费（分）');
+      if (amountCol < 0) continue;
+      const siteCol = findColumnIndex(headers, '场地名称');
+      const isShortTerm = siteCol >= 0;
+      const companyCol = isShortTerm ? siteCol : findColumnIndex(headers, '分组');
+      if (companyCol < 0) continue;
+      const dateCol = isShortTerm
+        ? findColumnIndex(headers, '打卡时间', '参保时间')
+        : findColumnIndex(headers, '投保时间', '生效时间');
+
+      for (let i = 1; i < data.length; i++) {
+        const row = data[i];
+        if (!row || !row[companyCol]) continue;
+        const amountFen = parseFloat(String(row[amountCol])) || 0;
+        const amountYuan = amountFen / 100;
+        const dateInfo = dateCol >= 0 ? parseDate(row[dateCol]) : null;
+        records.push({
+          company: String(row[companyCol]).trim(),
+          amount: amountYuan,
+          month: dateInfo?.month || 0,
+          year: dateInfo?.year || 0,
+        });
+      }
+    }
+  }
+
+  return { name: filename, insuranceType, records };
+}
+
 // ============ Assertion helper ============
 let passed = 0, failed = 0;
 function assertEqual(label, actual, expected) {
@@ -120,6 +222,32 @@ function assertEqual(label, actual, expected) {
   }
 }
 
+// ============ Scenario: parse.ts dual-reader comparison ============
+async function testParse() {
+  console.log('\n--- parse.ts ---');
+  let parseExceljs;
+  try {
+    const mod = await import('../src/utils/workbench/parse.ts');
+    parseExceljs = mod.parseRawFile;
+  } catch (e) {
+    console.log('  SKIP: parse.ts not yet implemented');
+    return;
+  }
+
+  const files = [
+    '优米-2026-02.xlsx',
+    '人保-短期-2026-02.xlsx',
+    '人保-长期-2026-02.xlsx',
+    '安淇瑞-2026-03.xlsx',
+  ];
+  for (const f of files) {
+    const buf = readFileSync(join(FIXTURE_DIR, f));
+    const expected = parseRawFileXlsx(buf, f);
+    const actual = await parseExceljs(buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength), f);
+    assertEqual(`parse ${f}`, actual, expected);
+  }
+}
+
 // ============ Main ============
 async function main() {
   console.log('\n=== Workbench test harness ===\n');
@@ -127,6 +255,7 @@ async function main() {
   await makeSetA();
 
   // Test blocks added task-by-task below this line.
+  await testParse();
 
   console.log(`\n=== ${passed} passed, ${failed} failed ===\n`);
   process.exit(failed > 0 ? 1 : 0);
