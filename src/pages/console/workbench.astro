@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WorkbenchApp from '../../components/console/Workbench.svelte';
+---
+
+<BaseLayout title="笑笑的摸鱼工作台" description="Console workbench for Excel processing.">
+  <main class="workbench-page">
+    <a href="/console" class="back-link">&larr; Console</a>
+    <WorkbenchApp client:only="svelte" />
+  </main>
+</BaseLayout>
+
+<style>
+  .workbench-page {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: clamp(4rem, 8vh, 6rem) var(--content-padding) 4rem;
+    min-height: 100dvh;
+  }
+
+  @media (max-width: 32rem) {
+    .workbench-page {
+      padding-top: 3rem;
+    }
+  }
+</style>

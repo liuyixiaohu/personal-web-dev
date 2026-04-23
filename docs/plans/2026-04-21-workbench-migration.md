@@ -247,30 +247,74 @@ git commit -m "test: add workbench test harness skeleton"
 
 ## Task 4: Generate Set A fixture files
 
+**IMPORTANT — Real column schema (from `git show 747fb7a^:src/components/tools/ExcelTool.svelte`):**
+
+The old tool did NOT use generic `公司名称 / 金额 / 日期` headers. Fixtures MUST use the exact column names the production parser looks for:
+
+**优米 (youmi)** — single format, amount already in 元:
+- Company: `被派遣单位`
+- Amount (元): `费用（元）`
+- Date: `保险起期`
+
+**人保 (renBao)** — two formats, auto-detected, amount in **分** (divide by 100 → 元):
+- **Short-term** (when `场地名称` column is present):
+  - Company: `场地名称`
+  - Amount (分): `保费（分）`
+  - Date: `打卡时间` OR `参保时间` (either works, first match wins)
+- **Long-term** (when `场地名称` is absent):
+  - Company: `分组`
+  - Amount (分): `保费（分）`
+  - Date: `投保时间` OR `生效时间`
+
+**Header normalization**: the parser strips whitespace and converts full-width `（）` to half-width `()`, so `费用（元）` ≡ `费用(元)` ≡ `费用 （元）`. Fixtures stay with full-width parens to match typical real-world input.
+
 **Files:**
 - Modify: `scripts/test-workbench.mjs` (add fixture generators)
 
-**Step 1: Extract the fixture generator spec**
+**Step 1: Add fixture generators**
 
-Append to harness, replacing `setupFixtures()` and adding generators:
+Append helper builders and the Set A generator:
 
 ```javascript
-function makeRawWorkbook({ insuranceType, year, month, rows }) {
+// ============ Schema helpers ============
+const YOUMI_HEADERS = ['被派遣单位', '费用（元）', '保险起期'];
+const RENBAO_SHORT_HEADERS = ['场地名称', '保费（分）', '打卡时间'];
+const RENBAO_LONG_HEADERS  = ['分组',    '保费（分）', '投保时间'];
+
+function makeYoumiWorkbook({ year, month, rows }) {
   const wb = new ExcelJS.Workbook();
   const ws = wb.addWorksheet('Sheet1');
-  ws.addRow(['公司名称', '金额', '日期']);
-  for (const [company, amount, day] of rows) {
-    ws.addRow([company, amount, new Date(year, month - 1, day)]);
+  ws.addRow(YOUMI_HEADERS);
+  for (const [company, amountYuan, day] of rows) {
+    ws.addRow([company, amountYuan, new Date(year, month - 1, day)]);
   }
   return wb;
 }
 
-function makeOutputWorkbook(existingBlocks = []) {
+function makeRenBaoShortWorkbook({ year, month, rows }) {
+  const wb = new ExcelJS.Workbook();
+  const ws = wb.addWorksheet('Sheet1');
+  ws.addRow(RENBAO_SHORT_HEADERS);
+  for (const [company, amountFen, day] of rows) {
+    ws.addRow([company, amountFen, new Date(year, month - 1, day)]);
+  }
+  return wb;
+}
+
+function makeRenBaoLongWorkbook({ year, month, rows }) {
+  const wb = new ExcelJS.Workbook();
+  const ws = wb.addWorksheet('Sheet1');
+  ws.addRow(RENBAO_LONG_HEADERS);
+  for (const [company, amountFen, day] of rows) {
+    ws.addRow([company, amountFen, new Date(year, month - 1, day)]);
+  }
+  return wb;
+}
+
+function makeOutputWorkbook() {
   const wb = new ExcelJS.Workbook();
   const ws = wb.addWorksheet('保险登记');
-  // Minimal starter: just a title row; supernova writer fills the rest
   ws.addRow(['保险登记']);
-  // Existing blocks (if any) are written by an earlier supernova run
   return wb;
 }
 
@@ -281,33 +325,41 @@ async function writeFixture(name, wb) {
 }
 
 async function makeSetA() {
-  // A1: output file (empty starting shell)
+  // A1: output file (starting shell — writer fills the rest)
   await writeFixture('保险登记-2026.xlsx', makeOutputWorkbook());
 
-  // A2: youmi 2026-02
-  await writeFixture('优米-2026-02.xlsx', makeRawWorkbook({
-    insuranceType: 'youmi', year: 2026, month: 2,
+  // A2: youmi 2026-02 (amounts already in 元)
+  await writeFixture('优米-2026-02.xlsx', makeYoumiWorkbook({
+    year: 2026, month: 2,
     rows: [['阿里巴巴', 100.00, 5], ['腾讯', 200.00, 15]],
   }));
 
-  // A3: renBao 2026-02
-  await writeFixture('人保-2026-02.xlsx', makeRawWorkbook({
-    insuranceType: 'renBao', year: 2026, month: 2,
-    rows: [['阿里巴巴', 50.00, 5], ['字节跳动', 75.00, 20]],
+  // A3a: renBao SHORT-term 2026-02 (amounts in 分, will ÷100 at parse time)
+  // Expected parsed: 阿里巴巴=50.00元, 字节跳动=75.00元
+  await writeFixture('人保-短期-2026-02.xlsx', makeRenBaoShortWorkbook({
+    year: 2026, month: 2,
+    rows: [['阿里巴巴', 5000, 5], ['字节跳动', 7500, 20]],
   }));
 
-  // A4: 安淇瑞 alias for youmi, 2026-03
-  await writeFixture('安淇瑞-2026-03.xlsx', makeRawWorkbook({
-    insuranceType: 'youmi', year: 2026, month: 3,
+  // A3b: renBao LONG-term 2026-02 (amounts in 分)
+  // Expected parsed: 网易=30.00元
+  await writeFixture('人保-长期-2026-02.xlsx', makeRenBaoLongWorkbook({
+    year: 2026, month: 2,
+    rows: [['网易', 3000, 10]],
+  }));
+
+  // A4: 安淇瑞 alias — filename contains '安淇瑞' → detected as youmi
+  await writeFixture('安淇瑞-2026-03.xlsx', makeYoumiWorkbook({
+    year: 2026, month: 3,
     rows: [['小米', 300.00, 10]],
   }));
 
-  // A5: cross-month bad data
+  // A5: cross-month bad data (youmi schema so it parses headers, but mixed months)
   const badWb = new ExcelJS.Workbook();
   const badWs = badWb.addWorksheet('Sheet1');
-  badWs.addRow(['公司名称', '金额', '日期']);
-  badWs.addRow(['混乱公司', 10, new Date(2026, 1, 5)]);  // Feb
-  badWs.addRow(['混乱公司', 20, new Date(2026, 2, 5)]);  // Mar
+  badWs.addRow(YOUMI_HEADERS);
+  badWs.addRow(['混乱公司', 10.00, new Date(2026, 1, 5)]);  // Feb
+  badWs.addRow(['混乱公司', 20.00, new Date(2026, 2, 5)]);  // Mar
   await writeFixture('优米-混乱.xlsx', badWb);
 }
 ```
@@ -321,13 +373,18 @@ node scripts/test-workbench.mjs
 ls tmp/workbench-fixtures/
 ```
 
-Expected: 5 `.xlsx` files created.
+Expected: 6 `.xlsx` files created:
+- `保险登记-2026.xlsx`
+- `优米-2026-02.xlsx`
+- `人保-短期-2026-02.xlsx`
+- `人保-长期-2026-02.xlsx`
+- `安淇瑞-2026-03.xlsx`
+- `优米-混乱.xlsx`
 
 **Step 3: Add .gitignore entry for tmp/**
 
-Check if `.gitignore` already ignores `tmp/`. If not:
 ```bash
-echo "tmp/" >> .gitignore
+grep -q '^tmp/' .gitignore || echo "tmp/" >> .gitignore
 ```
 
 **Step 4: Commit**
@@ -345,52 +402,67 @@ git commit -m "test: add Set A fixture generators"
 - Create: `src/utils/workbench/parse.ts`
 - Modify: `scripts/test-workbench.mjs` (add reference xlsx parser + comparison scenarios)
 
-This is the highest-risk task. Follow TDD strictly.
+This is the highest-risk task. The implementation must match the old code's domain semantics **exactly**, because "same output as before" is the acceptance criterion. Reference source: `git show 747fb7a^:src/components/tools/ExcelTool.svelte` lines ~200-355.
 
-**Step 1: Add reference `parseRawFileXlsx` to harness**
+### Domain logic summary (replicating the old code)
 
-Extract the old xlsx-based read logic from OLD:L284-L355. Translate to harness utility:
+1. **`normalizeHeader(s)`**: strip whitespace, `（）` → `()`, so `费用（元）` ≡ `费用(元)`
+2. **`findColumnIndex(headers, ...names)`**: normalize each header, try each candidate name in order, return first match index (or -1)
+3. **`parseDate(value)`**: three branches, tried in order:
+   - `Date` object → `{month, year}` from `getMonth()+1`/`getFullYear()`
+   - String containing `(\d{4})-(\d{2})-(\d{2})` (regex, not full Date parse — first match wins)
+   - Number `> 25000` treated as Excel serial: `new Date((value - 25569) * 86400 * 1000)`
+   - Otherwise `null`
+4. **Insurance-type branching**:
+   - **youmi**: company=`被派遣单位`, amount=`费用（元）`, date=`保险起期`. Amount used as-is (in 元).
+   - **renBao**: first check if `场地名称` exists:
+     - Short-term (yes): company=`场地名称`, date=`打卡时间`|`参保时间`
+     - Long-term (no): company=`分组`, date=`投保时间`|`生效时间`
+     - Both: amount=`保费（分）`, then **divide by 100** to get 元
+5. **Multi-sheet**: iterate every sheet in the workbook, collect records from all. A sheet that lacks required columns is **skipped** (not an error) — the old code logs a warning and continues.
+6. **Per-row skip**: if `row[companyCol]` is falsy, skip the row.
+7. **Date fallback**: if `parseDate` returns null, the record still gets pushed with `{month: 0, year: 0}`. This is a sentinel. Cross-month detection treats 0-0 records as "no date" and they don't block.
+8. **Cross-month check**: happens at a higher level (in aggregate.ts, not parse.ts). The old code does NOT throw in the parser for mixed months; it happens in aggregation. However, the parse.ts caller in Workbench.svelte may still want to surface it early — we'll keep this out of parse.ts for now and add the check in aggregate.ts (Task 6).
+
+### Step 1: Add reference `parseRawFileXlsx` + helpers to harness
+
+This is the **xlsx-based** reference implementation used only for comparison. It must match the old code's behavior literally.
 
 ```javascript
-// Reference parser using xlsx (SheetJS) — matches OLD implementation exactly.
-function parseRawFileXlsx(buffer, filename) {
-  const insuranceType = detectInsuranceType(filename);
-  const wb = XLSX.read(buffer, { type: 'buffer', cellDates: true });
-  const sheet = wb.Sheets[wb.SheetNames[0]];
-  const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, blankrows: false });
+// ============ Reference xlsx-based parser (matches 747fb7a^) ============
 
-  // First row is header; locate columns by exact label match
-  const header = rows[0];
-  const companyIdx = header.indexOf('公司名称');
-  const amountIdx = header.indexOf('金额');
-  const dateIdx = header.indexOf('日期');
-  if (companyIdx < 0 || amountIdx < 0 || dateIdx < 0) {
-    throw new Error(`无法识别表头：${filename}`);
+function normalizeHeader(s) {
+  if (s == null) return '';
+  return String(s).trim().replace(/\s+/g, '').replace(/（/g, '(').replace(/）/g, ')');
+}
+
+function findColumnIndex(headers, ...names) {
+  const normalized = headers.map(h => h ? normalizeHeader(h) : '');
+  for (const name of names) {
+    const target = normalizeHeader(name);
+    const idx = normalized.findIndex(h => h === target);
+    if (idx >= 0) return idx;
   }
+  return -1;
+}
 
-  const records = [];
-  for (let i = 1; i < rows.length; i++) {
-    const r = rows[i];
-    if (!r || r.length === 0) continue;
-    const company = String(r[companyIdx] ?? '').trim();
-    const amount = Number(r[amountIdx]);
-    const date = r[dateIdx];
-    if (!company || !Number.isFinite(amount) || !date) continue;
-    const d = date instanceof Date ? date : new Date(date);
-    records.push({
-      company, amount,
-      month: d.getMonth() + 1,
-      year: d.getFullYear(),
-    });
+function parseDate(value) {
+  if (!value) return null;
+  if (value instanceof Date) {
+    return { month: value.getMonth() + 1, year: value.getFullYear() };
   }
-
-  // Enforce single month
-  const months = new Set(records.map(r => `${r.year}-${r.month}`));
-  if (months.size > 1) {
-    throw new Error(`文件 ${filename} 包含多个月份的数据，请拆分后重试`);
+  const str = String(value);
+  const match = str.match(/(\d{4})-(\d{2})-(\d{2})/);
+  if (match) {
+    return { month: parseInt(match[2], 10), year: parseInt(match[1], 10) };
   }
-
-  return { name: filename, insuranceType, records };
+  if (typeof value === 'number' && value > 25000) {
+    const d = new Date((value - 25569) * 86400 * 1000);
+    if (!isNaN(d.getTime())) {
+      return { month: d.getMonth() + 1, year: d.getFullYear() };
+    }
+  }
+  return null;
 }
 
 function detectInsuranceType(filename) {
@@ -398,15 +470,73 @@ function detectInsuranceType(filename) {
   if (filename.includes('优米') || filename.includes('安淇瑞')) return 'youmi';
   throw new Error(`无法分类：${filename}`);
 }
+
+function parseRawFileXlsx(buffer, filename) {
+  const insuranceType = detectInsuranceType(filename);
+  const wb = XLSX.read(buffer, { type: 'buffer', cellDates: true });
+  const records = [];
+
+  for (const sheetName of wb.SheetNames) {
+    const ws = wb.Sheets[sheetName];
+    const data = XLSX.utils.sheet_to_json(ws, { header: 1, defval: null });
+    if (data.length < 2) continue;
+    const headers = data[0];
+
+    if (insuranceType === 'youmi') {
+      const companyCol = findColumnIndex(headers, '被派遣单位');
+      const amountCol = findColumnIndex(headers, '费用（元）');
+      const dateCol = findColumnIndex(headers, '保险起期');
+      if (companyCol < 0 || amountCol < 0) continue;
+
+      for (let i = 1; i < data.length; i++) {
+        const row = data[i];
+        if (!row || !row[companyCol]) continue;
+        const amount = parseFloat(String(row[amountCol])) || 0;
+        const dateInfo = dateCol >= 0 ? parseDate(row[dateCol]) : null;
+        records.push({
+          company: String(row[companyCol]).trim(),
+          amount,
+          month: dateInfo?.month || 0,
+          year: dateInfo?.year || 0,
+        });
+      }
+    } else {
+      // renBao
+      const amountCol = findColumnIndex(headers, '保费（分）');
+      if (amountCol < 0) continue;
+      const siteCol = findColumnIndex(headers, '场地名称');
+      const isShortTerm = siteCol >= 0;
+      const companyCol = isShortTerm ? siteCol : findColumnIndex(headers, '分组');
+      if (companyCol < 0) continue;
+      const dateCol = isShortTerm
+        ? findColumnIndex(headers, '打卡时间', '参保时间')
+        : findColumnIndex(headers, '投保时间', '生效时间');
+
+      for (let i = 1; i < data.length; i++) {
+        const row = data[i];
+        if (!row || !row[companyCol]) continue;
+        const amountFen = parseFloat(String(row[amountCol])) || 0;
+        const amountYuan = amountFen / 100;
+        const dateInfo = dateCol >= 0 ? parseDate(row[dateCol]) : null;
+        records.push({
+          company: String(row[companyCol]).trim(),
+          amount: amountYuan,
+          month: dateInfo?.month || 0,
+          year: dateInfo?.year || 0,
+        });
+      }
+    }
+  }
+
+  return { name: filename, insuranceType, records };
+}
 ```
 
-**Step 2: Add failing comparison scenario**
+### Step 2: Add failing comparison scenario
 
 ```javascript
 async function testParse() {
   console.log('\n--- parse.ts ---');
-
-  // Dynamic import so harness doesn't die if module is missing
   let parseExceljs;
   try {
     const mod = await import('../src/utils/workbench/parse.ts');
@@ -416,32 +546,73 @@ async function testParse() {
     return;
   }
 
-  const files = ['优米-2026-02.xlsx', '人保-2026-02.xlsx', '安淇瑞-2026-03.xlsx'];
+  const files = [
+    '优米-2026-02.xlsx',
+    '人保-短期-2026-02.xlsx',
+    '人保-长期-2026-02.xlsx',
+    '安淇瑞-2026-03.xlsx',
+  ];
   for (const f of files) {
     const buf = readFileSync(join(FIXTURE_DIR, f));
     const expected = parseRawFileXlsx(buf, f);
-    const actual = await parseExceljs(buf.buffer, f);
+    const actual = await parseExceljs(buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength), f);
     assertEqual(`parse ${f}`, actual, expected);
   }
 }
 ```
 
-Add `await testParse();` in `main()`. Add `import { readFileSync } from 'node:fs';` at top.
+Add `await testParse();` in `main()`. Add `import { readFileSync } from 'node:fs';` at the top of the harness.
 
-**Step 3: Run — expect SKIP (not yet implemented)**
+**Note on `buffer.slice(...)`**: Node's `Buffer.buffer` may be a shared ArrayBuffer covering more than the file; `.slice(byteOffset, byteOffset + byteLength)` extracts the exact file bytes. Without it, exceljs may read junk.
+
+### Step 3: Run — expect SKIP (parse.ts not yet implemented)
 
 ```bash
 node scripts/test-workbench.mjs
 ```
 
-Expected: `SKIP: parse.ts not yet implemented`.
-
-**Step 4: Implement minimal `parse.ts`**
+### Step 4: Implement `parse.ts`
 
 ```typescript
 import ExcelJS from 'exceljs';
 import type { InsuranceType, RawFileData, RawRecord } from './types';
 import { WorkbenchError } from './types';
+
+// ============ Helpers (mirror of old ExcelTool.svelte logic) ============
+
+function normalizeHeader(s: unknown): string {
+  if (s == null) return '';
+  return String(s).trim().replace(/\s+/g, '').replace(/（/g, '(').replace(/）/g, ')');
+}
+
+function findColumnIndex(headers: unknown[], ...names: string[]): number {
+  const normalized = headers.map(h => (h != null ? normalizeHeader(h) : ''));
+  for (const name of names) {
+    const target = normalizeHeader(name);
+    const idx = normalized.findIndex(h => h === target);
+    if (idx >= 0) return idx;
+  }
+  return -1;
+}
+
+function parseDate(value: unknown): { month: number; year: number } | null {
+  if (!value) return null;
+  if (value instanceof Date) {
+    return { month: value.getMonth() + 1, year: value.getFullYear() };
+  }
+  const str = String(value);
+  const match = str.match(/(\d{4})-(\d{2})-(\d{2})/);
+  if (match) {
+    return { month: parseInt(match[2], 10), year: parseInt(match[1], 10) };
+  }
+  if (typeof value === 'number' && value > 25000) {
+    const d = new Date((value - 25569) * 86400 * 1000);
+    if (!isNaN(d.getTime())) {
+      return { month: d.getMonth() + 1, year: d.getFullYear() };
+    }
+  }
+  return null;
+}
 
 function detectInsuranceType(filename: string): InsuranceType {
   if (filename.includes('人保')) return 'renBao';
@@ -449,95 +620,117 @@ function detectInsuranceType(filename: string): InsuranceType {
   throw new WorkbenchError(`无法分类：${filename}`);
 }
 
-function coerceToYearMonth(value: unknown): { year: number; month: number } | null {
-  if (value instanceof Date) {
-    return { year: value.getFullYear(), month: value.getMonth() + 1 };
-  }
-  if (typeof value === 'string') {
-    const d = new Date(value);
-    if (!isNaN(d.getTime())) return { year: d.getFullYear(), month: d.getMonth() + 1 };
-  }
-  if (typeof value === 'number') {
-    // Excel serial date
-    const d = new Date(Math.round((value - 25569) * 86400 * 1000));
-    if (!isNaN(d.getTime())) return { year: d.getFullYear(), month: d.getMonth() + 1 };
-  }
-  return null;
+// ============ exceljs row.values normalization ============
+// exceljs returns row.values as a 1-indexed array (index 0 is undefined).
+// We slice to get a 0-indexed array matching xlsx's sheet_to_json({header:1}) output.
+function rowValuesToArray(row: ExcelJS.Row, headerLen: number): unknown[] {
+  const vals = row.values as unknown[];
+  // vals[0] is always undefined. Drop it and pad to headerLen.
+  const arr = Array.isArray(vals) ? vals.slice(1) : [];
+  while (arr.length < headerLen) arr.push(null);
+  return arr;
 }
+
+function sheetToArrays(ws: ExcelJS.Worksheet): unknown[][] {
+  const rows: unknown[][] = [];
+  // Use rowCount to include potentially empty rows, then drop truly empty ones
+  const colCount = ws.columnCount;
+  ws.eachRow({ includeEmpty: false }, (row) => {
+    rows.push(rowValuesToArray(row, colCount));
+  });
+  return rows;
+}
+
+// ============ Main parser ============
 
 export async function parseRawFile(buffer: ArrayBuffer, filename: string): Promise<RawFileData> {
   const insuranceType = detectInsuranceType(filename);
   const wb = new ExcelJS.Workbook();
   await wb.xlsx.load(buffer);
-  const ws = wb.worksheets[0];
-  if (!ws) throw new WorkbenchError(`文件 ${filename} 没有工作表`);
-
-  // Row 1 is header
-  const header = ws.getRow(1).values as unknown[];
-  const companyIdx = header.indexOf('公司名称');
-  const amountIdx = header.indexOf('金额');
-  const dateIdx = header.indexOf('日期');
-  if (companyIdx < 0 || amountIdx < 0 || dateIdx < 0) {
-    throw new WorkbenchError(`无法识别表头：${filename}`);
-  }
 
   const records: RawRecord[] = [];
-  ws.eachRow({ includeEmpty: false }, (row, rowNum) => {
-    if (rowNum === 1) return;
-    const values = row.values as unknown[];
-    const company = String(values[companyIdx] ?? '').trim();
-    const amount = Number(values[amountIdx]);
-    const dateRaw = values[dateIdx];
-    if (!company || !Number.isFinite(amount) || dateRaw == null) return;
-    const ym = coerceToYearMonth(dateRaw);
-    if (!ym) return;
-    records.push({ company, amount, month: ym.month, year: ym.year });
-  });
 
-  const months = new Set(records.map(r => `${r.year}-${r.month}`));
-  if (months.size > 1) {
-    throw new WorkbenchError(`文件 ${filename} 包含多个月份的数据，请拆分后重试`);
+  for (const ws of wb.worksheets) {
+    const data = sheetToArrays(ws);
+    if (data.length < 2) continue;
+    const headers = data[0];
+
+    if (insuranceType === 'youmi') {
+      const companyCol = findColumnIndex(headers, '被派遣单位');
+      const amountCol = findColumnIndex(headers, '费用（元）');
+      const dateCol = findColumnIndex(headers, '保险起期');
+      if (companyCol < 0 || amountCol < 0) continue;
+
+      for (let i = 1; i < data.length; i++) {
+        const row = data[i];
+        if (!row || !row[companyCol]) continue;
+        const amount = parseFloat(String(row[amountCol])) || 0;
+        const dateInfo = dateCol >= 0 ? parseDate(row[dateCol]) : null;
+        records.push({
+          company: String(row[companyCol]).trim(),
+          amount,
+          month: dateInfo?.month || 0,
+          year: dateInfo?.year || 0,
+        });
+      }
+    } else {
+      // renBao: detect short-term vs long-term by presence of 场地名称
+      const amountCol = findColumnIndex(headers, '保费（分）');
+      if (amountCol < 0) continue;
+      const siteCol = findColumnIndex(headers, '场地名称');
+      const isShortTerm = siteCol >= 0;
+      const companyCol = isShortTerm ? siteCol : findColumnIndex(headers, '分组');
+      if (companyCol < 0) continue;
+      const dateCol = isShortTerm
+        ? findColumnIndex(headers, '打卡时间', '参保时间')
+        : findColumnIndex(headers, '投保时间', '生效时间');
+
+      for (let i = 1; i < data.length; i++) {
+        const row = data[i];
+        if (!row || !row[companyCol]) continue;
+        const amountFen = parseFloat(String(row[amountCol])) || 0;
+        const amountYuan = amountFen / 100;
+        const dateInfo = dateCol >= 0 ? parseDate(row[dateCol]) : null;
+        records.push({
+          company: String(row[companyCol]).trim(),
+          amount: amountYuan,
+          month: dateInfo?.month || 0,
+          year: dateInfo?.year || 0,
+        });
+      }
+    }
   }
 
   return { name: filename, insuranceType, records };
 }
 ```
 
-**Note on exceljs row.values**: exceljs returns values as a 1-indexed array (index 0 is always empty/undefined). When `header.indexOf(...)` locates a column, the same indexing pattern applies to data rows. Verify this works by running the harness.
+**Important notes for the implementer:**
 
-**Step 5: Run — expect PASS**
+- Do NOT add cross-month validation here — the old code does that in aggregate, not parse. Task 6 handles it.
+- Do NOT use `WorkbenchError` for "missing columns on a sheet" — the old code silently skips bad sheets (just logs a warning). Only `detectInsuranceType` throws.
+- The `rowValuesToArray` helper normalizes exceljs's 1-indexed values into xlsx-style 0-indexed arrays, so the shared `findColumnIndex` + row-access logic works identically for both parsers. This is the key to making the dual-reader comparison valid.
+- exceljs may return cell values as `{ richText: [...] }` or `{ result, formula }` objects for special cells. If real data needs this we'll add coercion later, but fixtures in Set A/B should produce plain values.
+
+### Step 5: Run — expect PASS
 
 ```bash
 node scripts/test-workbench.mjs
 ```
 
-Expected: all 3 `parse ...` assertions PASS.
+Expected: all 4 `parse <filename>` assertions PASS.
 
-**Step 6: If FAIL — debug**
+### Step 6: If FAIL — debug systematically
 
-Common issues:
-- exceljs 1-indexed values: dump `row.values` for one row to confirm offset
-- Header row handling: exceljs may return `row.values` with a leading undefined
-- Date coercion: check which branch of `coerceToYearMonth` is hit
+Follow this order:
+1. `console.log` the first row of `data` from both parsers, compare shape
+2. Dump `headers` array for both; confirm `findColumnIndex` returns same index
+3. For date mismatches: log the `parseDate` input type and output
+4. For amount mismatches on renBao: confirm both parsers divide by 100
 
-Use: `ExcelJS` API docs + `console.log` inside `parseRawFile` (remove before commit).
+Remove debug logs before commit.
 
-**Step 7: Add error-path scenarios**
-
-Append to `testParse()`:
-```javascript
-try {
-  const buf = readFileSync(join(FIXTURE_DIR, '优米-混乱.xlsx'));
-  await parseExceljs(buf.buffer, '优米-混乱.xlsx');
-  assertEqual('cross-month should throw', 'no throw', 'WorkbenchError');
-} catch (e) {
-  assertEqual('cross-month error message', e.message.includes('多个月份'), true);
-}
-```
-
-Run harness. Expected: PASS.
-
-**Step 8: Commit**
+### Step 7: Commit
 
 ```bash
 git add src/utils/workbench/parse.ts scripts/test-workbench.mjs
@@ -552,7 +745,17 @@ git commit -m "feat(workbench): parse.ts with dual-reader test coverage"
 - Create: `src/utils/workbench/aggregate.ts`
 - Modify: `scripts/test-workbench.mjs` (add aggregate scenarios)
 
-**Step 1: Add failing scenarios to harness**
+### Domain semantics (matching OLD:L357-L449)
+
+- **Return type**: old code returns `AggregatedResult | string` where `string` is a user-facing error message. New code: throw `WorkbenchError(msg)` using the **exact same Chinese messages** so the UI banner reads identically:
+  - No valid dates found: `'无法从数据中检测到日期信息'`
+  - Multiple months detected: `` `检测到 ${monthList}，一次只能处理一个月份的` `` where `monthList` is periods joined by `、` and formatted as `"${year}年${month}月"`.
+- **Period detection**: iterate all records from all files; only count records with `year && month` (skip `{year:0, month:0}` sentinels from failed `parseDate`). Use the **last** valid record's year/month as the detected period (old behavior — `detectedYear`/`detectedMonth` are overwritten in the loop).
+- **Column order**: fixed — `['优米', '人保']`. Sort with `order.indexOf(a) - order.indexOf(b)`. Do NOT rely on Set insertion order.
+- **Grouping**: by company, then by insurance column (youmi → '优米', renBao → '人保'). Multiple records for same company/column sum into one cell.
+- **Totals**: per-column sum, plus `grandTotal = sum(all totals)`.
+
+### Step 1: Add failing scenarios to harness
 
 ```javascript
 async function testAggregate() {
@@ -566,7 +769,7 @@ async function testAggregate() {
     return;
   }
 
-  // Scenario A1: two files, same month, different insurance types
+  // Scenario: two files, same month, different insurance types
   const raws = [
     { name: 'y', insuranceType: 'youmi', records: [
       { company: '阿里', amount: 100, month: 2, year: 2026 },
@@ -580,11 +783,32 @@ async function testAggregate() {
   const result = aggregate(raws);
   assertEqual('agg year', result.year, 2026);
   assertEqual('agg month', result.month, 2);
-  assertEqual('agg columns', result.insuranceColumns.sort(), ['优米', '人保'].sort());
+  assertEqual('agg columns', result.insuranceColumns, ['优米', '人保']);  // fixed order
   assertEqual('agg row count', result.rows.length, 3);  // 阿里, 腾讯, 字节
   assertEqual('agg 阿里 youmi', result.rows.find(r => r.company === '阿里').amounts['优米'], 100);
   assertEqual('agg 阿里 renBao', result.rows.find(r => r.company === '阿里').amounts['人保'], 50);
   assertEqual('agg grand total', result.grandTotal, 100 + 200 + 50 + 75);
+
+  // Scenario: cross-month should throw with exact message
+  try {
+    aggregate([{ name: 'x', insuranceType: 'youmi', records: [
+      { company: 'A', amount: 10, month: 2, year: 2026 },
+      { company: 'A', amount: 20, month: 3, year: 2026 },
+    ]}]);
+    assertEqual('cross-month should throw', 'no throw', 'WorkbenchError');
+  } catch (e) {
+    assertEqual('cross-month exact msg', e.message, '检测到 2026年2月、2026年3月，一次只能处理一个月份的');
+  }
+
+  // Scenario: no valid dates
+  try {
+    aggregate([{ name: 'x', insuranceType: 'youmi', records: [
+      { company: 'A', amount: 10, month: 0, year: 0 },
+    ]}]);
+    assertEqual('no-date should throw', 'no throw', 'WorkbenchError');
+  } catch (e) {
+    assertEqual('no-date exact msg', e.message, '无法从数据中检测到日期信息');
+  }
 }
 ```
 
@@ -598,53 +822,83 @@ node scripts/test-workbench.mjs
 
 **Step 3: Implement `aggregate.ts`**
 
-Port OLD:L356-L440 (approximate range; use `git show 747fb7a^:src/components/tools/ExcelTool.svelte` to find the actual aggregation function). Translate to standalone module:
+Port OLD:L361-L449. The key fidelity points from the old code are spelled out above ("Domain semantics").
 
 ```typescript
-import type { AggregatedResult, AggregatedRow, RawFileData } from './types';
+import type { AggregatedResult, AggregatedRow, InsuranceType, RawFileData } from './types';
 import { INSURANCE_LABELS, WorkbenchError } from './types';
 
-export function aggregate(raws: RawFileData[]): AggregatedResult {
-  if (raws.length === 0) throw new WorkbenchError('没有原始数据文件');
+const COLUMN_ORDER = ['优米', '人保'];
 
-  // All raws must share year and month
-  const first = raws[0].records[0];
-  if (!first) throw new WorkbenchError(`文件 ${raws[0].name} 没有有效数据`);
-  const { year, month } = first;
-  for (const raw of raws) {
-    for (const rec of raw.records) {
-      if (rec.year !== year || rec.month !== month) {
-        throw new WorkbenchError('多个文件的年月不一致');
+export function aggregate(raws: RawFileData[]): AggregatedResult {
+  // Collect all valid (year, month) pairs and remember the last one seen
+  const periods = new Set<string>();
+  let detectedYear = 0;
+  let detectedMonth = 0;
+
+  for (const rf of raws) {
+    for (const r of rf.records) {
+      if (r.year && r.month) {
+        periods.add(`${r.year}-${r.month}`);
+        detectedYear = r.year;
+        detectedMonth = r.month;
       }
     }
   }
 
-  // Group by company, then by insurance type
-  const byCompany = new Map<string, Record<string, number>>();
+  if (periods.size === 0) {
+    throw new WorkbenchError('无法从数据中检测到日期信息');
+  }
+
+  if (periods.size > 1) {
+    const monthList = [...periods]
+      .map(p => {
+        const [y, m] = p.split('-');
+        return `${y}年${m}月`;
+      })
+      .join('、');
+    throw new WorkbenchError(`检测到 ${monthList}，一次只能处理一个月份的`);
+  }
+
+  // Group by (column, company)
+  const companyMap = new Map<string, Record<string, number>>();
   const columnSet = new Set<string>();
-  for (const raw of raws) {
-    const colLabel = INSURANCE_LABELS[raw.insuranceType];
+
+  for (const rf of raws) {
+    const colLabel: string = INSURANCE_LABELS[rf.insuranceType as InsuranceType];
     columnSet.add(colLabel);
-    for (const rec of raw.records) {
-      if (!byCompany.has(rec.company)) byCompany.set(rec.company, {});
-      const entry = byCompany.get(rec.company)!;
-      entry[colLabel] = (entry[colLabel] ?? 0) + rec.amount;
+    for (const r of rf.records) {
+      const existing = companyMap.get(r.company) ?? {};
+      existing[colLabel] = (existing[colLabel] ?? 0) + r.amount;
+      companyMap.set(r.company, existing);
     }
   }
 
-  const insuranceColumns = [...columnSet];
-  const rows: AggregatedRow[] = [...byCompany.entries()].map(([company, amounts]) => ({
-    company,
-    amounts,
-  }));
+  const insuranceColumns = [...columnSet].sort(
+    (a, b) => COLUMN_ORDER.indexOf(a) - COLUMN_ORDER.indexOf(b),
+  );
 
+  const rows: AggregatedRow[] = [];
   const totals: Record<string, number> = {};
-  for (const col of insuranceColumns) {
-    totals[col] = rows.reduce((sum, r) => sum + (r.amounts[col] ?? 0), 0);
-  }
-  const grandTotal = Object.values(totals).reduce((a, b) => a + b, 0);
+  for (const col of insuranceColumns) totals[col] = 0;
 
-  return { year, month, insuranceColumns, rows, totals, grandTotal };
+  for (const [company, amounts] of companyMap) {
+    rows.push({ company, amounts });
+    for (const col of insuranceColumns) {
+      if (amounts[col]) totals[col] += amounts[col];
+    }
+  }
+
+  const grandTotal = Object.values(totals).reduce((s, v) => s + v, 0);
+
+  return {
+    year: detectedYear,
+    month: detectedMonth,
+    insuranceColumns,
+    rows,
+    totals,
+    grandTotal,
+  };
 }
 ```
 
@@ -726,12 +980,36 @@ async function testWrite() {
 
 **Step 3: Implement `write.ts`**
 
-Copy OLD:L441-L698 verbatim (the `updateOutputWorkbook` function). Adapt:
-- Extract into exported function `updateOutputWorkbook(buffer, result) => Blob`
-- Return a `Blob` constructed from the exceljs output buffer
-- Preserve ALL formatting code (borders, fills, alignment, number format) unchanged
+Port OLD:L451-L696. The goal is **byte-identical output formatting** to the old tool. Copy the three internal functions (`getSheetName`, `parseExistingBlocks`, `writeMonthBlock`) and the top-level `updateOutputFile` verbatim into the module, renaming the exported function to `updateOutputWorkbook`.
 
-The function signature:
+### Non-negotiable fidelity requirements
+
+These come from OLD:L451-L696 and must survive the port:
+
+| Item | Value | Source (OLD) |
+|---|---|---|
+| Sheet name format | `` `${year % 100}年` `` → e.g. 2026 → `"26年"` | L451-L454 |
+| Sheet created if missing | Yes, via `workbook.addWorksheet(sheetName)` | L616-L619 |
+| Header row cells | A=`月份`, B=`名称`, C+=insurance columns | L540-L544 |
+| Header cell style | `bold: true`, `alignment: { horizontal: 'center' }`, `fill: { type: 'pattern', pattern: 'solid', fgColor: { theme: 7, tint: 0.6 } }`, thin border all sides | L546-L556 |
+| Data cell amount format | `numFmt = '#,##0.00'` | L578 |
+| Data cell zero/undefined | **Skip** — do not write a value | L576 (guard) |
+| Data cell border | thin border all sides | L582-L584 |
+| Month cell value | numeric `block.month` (not string) | L570 |
+| 合计 row col A | `'合计'` | L592 |
+| 合计 row values | per-column totals, skip zero/undefined | L595-L600 |
+| 合计 row border + bold | columns 1..lastDataCol (NOT the grandTotal cell) | L612-L616 |
+| Grand total cell | column `allColumns.length + 3`, value = `block.grandTotal` | L604 |
+| Grand total fill | yellow `{ argb: 'FFFFFF00' }` | L608-L610 |
+| Grand total style | bold, yellow fill, **no border** | L618-L619 |
+| Blank rows between blocks | **5 rows** (not after the last block) | L661-L664 |
+| Month ordering | descending (newest first) | L652-L653 |
+| Sheet clear before rebuild | all cells in 20-column-wide range set to `null`, style `{}` | L638-L647 |
+| Gridlines | off: `ws.views = [{ showGridLines: false, state: 'normal' }]` | L668 |
+| Column widths | col 1=8, col 2=36, cols 3-10=14 | L671-L675 |
+
+### Function signature
+
 ```typescript
 import ExcelJS from 'exceljs';
 import type { AggregatedResult } from './types';
@@ -772,14 +1050,16 @@ git commit -m "feat(workbench): write.ts with round-trip coverage"
 **Files:**
 - Modify: `scripts/test-workbench.mjs` (add Set B generator + rerun comparison over Set B)
 
+**Purpose**: Set A confirms the happy path. Set B stresses the edge cases where `xlsx` and `exceljs` are most likely to diverge: date format variants, half/full-width parens in headers, whitespace, multi-sheet files, and alias column names.
+
 **Step 1: Add Set B generator**
 
 ```javascript
 async function makeSetB() {
-  // B1: 25 companies with punctuation in names, mixed date formats
+  // B1: youmi with 25 companies, mixed date formats, full-width parens in header
   const b1 = new ExcelJS.Workbook();
   const ws1 = b1.addWorksheet('Sheet1');
-  ws1.addRow(['公司名称', '金额', '日期']);
+  ws1.addRow(['被派遣单位', '费用（元）', '保险起期']);  // full-width parens
   const companies = [
     '阿里巴巴（中国）有限公司', '腾讯·深圳', '字节·跳动，北京',
     '小米科技', '美团', '京东', '百度', '网易', '搜狐', '新浪',
@@ -789,36 +1069,60 @@ async function makeSetB() {
   ];
   for (let i = 0; i < companies.length; i++) {
     const amt = [0.01, 99999999.99, 1234.56, 0.0001, 500][i % 5];
+    // Cycle through 3 date representations: Date object, string, Excel serial
     const dateValue = i % 3 === 0
       ? new Date(2026, 3, (i % 28) + 1)
-      : (i % 3 === 1 ? `2026-04-${String((i % 28) + 1).padStart(2, '0')}` : 43922 + (i % 28));
+      : (i % 3 === 1
+          ? `2026-04-${String((i % 28) + 1).padStart(2, '0')} 09:00:00`
+          : 46113 + (i % 28));  // Excel serial for 2026-04 (46113 = 2026-04-01)
     ws1.addRow([companies[i], amt, dateValue]);
   }
   await writeFixture('优米-2026-04-stress.xlsx', b1);
 
-  // B2: whitespace in company names + blank rows
+  // B2: renBao short-term with whitespace company names + blank rows + date alias
+  //     Use '参保时间' instead of '打卡时间' to test the fallback
+  //     Amounts in 分 (will ÷100). Header uses half-width parens this time.
   const b2 = new ExcelJS.Workbook();
   const ws2 = b2.addWorksheet('Sheet1');
-  ws2.addRow(['公司名称', '金额', '日期']);
-  ws2.addRow(['  前空格公司', 100, new Date(2026, 3, 1)]);
-  ws2.addRow([]);  // empty row
-  ws2.addRow(['后空格公司  ', 200, new Date(2026, 3, 2)]);
+  ws2.addRow(['场地名称', '保费(分)', '参保时间']);  // half-width; date alias
+  ws2.addRow(['  前空格公司', 10000, new Date(2026, 3, 1)]);   // 100元
+  ws2.addRow([]);  // blank row
+  ws2.addRow(['后空格公司  ', 20000, new Date(2026, 3, 2)]);   // 200元
   ws2.addRow([]);
-  ws2.addRow(['正常公司', 300, new Date(2026, 3, 3)]);
-  await writeFixture('人保-2026-04-spaces.xlsx', b2);
+  ws2.addRow(['正常公司', 30000, new Date(2026, 3, 3)]);       // 300元
+  await writeFixture('人保-短期-spaces.xlsx', b2);
+
+  // B3: renBao long-term with '生效时间' alias (not '投保时间'), multi-sheet
+  //     First sheet has required columns, second sheet does NOT → should be skipped
+  const b3 = new ExcelJS.Workbook();
+  const ws3a = b3.addWorksheet('主表');
+  ws3a.addRow(['分组', '保费（分）', '生效时间']);  // '生效时间' alias
+  ws3a.addRow(['A组', 5000, new Date(2026, 3, 5)]);   // 50元
+  ws3a.addRow(['B组', 7500, new Date(2026, 3, 6)]);   // 75元
+  const ws3b = b3.addWorksheet('说明');
+  ws3b.addRow(['无关列1', '无关列2']);
+  ws3b.addRow(['这个 sheet 应被跳过', '不报错']);
+  await writeFixture('人保-长期-multi-sheet.xlsx', b3);
 }
 ```
 
 Add `await makeSetB();` after `await makeSetA();`.
 
-**Step 2: Extend testParse to cover Set B**
+**Step 2: Extend `testParse` to cover Set B**
 
 ```javascript
-const setBFiles = ['优米-2026-04-stress.xlsx', '人保-2026-04-spaces.xlsx'];
+const setBFiles = [
+  '优米-2026-04-stress.xlsx',
+  '人保-短期-spaces.xlsx',
+  '人保-长期-multi-sheet.xlsx',
+];
 for (const f of setBFiles) {
   const buf = readFileSync(join(FIXTURE_DIR, f));
   const expected = parseRawFileXlsx(buf, f);
-  const actual = await parseExceljs(buf.buffer, f);
+  const actual = await parseExceljs(
+    buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength),
+    f,
+  );
   assertEqual(`parse-B ${f}`, actual, expected);
 }
 ```
@@ -829,7 +1133,12 @@ for (const f of setBFiles) {
 node scripts/test-workbench.mjs
 ```
 
-If diffs appear: they reveal real xlsx-vs-exceljs divergence. Fix `parse.ts` (typically coercion logic for Excel serial dates or whitespace) until all `parse-B ...` assertions PASS.
+If diffs appear, they reveal real xlsx-vs-exceljs divergence. Most likely fix sites in `parse.ts`:
+- Excel serial date coercion threshold
+- Whitespace trimming in company names (should happen in both)
+- Multi-sheet iteration order (should match `wb.SheetNames` in xlsx, `wb.worksheets` in exceljs)
+
+Debug by logging `data[0]` (headers) and `data[1]` (first row) from both parsers side-by-side until the diff localizes.
 
 **Step 4: Commit**
 
