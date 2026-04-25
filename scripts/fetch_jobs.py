@@ -56,6 +56,7 @@ NPM_COMPANIES = [
     ("gleanwork", "Glean", "greenhouse_gleanwork.json"),
     ("sambanovasystems", "SambaNova", "greenhouse_sambanovasystems.json"),
     ("tenstorrent", "Tenstorrent", "greenhouse_tenstorrent.json"),
+    ("amperesand", "Amperesand", "greenhouse_amperesand.json"),
     # Ashby
     ("figure", "Figure AI", "ashby_figure.json"),
     ("openai", "OpenAI", "ashby_openai.json"),
@@ -84,6 +85,7 @@ NPM_COMPANIES = [
     ("MachinaLabs", "Machina Labs", "lever_MachinaLabs.json"),
     ("brightmachines", "Bright Machines", "lever_brightmachines.json"),
     ("dexterity", "Dexterity", "lever_dexterity.json"),
+    ("cobaltrobotics", "Cobalt Robotics", "lever_cobaltrobotics.json"),
     # Amazon
     ("amazon", "Amazon", "amazon_amazon.json"),
     # Workday
