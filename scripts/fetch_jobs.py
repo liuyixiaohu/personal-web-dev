@@ -51,6 +51,11 @@ NPM_COMPANIES = [
     ("apptronik", "Apptronik", "greenhouse_apptronik.json"),
     ("formlabs", "Formlabs", "greenhouse_formlabs.json"),
     ("relativity", "Relativity Space", "greenhouse_relativity.json"),
+    ("cerebrassystems", "Cerebras", "greenhouse_cerebrassystems.json"),
+    ("togetherai", "Together AI", "greenhouse_togetherai.json"),
+    ("gleanwork", "Glean", "greenhouse_gleanwork.json"),
+    ("sambanovasystems", "SambaNova", "greenhouse_sambanovasystems.json"),
+    ("tenstorrent", "Tenstorrent", "greenhouse_tenstorrent.json"),
     # Ashby
     ("figure", "Figure AI", "ashby_figure.json"),
     ("openai", "OpenAI", "ashby_openai.json"),
@@ -61,6 +66,13 @@ NPM_COMPANIES = [
     ("perplexity", "Perplexity AI", "ashby_perplexity.json"),
     ("character", "Character AI", "ashby_character.json"),
     ("hadrian-automation", "Hadrian", "ashby_hadrian-automation.json"),
+    ("lambda", "Lambda", "ashby_lambda.json"),
+    ("cursor", "Cursor", "ashby_cursor.json"),
+    ("sierra", "Sierra", "ashby_sierra.json"),
+    ("harvey", "Harvey", "ashby_harvey.json"),
+    ("runway", "Runway", "ashby_runway.json"),
+    ("cobot", "Collaborative Robotics", "ashby_cobot.json"),
+    ("elevenlabs", "ElevenLabs", "ashby_elevenlabs.json"),
     # Lever
     ("zoox", "Zoox", "lever_zoox.json"),
     ("shieldai", "Shield AI", "lever_shieldai.json"),
@@ -71,6 +83,7 @@ NPM_COMPANIES = [
     ("plus-2", "Plus", "lever_plus-2.json"),
     ("MachinaLabs", "Machina Labs", "lever_MachinaLabs.json"),
     ("brightmachines", "Bright Machines", "lever_brightmachines.json"),
+    ("dexterity", "Dexterity", "lever_dexterity.json"),
     # Amazon
     ("amazon", "Amazon", "amazon_amazon.json"),
     # Workday
