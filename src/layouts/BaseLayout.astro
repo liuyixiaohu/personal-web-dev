@@ -13,7 +13,7 @@ interface Props {
   bodyClass?: string;
 }
 
-const { title = "Kun Li | Product Marketing, Data Science & Design", description = "Given the SEO Principals, I'm genuinely surprised you found this page. Welcome, I guess.", ogDescription, hideFooter = false, bodyClass } = Astro.props;
+const { title = "Kun Li", description = "Given the SEO Principals, I'm genuinely surprised you found this page. Welcome, I guess.", ogDescription, hideFooter = false, bodyClass } = Astro.props;
 const socialDescription = ogDescription || description;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -37,7 +37,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={socialDescription} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Kun Li" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:image" content="https://kunli.co/og-image.png" />
     <meta property="og:image:width" content="1200" />
