@@ -316,7 +316,13 @@
       <p class="event-stale">{t('events.staleWarning')}</p>
     {/if}
 
-    <div class="event-count">{filteredEvents.length} {t('events.eventCount')}</div>
+    <div class="event-count">
+      {#if filteredEvents.length !== events.length}
+        {filteredEvents.length} / {events.length} {t('events.eventCount')}
+      {:else}
+        {filteredEvents.length} {t('events.eventCount')}
+      {/if}
+    </div>
 
     {#if filteredEvents.length === 0}
       <p class="event-status">{t('events.noMatch')}</p>
