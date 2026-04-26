@@ -61,6 +61,7 @@ def main():
         "location", "location_type", "calendar_name", "guest_count",
         "is_free", "price_cents", "price_currency", "categories",
         "first_seen_at",
+        "host_names",  # used by search + exclude filters in EventList.svelte
     }
     trimmed = [{k: v for k, v in e.items() if k in FRONTEND_FIELDS} for e in all_events]
 
