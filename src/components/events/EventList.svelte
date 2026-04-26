@@ -136,10 +136,11 @@
           if (mins > eh * 60 + em) return false;
         }
       }
-      if (q && !e.name.toLowerCase().includes(q) && !e.host_names.some(h => h.toLowerCase().includes(q))) return false;
+      const hostNames = e.host_names ?? [];
+      if (q && !e.name.toLowerCase().includes(q) && !hostNames.some(h => h.toLowerCase().includes(q))) return false;
       if (excludeKeywords.length > 0) {
         const nameLower = e.name.toLowerCase();
-        const hostsLower = e.host_names.map(h => h.toLowerCase());
+        const hostsLower = hostNames.map(h => h.toLowerCase());
         if (excludeKeywords.some(kw => nameLower.includes(kw) || hostsLower.some(h => h.includes(kw)))) return false;
       }
       return true;
