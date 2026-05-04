@@ -57,6 +57,8 @@ NPM_COMPANIES = [
     ("sambanovasystems", "SambaNova", "greenhouse_sambanovasystems.json"),
     ("tenstorrent", "Tenstorrent", "greenhouse_tenstorrent.json"),
     ("amperesand", "Amperesand", "greenhouse_amperesand.json"),
+    ("skildai-careers", "Skild AI", "greenhouse_skildai-careers.json"),
+    ("roboforce", "RoboForce", "greenhouse_roboforce.json"),
     # Ashby
     ("figure", "Figure AI", "ashby_figure.json"),
     ("openai", "OpenAI", "ashby_openai.json"),
@@ -74,6 +76,14 @@ NPM_COMPANIES = [
     ("runway", "Runway", "ashby_runway.json"),
     ("cobot", "Collaborative Robotics", "ashby_cobot.json"),
     ("elevenlabs", "ElevenLabs", "ashby_elevenlabs.json"),
+    ("mindrobotics", "Mind Robotics", "ashby_mindrobotics.json"),
+    ("rhoda-ai", "Rhoda AI", "ashby_rhoda-ai.json"),
+    ("bedrock-robotics", "Bedrock Robotics", "ashby_bedrock-robotics.json"),
+    ("sunday", "Sunday Robotics", "ashby_sunday.json"),
+    ("lightwheel", "Lightwheel", "ashby_lightwheel.json"),
+    ("sereact", "Sereact", "ashby_sereact.json"),
+    ("robco", "RobCo", "ashby_robco.json"),
+    ("harmattan-ai", "Harmattan AI", "ashby_harmattan-ai.json"),
     # Lever
     ("zoox", "Zoox", "lever_zoox.json"),
     ("shieldai", "Shield AI", "lever_shieldai.json"),
@@ -97,6 +107,7 @@ NPM_COMPANIES = [
     # ("symbotic", "Symbotic", "workday_symbotic.json"),  # Workday 422 — skipped
     # SmartRecruiters
     ("intuitive", "Intuitive Surgical", "smartrecruiters_intuitive.json"),
+    ("Vention", "Vention", "smartrecruiters_Vention.json"),
     # Phenom
     ("adobe", "Adobe", "phenom_adobe.json"),
     # iCIMS
@@ -107,6 +118,10 @@ NPM_COMPANIES = [
     ("huggingface", "Hugging Face", "workable_huggingface.json"),
     # Recruitee
     ("1x", "1X Technologies", "recruitee_1x.json"),
+    # Rippling
+    ("mytra", "Mytra", "rippling_mytra.json"),
+    ("advanced-navigation", "Advanced Navigation", "rippling_advanced-navigation.json"),
+    ("overland-ai", "Overland AI", "rippling_overland-ai.json"),
     # Mobileye (custom)
     ("mobileye", "Mobileye", "mobileye_mobileye.json"),
 ]
