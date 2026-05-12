@@ -1,0 +1,276 @@
+---
+import fs from 'fs';
+import path from 'path';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const snapshotPath = path.resolve(process.cwd(), 'public/console/data/gsc-snapshot.json');
+let snapshot: any;
+try {
+  snapshot = JSON.parse(fs.readFileSync(snapshotPath, 'utf-8'));
+} catch {
+  snapshot = null;
+}
+
+function pct(n: number): string {
+  return `${(n * 100).toFixed(1)}%`;
+}
+
+function strip(site: string, page: string): string {
+  if (site.startsWith('sc-domain:')) {
+    const host = site.replace('sc-domain:', '');
+    return page.replace(new RegExp(`^https?://(www\\.)?${host}`), '') || '/';
+  }
+  return page.replace(site, '') || '/';
+}
+
+const generatedLabel = snapshot?.generatedAt
+  ? new Date(snapshot.generatedAt).toISOString().replace('T', ' ').slice(0, 16) + ' UTC'
+  : '—';
+---
+
+<BaseLayout title="SEO 看板" description="Search Console snapshot.">
+  <main class="page">
+    <a href="/console" class="back-link">&larr; Console</a>
+    <h1>SEO 看板</h1>
+
+    {snapshot ? (
+      <>
+        <p class="meta">
+          Snapshot：{generatedLabel} · 数据窗口 {snapshot.windows.last7.startDate} → {snapshot.windows.last7.endDate}（GSC 有约 3 天延迟）
+        </p>
+
+        <section class="totals-row">
+          <div class="totals-card">
+            <h2>最近 7 天</h2>
+            <dl>
+              <div><dt>点击</dt><dd>{snapshot.windows.last7.totals.clicks}</dd></div>
+              <div><dt>曝光</dt><dd>{snapshot.windows.last7.totals.impressions}</dd></div>
+              <div><dt>CTR</dt><dd>{pct(snapshot.windows.last7.totals.ctr)}</dd></div>
+              <div><dt>平均排名</dt><dd>{snapshot.windows.last7.totals.position.toFixed(1)}</dd></div>
+            </dl>
+          </div>
+          <div class="totals-card">
+            <h2>最近 30 天</h2>
+            <dl>
+              <div><dt>点击</dt><dd>{snapshot.windows.last30.totals.clicks}</dd></div>
+              <div><dt>曝光</dt><dd>{snapshot.windows.last30.totals.impressions}</dd></div>
+              <div><dt>CTR</dt><dd>{pct(snapshot.windows.last30.totals.ctr)}</dd></div>
+              <div><dt>平均排名</dt><dd>{snapshot.windows.last30.totals.position.toFixed(1)}</dd></div>
+            </dl>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="section-title">Top 10 搜索词（近 7 天）</h2>
+          {snapshot.topQueries.length > 0 ? (
+            <table>
+              <thead><tr><th>词</th><th class="num">点击</th><th class="num">曝光</th><th class="num">CTR</th><th class="num">排名</th></tr></thead>
+              <tbody>
+                {snapshot.topQueries.map((q: any) => (
+                  <tr>
+                    <td>{q.query}</td>
+                    <td class="num">{q.clicks}</td>
+                    <td class="num">{q.impressions}</td>
+                    <td class="num">{pct(q.ctr)}</td>
+                    <td class="num">{q.position.toFixed(1)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : <p class="empty">无</p>}
+        </section>
+
+        <section>
+          <h2 class="section-title">Top 10 着陆页（近 30 天）</h2>
+          {snapshot.topPages.length > 0 ? (
+            <table>
+              <thead><tr><th>页面</th><th class="num">点击</th><th class="num">曝光</th><th class="num">CTR</th><th class="num">排名</th></tr></thead>
+              <tbody>
+                {snapshot.topPages.map((p: any) => (
+                  <tr>
+                    <td><code>{strip(snapshot.site, p.page)}</code></td>
+                    <td class="num">{p.clicks}</td>
+                    <td class="num">{p.impressions}</td>
+                    <td class="num">{pct(p.ctr)}</td>
+                    <td class="num">{p.position.toFixed(1)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : <p class="empty">无</p>}
+        </section>
+
+        <section>
+          <h2 class="section-title">排名变化最大的关键词（近 7 天 vs 前 7 天）</h2>
+          {snapshot.biggestMovers.length > 0 ? (
+            <table>
+              <thead><tr><th>词</th><th class="num">之前</th><th class="num">现在</th><th class="num">变化</th><th class="num">点击</th><th class="num">曝光</th></tr></thead>
+              <tbody>
+                {snapshot.biggestMovers.map((m: any) => (
+                  <tr>
+                    <td>{m.query}</td>
+                    <td class="num">{m.before.toFixed(1)}</td>
+                    <td class="num">{m.after.toFixed(1)}</td>
+                    <td class={`num ${m.positionChange > 0 ? 'up' : 'down'}`}>
+                      {m.positionChange > 0 ? '↑' : '↓'} {Math.abs(m.positionChange).toFixed(1)}
+                    </td>
+                    <td class="num">{m.clicks}</td>
+                    <td class="num">{m.impressions}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : <p class="empty">无明显变化</p>}
+          <p class="hint">"现在"排名数字越小越好（第 1 名 = position 1）。↑ 表示排名提升。最小曝光阈值：10。</p>
+        </section>
+      </>
+    ) : (
+      <div class="setup">
+        <p>暂无 GSC snapshot。一次性设置：</p>
+        <ol>
+          <li>GitHub repo → Settings → Secrets and variables → Actions → New repository secret</li>
+          <li>Name: <code>GCP_SA_KEY</code></li>
+          <li>Value: 整个 service account JSON 内容</li>
+          <li>触发 <a href="https://github.com/liuyixiaohu/personal-web-dev/actions/workflows/gsc-snapshot.yml" target="_blank">GSC Snapshot workflow</a></li>
+        </ol>
+      </div>
+    )}
+  </main>
+</BaseLayout>
+
+<style>
+  .page {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: clamp(3rem, 6vh, 5rem) var(--content-padding) 4rem;
+  }
+
+  .back-link {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  h1 {
+    font-size: var(--fs-lg);
+    font-weight: 500;
+    margin: 0 0 0.4rem;
+  }
+
+  .meta {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    margin: 0 0 1.5rem;
+  }
+
+  .totals-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .totals-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.2rem;
+  }
+
+  .totals-card h2 {
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-light);
+    margin: 0 0 0.8rem;
+    font-weight: 500;
+  }
+
+  .totals-card dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem 1rem;
+  }
+
+  .totals-card dt {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    margin: 0;
+  }
+
+  .totals-card dd {
+    font-size: var(--fs-base);
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .section-title {
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    margin: 2rem 0 0.8rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--fs-xs);
+  }
+
+  th, td {
+    text-align: left;
+    padding: 0.4rem 0.5rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  th {
+    color: var(--text-light);
+    font-weight: 500;
+  }
+
+  th.num, td.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .num.up { color: var(--color-ds-mid); }
+  .num.down { color: var(--color-pm); }
+
+  code {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 0.9em;
+    color: var(--text-light);
+  }
+
+  .empty {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    margin: 0.4rem 0;
+  }
+
+  .hint {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    margin-top: 0.6rem;
+  }
+
+  .setup {
+    background: rgba(0, 0, 0, 0.025);
+    padding: 1.2rem 1.5rem;
+    border-radius: var(--radius-lg);
+    font-size: var(--fs-sm);
+  }
+
+  .setup ol {
+    padding-left: 1.2rem;
+    margin: 0.6rem 0 0;
+  }
+
+  .setup li {
+    margin: 0.3rem 0;
+  }
+</style>
