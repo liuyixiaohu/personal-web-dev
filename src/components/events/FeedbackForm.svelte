@@ -16,7 +16,7 @@
     feedbackError = false;
     const form = e.target as HTMLFormElement;
     try {
-      const res = await fetch('https://formspree.io/f/xbdzgjpr', {
+      const res = await fetch('/api/feedback', {
         method: 'POST',
         body: new FormData(form),
         headers: { Accept: 'application/json' },
