@@ -5,6 +5,7 @@
   import { parseRawFile } from '../../utils/workbench/parse.ts';
   import { aggregate } from '../../utils/workbench/aggregate.ts';
   import { updateOutputWorkbook } from '../../utils/workbench/write.ts';
+  import { sniffFileFormat, formatHint, isFormatSupported } from '../../utils/workbench/sniff.ts';
   import { track } from '../../utils/analytics';
 
   let lang: Lang = $state('en');
@@ -14,6 +15,7 @@
   let uploadedFiles: UploadedFile[] = $state([]);
   let processing = $state(false);
   let errorMessage = $state('');
+  let badFiles = $derived(uploadedFiles.filter((f) => !isFormatSupported(f.format)));
 
   function classifyFile(name: string): { role: 'output' | 'youmi' | 'renBao', label: string } | null {
     if (name.includes('保险登记')) return { role: 'output', label: '输出文件' };
@@ -34,7 +36,8 @@
         continue;
       }
       const buf = await f.arrayBuffer();
-      added.push({ name: f.name, role: cls.role, roleLabel: cls.label, buffer: buf });
+      const format = sniffFileFormat(buf);
+      added.push({ name: f.name, role: cls.role, roleLabel: cls.label, buffer: buf, format });
     }
     uploadedFiles = [...uploadedFiles, ...added];
     if (rejected.length > 0) {
@@ -68,6 +71,10 @@
     }
     if (raws.length === 0) {
       errorMessage = '请至少上传一个原始数据文件';
+      return;
+    }
+    if (badFiles.length > 0) {
+      errorMessage = `有 ${badFiles.length} 个文件不是有效的 Excel 文件，请先移除或替换`;
       return;
     }
 
@@ -142,9 +149,12 @@
     {#if uploadedFiles.length > 0}
       <ul class="file-list">
         {#each uploadedFiles as file, i}
-          <li>
+          <li class:bad={!isFormatSupported(file.format)}>
             <span class="role-tag">{file.roleLabel}</span>
             <span class="file-name">{file.name}</span>
+            {#if !isFormatSupported(file.format)}
+              <span class="format-warning">{formatHint(file.format)}</span>
+            {/if}
             <button type="button" onclick={() => removeFile(i)}>移除</button>
           </li>
         {/each}
@@ -158,7 +168,7 @@
     <button
       type="button"
       class="process-btn"
-      disabled={processing || uploadedFiles.length === 0}
+      disabled={processing || uploadedFiles.length === 0 || badFiles.length > 0}
       onclick={handleProcess}
     >
       {processing ? '处理中...' : '开始处理'}
@@ -274,6 +284,17 @@
     padding: 0.45rem 0.6rem;
     border-radius: var(--radius-sm);
     transition: background 0.15s;
+  }
+
+  .file-list li.bad .file-name {
+    color: var(--text-light);
+    text-decoration: line-through;
+  }
+
+  .format-warning {
+    font-size: var(--fs-xs);
+    color: var(--color-pm);
+    margin-right: 0.6em;
   }
 
   .file-name {

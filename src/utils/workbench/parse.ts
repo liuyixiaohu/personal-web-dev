@@ -1,6 +1,7 @@
 import ExcelJS from 'exceljs';
 import type { InsuranceType, RawFileData, RawRecord } from './types.ts';
 import { WorkbenchError } from './types.ts';
+import { sniffFileFormat } from './sniff.ts';
 
 // ============ Helpers (mirror of old ExcelTool.svelte logic) ============
 
@@ -64,17 +65,36 @@ function sheetToArrays(ws: ExcelJS.Worksheet): unknown[][] {
   return rows;
 }
 
+// Load workbook as a list of 2D arrays. Dispatches on file format: .xlsx via
+// ExcelJS (already a dep), .xls via lazy-loaded SheetJS so the ~150KB cost
+// is only paid by users who actually upload a legacy binary file.
+async function loadSheetsAsArrays(buffer: ArrayBuffer): Promise<unknown[][][]> {
+  const format = sniffFileFormat(buffer);
+  if (format === 'xls') {
+    const XLSX = await import('xlsx');
+    const wb = XLSX.read(new Uint8Array(buffer), { type: 'array', cellDates: true });
+    return wb.SheetNames.map(
+      (name) =>
+        XLSX.utils.sheet_to_json(wb.Sheets[name], { header: 1, blankrows: false }) as unknown[][],
+    );
+  }
+  if (format !== 'xlsx') {
+    throw new WorkbenchError(`不支持的文件格式（${format}），请使用 .xlsx 或 .xls`);
+  }
+  const wb = new ExcelJS.Workbook();
+  await wb.xlsx.load(buffer);
+  return wb.worksheets.map(sheetToArrays);
+}
+
 // ============ Main parser ============
 
 export async function parseRawFile(buffer: ArrayBuffer, filename: string): Promise<RawFileData> {
   const insuranceType = detectInsuranceType(filename);
-  const wb = new ExcelJS.Workbook();
-  await wb.xlsx.load(buffer);
+  const sheets = await loadSheetsAsArrays(buffer);
 
   const records: RawRecord[] = [];
 
-  for (const ws of wb.worksheets) {
-    const data = sheetToArrays(ws);
+  for (const data of sheets) {
     if (data.length < 2) continue;
     const headers = data[0];
 

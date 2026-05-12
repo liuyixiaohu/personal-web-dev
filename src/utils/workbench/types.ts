@@ -1,12 +1,14 @@
 export type InsuranceType = 'youmi' | 'renBao';
 export type FileRole = 'output' | InsuranceType;
 export type TaskId = 'supernova' | 'neutron' | 'redgiant';
+export type FileFormat = 'xlsx' | 'xls' | 'html' | 'unknown';
 
 export interface UploadedFile {
   name: string;
   role: FileRole;
   roleLabel: string;
   buffer: ArrayBuffer;
+  format: FileFormat;
 }
 
 export interface RawRecord {
