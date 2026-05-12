@@ -1,0 +1,144 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="反馈收件箱" description="Recent feedback submissions.">
+  <main class="page">
+    <a href="/console" class="back-link">&larr; Console</a>
+    <h1>反馈收件箱</h1>
+    <p class="meta" id="meta">加载中…</p>
+    <div id="list" class="list"></div>
+    <p class="hint">保留最近 30 天的反馈（CF KV TTL）。</p>
+  </main>
+</BaseLayout>
+
+<script>
+  function escapeHtml(s: string): string {
+    return s.replace(/[&<>"']/g, (c) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+    }[c] as string));
+  }
+
+  function fmtTime(iso: string): string {
+    const d = new Date(iso);
+    const y = d.getFullYear();
+    const mo = String(d.getMonth() + 1).padStart(2, '0');
+    const da = String(d.getDate()).padStart(2, '0');
+    const hh = String(d.getHours()).padStart(2, '0');
+    const mm = String(d.getMinutes()).padStart(2, '0');
+    return `${y}-${mo}-${da} ${hh}:${mm}`;
+  }
+
+  interface Entry {
+    id: string; ts: string; message: string; country: string; ua: string; referer: string;
+  }
+  interface ListResponse { count: number; entries: Entry[]; }
+
+  async function load() {
+    const meta = document.getElementById('meta') as HTMLElement;
+    const list = document.getElementById('list') as HTMLElement;
+    try {
+      const res = await fetch('/console/api/feedback', { credentials: 'include' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = (await res.json()) as ListResponse;
+      if (data.count === 0) {
+        meta.textContent = '暂无反馈';
+        return;
+      }
+      meta.textContent = `共 ${data.count} 条`;
+      list.innerHTML = data.entries.map((e) => `
+        <article class="entry">
+          <header>
+            <time>${fmtTime(e.ts)}</time>
+            ${e.country ? `<span class="tag">${escapeHtml(e.country)}</span>` : ''}
+            ${e.referer ? `<span class="referer">from ${escapeHtml(e.referer.replace(/^https?:\/\/[^/]+/, ''))}</span>` : ''}
+          </header>
+          <p class="msg">${escapeHtml(e.message)}</p>
+        </article>
+      `).join('');
+    } catch (e) {
+      meta.textContent = `加载失败：${(e as Error).message}`;
+      meta.classList.add('error');
+    }
+  }
+
+  load();
+</script>
+
+<style>
+  .page {
+    max-width: 50rem;
+    margin: 0 auto;
+    padding: clamp(3rem, 6vh, 5rem) var(--content-padding) 4rem;
+  }
+
+  .back-link {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  h1 {
+    font-size: var(--fs-lg);
+    font-weight: 500;
+    margin: 0 0 0.4rem;
+  }
+
+  .meta {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    margin: 0 0 1.5rem;
+  }
+
+  .meta.error { color: var(--color-pm); }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  :global(.entry) {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.8rem 1rem;
+  }
+
+  :global(.entry header) {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    margin-bottom: 0.4rem;
+  }
+
+  :global(.entry .tag) {
+    background: rgba(0, 0, 0, 0.04);
+    padding: 0.05rem 0.35rem;
+    border-radius: var(--radius-sm);
+  }
+
+  :global(.entry .referer) {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 0.85em;
+  }
+
+  :global(.entry .msg) {
+    margin: 0;
+    font-size: var(--fs-sm);
+    color: var(--text);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .hint {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    margin-top: 2rem;
+  }
+</style>
