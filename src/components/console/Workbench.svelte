@@ -15,7 +15,28 @@
   let uploadedFiles: UploadedFile[] = $state([]);
   let processing = $state(false);
   let errorMessage = $state('');
+
   let badFiles = $derived(uploadedFiles.filter((f) => !isFormatSupported(f.format)));
+  let parseErrors = $derived(uploadedFiles.filter((f) => f.parseError));
+  let stillParsing = $derived(uploadedFiles.some((f) => f.parsing));
+  let detectedPeriods = $derived.by(() => {
+    const set = new Set<string>();
+    for (const f of uploadedFiles) {
+      if (!f.parseResult) continue;
+      for (const r of f.parseResult.records) {
+        if (r.year && r.month) set.add(`${r.year}-${r.month}`);
+      }
+    }
+    return [...set].sort();
+  });
+  let canProcess = $derived(
+    uploadedFiles.length > 0 &&
+      badFiles.length === 0 &&
+      parseErrors.length === 0 &&
+      !stillParsing &&
+      detectedPeriods.length === 1 &&
+      TASKS.find((t) => t.id === selectedTask)?.implemented === true,
+  );
 
   function classifyFile(name: string): { role: 'output' | 'youmi' | 'renBao', label: string } | null {
     if (name.includes('保险登记')) return { role: 'output', label: '输出文件' };
@@ -37,11 +58,36 @@
       }
       const buf = await f.arrayBuffer();
       const format = sniffFileFormat(buf);
-      added.push({ name: f.name, role: cls.role, roleLabel: cls.label, buffer: buf, format });
+      const willParse = cls.role !== 'output' && isFormatSupported(format);
+      added.push({
+        name: f.name,
+        role: cls.role,
+        roleLabel: cls.label,
+        buffer: buf,
+        format,
+        parsing: willParse,
+      });
     }
     uploadedFiles = [...uploadedFiles, ...added];
     if (rejected.length > 0) {
       errorMessage = `无法识别文件：${rejected.join('、')}。请检查文件名是否包含'保险登记'、'人保'、'优米'或'安淇瑞'`;
+    }
+    for (const file of added) {
+      if (file.parsing) void parseFile(file);
+    }
+  }
+
+  async function parseFile(target: UploadedFile) {
+    try {
+      const result = await parseRawFile(target.buffer, target.name);
+      uploadedFiles = uploadedFiles.map((f) =>
+        f.buffer === target.buffer ? { ...f, parsing: false, parseResult: result } : f,
+      );
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      uploadedFiles = uploadedFiles.map((f) =>
+        f.buffer === target.buffer ? { ...f, parsing: false, parseError: msg } : f,
+      );
     }
   }
 
@@ -50,17 +96,25 @@
     errorMessage = '';
   }
 
+  function fileSummary(file: UploadedFile): string {
+    if (!file.parseResult) return '';
+    const recs = file.parseResult.records;
+    const total = recs.reduce((s, r) => s + r.amount, 0);
+    const months = [...new Set(recs.map((r) => r.month).filter(Boolean))].sort((a, b) => a - b);
+    const monthLabel = months.length > 0 ? `${months.join('、')} 月 · ` : '';
+    return `${monthLabel}${recs.length} 条 · ¥${total.toFixed(2)}`;
+  }
+
   async function handleProcess() {
     errorMessage = '';
     const outputs = uploadedFiles.filter((f) => f.role === 'output');
     const raws = uploadedFiles.filter((f) => f.role !== 'output');
 
-    if (selectedTask !== 'supernova') {
-      const task = TASKS.find((t) => t.id === selectedTask);
+    const task = TASKS.find((t) => t.id === selectedTask);
+    if (!task?.implemented) {
       errorMessage = `${task?.label ?? selectedTask} 暂未实现`;
       return;
     }
-
     if (outputs.length === 0) {
       errorMessage = "请至少上传一个输出文件（文件名包含'保险登记'）";
       return;
@@ -77,14 +131,23 @@
       errorMessage = `有 ${badFiles.length} 个文件不是有效的 Excel 文件，请先移除或替换`;
       return;
     }
+    if (parseErrors.length > 0) {
+      errorMessage = `有 ${parseErrors.length} 个文件解析失败，请检查后重新上传`;
+      return;
+    }
+    if (stillParsing) {
+      errorMessage = '还有文件正在解析，请稍候';
+      return;
+    }
+    if (detectedPeriods.length > 1) {
+      errorMessage = '检测到多个月份，一次只能处理一个月份的数据';
+      return;
+    }
 
     processing = true;
     try {
       track('workbench_run', { task: selectedTask, raw_count: raws.length });
-      const rawDatas = [];
-      for (const r of raws) {
-        rawDatas.push(await parseRawFile(r.buffer, r.name));
-      }
+      const rawDatas = raws.map((r) => r.parseResult!);
       const result = aggregate(rawDatas);
       const blob = await updateOutputWorkbook(outputs[0].buffer, result);
 
@@ -124,9 +187,17 @@
   <section class="task-selector">
     <h2>选择任务</h2>
     {#each TASKS as task}
-      <label class="task-option">
-        <input type="radio" bind:group={selectedTask} value={task.id} />
-        {task.label}
+      <label class="task-option" class:disabled={!task.implemented}>
+        <input
+          type="radio"
+          bind:group={selectedTask}
+          value={task.id}
+          disabled={!task.implemented}
+        />
+        <span>{task.label}</span>
+        {#if !task.implemented}
+          <span class="task-tag">敬请期待</span>
+        {/if}
       </label>
     {/each}
   </section>
@@ -144,21 +215,42 @@
         const target = e.currentTarget as HTMLInputElement;
         if (target.files) handleFiles(target.files);
       }} />
+      <p class="drop-hint">文件名需包含：保险登记、人保、优米 或 安淇瑞</p>
     </div>
 
     {#if uploadedFiles.length > 0}
       <ul class="file-list">
         {#each uploadedFiles as file, i}
-          <li class:bad={!isFormatSupported(file.format)}>
+          <li class:bad={!isFormatSupported(file.format) || !!file.parseError}>
             <span class="role-tag">{file.roleLabel}</span>
             <span class="file-name">{file.name}</span>
             {#if !isFormatSupported(file.format)}
-              <span class="format-warning">{formatHint(file.format)}</span>
+              <span class="file-status status-error">{formatHint(file.format)}</span>
+            {:else if file.parseError}
+              <span class="file-status status-error">解析失败：{file.parseError}</span>
+            {:else if file.parsing}
+              <span class="file-status status-muted">解析中…</span>
+            {:else if file.parseResult}
+              <span class="file-status status-info">{fileSummary(file)}</span>
             {/if}
             <button type="button" onclick={() => removeFile(i)}>移除</button>
           </li>
         {/each}
       </ul>
+    {/if}
+
+    {#if detectedPeriods.length === 1}
+      {@const [y, m] = detectedPeriods[0].split('-').map(Number)}
+      <div class="month-banner info">本次处理：{y} 年 {m} 月</div>
+    {:else if detectedPeriods.length > 1}
+      <div class="month-banner warn">
+        检测到多个月份：{detectedPeriods
+          .map((p) => {
+            const [yy, mm] = p.split('-');
+            return `${yy} 年 ${mm} 月`;
+          })
+          .join('、')}，一次只能处理一个月
+      </div>
     {/if}
 
     {#if errorMessage}
@@ -168,10 +260,10 @@
     <button
       type="button"
       class="process-btn"
-      disabled={processing || uploadedFiles.length === 0 || badFiles.length > 0}
+      disabled={processing || !canProcess}
       onclick={handleProcess}
     >
-      {processing ? '处理中...' : '开始处理'}
+      {processing ? '处理中…' : '开始处理'}
     </button>
   </section>
 </div>
@@ -237,6 +329,24 @@
     background: rgba(0, 0, 0, 0.04);
   }
 
+  .task-option.disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  .task-option.disabled:hover {
+    background: transparent;
+  }
+
+  .task-tag {
+    font-size: 0.65rem;
+    color: var(--text-light);
+    background: rgba(0, 0, 0, 0.04);
+    padding: 0.05rem 0.35rem;
+    border-radius: var(--radius-sm);
+    margin-left: auto;
+  }
+
   /* --- Workspace (drop zone + file list + actions stacked) --- */
   .workspace {
     flex: 1;
@@ -271,6 +381,12 @@
     margin: 0;
   }
 
+  .drop-zone .drop-hint {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    margin-top: 0.6rem;
+  }
+
   /* --- File list --- */
   .file-list {
     list-style: none;
@@ -291,10 +407,40 @@
     text-decoration: line-through;
   }
 
-  .format-warning {
+  .file-status {
     font-size: var(--fs-xs);
-    color: var(--color-pm);
     margin-right: 0.6em;
+    white-space: nowrap;
+  }
+
+  .file-status.status-info {
+    color: var(--text-light);
+  }
+
+  .file-status.status-muted {
+    color: var(--text-light);
+    font-style: italic;
+  }
+
+  .file-status.status-error {
+    color: var(--color-pm);
+  }
+
+  .month-banner {
+    font-size: var(--fs-xs);
+    margin-top: 1rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .month-banner.info {
+    color: var(--text);
+    background: rgba(0, 0, 0, 0.035);
+  }
+
+  .month-banner.warn {
+    color: var(--color-pm);
+    background: rgba(0, 0, 0, 0.025);
   }
 
   .file-name {

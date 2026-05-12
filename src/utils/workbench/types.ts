@@ -9,6 +9,9 @@ export interface UploadedFile {
   roleLabel: string;
   buffer: ArrayBuffer;
   format: FileFormat;
+  parsing: boolean;
+  parseResult?: RawFileData;
+  parseError?: string;
 }
 
 export interface RawRecord {
@@ -49,6 +52,7 @@ export interface MonthBlock {
 export interface Task {
   id: TaskId;
   label: string;
+  implemented: boolean;
 }
 
 export class WorkbenchError extends Error {
@@ -59,9 +63,9 @@ export class WorkbenchError extends Error {
 }
 
 export const TASKS: Task[] = [
-  { id: 'supernova', label: '超新星小吕' },
-  { id: 'neutron', label: '中子星小吕' },
-  { id: 'redgiant', label: '红巨星小吕' },
+  { id: 'supernova', label: '超新星小吕', implemented: true },
+  { id: 'neutron', label: '中子星小吕', implemented: false },
+  { id: 'redgiant', label: '红巨星小吕', implemented: false },
 ];
 
 export const INSURANCE_LABELS: Record<InsuranceType, string> = {
