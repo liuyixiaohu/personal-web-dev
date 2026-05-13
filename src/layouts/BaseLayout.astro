@@ -10,10 +10,11 @@ interface Props {
   description?: string;
   ogDescription?: string;
   hideFooter?: boolean;
+  hideLanguageToggle?: boolean;
   bodyClass?: string;
 }
 
-const { title = "Kun Li", description = "Given the SEO Principals, I'm genuinely surprised you found this page. Welcome, I guess.", ogDescription, hideFooter = false, bodyClass } = Astro.props;
+const { title = "Kun Li", description = "Given the SEO Principals, I'm genuinely surprised you found this page. Welcome, I guess.", ogDescription, hideFooter = false, hideLanguageToggle = false, bodyClass } = Astro.props;
 const socialDescription = ogDescription || description;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -105,7 +106,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <body class={bodyClass} transition:animate={fade({ duration: '0.4s' })}>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PNCRCQBM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <LanguageToggle client:load />
+    {!hideLanguageToggle && <LanguageToggle client:load />}
     <slot />
     {!hideFooter && <Footer />}
     <BackToTop />
