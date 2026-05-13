@@ -2,12 +2,21 @@
   import type { Lang } from '../../i18n/translations';
   import { t } from '../../i18n/langStore';
   import { formatEventRange, formatPrice, locationDisplay, type LumaEvent } from './eventUtils';
+  import { eventBuckets, BUCKET_LABEL_KEYS, type CategoryBucket } from '../../utils/events/categories';
+
   interface Props {
     event: LumaEvent;
     lang: Lang;
+    /** Show category badges: 'never' (default), 'multi' (only if event spans >1 bucket), 'always'. */
+    badgeMode?: 'never' | 'multi' | 'always';
   }
 
-  let { event, lang }: Props = $props();
+  let { event, lang, badgeMode = 'never' }: Props = $props();
+
+  let buckets = $derived(eventBuckets(event));
+  let showBadges = $derived(
+    badgeMode === 'always' || (badgeMode === 'multi' && buckets.length > 1)
+  );
 </script>
 
 <li class="event-card" id="event-{event.api_id}">
@@ -20,6 +29,14 @@
       {formatPrice(event)}
     </span>
   </div>
+
+  {#if showBadges}
+    <div class="event-badges">
+      {#each buckets as bucket (bucket)}
+        <span class="event-badge event-badge--{bucket}">{t(BUCKET_LABEL_KEYS[bucket])}</span>
+      {/each}
+    </div>
+  {/if}
 
   <div class="event-card-details">
     <span class="event-date"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>{formatEventRange(event.start_at, event.end_at, event.timezone, lang)}</span>
@@ -97,6 +114,30 @@
     color: var(--text-light);
     line-height: 1.5;
   }
+
+  .event-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin: 0 0 0.3rem;
+  }
+
+  .event-badge {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    padding: 0.1em 0.5em;
+    border-radius: var(--radius-sm);
+    border: 1px solid currentColor;
+    line-height: 1.5;
+    white-space: nowrap;
+  }
+
+  .event-badge--tech-ai  { color: var(--color-ds);     background: rgba(90, 122, 148, 0.06); }
+  .event-badge--food     { color: var(--color-pm);     background: rgba(154, 104, 104, 0.06); }
+  .event-badge--arts     { color: var(--color-rose);   background: rgba(217, 121, 123, 0.06); }
+  .event-badge--fitness  { color: var(--color-visual); background: rgba(90, 138, 110, 0.06); }
+  .event-badge--wellness { color: var(--color-ds-mid); background: rgba(122, 154, 180, 0.06); }
 
   .event-date,
   .event-location,
