@@ -9,10 +9,6 @@ export const translations: Record<string, Record<Lang, string>> = {
   'home.lifeJourney': { en: 'Journey', zh: '旅程' },
 
   // --- Greeting ---
-  'greeting.quote': {
-    en: 'Where\u2019s your Negative #25?',
-    zh: '你的25号底片在哪？',
-  },
   'greeting.prefix': { en: 'Where\u2019s your ', zh: '你的 ' },
   'greeting.keyword': { en: 'Negative #25', zh: '25 号底片' },
   'greeting.suffix': { en: '?', zh: '在哪里呢？' },
@@ -106,8 +102,6 @@ export const translations: Record<string, Record<Lang, string>> = {
 
   'home.sift': { en: 'Sift', zh: 'Sift' },
   'home.sift.desc': { en: 'Take back a LinkedIn worth your time.', zh: '夺回值得你时间的 LinkedIn。' },
-  'home.brand': { en: 'Brand Guidelines', zh: '品牌指南' },
-  'home.privacy': { en: 'Privacy', zh: '隐私政策' },
   'events.title': { en: 'Today\'s New Tech Events @Bay Area', zh: '今日湾区新增科技活动' },
   'events.subtitlePre': { en: 'Bay Area Tech & AI events from Luma, showing ', zh: '来自 Luma 的湾区科技与 AI 活动，仅展示' },
   'events.subtitleHighlight': { en: 'only what\'s new since the last daily check', zh: '上次检查后的新增' },
@@ -131,7 +125,6 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.approval': { en: 'Requires Approval', zh: '需要审批' },
   'events.guests': { en: 'guests', zh: '位参与者' },
   'events.online': { en: 'Online', zh: '线上' },
-  'events.hostedBy': { en: 'Hosted by', zh: '主办方' },
   'events.eventCount': { en: 'events found', zh: '个活动' },
   'events.filterLocation': { en: 'Location', zh: '地点' },
   'events.filterPrice': { en: 'Price', zh: '费用' },
@@ -145,7 +138,6 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.sortTimeDesc': { en: 'Latest first', zh: '时间最近' },
   'events.sortGuestsAsc': { en: 'Fewest guests', zh: '参与最少' },
   'events.sortGuestsDesc': { en: 'Most guests', zh: '参与最多' },
-  'events.calendar': { en: 'Event Distribution', zh: '活动分布' },
   'events.searchLabel': { en: 'Search Events or Hosts', zh: '搜索活动或主办方' },
   'events.searchPlaceholder': { en: 'e.g. hackathon, google, etc', zh: '如：hackathon、google' },
   'events.excludeLabel': { en: 'Exclude the event including...', zh: '排除包含以下关键词的活动' },
@@ -154,7 +146,6 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.noMatch': { en: 'No events match filters', zh: '没有匹配的活动' },
   'events.showMore': { en: 'More', zh: '更多' },
   'events.showLess': { en: 'Less', zh: '收起' },
-  'events.guestsNotDisclosed': { en: 'Not Disclosed', zh: '未公开' },
 
   // --- Brand Guidelines page ---
   'brand.title': { en: 'Brand Guidelines', zh: '品牌规范' },
@@ -183,11 +174,8 @@ export const translations: Record<string, Record<Lang, string>> = {
     zh: '关于我是谁，而不是我做过什么。',
   },
   'brand.colors': { en: 'Color Palette', zh: '配色方案' },
-  'brand.colorsCore': { en: 'Core Palette', zh: '核心色板' },
-  'brand.colorsAccents': { en: 'Professional Accents', zh: '职业配色' },
   'brand.typography': { en: 'Typography', zh: '字体排印' },
   'brand.typeFonts': { en: 'Font Pairing', zh: '字体搭配' },
-  'brand.typeScale': { en: 'Type Scale', zh: '字号阶梯' },
   'brand.typeStyles': { en: 'Type Styles', zh: '字体样式' },
   'brand.typeScaleNote': {
     en: 'Major Third ratio (1.25×), 0.75rem floor. Root font-size is fluid.',
@@ -246,8 +234,6 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.dayFri': { en: 'Fri', zh: '五' },
   'events.daySat': { en: 'Sat', zh: '六' },
   'events.filterTime': { en: 'Time', zh: '时间' },
-  'events.timeFrom': { en: 'From', zh: '从' },
-  'events.timeTo': { en: 'To', zh: '到' },
   'events.timeAny': { en: 'Any', zh: '不限' },
 
   // --- Sift (formerly JobLens) ---
@@ -335,7 +321,6 @@ export const translations: Record<string, Record<Lang, string>> = {
   // --- Sift Feedback ---
   'sift.feedback': { en: 'Feedback', zh: '反馈' },
   'sift.feedbackTitle': { en: 'Any Suggestion? Pls!!!', zh: '有什么建议吗？求求了！！！' },
-  'sift.feedbackPlaceholder': { en: 'Bugs, ideas, anything...', zh: '问题、建议、随便说说…' },
   'sift.feedbackSend': { en: 'Send', zh: '发送' },
   'sift.feedbackSent': { en: 'Thanks! Feedback sent.', zh: '谢谢！反馈已发送。' },
   'sift.feedbackError': { en: 'Failed to send. Try again?', zh: '发送失败，再试一次？' },
