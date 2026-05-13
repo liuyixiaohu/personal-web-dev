@@ -16,20 +16,18 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from common import load_old_events, stamp_first_seen, save_events, request_with_retry, merge_into
 
 # --- Configuration ---
-# Bay Area Luma categories. Category IDs come from luma.com/{slug}?k=t
-# server-rendered HTML (the `cat-*` strings in the markup). Some are
-# clean slug-style (cat-tech, cat-ai, cat-fooddrink, cat-climate, cat-crypto)
-# and some are random opaque IDs from Luma's internal store — if any of
-# the opaque IDs (Arts & Culture, Fitness, Wellness) ever stop returning
-# events, re-grep luma.com/{slug}?k=t to update.
+# Bay Area Luma categories. The Luma API filters by the `slug` query param,
+# NOT by `category_api_id` (which is silently ignored — verified by probing
+# 4 different cat-ids and getting identical results). Slugs come from the
+# luma.com/{slug} URL pattern (e.g. luma.com/food → slug "food").
 GEO_SF = {"geo_latitude": 37.7749, "geo_longitude": -122.4194}
 SOURCES = [
-    {"category": "cat-tech",            "label": "Tech Events (Bay Area)",          "pagination_limit": 50, **GEO_SF},
-    {"category": "cat-ai",              "label": "AI Events (Bay Area)",            "pagination_limit": 50, **GEO_SF},
-    {"category": "cat-fooddrink",       "label": "Food & Drink Events (Bay Area)",  "pagination_limit": 50, **GEO_SF},
-    {"category": "cat-AzVAf6VmE9JEre4", "label": "Arts & Culture Events (Bay Area)","pagination_limit": 50, **GEO_SF},
-    {"category": "cat-0Km9ZnuBjFAjwFl", "label": "Fitness Events (Bay Area)",       "pagination_limit": 50, **GEO_SF},
-    {"category": "cat-C1VaNLnt25w9t6c", "label": "Wellness Events (Bay Area)",      "pagination_limit": 50, **GEO_SF},
+    {"slug": "tech",     "label": "Tech Events (Bay Area)",          "pagination_limit": 50, **GEO_SF},
+    {"slug": "ai",       "label": "AI Events (Bay Area)",            "pagination_limit": 50, **GEO_SF},
+    {"slug": "food",     "label": "Food & Drink Events (Bay Area)",  "pagination_limit": 50, **GEO_SF},
+    {"slug": "arts",     "label": "Arts & Culture Events (Bay Area)","pagination_limit": 50, **GEO_SF},
+    {"slug": "fitness",  "label": "Fitness Events (Bay Area)",       "pagination_limit": 50, **GEO_SF},
+    {"slug": "wellness", "label": "Wellness Events (Bay Area)",      "pagination_limit": 50, **GEO_SF},
 ]
 MAX_PAGES = 50  # effectively unlimited; stops when API returns has_more=false
 REQUEST_DELAY = 1.0
@@ -47,7 +45,7 @@ def fetch_category_events(source: dict) -> list[dict]:
 
     for page in range(MAX_PAGES):
         params = {
-            "category_api_id": source["category"],
+            "slug": source["slug"],
             "pagination_limit": source["pagination_limit"],
             "geo_latitude": source["geo_latitude"],
             "geo_longitude": source["geo_longitude"],
@@ -116,7 +114,7 @@ def main() -> None:
     merged: dict[str, dict] = {}
 
     for source in SOURCES:
-        print(f"Fetching: {source['label']} (category={source['category']})")
+        print(f"Fetching: {source['label']} (slug={source['slug']})")
         try:
             raw_entries = fetch_category_events(source)
             events = [normalize_event(e) for e in raw_entries]
