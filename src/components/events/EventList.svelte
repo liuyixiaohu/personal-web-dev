@@ -15,14 +15,33 @@
   import Popup from './Popup.svelte';
   import FeedbackForm from './FeedbackForm.svelte';
   import { track } from '../../utils/analytics';
+  import { ALL_BUCKETS, NEW_BUCKETS, eventBuckets, type CategoryBucket } from '../../utils/events/categories';
 
   // --- Props ---
   interface Props {
-    mode?: 'public' | 'console';
+    mode?: 'public' | 'console' | 'console-new';
   }
   let { mode = 'public' }: Props = $props();
   const isConsole = mode === 'console';
-  const pfx = isConsole ? 'console.events' : 'events';  // localStorage namespace
+  const isConsoleNew = mode === 'console-new';
+  const isPublic = mode === 'public';
+  const pfx = isConsoleNew ? 'console.new-events' : isConsole ? 'console.events' : 'events';
+
+  // Bucket filter at load time (events array scope). For console mode it's null
+  // because the user toggles buckets via UI chips — load all 6 categories then
+  // filter at render time.
+  const loadBuckets: CategoryBucket[] | null = isPublic
+    ? ['tech-ai']
+    : isConsoleNew
+    ? NEW_BUCKETS
+    : null;
+
+  // Badge display mode passed to each EventCard.
+  const badgeMode: 'never' | 'multi' | 'always' = isConsoleNew
+    ? 'always'
+    : isConsole
+    ? 'multi'
+    : 'never';
 
   // --- State ---
   let lang = $state<Lang>('en');
@@ -42,6 +61,14 @@
   let searchQuery = $state<string>('');
   let excludeKeywords = $state<string[]>(loadPref<string[]>(`${pfx}.exclude`, []));
 
+  // Category bucket selection — only user-toggleable in console mode.
+  // Empty Set means "all" (so the UI default is "nothing selected = everything").
+  let selectedBuckets = $state<Set<CategoryBucket>>(
+    isConsole
+      ? new Set(loadPref<CategoryBucket[]>(`${pfx}.buckets`, []))
+      : new Set<CategoryBucket>()
+  );
+
   let changelogOpen = $state(false);
   let whyOpen = $state(false);
   let feedbackOpen = $state(false);
@@ -60,6 +87,9 @@
     localStorage.setItem(`${pfx}.timeStart`, JSON.stringify(selectedTimeStart));
     localStorage.setItem(`${pfx}.timeEnd`, JSON.stringify(selectedTimeEnd));
     localStorage.setItem(`${pfx}.exclude`, JSON.stringify(excludeKeywords));
+    if (isConsole) {
+      localStorage.setItem(`${pfx}.buckets`, JSON.stringify([...selectedBuckets]));
+    }
   });
 
   // --- Data fetching ---
@@ -69,10 +99,10 @@
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const data: EventData = await resp.json();
 
-      // Future cutoff: console includes today, public starts from tomorrow
+      // Future cutoff: console / console-new include today; public starts from tomorrow
       const cutoff = new Date();
       cutoff.setHours(0, 0, 0, 0);
-      if (!isConsole) cutoff.setDate(cutoff.getDate() + 1);
+      if (isPublic) cutoff.setDate(cutoff.getDate() + 1);
       const cutoffMs = cutoff.getTime();
       const isFuture = (e: LumaEvent) => new Date(e.start_at).getTime() >= cutoffMs;
 
@@ -80,12 +110,18 @@
         !BLOCKED_CALENDARS.has(e.calendar_name) &&
         !BLOCKED_NAME_KEYWORDS.some(kw => e.name.includes(kw));
 
+      const inLoadBuckets = (e: LumaEvent) => {
+        if (!loadBuckets) return true;
+        return eventBuckets(e).some(b => loadBuckets.includes(b));
+      };
+
       let filtered: LumaEvent[];
       if (isConsole) {
-        // Console: show ALL future events regardless of when first seen
+        // Console: show ALL future events; bucket filter is user-driven via chips
         filtered = data.events.filter(e => notBlocked(e) && isFuture(e));
       } else {
-        // Public: show only newly discovered future events
+        // public / console-new: only events newly discovered since last fetch,
+        // restricted to the mode's fixed bucket scope
         const prevCheck = data.previous_updated_at
           ? new Date(data.previous_updated_at).getTime()
           : 0;
@@ -94,8 +130,8 @@
             ? new Date(e.first_seen_at).getTime() > prevCheck
             : false;
         filtered = prevCheck > 0
-          ? data.events.filter(e => notBlocked(e) && isNew(e) && isFuture(e))
-          : data.events.filter(e => notBlocked(e) && isFuture(e));
+          ? data.events.filter(e => notBlocked(e) && isNew(e) && isFuture(e) && inLoadBuckets(e))
+          : data.events.filter(e => notBlocked(e) && isFuture(e) && inLoadBuckets(e));
       }
       enrichEvents(filtered);
       events = filtered;
@@ -117,11 +153,28 @@
   let locationCounts = $derived(locationIndex.counts);
   let priceCounts = $derived(buildPriceCounts(events));
 
+  // Bucket counts (only meaningful for console mode's chip UI)
+  let bucketCounts = $derived.by(() => {
+    const counts = new Map<CategoryBucket, number>();
+    for (const b of ALL_BUCKETS) counts.set(b, 0);
+    for (const e of events) {
+      for (const b of eventBuckets(e)) {
+        counts.set(b, (counts.get(b) ?? 0) + 1);
+      }
+    }
+    return counts;
+  });
+
   // --- Filtering & Sorting ---
   let filteredEvents = $derived.by(() => {
     const q = searchQuery.toLowerCase().trim();
 
     let result = events.filter(e => {
+      // Bucket filter (console mode only — empty selection = all)
+      if (isConsole && selectedBuckets.size > 0) {
+        const buckets = eventBuckets(e);
+        if (!buckets.some(b => selectedBuckets.has(b))) return false;
+      }
       if (selectedLocations.size > 0 && !selectedLocations.has(e._strippedLocation!)) return false;
       if (!matchesPrice(e, selectedPrice)) return false;
       if (selectedDays.size > 0 && !selectedDays.has(e._dayOfWeek!)) return false;
@@ -206,6 +259,13 @@
     pushFilter('day', day);
   }
 
+  function toggleBucket(b: CategoryBucket) {
+    const next = new Set(selectedBuckets);
+    if (next.has(b)) next.delete(b); else next.add(b);
+    selectedBuckets = next;
+    pushFilter('category', b);
+  }
+
   function clearFilters() {
     selectedLocations = new Set();
     selectedPrice = null;
@@ -214,13 +274,17 @@
     selectedTimeEnd = '';
     searchQuery = '';
     excludeKeywords = [];
+    if (isConsole) selectedBuckets = new Set();
     pushFilter('clear');
   }
 </script>
 
 <div class="event-list">
   <header class="event-header">
-    {#if isConsole}
+    {#if isConsoleNew}
+      <h2 class="event-title">{t('consoleNew.title')}</h2>
+      <p class="event-subtitle">{t('consoleNew.desc')}</p>
+    {:else if isConsole}
       <h2 class="event-title">All Upcoming Events</h2>
     {:else}
       <div class="event-title-row">
@@ -300,6 +364,10 @@
       {sortBy}
       {searchQuery}
       {excludeKeywords}
+      showCategoryFilter={isConsole}
+      {selectedBuckets}
+      {bucketCounts}
+      onBucketToggle={toggleBucket}
       onLocationToggle={toggleLocation}
       onPriceChange={(p) => { selectedPrice = p; pushFilter('price', p); }}
       onDayToggle={toggleDay}
@@ -332,12 +400,12 @@
       <h3 class="date-group-header">{formatDateGroup(group.date, lang)}</h3>
       <ul class="event-cards">
         {#each group.events as event (event.api_id)}
-          <EventCard {event} {lang} />
+          <EventCard {event} {lang} {badgeMode} />
         {/each}
       </ul>
     {/each}
 
-    {#if !isConsole}
+    {#if isPublic}
     <section class="privacy-section">
       <h2 class="privacy-heading">{t('events.privacyTitle')}</h2>
       <p class="privacy-desc">{t('events.privacyDesc')}</p>
