@@ -3,54 +3,24 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Console" description="Personal dashboard.">
-  <main class="console-page">
+  <main class="page-shell">
     <a href="/" class="back-link">&larr; Back</a>
     <h1 class="console-title">Console</h1>
 
     <nav class="console-nav">
-      <a href="/console/events" class="console-card">
-        <span class="console-card-title">All Events</span>
-        <span class="console-card-desc">All upcoming Bay Area tech & AI events</span>
-      </a>
-      <a href="/console/jobs" class="console-card">
-        <span class="console-card-title">New Jobs</span>
-        <span class="console-card-desc">Newly discovered positions from latest refresh</span>
-      </a>
-      <a href="/console/workbench" class="console-card">
-        <span class="console-card-title">笑笑的摸鱼工作台</span>
-      </a>
-      <a href="/console/knowledge-system" class="console-card">
-        <span class="console-card-title">知识体系工作流</span>
-        <span class="console-card-desc">私人备忘 · 10 节阅读指南</span>
-      </a>
-      <a href="/console/i18n" class="console-card">
-        <span class="console-card-title">i18n 审阅</span>
-        <span class="console-card-desc">Translation key audit (missing / unused / mismatched)</span>
-      </a>
-      <a href="/console/cron" class="console-card">
-        <span class="console-card-title">Cron 健康</span>
-        <span class="console-card-desc">Daily snapshot of fetch-events + fetch-jobs run status</span>
-      </a>
-      <a href="/console/feedback" class="console-card">
-        <span class="console-card-title">反馈收件箱</span>
-        <span class="console-card-desc">Submissions from the events page (last 30 days)</span>
-      </a>
-      <a href="/console/seo" class="console-card">
-        <span class="console-card-title">SEO 看板</span>
-        <span class="console-card-desc">Daily Search Console snapshot (queries / pages / movers)</span>
-      </a>
+      <a href="/console/jobs" class="console-card">New Jobs</a>
+      <a href="/console/knowledge-system" class="console-card">知识体系工作流</a>
+      <a href="/console/workbench" class="console-card">笑笑的摸鱼工作台</a>
+      <a href="/console/i18n" class="console-card">i18n 审阅</a>
+      <a href="/console/cron" class="console-card">Cron 健康</a>
+      <a href="/console/feedback" class="console-card">反馈收件箱</a>
+      <a href="/console/seo" class="console-card">SEO 看板</a>
+      <a href="/console/events" class="console-card">All Events</a>
     </nav>
   </main>
 </BaseLayout>
 
 <style>
-  .console-page {
-    max-width: 42rem;
-    margin: 0 auto;
-    padding: clamp(4rem, 8vh, 6rem) var(--content-padding) 4rem;
-    min-height: 100dvh;
-  }
-
   .console-title {
     font-size: var(--fs-lg);
     font-weight: 500;
@@ -58,17 +28,21 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   }
 
   .console-nav {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xs);
   }
 
   .console-card {
     display: block;
-    padding: var(--space-sm) var(--space-md);
+    padding: 0.55rem var(--space-sm);
     border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-md);
+    font-size: var(--fs-base);
+    font-weight: 500;
+    color: var(--text);
     text-decoration: none;
+    line-height: 1.4;
     transition: border-color 0.15s, background 0.15s;
   }
 
@@ -77,23 +51,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     background: rgba(0, 0, 0, 0.015);
   }
 
-  .console-card-title {
-    display: block;
-    font-size: var(--fs-base);
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 0.2rem;
-  }
-
-  .console-card-desc {
-    display: block;
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-  }
-
   @media (max-width: 32rem) {
-    .console-page {
-      padding-top: 3rem;
-    }
+    .console-nav { grid-template-columns: 1fr; }
   }
 </style>

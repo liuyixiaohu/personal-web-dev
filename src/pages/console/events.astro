@@ -4,23 +4,8 @@ import EventList from '../../components/events/EventList.svelte';
 ---
 
 <BaseLayout title="All Events — Console" description="All upcoming Bay Area events.">
-  <main class="events-page">
+  <main class="page-shell">
     <a href="/console" class="back-link">&larr; Console</a>
     <EventList client:only="svelte" mode="console" />
   </main>
 </BaseLayout>
-
-<style>
-  .events-page {
-    max-width: 42rem;
-    margin: 0 auto;
-    padding: clamp(4rem, 8vh, 6rem) var(--content-padding) 4rem;
-    min-height: 100dvh;
-  }
-
-  @media (max-width: 32rem) {
-    .events-page {
-      padding-top: 3rem;
-    }
-  }
-</style>
