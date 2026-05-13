@@ -1,0 +1,1118 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="知识体系工作流" description="私人知识管理工作流备忘 · 10 节阅读指南">
+  <main class="knowledge-system">
+    <a href="/console" class="back-link">&larr; 返回</a>
+
+    <header class="ks-header">
+      <h1>知识体系工作流</h1>
+      <p class="ks-lead">用纸笔思考,Obsidian 沉淀。把 PDF 阅读变成可以在工作中调用的框架。</p>
+      <p class="ks-meta">v0.2 · 私人备忘</p>
+    </header>
+
+    <div class="ks-body">
+
+      <nav class="ks-toc" aria-label="目录">
+        <span class="ks-toc-label">目录</span>
+        <ol>
+          <li><a href="#sec-1">三条核心原则</a></li>
+          <li><a href="#sec-2">三层证据结构</a></li>
+          <li><a href="#sec-3">Vault 结构</a></li>
+          <li><a href="#sec-4">工作流 · 三阶段</a></li>
+          <li><a href="#sec-5">永久笔记 · 结构</a></li>
+          <li><a href="#sec-6">工作中调用</a></li>
+          <li><a href="#sec-7">工具栈</a></li>
+          <li><a href="#sec-8">红线</a></li>
+          <li><a href="#sec-9">起步清单</a></li>
+          <li><a href="#sec-10">终极检验</a></li>
+        </ol>
+      </nav>
+
+      <article class="ks-article">
+
+        <!-- ─── 01 三条核心原则 ─── -->
+        <section id="sec-1" class="ks-section">
+          <h2>三条核心原则</h2>
+          <p class="ks-note">系统的成败不在工具有多复杂,而在于你是否守住这三条。</p>
+          <div class="ks-card-grid ks-card-grid--3">
+            <div class="ks-card ks-card--principle">
+              <span class="ks-card-num">01</span>
+              <h3>纸笔是思考主战场,Obsidian 是结晶载体</h3>
+              <p>不试图把所有手稿数字化。手写是过程,打字总结才是结晶。</p>
+            </div>
+            <div class="ks-card ks-card--principle">
+              <span class="ks-card-num">02</span>
+              <h3>永久笔记重质不重量</h3>
+              <p>三年 100 张精炼卡 &gt; 500 张沉睡笔记。建笔记前必须能回答"何时调用"。</p>
+            </div>
+            <div class="ks-card ks-card--principle">
+              <span class="ks-card-num">03</span>
+              <h3>目的是"调用",不是"保存"</h3>
+              <p>体系的检验标准只有一个——它是否让你的决策、沟通、提案变得更好。</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ─── 02 三层证据结构 ─── -->
+        <section id="sec-2" class="ks-section">
+          <h2>三层证据结构</h2>
+          <p class="ks-note">从你的思考结晶,到思考过程,再到原始材料——三层之间精确链接,可双向追溯。</p>
+
+          <figure class="ks-diagram">
+            <svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="三层证据结构示意">
+              <!-- Layer 1: 结晶 · 永久笔记 (PM 暖陶土) -->
+              <g transform="translate(160, 16)">
+                <rect width="320" height="64" rx="6" fill="#9a6868"/>
+                <text x="160" y="40" font-size="15" font-weight="500" fill="#FAF7F2" text-anchor="middle">永久笔记 · 你的概念思考</text>
+              </g>
+              <!-- connector -->
+              <line x1="320" y1="86" x2="320" y2="110" stroke="#5A636B" stroke-width="1" stroke-dasharray="2,3" opacity="0.7"/>
+              <polygon points="316,108 320,116 324,108" fill="#5A636B" opacity="0.7"/>
+
+              <!-- Layer 2: 过程 · 关键页照片 (DS 冷蓝) -->
+              <g transform="translate(160, 124)">
+                <rect width="320" height="64" rx="6" fill="#5a7a94"/>
+                <text x="160" y="40" font-size="15" font-weight="500" fill="#FAF7F2" text-anchor="middle">关键页照片 · 你的思考过程</text>
+              </g>
+              <line x1="320" y1="194" x2="320" y2="218" stroke="#5A636B" stroke-width="1" stroke-dasharray="2,3" opacity="0.7"/>
+              <polygon points="316,216 320,224 324,216" fill="#5A636B" opacity="0.7"/>
+
+              <!-- Layer 3: 来源 · 完整 PDF (Visual 绿) -->
+              <g transform="translate(160, 232)">
+                <rect width="320" height="64" rx="6" fill="#5a8a6e"/>
+                <text x="160" y="40" font-size="15" font-weight="500" fill="#FAF7F2" text-anchor="middle">完整 PDF · 原始全文</text>
+              </g>
+
+              <!-- side captions -->
+              <text x="148" y="52" font-size="11" fill="#8A939B" text-anchor="end">少而精</text>
+              <text x="148" y="160" font-size="11" fill="#8A939B" text-anchor="end">1–3 张</text>
+              <text x="148" y="268" font-size="11" fill="#8A939B" text-anchor="end">全文备份</text>
+
+              <text x="492" y="52" font-size="11" fill="#8A939B">用自己的话</text>
+              <text x="492" y="160" font-size="11" fill="#8A939B">iPhone 拍照</text>
+              <text x="492" y="268" font-size="11" fill="#8A939B">精确锚点</text>
+            </svg>
+            <figcaption>物理纸稿读完即扔。关键页照片 + 完整数字 PDF + 你的永久笔记,构成完整证据链。</figcaption>
+          </figure>
+        </section>
+
+        <!-- ─── 03 Vault 结构 ─── -->
+        <section id="sec-3" class="ks-section">
+          <h2>Vault 结构</h2>
+          <p class="ks-note">按"技能集"分区。每个领域是独立小宇宙,内部紧密连接,领域之间松散或不连。</p>
+
+          <pre class="ks-code"><code>MyVault/
+├── 0-Inbox/                     <span class="ks-c">← 临时想法,定期清理</span>
+├── Marketing/                   <span class="ks-c">← 第一个技能集</span>
+│   ├── 1-Permanent/             <span class="ks-c">永久笔记(概念体系核心)</span>
+│   ├── 2-Sessions/              <span class="ks-c">会话笔记(每次阅读总结)</span>
+│   ├── 3-Sources/
+│   │   ├── PDFs/                <span class="ks-c">完整 PDF</span>
+│   │   └── Photos/              <span class="ks-c">手稿关键页照片</span>
+│   └── 4-Maps/                  <span class="ks-c">Framework Index(调用入口)</span>
+├── DataScience/                 <span class="ks-c">← 第二个技能集(同样结构)</span>
+└── _Templates/                  <span class="ks-c">会话模板、永久笔记模板</span></code></pre>
+
+          <p class="ks-rule"><strong>原则:</strong>一个领域跑通再加下一个。不要预建空文件夹——空文件夹是心理负担。</p>
+        </section>
+
+        <!-- ─── 04 工作流 · 三阶段 ─── -->
+        <section id="sec-4" class="ks-section">
+          <h2>工作流 · 三阶段</h2>
+          <p class="ks-note">从打印的纸到结晶的笔记,整套流程每次会话总数字化时间控制在 15–30 分钟以内。</p>
+
+          <dl class="ks-stages">
+            <div class="ks-stage">
+              <dt>
+                <span class="ks-stage-title">阅读</span>
+                <span class="ks-stage-meta">咖啡馆 · 2–3 小时</span>
+              </dt>
+              <dd>打印 PDF(留 3cm 边距、1.5 行距、单面)→ 真实笔手写阅读 → <strong>最后 5 分钟在最后一页写"今日结论"</strong>:用一句话回答"今天想清楚了什么"。</dd>
+            </div>
+
+            <div class="ks-stage">
+              <dt>
+                <span class="ks-stage-title">数字化</span>
+                <span class="ks-stage-meta">回家后 · 15–30 分钟</span>
+              </dt>
+              <dd>
+                <p><strong>判断:这次有重要产出吗?</strong></p>
+                <ol class="ks-flow">
+                  <li>iPhone 拍 <strong>1–3 张</strong>关键手稿页(光线均匀、正面拍)</li>
+                  <li>改名 <code>R-2026-05-13-01-p3.jpg</code>,存进对应领域 <code>Sources/Photos/</code></li>
+                  <li>完整 PDF(若未在 Vault)放进 <code>Sources/PDFs/</code></li>
+                  <li>写<strong>会话笔记</strong>(15 分钟):链接照片 + PDF 锚点 + 今日结论</li>
+                  <li>写 <strong>1–2 张永久笔记</strong>(15–30 分钟):"何时调用"字段必填</li>
+                </ol>
+                <p class="ks-aside">如果没有重要产出 → 纸稿直接扔掉,完事。</p>
+              </dd>
+            </div>
+
+            <div class="ks-stage">
+              <dt>
+                <span class="ks-stage-title">激活</span>
+                <span class="ks-stage-meta">每周一次 · 30 分钟</span>
+              </dt>
+              <dd>
+                <p><strong>框架巡视(10 分钟)</strong>:扫各领域 Framework Index → 重读 1–2 个 → 升级成熟度</p>
+                <p><strong>双链整理(10 分钟)</strong>:本周新笔记加 [[双链]] 到相关老笔记(同领域内为主)</p>
+                <p><strong>Index 更新(10 分钟)</strong>:本周新涌现的成熟框架,加进对应 Framework Index</p>
+              </dd>
+            </div>
+          </dl>
+        </section>
+
+        <!-- ─── 05 永久笔记 · 结构 ─── -->
+        <section id="sec-5" class="ks-section">
+          <h2>永久笔记 · 结构</h2>
+          <p class="ks-note">"何时调用"是整个系统的灵魂字段。如果你填不出来——别建这张笔记,放回 Inbox。</p>
+
+          <pre class="ks-code"><code>---
+domain: Marketing
+created: 2026-05-13
+maturity: <span class="ks-a">●○○ 种子 / ●●○ 发芽 / ●●● 成熟</span>
+tags: [增长, 留存]
+---
+
+# 框架名
+
+## 一句话定义
+
+<span class="ks-a">## 何时调用 ★★★★★      ← 必填!填不出说明还不成熟</span>
+
+## 框架内容              ← 用自己的话,不抄原文
+
+## 真实例子(我亲历或读到的)
+
+## 局限 / 不适用
+
+## 相关 [[其他笔记]]
+
+## 来源
+- [[Photos/R-2026-05-13-01-p3.jpg|手稿]]
+- [[PDFs/反脆弱.pdf#page=87|原文锚点]]</code></pre>
+
+          <h3>成熟度的演化</h3>
+          <ul class="ks-maturity">
+            <li>
+              <span class="ks-dots" aria-label="成熟度 1/3">●○○</span>
+              <span class="ks-mat-name">种子</span>
+              <span class="ks-mat-desc">刚记下,可能不准确</span>
+            </li>
+            <li>
+              <span class="ks-dots" aria-label="成熟度 2/3">●●○</span>
+              <span class="ks-mat-name">发芽</span>
+              <span class="ks-mat-desc">用了几次,框架基本可信</span>
+            </li>
+            <li>
+              <span class="ks-dots" aria-label="成熟度 3/3">●●●</span>
+              <span class="ks-mat-name">成熟</span>
+              <span class="ks-mat-desc">反复验证,成为思考的肌肉记忆</span>
+            </li>
+          </ul>
+          <p class="ks-rule">每次"反复看"或"工作中用过"之后,可以升级标记。这让你知道哪些笔记真在用、哪些只是躺着。</p>
+        </section>
+
+        <!-- ─── 06 工作中调用 ─── -->
+        <section id="sec-6" class="ks-section">
+          <h2>工作中调用</h2>
+          <p class="ks-note">前 3 个月,每次工作任务前花 5 分钟做这件事。3 个月后框架内化,这一步消失。</p>
+
+          <div class="ks-phases">
+            <div class="ks-phase">
+              <span class="ks-phase-label">何时</span>
+              <p>要做决策、写提案、参加讨论之前</p>
+            </div>
+            <div class="ks-phase">
+              <span class="ks-phase-label">何处</span>
+              <p>打开对应领域的 Framework Index</p>
+            </div>
+            <div class="ks-phase">
+              <span class="ks-phase-label">做什么</span>
+              <p>选 1–2 个相关框架,点进去快速复习,带着去工作</p>
+            </div>
+          </div>
+
+          <p class="ks-rule">Framework Index 是你的"调用菜单"——比 100 张概念卡更重要。它是体系真正<strong>激活</strong>的关键。</p>
+        </section>
+
+        <!-- ─── 07 工具栈 ─── -->
+        <section id="sec-7" class="ks-section">
+          <h2>工具栈</h2>
+          <p class="ks-note">每个工具都有具体的"何时用"。如果一个工具你两周都没打开过,删掉它——工具不是越多越好。</p>
+
+          <div class="ks-tools-cat">
+            <span class="ks-cat-label">核心 · 必装</span>
+            <p class="ks-cat-note">这两个是整套系统的地基,缺一不可。</p>
+
+            <div class="ks-tool">
+              <div class="ks-tool-head">
+                <span class="ks-tool-name">Obsidian</span>
+                <span class="ks-tag ks-tag--visual">免费</span>
+                <span class="ks-tag">桌面 + 移动</span>
+              </div>
+              <p class="ks-tool-sub">本地优先的 Markdown 笔记软件,所有数据是你电脑里的 .md 文件,十年后还能打开。</p>
+              <p class="ks-tool-when"><span class="ks-when-label">何时用</span>所有永久笔记、会话笔记、Framework Index 都在这里写和管理。整个体系的"家"。每天都会打开。</p>
+            </div>
+
+            <div class="ks-tool">
+              <div class="ks-tool-head">
+                <span class="ks-tool-name">PDF++</span>
+                <span class="ks-tag ks-tag--pm">Obsidian 插件</span>
+                <span class="ks-tag ks-tag--visual">免费</span>
+              </div>
+              <p class="ks-tool-sub">Obsidian 内的 PDF 阅读增强,支持精确到行的引用链接、双向反链、高亮颜色编码。</p>
+              <p class="ks-tool-when"><span class="ks-when-label">何时用</span>在 Obsidian 里打开 PDF 书籍 → 选中关键段落 → 生成精确锚点 → 贴到永久笔记里。这是"概念回溯到原文"那一层的核心工具。每次写永久笔记时几乎都会用到。</p>
+            </div>
+          </div>
+
+          <div class="ks-tools-cat">
+            <span class="ks-cat-label">推荐插件 · 根据需要</span>
+            <p class="ks-cat-note">不是必装,但用上之后体验会明显更好。先跑通核心流程,再按需添加。</p>
+
+            <div class="ks-tool">
+              <div class="ks-tool-head">
+                <span class="ks-tool-name">Excalidraw</span>
+                <span class="ks-tag ks-tag--pm">Obsidian 插件</span>
+                <span class="ks-tag ks-tag--visual">免费</span>
+              </div>
+              <p class="ks-tool-sub">手绘风格的白板,可以在 Obsidian 笔记里嵌入可编辑的概念图。</p>
+              <p class="ks-tool-when"><span class="ks-when-label">何时用</span>梳理 3–5 个概念之间的关系、画一张领域的"思维导图"、或者某个框架的可视化表达——打字说不清的视觉关系,用它画出来。每周可能用 1–2 次。</p>
+            </div>
+
+            <div class="ks-tool">
+              <div class="ks-tool-head">
+                <span class="ks-tool-name">Templater</span>
+                <span class="ks-tag ks-tag--pm">Obsidian 插件</span>
+                <span class="ks-tag ks-tag--visual">免费</span>
+              </div>
+              <p class="ks-tool-sub">笔记模板系统,Cmd+P 一键插入预定义的笔记结构(自动填日期、字段、frontmatter)。</p>
+              <p class="ks-tool-when"><span class="ks-when-label">何时用</span>每次新建会话笔记或永久笔记时——按快捷键 → 选模板 → 自动填好骨架。每次省 30 秒,日积月累很可观,而且降低"建笔记"的心理摩擦。</p>
+            </div>
+
+            <div class="ks-tool">
+              <div class="ks-tool-head">
+                <span class="ks-tool-name">Spaced Repetition</span>
+                <span class="ks-tag ks-tag--pm">Obsidian 插件</span>
+                <span class="ks-tag ks-tag--visual">免费</span>
+              </div>
+              <p class="ks-tool-sub">Anki 风格的间隔重复复习系统,自动安排你"什么时候该回看哪张笔记"。</p>
+              <p class="ks-tool-when"><span class="ks-when-label">何时用</span>把核心永久笔记或框架标记为"待复习" → 插件每天给你推几张让你重温。弥补不买 Readwise 留下的"反复看"功能空缺。<strong>对解决"读过就忘"这个痛点特别关键。</strong></p>
+            </div>
+          </div>
+
+          <div class="ks-tools-cat">
+            <span class="ks-cat-label">进阶 · 等积累到 50+ 张笔记后再考虑</span>
+            <p class="ks-cat-note">初期不要装,会让 Obsidian 学习曲线变陡。</p>
+
+            <div class="ks-tool ks-tool--advanced">
+              <div class="ks-tool-head">
+                <span class="ks-tool-name">Dataview</span>
+                <span class="ks-tag ks-tag--pm">Obsidian 插件</span>
+                <span class="ks-tag ks-tag--visual">免费</span>
+              </div>
+              <p class="ks-tool-sub">类 SQL 语法查询笔记,生成动态表格和列表。把你的笔记库变成可查询的数据库。</p>
+              <p class="ks-tool-when"><span class="ks-when-label">何时用</span>当你想问"我所有 ●●● 成熟的 Marketing 框架是哪些?"、"过去三个月新建的所有永久笔记按 domain 分类列表"——这种聚合查询。<strong>笔记量少时没必要,等积累到 50+ 张再考虑</strong>。</p>
+            </div>
+          </div>
+
+          <div class="ks-tools-cat">
+            <span class="ks-cat-label">同步方案 · 多设备使用时</span>
+            <p class="ks-cat-note">Obsidian 本身没有云同步,需要外部文件夹同步工具。</p>
+
+            <div class="ks-tool">
+              <div class="ks-tool-head">
+                <span class="ks-tool-name">OneDrive</span>
+                <span class="ks-tag">系统级</span>
+                <span class="ks-tag ks-tag--ds">订阅含</span>
+              </div>
+              <p class="ks-tool-sub">把 Obsidian Vault 文件夹放进 OneDrive 同步目录,实现多设备(电脑/手机)同步。</p>
+              <p class="ks-tool-when"><span class="ks-when-label">何时用</span>当你开始想在手机上随时查笔记、或者用多台电脑时启用。Obsidian 官方 Sync 是 $4/月,OneDrive 是免费替代(已订阅 Microsoft 365 的话直接用即可)。<br><strong class="ks-warn">注意</strong>:Vault 越大同步越慢。如果 PDF 库超过几 GB,可以把 PDF 放在 Vault 外、用相对路径引用,减小同步压力。</p>
+            </div>
+          </div>
+
+          <blockquote class="ks-pullquote">
+            工具是手段。让你的决策更好、沟通更深、提案更准——才是目的。
+          </blockquote>
+        </section>
+
+        <!-- ─── 08 红线 ─── -->
+        <section id="sec-8" class="ks-section">
+          <h2>红线 · 避免常见陷阱</h2>
+          <p class="ks-note">这些是最容易让系统崩坏的行为。守住这几条红线,系统就有韧性。</p>
+
+          <ul class="ks-redlines">
+            <li>
+              <span class="ks-x" aria-hidden="true">✕</span>
+              <div><strong>永久笔记复制粘贴原文</strong><span class="ks-rl-why">必须用自己的话重写,这是 Zettelkasten 的核心</span></div>
+            </li>
+            <li>
+              <span class="ks-x" aria-hidden="true">✕</span>
+              <div><strong>"何时调用"填空白</strong><span class="ks-rl-why">那就别建这张笔记,放回 Inbox 等成熟</span></div>
+            </li>
+            <li>
+              <span class="ks-x" aria-hidden="true">✕</span>
+              <div><strong>同时启动 3 个以上领域</strong><span class="ks-rl-why">一个跑通再加下一个,贪多必崩</span></div>
+            </li>
+            <li>
+              <span class="ks-x" aria-hidden="true">✕</span>
+              <div><strong>第一个月超过 15 张永久笔记</strong><span class="ks-rl-why">少而精,严格限量,质量永远优先于数量</span></div>
+            </li>
+            <li>
+              <span class="ks-x" aria-hidden="true">✕</span>
+              <div><strong>因为想买 iPad 而推迟开始</strong><span class="ks-rl-why">iPhone + Mac 完全够用,至少跑 3 个月再考虑</span></div>
+            </li>
+            <li>
+              <span class="ks-x" aria-hidden="true">✕</span>
+              <div><strong>把工具配置当成进步</strong><span class="ks-rl-why">真正的进步是"工作中调用次数",不是插件数量</span></div>
+            </li>
+          </ul>
+        </section>
+
+        <!-- ─── 09 起步清单 ─── -->
+        <section id="sec-9" class="ks-section">
+          <h2>起步清单</h2>
+          <p class="ks-note">理论再美,跑一遍 &gt; 想十遍。下面是你今天就能做的事。</p>
+
+          <div class="ks-checklist-group">
+            <h3>今天(1 小时)</h3>
+            <ul class="ks-checklist">
+              <li>装 Obsidian(<a href="https://obsidian.md" target="_blank" rel="noopener">obsidian.md</a>)→ 创建 Vault</li>
+              <li>装核心插件:<strong>PDF++</strong>(必装)、<strong>Templater</strong>(强烈推荐)</li>
+              <li>建一个领域文件夹(只建最常读的那个)</li>
+              <li>在 <code>_Templates/</code> 里建两个模板:会话笔记 / 永久笔记</li>
+            </ul>
+          </div>
+
+          <div class="ks-checklist-group">
+            <h3>本周(3 次会话)</h3>
+            <ul class="ks-checklist">
+              <li>打印一份 HBR 或 PDF 章节</li>
+              <li>跑完整流程一次:阅读 → 拍照 → 会话笔记 → 1 张永久笔记</li>
+              <li>建第一张 Framework Index</li>
+            </ul>
+          </div>
+
+          <div class="ks-checklist-group">
+            <h3>本月(目标 ≤ 15 张永久笔记)</h3>
+            <ul class="ks-checklist">
+              <li>跑满 8–10 次会话</li>
+              <li>完成第一次"每周回顾"</li>
+              <li>按需添加:<strong>Excalidraw</strong>(需要画图时)、<strong>Spaced Repetition</strong>(感到"读过就忘"时)</li>
+              <li><strong>关键检验</strong>:工作中真正调用过一次</li>
+            </ul>
+          </div>
+
+          <div class="ks-checklist-group">
+            <h3>未来(多设备同步需求出现时)</h3>
+            <ul class="ks-checklist">
+              <li>把 Vault 文件夹挪进 <strong>OneDrive</strong> 同步目录</li>
+              <li>Vault 超过几 GB 时,把 PDF 移出 Vault,用相对路径引用</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- ─── 10 终极检验 ─── -->
+        <section id="sec-10" class="ks-section">
+          <h2>终极检验</h2>
+          <p class="ks-note">每个月问自己一次。这个问题的答案,决定你的系统是否在生效。</p>
+
+          <blockquote class="ks-question">
+            我最近一次在工作中真的用上 Obsidian 里的某张永久笔记,是什么时候?
+          </blockquote>
+
+          <div class="ks-verdict-grid">
+            <div class="ks-verdict ks-verdict--good">
+              <span class="ks-verdict-label">答得出</span>
+              <p>系统在生效,继续。</p>
+            </div>
+            <div class="ks-verdict ks-verdict--bad">
+              <span class="ks-verdict-label">答不出</span>
+              <p>停下来反思。减少建笔记时间,多花时间在工作中主动调用。</p>
+            </div>
+          </div>
+        </section>
+
+        <footer class="ks-footer">
+          <p>— 完 —</p>
+          <p class="ks-footer-meta">v0.2 · 按需持续打磨</p>
+        </footer>
+
+      </article>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  /* ─────────────────────────────────────
+     Page shell
+     ─────────────────────────────────────*/
+  .knowledge-system {
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: clamp(3rem, 6vh, 5rem) var(--content-padding) 4rem;
+    min-height: 100dvh;
+  }
+
+  .back-link {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+  }
+  .back-link:hover { color: var(--text); }
+
+  /* ─────────────────────────────────────
+     Header
+     ─────────────────────────────────────*/
+  .ks-header {
+    margin-bottom: var(--space-lg);
+  }
+  .ks-header h1 {
+    font-size: var(--fs-xl);
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0 0 0.6rem;
+  }
+  .ks-lead {
+    font-size: var(--fs-md);
+    color: var(--text-light);
+    line-height: 1.55;
+    margin: 0 0 0.4rem;
+    max-width: 38rem;
+  }
+  .ks-meta {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    letter-spacing: 0.05em;
+    margin: 0;
+  }
+
+  /* ─────────────────────────────────────
+     Body layout (TOC + article)
+     ─────────────────────────────────────*/
+  .ks-body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  @media (min-width: 64rem) {
+    .ks-body {
+      grid-template-columns: 10rem minmax(0, 1fr);
+      gap: var(--space-xl);
+    }
+  }
+
+  /* ─────────────────────────────────────
+     TOC (sticky on desktop, hidden on mobile)
+     ─────────────────────────────────────*/
+  .ks-toc { display: none; }
+
+  @media (min-width: 64rem) {
+    .ks-toc {
+      display: block;
+      position: sticky;
+      top: 4rem;
+      align-self: start;
+      max-height: calc(100vh - 6rem);
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+    .ks-toc-label {
+      display: block;
+      font-size: var(--fs-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-light);
+      margin-bottom: 0.8rem;
+    }
+    .ks-toc ol {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      counter-reset: toc;
+    }
+    .ks-toc li {
+      counter-increment: toc;
+      margin-bottom: 0.35rem;
+    }
+    .ks-toc a {
+      display: flex;
+      gap: 0.5rem;
+      font-size: var(--fs-xs);
+      color: var(--text-light);
+      text-decoration: none;
+      line-height: 1.5;
+      padding: 0.15rem 0;
+      border-left: 2px solid transparent;
+      padding-left: 0.5rem;
+      margin-left: -0.5rem;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .ks-toc a::before {
+      content: counter(toc, decimal-leading-zero);
+      color: var(--text-light);
+      opacity: 0.55;
+      font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+    }
+    .ks-toc a:hover {
+      color: var(--text);
+    }
+    .ks-toc a[aria-current="true"] {
+      color: var(--text);
+      border-left-color: var(--color-pm);
+    }
+  }
+
+  /* ─────────────────────────────────────
+     Article + section rhythm
+     ─────────────────────────────────────*/
+  .ks-article {
+    min-width: 0; /* allow grid to shrink */
+  }
+
+  .ks-section {
+    border-top: 1px solid var(--border);
+    padding-top: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    scroll-margin-top: 4rem;
+  }
+  .ks-section:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+  .ks-section h2 {
+    font-size: var(--fs-lg);
+    font-weight: 500;
+    line-height: 1.3;
+    margin: 0 0 var(--space-xs);
+  }
+  .ks-section h3 {
+    font-size: var(--fs-md);
+    font-weight: 500;
+    margin: var(--space-md) 0 var(--space-xs);
+  }
+  .ks-section p { line-height: 1.7; }
+  .ks-section strong { font-weight: 500; }
+
+  .ks-note {
+    font-size: var(--fs-sm, 0.85rem);
+    color: var(--text-light);
+    margin: 0 0 var(--space-md);
+    line-height: 1.6;
+  }
+  .ks-rule {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    line-height: 1.65;
+    margin-top: var(--space-sm);
+  }
+
+  /* ─────────────────────────────────────
+     Card grid (principles, tools)
+     ─────────────────────────────────────*/
+  .ks-card-grid {
+    display: grid;
+    gap: var(--space-sm);
+    grid-template-columns: 1fr;
+  }
+  .ks-card-grid--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @media (max-width: 52rem) {
+    .ks-card-grid--3 { grid-template-columns: 1fr; }
+  }
+
+  .ks-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .ks-card--principle .ks-card-num {
+    display: block;
+    font-size: var(--fs-lg);
+    font-weight: 400;
+    color: var(--text-light);
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    line-height: 1;
+    margin-bottom: 0.6rem;
+  }
+  .ks-card--principle h3 {
+    font-size: var(--fs-md);
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 0 0 0.4rem;
+  }
+  .ks-card--principle p {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ─────────────────────────────────────
+     Three-layer diagram
+     ─────────────────────────────────────*/
+  .ks-diagram {
+    margin: var(--space-md) 0 0;
+    padding: 0;
+  }
+  .ks-diagram svg {
+    width: 100%;
+    height: auto;
+    max-width: 44rem;
+    display: block;
+    margin: 0 auto;
+  }
+  .ks-diagram figcaption {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    text-align: center;
+    margin-top: var(--space-sm);
+    line-height: 1.6;
+  }
+
+  /* ─────────────────────────────────────
+     Code blocks (vault tree + frontmatter)
+     ─────────────────────────────────────*/
+  .ks-code {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: var(--fs-xs);
+    line-height: 1.7;
+    background: rgba(0, 0, 0, 0.025);
+    border-radius: var(--radius-md);
+    padding: var(--space-sm) var(--space-md);
+    overflow-x: auto;
+    color: var(--text);
+    margin: 0 0 var(--space-sm);
+    white-space: pre;
+  }
+  .ks-code code { font-family: inherit; }
+  .ks-code .ks-c { color: var(--text-light); }
+  .ks-code .ks-a { color: var(--color-pm); }
+
+  /* ─────────────────────────────────────
+     Stages (dl)
+     ─────────────────────────────────────*/
+  .ks-stages { margin: 0; }
+  .ks-stage {
+    padding: var(--space-sm) 0;
+    border-top: 1px solid var(--border);
+  }
+  .ks-stage:last-child { border-bottom: 1px solid var(--border); }
+  .ks-stage dt {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-bottom: 0.4rem;
+  }
+  .ks-stage-title {
+    font-size: var(--fs-md);
+    font-weight: 500;
+  }
+  .ks-stage-meta {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    letter-spacing: 0.03em;
+  }
+  .ks-stage dd {
+    margin: 0;
+    font-size: var(--fs-base);
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .ks-stage dd p { margin: 0 0 0.5rem; }
+  .ks-stage dd p:last-child { margin-bottom: 0; }
+  .ks-flow {
+    padding-left: 1.2rem;
+    margin: 0.4rem 0;
+  }
+  .ks-flow li {
+    font-size: var(--fs-sm, 0.9rem);
+    line-height: 1.7;
+    padding: 0.1rem 0;
+  }
+  .ks-flow code,
+  .ks-stage dd code {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 0.88em;
+    background: rgba(0, 0, 0, 0.04);
+    padding: 0.1rem 0.35rem;
+    border-radius: var(--radius-sm);
+    color: var(--text);
+  }
+  .ks-aside {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    margin-top: 0.4rem;
+  }
+
+  /* ─────────────────────────────────────
+     Maturity legend
+     ─────────────────────────────────────*/
+  .ks-maturity {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-sm);
+  }
+  .ks-maturity li {
+    display: grid;
+    grid-template-columns: auto 4rem 1fr;
+    gap: var(--space-sm);
+    align-items: baseline;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  }
+  .ks-maturity li:last-child { border-bottom: none; }
+  .ks-dots {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    letter-spacing: 0.15em;
+    color: var(--text);
+    font-size: 0.95rem;
+  }
+  .ks-mat-name {
+    font-weight: 500;
+    font-size: var(--fs-sm, 0.9rem);
+  }
+  .ks-mat-desc {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  /* ─────────────────────────────────────
+     Phases (When / Where / What)
+     ─────────────────────────────────────*/
+  .ks-phases {
+    display: grid;
+    gap: var(--space-sm);
+    grid-template-columns: 1fr;
+    margin-bottom: var(--space-sm);
+  }
+  @media (min-width: 40rem) {
+    .ks-phases { grid-template-columns: repeat(3, 1fr); }
+  }
+  .ks-phase {
+    border-left: 3px solid var(--color-pm);
+    padding: 0.4rem 0 0.4rem var(--space-sm);
+  }
+  .ks-phase-label {
+    display: block;
+    font-size: var(--fs-xs);
+    color: var(--color-pm);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  .ks-phase p {
+    font-size: var(--fs-sm, 0.9rem);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* ─────────────────────────────────────
+     Tools
+     ─────────────────────────────────────*/
+  .ks-tools-cat {
+    margin-bottom: var(--space-lg);
+  }
+  .ks-cat-label {
+    display: block;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-pm);
+    margin-bottom: 0.25rem;
+  }
+  .ks-cat-note {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    margin: 0 0 var(--space-sm);
+  }
+  .ks-tool {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-sm) var(--space-md);
+    margin-bottom: var(--space-xs);
+  }
+  .ks-tool--advanced {
+    border-style: dashed;
+    opacity: 0.95;
+  }
+  .ks-tool-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .ks-tool-name {
+    font-size: var(--fs-md);
+    font-weight: 500;
+  }
+  .ks-tag {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.1rem 0.45rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-light);
+  }
+  .ks-tag--pm    { color: var(--color-pm);     border-color: rgba(154, 104, 104, 0.35); }
+  .ks-tag--ds    { color: var(--color-ds);     border-color: rgba(90, 122, 148, 0.35); }
+  .ks-tag--visual{ color: var(--color-visual); border-color: rgba(90, 138, 110, 0.35); }
+  .ks-tool-sub {
+    font-size: var(--fs-sm, 0.9rem);
+    color: var(--text-light);
+    line-height: 1.55;
+    margin: 0 0 0.5rem;
+  }
+  .ks-tool-when {
+    font-size: var(--fs-sm, 0.9rem);
+    line-height: 1.65;
+    margin: 0;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.04);
+  }
+  .ks-when-label {
+    font-size: var(--fs-xs);
+    color: var(--color-pm);
+    letter-spacing: 0.05em;
+    margin-right: 0.5rem;
+    font-weight: 600;
+  }
+  .ks-warn {
+    color: var(--color-pm);
+    font-weight: 500;
+  }
+
+  /* ─────────────────────────────────────
+     Pullquote (between tools and red lines)
+     ─────────────────────────────────────*/
+  .ks-pullquote {
+    margin: var(--space-lg) 0 0;
+    padding: var(--space-md) var(--space-lg);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    font-size: var(--fs-md);
+    line-height: 1.5;
+    text-align: center;
+    color: var(--text);
+    quotes: none;
+  }
+
+  /* ─────────────────────────────────────
+     Red lines
+     ─────────────────────────────────────*/
+  .ks-redlines {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .ks-redlines li {
+    display: grid;
+    grid-template-columns: 1.5rem 1fr;
+    gap: var(--space-sm);
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    align-items: baseline;
+  }
+  .ks-redlines li:last-child { border-bottom: none; }
+  .ks-x {
+    color: var(--color-pm);
+    font-size: var(--fs-md);
+    font-weight: 400;
+    line-height: 1;
+    text-align: center;
+  }
+  .ks-redlines strong {
+    display: inline;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .ks-rl-why {
+    display: block;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    margin-top: 0.2rem;
+    line-height: 1.55;
+  }
+
+  /* ─────────────────────────────────────
+     Checklists
+     ─────────────────────────────────────*/
+  .ks-checklist-group {
+    margin-bottom: var(--space-md);
+  }
+  .ks-checklist-group h3 {
+    font-size: var(--fs-md);
+    font-weight: 500;
+    margin: 0 0 0.5rem;
+  }
+  .ks-checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .ks-checklist li {
+    position: relative;
+    padding: 0.4rem 0 0.4rem 1.8rem;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.06);
+    font-size: var(--fs-sm, 0.9rem);
+    line-height: 1.6;
+  }
+  .ks-checklist li:last-child { border-bottom: none; }
+  .ks-checklist li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.7rem;
+    width: 0.95rem;
+    height: 0.95rem;
+    border: 1.5px solid var(--text-light);
+    border-radius: 3px;
+    background: var(--bg);
+    opacity: 0.65;
+  }
+  .ks-checklist code {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 0.88em;
+    background: rgba(0, 0, 0, 0.04);
+    padding: 0.05rem 0.3rem;
+    border-radius: var(--radius-sm);
+  }
+  .ks-checklist a {
+    color: var(--color-pm);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(154, 104, 104, 0.3);
+  }
+  .ks-checklist a:hover { border-bottom-color: var(--color-pm); }
+
+  /* ─────────────────────────────────────
+     Ultimate check (question + verdict)
+     ─────────────────────────────────────*/
+  .ks-question {
+    margin: var(--space-md) 0;
+    padding: var(--space-md) var(--space-lg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: rgba(0, 0, 0, 0.015);
+    font-size: var(--fs-md);
+    line-height: 1.55;
+    text-align: center;
+    color: var(--text);
+    quotes: none;
+  }
+
+  .ks-verdict-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+    margin-top: var(--space-sm);
+  }
+  @media (min-width: 40rem) {
+    .ks-verdict-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .ks-verdict {
+    padding: var(--space-sm) var(--space-md);
+    border-left: 3px solid var(--border);
+    background: rgba(0, 0, 0, 0.015);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+  .ks-verdict--good { border-left-color: var(--color-visual); }
+  .ks-verdict--bad  { border-left-color: var(--color-pm); }
+  .ks-verdict-label {
+    display: block;
+    font-size: var(--fs-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+  }
+  .ks-verdict--good .ks-verdict-label { color: var(--color-visual); }
+  .ks-verdict--bad  .ks-verdict-label { color: var(--color-pm); }
+  .ks-verdict p {
+    font-size: var(--fs-sm, 0.9rem);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ─────────────────────────────────────
+     Footer
+     ─────────────────────────────────────*/
+  .ks-footer {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+  .ks-footer p {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    margin: 0 0 0.3rem;
+  }
+  .ks-footer-meta {
+    font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+    letter-spacing: 0.05em;
+  }
+</style>
+
+<script>
+  // Smooth scroll for TOC links (native CSS scroll-behavior would override site-wide,
+  // so do it per-link with scrollIntoView).
+  document.querySelectorAll<HTMLAnchorElement>('.ks-toc a').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+      const target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.replaceState(null, '', href);
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // TOC active-section tracking
+  // ─────────────────────────────────────────────────────────────────────────────
+  // 👉 This is the bit I (your assistant) left for you to write.
+  // It directly shapes how this page *feels* when you scroll through your own memo.
+  //
+  // Decisions to make:
+  //   • rootMargin: how much top offset (sticky nav?) + bottom dead zone?
+  //   • threshold: single value or array?
+  //   • Tie-break when multiple sections are visible — top-most vs. largest ratio?
+  //   • At page bottom, should the last section stay highlighted?
+  //
+  // A conservative default (uncomment + tweak):
+  //
+  //   const observer = new IntersectionObserver((entries) => {
+  //     entries.forEach((entry) => {
+  //       if (entry.isIntersecting) {
+  //         const id = entry.target.id;
+  //         document.querySelectorAll<HTMLAnchorElement>('.ks-toc a').forEach((a) => {
+  //           a.removeAttribute('aria-current');
+  //           if (a.getAttribute('href') === `#${id}`) a.setAttribute('aria-current', 'true');
+  //         });
+  //       }
+  //     });
+  //   }, { rootMargin: '-20% 0px -60% 0px', threshold: 0 });
+  //
+  //   document.querySelectorAll('.knowledge-system section[id]').forEach((s) => observer.observe(s));
+</script>
