@@ -81,6 +81,9 @@
     savePref(`${PFX}.exclude`, []);
   }
 
+  // --- Derived: total new jobs (pre-user-filter), for the "X / Y" counter ---
+  let totalNewJobs = $derived(allJobs.filter(j => newIdSet.has(j.id)).length);
+
   // --- Derived: filtered + sorted ---
   let filteredJobs = $derived.by(() => {
     let result = allJobs;
@@ -196,7 +199,13 @@
   {:else}
     <!-- Filter toggle + count -->
     <div class="job-toolbar">
-      <span class="job-count">{filteredJobs.length} new {filteredJobs.length === 1 ? 'job' : 'jobs'}</span>
+      <span class="job-count">
+        {#if filteredJobs.length !== totalNewJobs}
+          {filteredJobs.length} / {totalNewJobs} new {totalNewJobs === 1 ? 'job' : 'jobs'}
+        {:else}
+          {filteredJobs.length} new {filteredJobs.length === 1 ? 'job' : 'jobs'}
+        {/if}
+      </span>
       <button class="filter-toggle" onclick={() => showFilters = !showFilters}>
         {showFilters ? 'Hide filters' : 'Filters'}
       </button>
