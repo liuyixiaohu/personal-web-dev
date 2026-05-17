@@ -1,6 +1,5 @@
 <script lang="ts">
   import '../../styles/filters.css';
-  import { ALL_BUCKETS, BUCKET_LABELS, type CategoryBucket } from '../../utils/events/categories';
 
   interface Props {
     allLocations: string[];
@@ -14,11 +13,6 @@
     sortBy: string;
     searchQuery: string;
     excludeKeywords: string[];
-    /** When true, render the 5-bucket category chip row. */
-    showCategoryFilter?: boolean;
-    selectedBuckets?: Set<CategoryBucket>;
-    bucketCounts?: Map<CategoryBucket, number>;
-    onBucketToggle?: (bucket: CategoryBucket) => void;
     onLocationToggle: (loc: string) => void;
     onPriceChange: (price: string | null) => void;
     onDayToggle: (day: number) => void;
@@ -43,10 +37,6 @@
     sortBy,
     searchQuery,
     excludeKeywords,
-    showCategoryFilter = false,
-    selectedBuckets = new Set<CategoryBucket>(),
-    bucketCounts = new Map<CategoryBucket, number>(),
-    onBucketToggle = () => {},
     onLocationToggle,
     onPriceChange,
     onDayToggle,
@@ -121,22 +111,6 @@
 </script>
 
 <div class="filter-controls">
-  <!-- Category filter (5 buckets, console mode only) -->
-  {#if showCategoryFilter}
-    <div class="filter-row">
-      <span class="filter-label">{'Category'}</span>
-      <div class="filter-pills">
-        {#each ALL_BUCKETS as bucket}
-          <button
-            class="pill"
-            class:pill--active={selectedBuckets.has(bucket)}
-            onclick={() => onBucketToggle(bucket)}
-          >{BUCKET_LABELS[bucket]} <span class="pill-count">({bucketCounts.get(bucket) ?? 0})</span></button>
-        {/each}
-      </div>
-    </div>
-  {/if}
-
   <!-- Price filter -->
   <div class="filter-row">
     <span class="filter-label">{'Price'}</span>
