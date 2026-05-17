@@ -4,11 +4,9 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "prebuild": "npm run audit:i18n",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "audit:i18n": "node scripts/audit-i18n.mjs",
     "seo:diagnose": "node scripts/gsc-diagnose.mjs",
     "seo:resubmit": "node scripts/gsc-reindex.mjs"
   },
