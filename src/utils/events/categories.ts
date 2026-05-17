@@ -31,11 +31,11 @@ export function eventBuckets(event: { categories?: string[] }): CategoryBucket[]
   );
 }
 
-/** i18n key for each bucket's display label. */
-export const BUCKET_LABEL_KEYS: Record<CategoryBucket, string> = {
-  'tech-ai':  'events.bucket.techAi',
-  'food':     'events.bucket.food',
-  'arts':     'events.bucket.arts',
-  'fitness':  'events.bucket.fitness',
-  'wellness': 'events.bucket.wellness',
+/** Display label for each bucket. */
+export const BUCKET_LABELS: Record<CategoryBucket, string> = {
+  'tech-ai':  'Tech & AI',
+  'food':     'Food & Drink',
+  'arts':     'Arts & Culture',
+  'fitness':  'Fitness',
+  'wellness': 'Wellness',
 };

@@ -1,15 +1,10 @@
 <script lang="ts">
-  import { subscribeLang, getLang } from '../../i18n/langStore';
-  import type { Lang } from '../../i18n/translations';
   import { TASKS, type TaskId, type UploadedFile, WorkbenchError } from '../../utils/workbench/types.ts';
   import { parseRawFile } from '../../utils/workbench/parse.ts';
   import { aggregate } from '../../utils/workbench/aggregate.ts';
   import { updateOutputWorkbook } from '../../utils/workbench/write.ts';
   import { sniffFileFormat, formatHint, isFormatSupported } from '../../utils/workbench/sniff.ts';
   import { track } from '../../utils/analytics';
-
-  let lang: Lang = $state('en');
-  $effect(() => subscribeLang(() => { lang = getLang(); }));
 
   let selectedTask: TaskId = $state('supernova');
   let uploadedFiles: UploadedFile[] = $state([]);
