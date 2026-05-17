@@ -23,10 +23,7 @@
   --bubble-visual: #DDEEE7;
 
   /* Typography : Major Third modular scale (1.25×) */
-  --font-body: 'EB Garamond', Garamond, 'Times New Roman', serif;
-  --font-zh: 'LXGW WenKai', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  --font-zh-body: var(--font-zh);
-  --font-zh-heading: var(--font-zh);
+  --font-body: 'LXGW WenKai', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --fs-base: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);  /* root font-size */
   --fs-xs: 0.75rem;    /* small : labels, tags, captions, secondary text */
   --fs-sm: 0.8rem;     /* 1.25⁻¹ : secondary text, descriptions, captions */
@@ -322,20 +319,6 @@ a:hover {
   .page-shell {
     padding-top: 3rem;
   }
-}
-
-/* ============================================
-   Chinese Font Overrides
-   ============================================ */
-html[lang="zh"] body {
-  font-family: var(--font-zh-body);
-}
-
-html[lang="zh"] h1,
-html[lang="zh"] h2,
-html[lang="zh"] h3,
-html[lang="zh"] .home-title {
-  font-family: var(--font-zh-heading);
 }
 
 /* ============================================
