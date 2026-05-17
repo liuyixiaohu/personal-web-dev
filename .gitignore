@@ -2,8 +2,6 @@
 dist/
 # generated types
 .astro/
-# build-time audit output (regenerated each build)
-public/console/data/i18n-audit.json
 
 # git worktrees
 .worktrees/
