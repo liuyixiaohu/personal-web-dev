@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { t } from '../../i18n/langStore';
-
   let feedbackSending = $state(false);
   let feedbackSent = $state(false);
   let feedbackError = $state(false);
@@ -32,17 +30,17 @@
 </script>
 
 {#if feedbackSent}
-  <p class="feedback-success">{t('events.feedbackSent')}</p>
+  <p class="feedback-success">{'Thanks! Feedback sent.'}</p>
 {:else}
   <form onsubmit={handleSubmit}>
-    <textarea name="message" required placeholder={t('events.feedbackPlaceholder')} rows="4" class="feedback-textarea"></textarea>
+    <textarea name="message" required placeholder={'Bugs, ideas, anything...'} rows="4" class="feedback-textarea"></textarea>
     <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
     <button type="submit" class="feedback-submit" disabled={feedbackSending}>
-      {feedbackSending ? '...' : t('events.feedbackSend')}
+      {feedbackSending ? '...' : 'Send'}
     </button>
   </form>
   {#if feedbackError}
-    <p class="feedback-error-msg">{t('events.feedbackError')}</p>
+    <p class="feedback-error-msg">{'Failed to send. Try again?'}</p>
   {/if}
 {/if}
 
