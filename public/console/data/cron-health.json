@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-16T07:15:12.404078Z",
+  "generatedAt": "2026-05-17T07:33:33.583937Z",
   "repo": "liuyixiaohu/personal-web-dev",
   "workflows": [
     {
@@ -8,14 +8,24 @@
       "lastRun": {
         "status": "completed",
         "conclusion": "success",
-        "startedAt": "2026-05-16T03:36:18Z",
-        "updatedAt": "2026-05-16T03:36:51Z",
-        "durationSec": 33,
-        "htmlUrl": "https://github.com/liuyixiaohu/personal-web-dev/actions/runs/25951771276",
+        "startedAt": "2026-05-17T03:55:15Z",
+        "updatedAt": "2026-05-17T03:55:46Z",
+        "durationSec": 31,
+        "htmlUrl": "https://github.com/liuyixiaohu/personal-web-dev/actions/runs/25980729055",
         "event": "schedule",
-        "runNumber": 79
+        "runNumber": 80
       },
       "recentRuns": [
+        {
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-05-17T03:55:15Z",
+          "updatedAt": "2026-05-17T03:55:46Z",
+          "durationSec": 31,
+          "htmlUrl": "https://github.com/liuyixiaohu/personal-web-dev/actions/runs/25980729055",
+          "event": "schedule",
+          "runNumber": 80
+        },
         {
           "status": "completed",
           "conclusion": "success",
@@ -105,16 +115,6 @@
           "htmlUrl": "https://github.com/liuyixiaohu/personal-web-dev/actions/runs/25619085640",
           "event": "schedule",
           "runNumber": 71
-        },
-        {
-          "status": "completed",
-          "conclusion": "success",
-          "startedAt": "2026-05-09T03:32:23Z",
-          "updatedAt": "2026-05-09T03:33:28Z",
-          "durationSec": 65,
-          "htmlUrl": "https://github.com/liuyixiaohu/personal-web-dev/actions/runs/25590549957",
-          "event": "schedule",
-          "runNumber": 70
         }
       ]
     },
@@ -124,14 +124,44 @@
       "lastRun": {
         "status": "completed",
         "conclusion": "success",
-        "startedAt": "2026-05-16T06:23:33Z",
-        "updatedAt": "2026-05-16T06:24:02Z",
-        "durationSec": 29,
-        "htmlUrl": "https://github.com/liuyixiaohu/personal-web-dev/actions/runs/25954910020",
+        "startedAt": "2026-05-17T06:47:15Z",
+        "updatedAt": "2026-05-17T06:47:42Z",
+        "durationSec": 27,
+        "htmlUrl": "https://github.com/liuyixiaohu/personal-web-dev/actions/runs/25983855335",
         "event": "schedule",
-        "runNumber": 124
+        "runNumber": 127
       },
       "recentRuns": [
+        {
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-05-17T06:47:15Z",
+          "updatedAt": "2026-05-17T06:47:42Z",
+          "durationSec": 27,
+          "htmlUrl": "https://github.com/liuyixiaohu/personal-web-dev/actions/runs/25983855335",
+          "event": "schedule",
+          "runNumber": 127
+        },
+        {
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-05-17T06:14:47Z",
+          "updatedAt": "2026-05-17T06:15:24Z",
+          "durationSec": 37,
+          "htmlUrl": "https://github.com/liuyixiaohu/personal-web-dev/actions/runs/25983251789",
+          "event": "workflow_dispatch",
+          "runNumber": 126
+        },
+        {
+          "status": "completed",
+          "conclusion": "success",
+          "startedAt": "2026-05-17T06:00:32Z",
+          "updatedAt": "2026-05-17T06:01:02Z",
+          "durationSec": 30,
+          "htmlUrl": "https://github.com/liuyixiaohu/personal-web-dev/actions/runs/25982976542",
+          "event": "workflow_dispatch",
+          "runNumber": 125
+        },
         {
           "status": "completed",
           "conclusion": "success",
@@ -201,36 +231,6 @@
           "htmlUrl": "https://github.com/liuyixiaohu/personal-web-dev/actions/runs/25849904412",
           "event": "workflow_dispatch",
           "runNumber": 118
-        },
-        {
-          "status": "completed",
-          "conclusion": "success",
-          "startedAt": "2026-05-14T08:22:27Z",
-          "updatedAt": "2026-05-14T08:22:52Z",
-          "durationSec": 25,
-          "htmlUrl": "https://github.com/liuyixiaohu/personal-web-dev/actions/runs/25849864758",
-          "event": "workflow_dispatch",
-          "runNumber": 117
-        },
-        {
-          "status": "completed",
-          "conclusion": "success",
-          "startedAt": "2026-05-14T06:47:43Z",
-          "updatedAt": "2026-05-14T06:48:04Z",
-          "durationSec": 21,
-          "htmlUrl": "https://github.com/liuyixiaohu/personal-web-dev/actions/runs/25846242380",
-          "event": "schedule",
-          "runNumber": 116
-        },
-        {
-          "status": "completed",
-          "conclusion": "success",
-          "startedAt": "2026-05-14T06:16:12Z",
-          "updatedAt": "2026-05-14T06:16:52Z",
-          "durationSec": 40,
-          "htmlUrl": "https://github.com/liuyixiaohu/personal-web-dev/actions/runs/25845142527",
-          "event": "workflow_dispatch",
-          "runNumber": 115
         }
       ]
     }
