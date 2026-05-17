@@ -20,51 +20,59 @@ import json
 import re
 import sys
 import xml.etree.ElementTree as ET
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
 import requests
+from bs4 import BeautifulSoup
 
 SITEMAP_URL = "https://claude.com/sitemap.xml"
+CONNECTOR_BASE = "https://claude.com/connectors"
 DATA_FILE = Path("public/data/connectors.json")
 CONNECTOR_PATH_RE = re.compile(r"^https://claude\.com/connectors/([a-z0-9-]+)$")
+USER_AGENT = "personal-web-dev/fetch-connectors"
+ENRICH_WORKERS = 5
+ENRICH_TIMEOUT = 10
 
 
 def derive_name(slug: str) -> str:
-    """Turn "adobe-experience-manager" into "Adobe Experience Manager".
+    """Fallback name derivation when the connector page can't be fetched.
 
-    Baseline rule: title-case each hyphen-separated part, except a small
-    set of joining words. Known edge cases (acronyms like "aws" → "Aws"
-    rather than "AWS") are accepted in v1 — see the TODO below for the
-    enrichment path that fixes them at the cost of N+1 requests.
+    Turns "adobe-experience-manager" into "Adobe Experience Manager" by
+    title-casing each hyphen-separated part. Acronyms ("aws" → "Aws") get
+    mangled — that's why `enrich` (below) is the primary path; this is the
+    last-resort fallback.
     """
     SMALL = {"for", "and", "of", "to"}
     parts = slug.split("-")
     return " ".join(p if p in SMALL else p[:1].upper() + p[1:] for p in parts)
 
 
-# --------------- LEARNING-MODE TODO -----------------------------------------
-# Right now display names come from slug title-casing (see derive_name above).
-# That's fine for "linear" → "Linear" but mangles acronyms ("aws" → "Aws")
-# and product casing ("zoominfo" → "Zoominfo" instead of "ZoomInfo").
-#
-# If you want pretty names + real descriptions, write a function:
-#
-#     def enrich(slug: str) -> tuple[str, str]:
-#         """Fetch https://claude.com/connectors/<slug> and return
-#         (display_name, description). Pull from <title> and
-#         <meta name="description"> respectively."""
-#
-# Then call it inside `merge()` only when the entry is brand-new (so old
-# entries don't get re-fetched every cron tick — that'd be ~300 requests
-# per run instead of just the handful of new ones).
-#
-# Trade-off:
-#   * Skip enrichment  → 1 HTTP request, ~1s total, slug-derived names.
-#   * Enrich on add    → +1 request per NEW connector (usually 0-5), pretty
-#                         names + descriptions on the /console/connectors
-#                         page. Recommended once you've seen v1 ship.
-# ----------------------------------------------------------------------------
+def enrich(slug: str) -> tuple[str, str] | None:
+    """Fetch the connector's own page and return (display_name, description).
+
+    Pulls the name from <h1> (cleanest source — "ZoomInfo", "AWS Marketplace")
+    and the description from <meta name="description">. Returns None on any
+    network or parse failure; the caller should fall back to derive_name.
+    """
+    try:
+        resp = requests.get(
+            f"{CONNECTOR_BASE}/{slug}",
+            headers={"User-Agent": USER_AGENT},
+            timeout=ENRICH_TIMEOUT,
+        )
+        resp.raise_for_status()
+    except requests.RequestException:
+        return None
+    soup = BeautifulSoup(resp.text, "html.parser")
+    h1 = soup.find("h1")
+    md = soup.find("meta", attrs={"name": "description"})
+    name = h1.get_text(strip=True) if h1 else ""
+    desc = md.get("content", "").strip() if md else ""
+    if not name:
+        return None
+    return name, desc
 
 
 def fetch_slugs() -> list[str]:
@@ -132,6 +140,31 @@ def merge(old: dict[str, Any], slugs: list[str], now: dt.datetime) -> dict[str, 
     }
 
 
+def enrich_missing(connectors: list[dict[str, Any]]) -> int:
+    """Enrich any connector whose description is empty.
+
+    Once an entry has a description, it's never re-fetched — so this is
+    cheap on steady-state runs (only new connectors need it) and only
+    expensive on the initial seed. Returns the number of entries enriched.
+    """
+    targets = [c for c in connectors if not c.get("description")]
+    if not targets:
+        return 0
+    print(f"Enriching {len(targets)} connector(s)...", flush=True)
+    enriched = 0
+    with ThreadPoolExecutor(max_workers=ENRICH_WORKERS) as pool:
+        futures = {pool.submit(enrich, c["id"]): c for c in targets}
+        for fut in as_completed(futures):
+            entry = futures[fut]
+            result = fut.result()
+            if result is None:
+                continue
+            entry["name"], entry["description"] = result
+            enriched += 1
+    print(f"Enriched {enriched}/{len(targets)}.", flush=True)
+    return enriched
+
+
 def main() -> int:
     print(f"Fetching {SITEMAP_URL}...", flush=True)
     slugs = fetch_slugs()
@@ -153,6 +186,7 @@ def main() -> int:
 
     now = dt.datetime.now(dt.timezone.utc)
     merged = merge(old, slugs, now)
+    enrich_missing(merged["connectors"])
 
     DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
     DATA_FILE.write_text(json.dumps(merged, indent=2, ensure_ascii=False) + "\n")
