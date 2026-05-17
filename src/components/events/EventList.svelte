@@ -13,33 +13,6 @@
   import Popup from './Popup.svelte';
   import FeedbackForm from './FeedbackForm.svelte';
   import { track } from '../../utils/analytics';
-  import { ALL_BUCKETS, NEW_BUCKETS, eventBuckets, type CategoryBucket } from '../../utils/events/categories';
-
-  // --- Props ---
-  interface Props {
-    mode?: 'public' | 'console' | 'console-new';
-  }
-  let { mode = 'public' }: Props = $props();
-  const isConsole = mode === 'console';
-  const isConsoleNew = mode === 'console-new';
-  const isPublic = mode === 'public';
-  const pfx = isConsoleNew ? 'console.new-events' : isConsole ? 'console.events' : 'events';
-
-  // Bucket filter at load time (events array scope). For console mode it's null
-  // because the user toggles buckets via UI chips — load all 6 categories then
-  // filter at render time.
-  const loadBuckets: CategoryBucket[] | null = isPublic
-    ? ['tech-ai']
-    : isConsoleNew
-    ? NEW_BUCKETS
-    : null;
-
-  // Badge display mode passed to each EventCard.
-  const badgeMode: 'never' | 'multi' | 'always' = isConsoleNew
-    ? 'always'
-    : isConsole
-    ? 'multi'
-    : 'never';
 
   // --- State ---
   let events = $state<LumaEvent[]>([]);
@@ -49,54 +22,46 @@
   let isStale = $state(false);
 
   // --- Filter & Sort State (persisted via localStorage) ---
-  let selectedLocations = $state<Set<string>>(new Set(loadPref<string[]>(`${pfx}.locations`, [])));
-  let selectedPrice = $state<string | null>(loadPref(`${pfx}.price`, null));
-  let selectedDays = $state<Set<number>>(new Set(loadPref<number[]>(`${pfx}.days`, [])));
-  let selectedTimeStart = $state<string>(loadPref(`${pfx}.timeStart`, ''));
-  let selectedTimeEnd = $state<string>(loadPref(`${pfx}.timeEnd`, ''));
-  let sortBy = $state<string>(loadPref(`${pfx}.sort`, 'time-asc'));
+  const PFX = 'events';
+  let selectedLocations = $state<Set<string>>(new Set(loadPref<string[]>(`${PFX}.locations`, [])));
+  let selectedPrice = $state<string | null>(loadPref(`${PFX}.price`, null));
+  let selectedDays = $state<Set<number>>(new Set(loadPref<number[]>(`${PFX}.days`, [])));
+  let selectedTimeStart = $state<string>(loadPref(`${PFX}.timeStart`, ''));
+  let selectedTimeEnd = $state<string>(loadPref(`${PFX}.timeEnd`, ''));
+  let sortBy = $state<string>(loadPref(`${PFX}.sort`, 'time-asc'));
   let searchQuery = $state<string>('');
-  let excludeKeywords = $state<string[]>(loadPref<string[]>(`${pfx}.exclude`, []));
-
-  // Category bucket selection — only user-toggleable in console mode.
-  // Empty Set means "all" (so the UI default is "nothing selected = everything").
-  let selectedBuckets = $state<Set<CategoryBucket>>(
-    isConsole
-      ? new Set(loadPref<CategoryBucket[]>(`${pfx}.buckets`, []))
-      : new Set<CategoryBucket>()
-  );
+  let excludeKeywords = $state<string[]>(loadPref<string[]>(`${PFX}.exclude`, []));
 
   let changelogOpen = $state(false);
   let whyOpen = $state(false);
   let feedbackOpen = $state(false);
   let feedbackFormRef: FeedbackForm | undefined = $state();
 
-
   // --- Persist filter/sort to localStorage ---
   $effect(() => {
-    localStorage.setItem(`${pfx}.price`, JSON.stringify(selectedPrice));
-    localStorage.setItem(`${pfx}.sort`, JSON.stringify(sortBy));
-    localStorage.setItem(`${pfx}.locations`, JSON.stringify([...selectedLocations]));
-    localStorage.setItem(`${pfx}.days`, JSON.stringify([...selectedDays]));
-    localStorage.setItem(`${pfx}.timeStart`, JSON.stringify(selectedTimeStart));
-    localStorage.setItem(`${pfx}.timeEnd`, JSON.stringify(selectedTimeEnd));
-    localStorage.setItem(`${pfx}.exclude`, JSON.stringify(excludeKeywords));
-    if (isConsole) {
-      localStorage.setItem(`${pfx}.buckets`, JSON.stringify([...selectedBuckets]));
-    }
+    localStorage.setItem(`${PFX}.price`, JSON.stringify(selectedPrice));
+    localStorage.setItem(`${PFX}.sort`, JSON.stringify(sortBy));
+    localStorage.setItem(`${PFX}.locations`, JSON.stringify([...selectedLocations]));
+    localStorage.setItem(`${PFX}.days`, JSON.stringify([...selectedDays]));
+    localStorage.setItem(`${PFX}.timeStart`, JSON.stringify(selectedTimeStart));
+    localStorage.setItem(`${PFX}.timeEnd`, JSON.stringify(selectedTimeEnd));
+    localStorage.setItem(`${PFX}.exclude`, JSON.stringify(excludeKeywords));
   });
 
   // --- Data fetching ---
+  // The cron now only ingests Bay Area Tech + AI categories, so the JSON is
+  // already scoped — no client-side bucket filter needed. We only show events
+  // that are NEW since the last fetch (per first_seen_at), starting from
+  // tomorrow (today is mostly stale by the time the daily cron lands).
   onMount(async () => {
     try {
       const resp = await fetch(DATA_URL);
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const data: EventData = await resp.json();
 
-      // Future cutoff: console / console-new include today; public starts from tomorrow
       const cutoff = new Date();
       cutoff.setHours(0, 0, 0, 0);
-      if (isPublic) cutoff.setDate(cutoff.getDate() + 1);
+      cutoff.setDate(cutoff.getDate() + 1);
       const cutoffMs = cutoff.getTime();
       const isFuture = (e: LumaEvent) => new Date(e.start_at).getTime() >= cutoffMs;
 
@@ -104,29 +69,17 @@
         !BLOCKED_CALENDARS.has(e.calendar_name) &&
         !BLOCKED_NAME_KEYWORDS.some(kw => e.name.includes(kw));
 
-      const inLoadBuckets = (e: LumaEvent) => {
-        if (!loadBuckets) return true;
-        return eventBuckets(e).some(b => loadBuckets.includes(b));
-      };
+      const prevCheck = data.previous_updated_at
+        ? new Date(data.previous_updated_at).getTime()
+        : 0;
+      const isNew = (e: LumaEvent) =>
+        prevCheck > 0 && e.first_seen_at
+          ? new Date(e.first_seen_at).getTime() > prevCheck
+          : false;
+      const filtered = prevCheck > 0
+        ? data.events.filter(e => notBlocked(e) && isNew(e) && isFuture(e))
+        : data.events.filter(e => notBlocked(e) && isFuture(e));
 
-      let filtered: LumaEvent[];
-      if (isConsole) {
-        // Console: show ALL future events; bucket filter is user-driven via chips
-        filtered = data.events.filter(e => notBlocked(e) && isFuture(e));
-      } else {
-        // public / console-new: only events newly discovered since last fetch,
-        // restricted to the mode's fixed bucket scope
-        const prevCheck = data.previous_updated_at
-          ? new Date(data.previous_updated_at).getTime()
-          : 0;
-        const isNew = (e: LumaEvent) =>
-          prevCheck > 0 && e.first_seen_at
-            ? new Date(e.first_seen_at).getTime() > prevCheck
-            : false;
-        filtered = prevCheck > 0
-          ? data.events.filter(e => notBlocked(e) && isNew(e) && isFuture(e) && inLoadBuckets(e))
-          : data.events.filter(e => notBlocked(e) && isFuture(e) && inLoadBuckets(e));
-      }
       enrichEvents(filtered);
       events = filtered;
       updatedAt = data.updated_at;
@@ -147,28 +100,11 @@
   let locationCounts = $derived(locationIndex.counts);
   let priceCounts = $derived(buildPriceCounts(events));
 
-  // Bucket counts (only meaningful for console mode's chip UI)
-  let bucketCounts = $derived.by(() => {
-    const counts = new Map<CategoryBucket, number>();
-    for (const b of ALL_BUCKETS) counts.set(b, 0);
-    for (const e of events) {
-      for (const b of eventBuckets(e)) {
-        counts.set(b, (counts.get(b) ?? 0) + 1);
-      }
-    }
-    return counts;
-  });
-
   // --- Filtering & Sorting ---
   let filteredEvents = $derived.by(() => {
     const q = searchQuery.toLowerCase().trim();
 
     let result = events.filter(e => {
-      // Bucket filter (console mode only — empty selection = all)
-      if (isConsole && selectedBuckets.size > 0) {
-        const buckets = eventBuckets(e);
-        if (!buckets.some(b => selectedBuckets.has(b))) return false;
-      }
       if (selectedLocations.size > 0 && !selectedLocations.has(e._strippedLocation!)) return false;
       if (!matchesPrice(e, selectedPrice)) return false;
       if (selectedDays.size > 0 && !selectedDays.has(e._dayOfWeek!)) return false;
@@ -253,13 +189,6 @@
     pushFilter('day', day);
   }
 
-  function toggleBucket(b: CategoryBucket) {
-    const next = new Set(selectedBuckets);
-    if (next.has(b)) next.delete(b); else next.add(b);
-    selectedBuckets = next;
-    pushFilter('category', b);
-  }
-
   function clearFilters() {
     selectedLocations = new Set();
     selectedPrice = null;
@@ -268,80 +197,72 @@
     selectedTimeEnd = '';
     searchQuery = '';
     excludeKeywords = [];
-    if (isConsole) selectedBuckets = new Set();
     pushFilter('clear');
   }
 </script>
 
 <div class="event-list">
   <header class="event-header">
-    {#if isConsoleNew}
-      <h2 class="event-title">{'Today\'s New · Lifestyle'}</h2>
-      <p class="event-subtitle">{'Food, Arts, Fitness, Wellness — new since last fetch'}</p>
-    {:else if isConsole}
-      <h2 class="event-title">All Upcoming Events</h2>
-    {:else}
-      <div class="event-title-row">
-        <h2 class="event-title">{'Today\'s New Tech Events @Bay Area'}</h2>
-        <div class="version-wrap">
-          <button class="version-btn" onclick={() => changelogOpen = !changelogOpen}>
-            {VERSION}
-          </button>
-          <Popup open={changelogOpen} title="Changelog" onClose={() => changelogOpen = false}>
-            {#each CHANGELOG as release}
-              <div class="changelog-release">
-                <div class="changelog-version">{release.version}</div>
-                <p class="changelog-why">{release.why}</p>
-                <ul class="changelog-list">
-                  {#each release.changes as change}
-                    <li>{change}</li>
-                  {/each}
-                </ul>
-              </div>
-            {/each}
-          </Popup>
-        </div>
-        <span class="feedback-wrap">
-          <button class="why-btn" onclick={() => { feedbackOpen = !feedbackOpen; feedbackFormRef?.reset(); }}>
-            {'Feedback'}
-          </button>
-          <Popup open={feedbackOpen} title={'Any Suggestion? Pls!!!'} onClose={() => feedbackOpen = false} width="18rem">
-            <FeedbackForm bind:this={feedbackFormRef} />
-          </Popup>
-        </span>
+    <div class="event-title-row">
+      <h2 class="event-title">Today's New Tech Events @Bay Area</h2>
+      <div class="version-wrap">
+        <button class="version-btn" onclick={() => changelogOpen = !changelogOpen}>
+          {VERSION}
+        </button>
+        <Popup open={changelogOpen} title="Changelog" onClose={() => changelogOpen = false}>
+          {#each CHANGELOG as release}
+            <div class="changelog-release">
+              <div class="changelog-version">{release.version}</div>
+              <p class="changelog-why">{release.why}</p>
+              <ul class="changelog-list">
+                {#each release.changes as change}
+                  <li>{change}</li>
+                {/each}
+              </ul>
+            </div>
+          {/each}
+        </Popup>
       </div>
+      <span class="feedback-wrap">
+        <button class="why-btn" onclick={() => { feedbackOpen = !feedbackOpen; feedbackFormRef?.reset(); }}>
+          Feedback
+        </button>
+        <Popup open={feedbackOpen} title="Any Suggestion? Pls!!!" onClose={() => feedbackOpen = false} width="18rem">
+          <FeedbackForm bind:this={feedbackFormRef} />
+        </Popup>
+      </span>
+    </div>
 
-      <p class="event-subtitle">
-        {'Bay Area Tech & AI events from Luma, showing '}<span class="newly-highlight">{'only what\'s new since the last daily check'}</span>{'.'}
-        <span class="why-wrap">
-          <button class="why-btn" onclick={() => whyOpen = !whyOpen}>Why?</button>
-          <Popup open={whyOpen} title={'Why show only newly added events?'} onClose={() => whyOpen = false}>
-            <p class="why-point">{'This page pulls from Luma\'s Bay Area Tech and AI categories once a day. It only shows events that appeared since the last check — not the full catalog. If you\'re looking for a specific event or topic outside Tech/AI, search directly on the platform.'}</p>
-            <p class="why-point">{'This page is intentionally designed to balance convenience and long-term availability. The data comes from an undisclosed endpoint. Keeping the feature restrained and differentiated, rather than building a full-featured alternative, helps reduce the risk of the data source being noticed and shut down.'}</p>
-          </Popup>
-        </span>
-      </p>
-    {/if}
+    <p class="event-subtitle">
+      Bay Area Tech & AI events from Luma, showing <span class="newly-highlight">only what's new since the last daily check</span>.
+      <span class="why-wrap">
+        <button class="why-btn" onclick={() => whyOpen = !whyOpen}>Why?</button>
+        <Popup open={whyOpen} title="Why show only newly added events?" onClose={() => whyOpen = false}>
+          <p class="why-point">This page pulls from Luma's Bay Area Tech and AI categories once a day. It only shows events that appeared since the last check — not the full catalog. If you're looking for a specific event or topic outside Tech/AI, search directly on the platform.</p>
+          <p class="why-point">This page is intentionally designed to balance convenience and long-term availability. The data comes from an undisclosed endpoint. Keeping the feature restrained and differentiated, rather than building a full-featured alternative, helps reduce the risk of the data source being noticed and shut down.</p>
+        </Popup>
+      </span>
+    </p>
   </header>
 
   {#if loading}
-    <p class="event-status">{'Loading events...'}</p>
+    <p class="event-status">Loading events...</p>
 
   {:else if error}
-    <p class="event-status event-status--error">{'Unable to load events right now. Please try again later.'}</p>
+    <p class="event-status event-status--error">Unable to load events right now. Please try again later.</p>
 
   {:else if events.length === 0}
     <div class="event-empty">
-      <p>{'No new events discovered today. Check back tomorrow!'}</p>
+      <p>No new events discovered today. Check back tomorrow!</p>
       {#if updatedAt}
-        <p class="event-meta">{'Last checked'}: {formatUpdatedAt(updatedAt)} {'(Refreshes daily ~7 PM PT)'}</p>
+        <p class="event-meta">Last checked: {formatUpdatedAt(updatedAt)} (Refreshes daily ~7 PM PT)</p>
       {/if}
     </div>
 
   {:else}
     {#if updatedAt}
       <div class="event-meta-bar">
-        <span class="event-updated">{'Last checked'}: {formatUpdatedAt(updatedAt)} {'(Refreshes daily ~7 PM PT)'}</span>
+        <span class="event-updated">Last checked: {formatUpdatedAt(updatedAt)} (Refreshes daily ~7 PM PT)</span>
       </div>
     {/if}
 
@@ -358,10 +279,6 @@
       {sortBy}
       {searchQuery}
       {excludeKeywords}
-      showCategoryFilter={isConsole}
-      {selectedBuckets}
-      {bucketCounts}
-      onBucketToggle={toggleBucket}
       onLocationToggle={toggleLocation}
       onPriceChange={(p) => { selectedPrice = p; pushFilter('price', p); }}
       onDayToggle={toggleDay}
@@ -375,37 +292,35 @@
     />
 
     {#if isStale}
-      <p class="event-stale">{'Data may be stale. Last update was over 48 hours ago.'}</p>
+      <p class="event-stale">Data may be stale. Last update was over 48 hours ago.</p>
     {/if}
 
     <div class="event-count">
       {#if filteredEvents.length !== events.length}
-        {filteredEvents.length} / {events.length} {'events found'}
+        {filteredEvents.length} / {events.length} events found
       {:else}
-        {filteredEvents.length} {'events found'}
+        {filteredEvents.length} events found
       {/if}
     </div>
 
     {#if filteredEvents.length === 0}
-      <p class="event-status">{'No events match filters'}</p>
+      <p class="event-status">No events match filters</p>
     {/if}
 
     {#each groupedEvents as group}
       <h3 class="date-group-header">{formatDateGroup(group.date)}</h3>
       <ul class="event-cards">
         {#each group.events as event (event.api_id)}
-          <EventCard {event} {badgeMode} />
+          <EventCard {event} />
         {/each}
       </ul>
     {/each}
 
-    {#if isPublic}
     <section class="privacy-section">
-      <h2 class="privacy-heading">{'Privacy'}</h2>
-      <p class="privacy-desc">{'This page runs entirely in your browser. Event data is fetched from a public source and displayed directly. No personal data is collected, transmitted, or stored.'}</p>
-      <a href="/events/privacy" class="privacy-link">{'Full privacy policy →'}</a>
+      <h2 class="privacy-heading">Privacy</h2>
+      <p class="privacy-desc">This page runs entirely in your browser. Event data is fetched from a public source and displayed directly. No personal data is collected, transmitted, or stored.</p>
+      <a href="/events/privacy" class="privacy-link">Full privacy policy →</a>
     </section>
-    {/if}
 
   {/if}
 </div>
@@ -452,7 +367,6 @@
     position: relative;
     display: inline-block;
   }
-
 
   .changelog-release {
     margin-bottom: 0.6rem;
@@ -531,7 +445,6 @@
     color: var(--text);
   }
 
-
   .why-point {
     font-size: var(--fs-xs);
     color: var(--text-light);
@@ -542,7 +455,6 @@
   .why-point:last-child {
     margin-bottom: 0;
   }
-
 
   .event-meta-bar {
     font-size: var(--fs-xs);
@@ -659,5 +571,4 @@
   .privacy-link:hover {
     opacity: 0.7;
   }
-
 </style>
