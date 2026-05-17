@@ -1,7 +1,6 @@
 ---
 import { ClientRouter, fade } from 'astro:transitions';
 import '../styles/global.css';
-import LanguageToggle from '../components/LanguageToggle.svelte';
 import Footer from '../components/Footer.astro';
 import BackToTop from '../components/BackToTop.astro';
 
@@ -10,16 +9,17 @@ interface Props {
   description?: string;
   ogDescription?: string;
   hideFooter?: boolean;
-  hideLanguageToggle?: boolean;
   bodyClass?: string;
+  /** Page language for the <html> tag. Defaults to 'en'; pass 'zh' on Chinese-only pages. */
+  lang?: 'en' | 'zh';
 }
 
-const { title = "Kun Li", description = "Given the SEO Principals, I'm genuinely surprised you found this page. Welcome, I guess.", ogDescription, hideFooter = false, hideLanguageToggle = false, bodyClass } = Astro.props;
+const { title = "Kun Li", description = "Given the SEO Principals, I'm genuinely surprised you found this page. Welcome, I guess.", ogDescription, hideFooter = false, bodyClass, lang = 'en' } = Astro.props;
 const socialDescription = ogDescription || description;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -106,39 +106,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <body class={bodyClass} transition:animate={fade({ duration: '0.4s' })}>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PNCRCQBM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    {!hideLanguageToggle && <LanguageToggle client:load />}
     <slot />
     {!hideFooter && <Footer />}
     <BackToTop />
 
     <script>
-      import { initLang, getLang, t } from '../i18n/langStore';
-
-      function applyTranslations() {
-        initLang();
-        const lang = getLang() as 'en' | 'zh';
-        document.documentElement.setAttribute('data-lang', lang);
-
-        // Apply static data-i18n translations
-        document.querySelectorAll('[data-i18n]').forEach((el) => {
-          const key = el.getAttribute('data-i18n');
-          if (!key) return;
-          const text = t(key);
-          if (text.includes('<')) el.innerHTML = text;
-          else el.textContent = text;
-        });
-
-      }
-
-      // Apply on initial load
-      applyTranslations();
-
-      // Apply when language changes (from LanguageToggle click)
-      document.addEventListener('lang-change', applyTranslations);
-
-      // Apply after Astro View Transition page swap
+      // GTM virtual page-view on Astro View Transition swap.
       document.addEventListener('astro:after-swap', () => {
-        applyTranslations();
         window.dataLayer?.push({
           event: 'virtual_page_view',
           page_path: (window as any).__normPath(window.location.pathname),

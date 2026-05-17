@@ -1,7 +1,5 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { subscribeLang, getLang, t } from '../../i18n/langStore';
-  import type { Lang } from '../../i18n/translations';
   import {
     type LumaEvent, type EventData,
     DATA_URL, STALE_THRESHOLD_MS, BLOCKED_CALENDARS, BLOCKED_NAME_KEYWORDS,
@@ -44,7 +42,6 @@
     : 'never';
 
   // --- State ---
-  let lang = $state<Lang>('en');
   let events = $state<LumaEvent[]>([]);
   let updatedAt = $state('');
   let loading = $state(true);
@@ -74,9 +71,6 @@
   let feedbackOpen = $state(false);
   let feedbackFormRef: FeedbackForm | undefined = $state();
 
-
-  // --- Language ---
-  $effect(() => subscribeLang(() => { lang = getLang(); }));
 
   // --- Persist filter/sort to localStorage ---
   $effect(() => {
@@ -282,13 +276,13 @@
 <div class="event-list">
   <header class="event-header">
     {#if isConsoleNew}
-      <h2 class="event-title">{t('consoleNew.title')}</h2>
-      <p class="event-subtitle">{t('consoleNew.desc')}</p>
+      <h2 class="event-title">{'Today\'s New · Lifestyle'}</h2>
+      <p class="event-subtitle">{'Food, Arts, Fitness, Wellness — new since last fetch'}</p>
     {:else if isConsole}
       <h2 class="event-title">All Upcoming Events</h2>
     {:else}
       <div class="event-title-row">
-        <h2 class="event-title">{t('events.title')}</h2>
+        <h2 class="event-title">{'Today\'s New Tech Events @Bay Area'}</h2>
         <div class="version-wrap">
           <button class="version-btn" onclick={() => changelogOpen = !changelogOpen}>
             {VERSION}
@@ -309,21 +303,21 @@
         </div>
         <span class="feedback-wrap">
           <button class="why-btn" onclick={() => { feedbackOpen = !feedbackOpen; feedbackFormRef?.reset(); }}>
-            {t('events.feedback')}
+            {'Feedback'}
           </button>
-          <Popup open={feedbackOpen} title={t('events.feedbackTitle')} onClose={() => feedbackOpen = false} width="18rem">
+          <Popup open={feedbackOpen} title={'Any Suggestion? Pls!!!'} onClose={() => feedbackOpen = false} width="18rem">
             <FeedbackForm bind:this={feedbackFormRef} />
           </Popup>
         </span>
       </div>
 
       <p class="event-subtitle">
-        {t('events.subtitlePre')}<span class="newly-highlight">{t('events.subtitleHighlight')}</span>{t('events.subtitlePost')}
+        {'Bay Area Tech & AI events from Luma, showing '}<span class="newly-highlight">{'only what\'s new since the last daily check'}</span>{'.'}
         <span class="why-wrap">
           <button class="why-btn" onclick={() => whyOpen = !whyOpen}>Why?</button>
-          <Popup open={whyOpen} title={t('events.whyTitle')} onClose={() => whyOpen = false}>
-            <p class="why-point">{t('events.whyPoint1')}</p>
-            <p class="why-point">{t('events.whyPoint2')}</p>
+          <Popup open={whyOpen} title={'Why show only newly added events?'} onClose={() => whyOpen = false}>
+            <p class="why-point">{'This page pulls from Luma\'s Bay Area Tech and AI categories once a day. It only shows events that appeared since the last check — not the full catalog. If you\'re looking for a specific event or topic outside Tech/AI, search directly on the platform.'}</p>
+            <p class="why-point">{'This page is intentionally designed to balance convenience and long-term availability. The data comes from an undisclosed endpoint. Keeping the feature restrained and differentiated, rather than building a full-featured alternative, helps reduce the risk of the data source being noticed and shut down.'}</p>
           </Popup>
         </span>
       </p>
@@ -331,23 +325,23 @@
   </header>
 
   {#if loading}
-    <p class="event-status">{t('events.loading')}</p>
+    <p class="event-status">{'Loading events...'}</p>
 
   {:else if error}
-    <p class="event-status event-status--error">{t('events.fetchError')}</p>
+    <p class="event-status event-status--error">{'Unable to load events right now. Please try again later.'}</p>
 
   {:else if events.length === 0}
     <div class="event-empty">
-      <p>{t('events.noEvents')}</p>
+      <p>{'No new events discovered today. Check back tomorrow!'}</p>
       {#if updatedAt}
-        <p class="event-meta">{t('events.lastUpdated')}: {formatUpdatedAt(updatedAt, lang)} {t('events.refreshNote')}</p>
+        <p class="event-meta">{'Last checked'}: {formatUpdatedAt(updatedAt)} {'(Refreshes daily ~7 PM PT)'}</p>
       {/if}
     </div>
 
   {:else}
     {#if updatedAt}
       <div class="event-meta-bar">
-        <span class="event-updated">{t('events.lastUpdated')}: {formatUpdatedAt(updatedAt, lang)} {t('events.refreshNote')}</span>
+        <span class="event-updated">{'Last checked'}: {formatUpdatedAt(updatedAt)} {'(Refreshes daily ~7 PM PT)'}</span>
       </div>
     {/if}
 
@@ -381,35 +375,35 @@
     />
 
     {#if isStale}
-      <p class="event-stale">{t('events.staleWarning')}</p>
+      <p class="event-stale">{'Data may be stale. Last update was over 48 hours ago.'}</p>
     {/if}
 
     <div class="event-count">
       {#if filteredEvents.length !== events.length}
-        {filteredEvents.length} / {events.length} {t('events.eventCount')}
+        {filteredEvents.length} / {events.length} {'events found'}
       {:else}
-        {filteredEvents.length} {t('events.eventCount')}
+        {filteredEvents.length} {'events found'}
       {/if}
     </div>
 
     {#if filteredEvents.length === 0}
-      <p class="event-status">{t('events.noMatch')}</p>
+      <p class="event-status">{'No events match filters'}</p>
     {/if}
 
     {#each groupedEvents as group}
-      <h3 class="date-group-header">{formatDateGroup(group.date, lang)}</h3>
+      <h3 class="date-group-header">{formatDateGroup(group.date)}</h3>
       <ul class="event-cards">
         {#each group.events as event (event.api_id)}
-          <EventCard {event} {lang} {badgeMode} />
+          <EventCard {event} {badgeMode} />
         {/each}
       </ul>
     {/each}
 
     {#if isPublic}
     <section class="privacy-section">
-      <h2 class="privacy-heading">{t('events.privacyTitle')}</h2>
-      <p class="privacy-desc">{t('events.privacyDesc')}</p>
-      <a href="/events/privacy" class="privacy-link">{t('events.privacyLink')}</a>
+      <h2 class="privacy-heading">{'Privacy'}</h2>
+      <p class="privacy-desc">{'This page runs entirely in your browser. Event data is fetched from a public source and displayed directly. No personal data is collected, transmitted, or stored.'}</p>
+      <a href="/events/privacy" class="privacy-link">{'Full privacy policy →'}</a>
     </section>
     {/if}
 
@@ -627,11 +621,6 @@
   @keyframes highlight-fade {
     0% { background: rgba(90, 138, 110, 0.15); }
     100% { background: transparent; }
-  }
-
-  /* Chinese font overrides */
-  :global(html[data-lang="zh"]) .event-title {
-    font-family: var(--font-zh);
   }
 
   /* Mobile */

@@ -1,6 +1,3 @@
-import type { Lang } from '../../i18n/translations';
-import { t } from '../../i18n/langStore';
-
 // --- Types ---
 export interface LumaEvent {
   api_id: string;
@@ -38,14 +35,11 @@ export interface EventData {
 export const DATA_URL = '/data/events.json';
 export const STALE_THRESHOLD_MS = 48 * 60 * 60 * 1000; // 48 hours
 export const TZ = 'America/Los_Angeles';
+export const LOCALE = 'en-US';
 export const BLOCKED_CALENDARS = new Set(['社交感染聚会']);
 export const BLOCKED_NAME_KEYWORDS = ['Kiehl\'s'];
 
 // --- Helpers ---
-export function locale(lang: Lang): string {
-  return lang === 'zh' ? 'zh-CN' : 'en-US';
-}
-
 export function loadPref<T>(key: string, fallback: T): T {
   try {
     const v = localStorage.getItem(key);
@@ -58,48 +52,47 @@ export function stripState(loc: string): string {
 }
 
 // --- Formatting ---
-export function formatEventRange(startIso: string, endIso: string, tz: string, lang: Lang): string {
+export function formatEventRange(startIso: string, endIso: string, tz: string): string {
   try {
     const effectiveTz = tz || TZ;
-    const loc = locale(lang);
     const s = new Date(startIso);
     const e = new Date(endIso);
-    const sDate = s.toLocaleDateString(loc, { weekday: 'short', month: 'short', day: 'numeric', timeZone: effectiveTz });
-    const eDate = e.toLocaleDateString(loc, { weekday: 'short', month: 'short', day: 'numeric', timeZone: effectiveTz });
-    const sTime = s.toLocaleTimeString(loc, { hour: 'numeric', minute: '2-digit', timeZone: effectiveTz });
-    const eTime = e.toLocaleTimeString(loc, { hour: 'numeric', minute: '2-digit', timeZone: effectiveTz });
+    const sDate = s.toLocaleDateString(LOCALE, { weekday: 'short', month: 'short', day: 'numeric', timeZone: effectiveTz });
+    const eDate = e.toLocaleDateString(LOCALE, { weekday: 'short', month: 'short', day: 'numeric', timeZone: effectiveTz });
+    const sTime = s.toLocaleTimeString(LOCALE, { hour: 'numeric', minute: '2-digit', timeZone: effectiveTz });
+    const eTime = e.toLocaleTimeString(LOCALE, { hour: 'numeric', minute: '2-digit', timeZone: effectiveTz });
     if (sDate === eDate) return `${sDate}, ${sTime} – ${eTime}`;
     return `${sDate}, ${sTime} – ${eDate}, ${eTime}`;
   } catch { return startIso; }
 }
 
-export function formatUpdatedAt(isoStr: string, lang: Lang): string {
+export function formatUpdatedAt(isoStr: string): string {
   try {
     const d = new Date(isoStr);
-    return d.toLocaleDateString(locale(lang), { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
+    return d.toLocaleDateString(LOCALE, { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
   } catch { return isoStr; }
 }
 
 export function formatPrice(event: LumaEvent): string {
-  if (event.is_free) return t('events.free');
+  if (event.is_free) return 'Free';
   if (event.price_cents != null) {
     const dollars = event.price_cents / 100;
     const currency = (event.price_currency || 'usd').toUpperCase();
     if (currency === 'USD') return `$${dollars.toFixed(0)}`;
     return `${dollars.toFixed(0)} ${currency}`;
   }
-  return t('events.approval');
+  return 'Requires Approval';
 }
 
 export function locationDisplay(event: LumaEvent): string {
-  if (event.location_type === 'online') return t('events.online');
+  if (event.location_type === 'online') return 'Online';
   return stripState(event.location || '');
 }
 
-export function formatDateGroup(dateKey: string, lang: Lang): string {
+export function formatDateGroup(dateKey: string): string {
   const [y, m, d] = dateKey.split('-').map(Number);
   const date = new Date(y, m - 1, d);
-  return date.toLocaleDateString(locale(lang), { weekday: 'long', month: 'short', day: 'numeric' });
+  return date.toLocaleDateString(LOCALE, { weekday: 'long', month: 'short', day: 'numeric' });
 }
 
 // --- Filtering ---
