@@ -16,78 +16,17 @@ export const translations: Record<string, Record<Lang, string>> = {
     en: 'From <a href="https://www.imdb.com/title/tt0359950/" target="_blank">The Secret Life of Walter Mitty</a>, a film that has been encouraging me to explore the world, find myself.',
     zh: '\u51fa\u81ea<a href="https://www.imdb.com/title/tt0359950/" target="_blank">\u300a\u767d\u65e5\u68a6\u60f3\u5bb6\u300b</a>\u3002\u8fd9\u90e8\u7535\u5f71\u4e00\u76f4\u6fc0\u52b1\u7740\u6211\u63a2\u7d22\u4e16\u754c\uff0c\u627e\u5230\u81ea\u5df1\u3002',
   },
-  'greeting.source': { en: 'The Secret Life of Walter Mitty', zh: '《白日梦想家》' },
 
   // --- Navigation ---
   'nav.back': { en: '\u2190 Home', zh: '\u2190 首页' },
   'nav.backToTop': { en: '\u2191 Top', zh: '\u2191 顶部' },
 
   // --- Life Journey ---
-  'journey.hint': { en: 'Click a pin to read the story', zh: '点击图钉查看故事' },
-  'journey.hintWip': { en: 'ALL stories are still in progress', zh: '所有故事均还未完成' },
-  'journey.hintDeadline': { en: 'Trying to finish before April Fools\u2019 Day. No joke.', zh: '努力在四月一号之前完成，愚人节但不愚人' },
   'journey.china': { en: 'China', zh: '中国' },
   'journey.usa': { en: 'United States', zh: '美国' },
-  'journey.city.jiaozhou': { en: 'Jiaozhou', zh: '胶州' },
-  'journey.city.shouguang': { en: 'Shouguang', zh: '寿光' },
-  'journey.city.qingdao': { en: 'Qingdao', zh: '青岛' },
-  'journey.city.madison': { en: 'Madison', zh: '麦迪逊' },
-  'journey.city.fairfield': { en: 'Fairfield', zh: '费尔菲尔德' },
-  'journey.city.berkeley': { en: 'Berkeley', zh: '伯克利' },
-
-  // --- Visual Design ---
-  'craft.visual.title': { en: 'Visual Design', zh: '视觉设计' },
 
   // --- Common ---
   'common.comingSoon': { en: 'Content coming soon...', zh: '内容即将上线…' },
-
-  // --- Globe pin locations ---
-  'pin.jiaozhou.city': { en: 'Jiaozhou', zh: '胶州' },
-  'pin.jiaozhou.country': { en: 'Shandong, China', zh: '中国山东' },
-  'pin.shouguang.city': { en: 'Shouguang', zh: '寿光' },
-  'pin.shouguang.country': { en: 'Shandong, China', zh: '中国山东' },
-  'pin.qingdao.city': { en: 'Qingdao', zh: '青岛' },
-  'pin.qingdao.country': { en: 'Shandong, China', zh: '中国山东' },
-  'pin.madison.city': { en: 'Madison', zh: '麦迪逊' },
-  'pin.madison.country': { en: 'Wisconsin, USA', zh: '美国威斯康星' },
-  'pin.fairfield.city': { en: 'Fairfield', zh: '费尔菲尔德' },
-  'pin.fairfield.country': { en: 'California, USA', zh: '美国加利福尼亚' },
-  'pin.berkeley.city': { en: 'Berkeley', zh: '伯克利' },
-  'pin.berkeley.country': { en: 'California, USA', zh: '美国加利福尼亚' },
-
-  // --- Globe pin titles ---
-  'pin.jiaozhou.title': { en: 'Where this wonderfully absurd life began', zh: '奇妙人生开始的地方' },
-  'pin.qingdao.title': { en: 'Qingdao & Tsingtao', zh: '青岛与青岛啤酒' },
-  'pin.shouguang.title': { en: 'Every Step Counts', zh: '每一步都算数' },
-  'pin.madison.title': { en: 'Between the lakes', zh: '湖间小城' },
-  'pin.fairfield.title': { en: 'Freedom and Hope', zh: '自由与希望' },
-  'pin.berkeley.title': { en: 'Stories here are still unfolding...', zh: '在伯克利的故事还在展开...' },
-
-  // --- Globe pin stories (placeholder) ---
-  'pin.jiaozhou.story': {
-    en: '<a href="https://baike.baidu.com/en/item/Jiaozhou%20City/997960" target="_blank" rel="noopener">Jiaozhou</a> is my real hometown, a place famously known for not being known... Which is why, if someone asks me where I\'m from, I always say Qingdao. (Technically, Jiaozhou is part of Qingdao. So it\'s not entirely a lie.)\n\nOne day in the last century, a person who was bad at English and absolutely terrible at math, even through high school, yet somehow ended up working as a Data Scientist in the USA was born.\n\n<strong>That\'s me.</strong>\n\n<img src="/images/journey/jiaozhou-baby.webp" alt="Baby Kun with mom in Jiaozhou" class="story-photo" />',
-    zh: '<a href="https://baike.baidu.com/en/item/Jiaozhou%20City/997960" target="_blank" rel="noopener">胶州</a>是我真正的家乡，尽管有 5000 年的历史，但是很少有人听说过，所以有人问我是哪里人的时候，我总是说青岛的。（好在胶州确实属于青岛，所以也不全错。）\n\n上世纪某一天，一个不怎么擅长英语、数学也有些烂，结果最终跑到一个说英文的国家做数据科学的我诞生了。\n\n<strong>就是我。</strong>\n\n<img src="/images/journey/jiaozhou-baby.webp" alt="婴儿时期的坤和妈妈在胶州" class="story-photo" />',
-  },
-  'pin.qingdao.story': {
-    en: '"I\'m from a seaside city known for beer and tourism, but I don\'t drink, don\'t like seafood, and don\'t know how to swim" is one of my classic ice breakers.\n\nThe most famous thing about <a href="https://baike.baidu.com/en/item/Qingdao%20City/985933" target="_blank" rel="noopener">Qingdao</a> is probably Tsingtao Beer, the green bottle that you can find at 99 Ranch and most Asian supermarkets.',
-    zh: '"我来自一个以啤酒和旅游闻名的海滨城市，但我不喝酒，不爱吃海鲜，也不会游泳"是我的经典破冰台词之一。\n\n<a href="https://baike.baidu.com/en/item/Qingdao%20City/985933" target="_blank" rel="noopener">青岛</a>最家喻户晓的东西大概是青岛啤酒，你都能在 99 Ranch 和大多数亚洲超市里找到。',
-  },
-  'pin.shouguang.story': {
-    en: 'My college was called "Weifang University of Science and Technology." Still, it is actually located in <a href="https://baike.baidu.com/en/item/Shouguang%20City/1001909" target="_blank" rel="noopener">Shouguang</a>, a small city I\'d probably never have heard of if I hadn\'t gone to school there, as unknown to most people as Jiaozhou.\n\nHowever, it holds a lot of my firsts: first time taking a train alone, first time being so far from home (a two-hour drive, which honestly doesn\'t seem that far now... it takes similar time to drive from Berkeley to SFO in the morning, due to traffic), first time being away from home for four years, first time living like a "real adult," and the first time I dared to tell my family I was dating someone...',
-    zh: '尽管我大学的名字叫"潍坊科技学院"，但它的的确确在<a href="https://baike.baidu.com/en/item/Shouguang%20City/1001909" target="_blank" rel="noopener">寿光</a>，一个如果我不是在那里上学也许永远不会听说的小城市。\n\n尽管它对大多数人来说和胶州一样名不见经传，但却承载了我很多的第一次：第一次一个人坐火车、第一次一个人离家这么远（要两个小时的车程，现在看起来其实也还好...早晨从伯克利开到 SFO 也要一个半小时，多亏了堵车）、第一次离家四年这么久、第一次像一个"大人"一样生活、第一次敢对家里人公开自己恋爱了...',
-  },
-  'pin.madison.story': {
-    en: 'Placeholder story about Madison. A city cradled between two lakes, full of ideas and energy.',
-    zh: '关于麦迪逊的故事。一座依偎在两个湖泊之间的城市，充满思想与活力。',
-  },
-  'pin.fairfield.story': {
-    en: 'Placeholder story about Fairfield. Where the Central Valley meets the coastal hills.',
-    zh: '关于费尔菲尔德的故事。中央谷地与海岸丘陵在此交汇。',
-  },
-  'pin.berkeley.story': {
-    en: 'Come with me to <a href="https://maps.app.goo.gl/AJMEjizHQyYtX2Kw5" target="_blank" rel="noopener"><u>Grizzly Peak</u></a> -- the Bay Area lights up beautifully at night.\n\n<img class="story-photo" src="/images/journey/berkeley-grizzly-peak.webp" alt="Bay Area night view from Grizzly Peak" />',
-    zh: '一起去 <a href="https://maps.app.goo.gl/AJMEjizHQyYtX2Kw5" target="_blank" rel="noopener"><u>Grizzly Peak</u></a> 看看湾区夜景吧。\n\n<img class="story-photo" src="/images/journey/berkeley-grizzly-peak.webp" alt="从 Grizzly Peak 俯瞰湾区夜景" />',
-  },
 
   // --- Professional section headings ---
   'pro.section.lab': { en: 'Touch Fish!', zh: '摸鱼万岁！' },
@@ -128,7 +67,6 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.eventCount': { en: 'events found', zh: '个活动' },
   'events.filterLocation': { en: 'Location', zh: '地点' },
   'events.filterPrice': { en: 'Price', zh: '费用' },
-  'events.filterAll': { en: 'All', zh: '全部' },
   'events.filterFreeApproval': { en: 'Free (May Require Approval)', zh: '免费（可能需要审批）' },
   'events.filterPaid': { en: 'Paid', zh: '付费' },
   'events.filterCategory': { en: 'Category', zh: '分类' },
@@ -154,67 +92,6 @@ export const translations: Record<string, Record<Lang, string>> = {
   'events.noMatch': { en: 'No events match filters', zh: '没有匹配的活动' },
   'events.showMore': { en: 'More', zh: '更多' },
   'events.showLess': { en: 'Less', zh: '收起' },
-
-  // --- Brand Guidelines page ---
-  'brand.title': { en: 'Brand Guidelines', zh: '品牌规范' },
-  'brand.principles': { en: 'Design Philosophy', zh: '设计哲学' },
-  'brand.principleMinimal': { en: 'Minimal', zh: '极简' },
-  'brand.principleMinimalDesc1': {
-    en: 'Page depth ≤ 3. Dependencies in single digits. No framework where static HTML will do.',
-    zh: '页面层级 ≤ 3。依赖个位数。静态 HTML 能做的事不用框架。',
-  },
-  'brand.principleMinimalDesc2': {
-    en: 'If it doesn\'t serve a purpose, it doesn\'t exist.',
-    zh: '没有存在意义的东西，就不该存在。',
-  },
-  'brand.principleWarm': { en: 'Warm', zh: '温暖' },
-  'brand.principleWarmDesc1': {
-    en: 'The palette was refined from my deeply loved character -- 小龙格林, a little dragon.',
-    zh: '配色源自我深爱的角色——小龙格林，一只小龙。',
-  },
-  'brand.principleWarmDesc2': {
-    en: 'Warm like the character itself.',
-    zh: '像这个角色本身一样温暖。',
-  },
-  'brand.principlePersonal': { en: 'Personal', zh: '个人' },
-  'brand.principlePersonalDesc': {
-    en: 'Who I am, not what I\'ve done.',
-    zh: '关于我是谁，而不是我做过什么。',
-  },
-  'brand.colors': { en: 'Color Palette', zh: '配色方案' },
-  'brand.typography': { en: 'Typography', zh: '字体排印' },
-  'brand.typeFonts': { en: 'Font Pairing', zh: '字体搭配' },
-  'brand.typeStyles': { en: 'Type Styles', zh: '字体样式' },
-  'brand.typeScaleNote': {
-    en: 'Major Third ratio (1.25×), 0.75rem floor. Root font-size is fluid.',
-    zh: '大三度比例（1.25×），最小 0.75rem。根字号流式缩放。',
-  },
-  'brand.spacing': { en: 'Spacing', zh: '间距' },
-  'brand.spacingNote': {
-    en: 'Fluid scale using clamp(), adapts to viewport width.',
-    zh: '使用 clamp() 的流式间距，随视口宽度自适应。',
-  },
-  'brand.grid': { en: 'Grid System', zh: '网格系统' },
-  'brand.gridNote': {
-    en: 'Named-line CSS Grid with three content tracks.',
-    zh: '具有三条内容轨道的命名线 CSS 网格。',
-  },
-  'brand.components': { en: 'Components', zh: '组件样式' },
-  'brand.usage.bg': { en: 'Page background', zh: '页面背景' },
-  'brand.usage.subtleBg': { en: 'Subtle variation', zh: '细微变化' },
-  'brand.usage.warmBorder': { en: 'Warm border', zh: '暖色边框' },
-  'brand.usage.greenLight': { en: 'Green background', zh: '绿色背景' },
-  'brand.usage.greenMid': { en: 'Green accent', zh: '绿色强调' },
-  'brand.usage.blueLight': { en: 'Blue background', zh: '蓝色背景' },
-  'brand.usage.blueAccent': { en: 'Blue accent', zh: '蓝色强调' },
-  'brand.usage.pinkLight': { en: 'Pink background', zh: '粉色背景' },
-  'brand.usage.pinkStrong': { en: 'Pink accent', zh: '粉色强调' },
-  'brand.usage.greenText': { en: 'Green text', zh: '绿色文字' },
-  'brand.usage.blueText': { en: 'Blue text', zh: '蓝色文字' },
-  'brand.usage.pinkText': { en: 'Pink text', zh: '粉色文字' },
-  'brand.usage.textLight': { en: 'Subtle / decorative', zh: '装饰性文字' },
-  'brand.usage.textMid': { en: 'Secondary text', zh: '次要文字' },
-  'brand.usage.textPrimary': { en: 'Primary text', zh: '主要文字' },
 
   // --- Events Privacy ---
   'events.privacyTitle': { en: 'Privacy', zh: '隐私' },
