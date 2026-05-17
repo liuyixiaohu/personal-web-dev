@@ -1,17 +1,14 @@
 <script lang="ts">
-  import type { Lang } from '../../i18n/translations';
-  import { t } from '../../i18n/langStore';
   import { formatEventRange, formatPrice, locationDisplay, type LumaEvent } from './eventUtils';
-  import { eventBuckets, BUCKET_LABEL_KEYS, type CategoryBucket } from '../../utils/events/categories';
+  import { eventBuckets, BUCKET_LABELS } from '../../utils/events/categories';
 
   interface Props {
     event: LumaEvent;
-    lang: Lang;
     /** Show category badges: 'never' (default), 'multi' (only if event spans >1 bucket), 'always'. */
     badgeMode?: 'never' | 'multi' | 'always';
   }
 
-  let { event, lang, badgeMode = 'never' }: Props = $props();
+  let { event, badgeMode = 'never' }: Props = $props();
 
   let buckets = $derived(eventBuckets(event));
   let showBadges = $derived(
@@ -33,20 +30,20 @@
   {#if showBadges}
     <div class="event-badges">
       {#each buckets as bucket (bucket)}
-        <span class="event-badge event-badge--{bucket}">{t(BUCKET_LABEL_KEYS[bucket])}</span>
+        <span class="event-badge event-badge--{bucket}">{BUCKET_LABELS[bucket]}</span>
       {/each}
     </div>
   {/if}
 
   <div class="event-card-details">
-    <span class="event-date"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>{formatEventRange(event.start_at, event.end_at, event.timezone, lang)}</span>
+    <span class="event-date"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>{formatEventRange(event.start_at, event.end_at, event.timezone)}</span>
 
     {#if locationDisplay(event)}
       <span class="event-location"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>{locationDisplay(event)}</span>
     {/if}
 
     {#if event.guest_count > 0}
-      <span class="event-guests"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>{event.guest_count} {t('events.guests')}</span>
+      <span class="event-guests"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>{event.guest_count} guests</span>
     {/if}
   </div>
 </li>
@@ -151,13 +148,6 @@
     height: 0.9em;
     margin-right: 0.25em;
     flex-shrink: 0;
-  }
-
-  /* Chinese font overrides */
-  :global(html[data-lang="zh"]) .event-name,
-  :global(html[data-lang="zh"]) .event-card-details {
-    font-family: var(--font-zh);
-    font-style: normal;
   }
 
   /* Mobile */

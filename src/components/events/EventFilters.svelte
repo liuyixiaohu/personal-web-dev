@@ -1,7 +1,6 @@
 <script lang="ts">
   import '../../styles/filters.css';
-  import { t } from '../../i18n/langStore';
-  import { ALL_BUCKETS, BUCKET_LABEL_KEYS, type CategoryBucket } from '../../utils/events/categories';
+  import { ALL_BUCKETS, BUCKET_LABELS, type CategoryBucket } from '../../utils/events/categories';
 
   interface Props {
     allLocations: string[];
@@ -61,10 +60,7 @@
   }: Props = $props();
 
   // Day-of-week labels (0=Sun ... 6=Sat)
-  const DAY_KEYS = [
-    'events.daySun', 'events.dayMon', 'events.dayTue', 'events.dayWed',
-    'events.dayThu', 'events.dayFri', 'events.daySat',
-  ] as const;
+  const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as const;
 
   // Hour (0–23) and minute (00/15/30/45) options for time dropdowns
   const HOURS = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, '0'));
@@ -128,14 +124,14 @@
   <!-- Category filter (5 buckets, console mode only) -->
   {#if showCategoryFilter}
     <div class="filter-row">
-      <span class="filter-label">{t('events.filterCategory')}</span>
+      <span class="filter-label">{'Category'}</span>
       <div class="filter-pills">
         {#each ALL_BUCKETS as bucket}
           <button
             class="pill"
             class:pill--active={selectedBuckets.has(bucket)}
             onclick={() => onBucketToggle(bucket)}
-          >{t(BUCKET_LABEL_KEYS[bucket])} <span class="pill-count">({bucketCounts.get(bucket) ?? 0})</span></button>
+          >{BUCKET_LABELS[bucket]} <span class="pill-count">({bucketCounts.get(bucket) ?? 0})</span></button>
         {/each}
       </div>
     </div>
@@ -143,7 +139,7 @@
 
   <!-- Price filter -->
   <div class="filter-row">
-    <span class="filter-label">{t('events.filterPrice')}</span>
+    <span class="filter-label">{'Price'}</span>
     <div class="filter-pills">
       {#each ['free-approval', 'paid'] as priceOpt}
         <button
@@ -151,8 +147,8 @@
           class:pill--active={selectedPrice === priceOpt}
           onclick={() => onPriceChange(selectedPrice === priceOpt ? null : priceOpt)}
         >
-          {priceOpt === 'free-approval' ? t('events.filterFreeApproval') :
-           t('events.filterPaid')} <span class="pill-count">({priceCounts.get(priceOpt) ?? 0})</span>
+          {priceOpt === 'free-approval' ? 'Free (May Require Approval)' :
+           'Paid'} <span class="pill-count">({priceCounts.get(priceOpt) ?? 0})</span>
         </button>
       {/each}
     </div>
@@ -161,7 +157,7 @@
   <!-- Location filter (multi-select, collapsible) -->
   {#if allLocations.length > 0}
     <div class="filter-row">
-      <span class="filter-label">{t('events.filterLocation')}</span>
+      <span class="filter-label">{'Location'}</span>
       <div class="location-pills-wrap">
         <div class="filter-pills filter-pills--wrap"
              class:filter-pills--collapsed={!locationExpanded}
@@ -178,7 +174,7 @@
           <button class="show-more-btn"
                   class:show-more-btn--collapsed={!locationExpanded}
                   onclick={() => locationExpanded = !locationExpanded}>
-            {locationExpanded ? t('events.showLess') : t('events.showMore')}
+            {locationExpanded ? 'Less' : 'More'}
           </button>
         {/if}
       </div>
@@ -187,25 +183,25 @@
 
   <!-- Day-of-week filter (multi-select pills) -->
   <div class="filter-row">
-    <span class="filter-label">{t('events.filterDay')}</span>
+    <span class="filter-label">{'Day'}</span>
     <div class="filter-pills">
-      {#each DAY_KEYS as dayKey, i}
+      {#each DAY_LABELS as dayLabel, i}
         <button
           class="pill"
           class:pill--active={selectedDays.has(i)}
           onclick={() => onDayToggle(i)}
-        >{t(dayKey)}</button>
+        >{dayLabel}</button>
       {/each}
     </div>
   </div>
 
   <!-- Time range filter (4 dropdowns: hour:min – hour:min) -->
   <div class="filter-row">
-    <span class="filter-label">{t('events.filterTime')}</span>
+    <span class="filter-label">{'Time'}</span>
     <div class="time-range">
       <select class="time-select" value={startH}
         onchange={(e) => setStartHour((e.target as HTMLSelectElement).value)}>
-        <option value="">{t('events.timeAny')}</option>
+        <option value="">{'Any'}</option>
         {#each HOURS as h}<option value={h}>{h}</option>{/each}
       </select>
       <span class="time-sep">:</span>
@@ -216,7 +212,7 @@
       <span class="time-sep">–</span>
       <select class="time-select" value={endH}
         onchange={(e) => setEndHour((e.target as HTMLSelectElement).value)}>
-        <option value="">{t('events.timeAny')}</option>
+        <option value="">{'Any'}</option>
         {#each HOURS as h}<option value={h}>{h}</option>{/each}
       </select>
       <span class="time-sep">:</span>
@@ -229,15 +225,15 @@
 
   <!-- Sort (pills) -->
   <div class="filter-row">
-    <span class="filter-label">{t('events.sortBy')}</span>
+    <span class="filter-label">{'Sort'}</span>
     <div class="filter-pills">
       {#each [
-        ['time-asc', t('events.sortTimeAsc')],
-        ['time-desc', t('events.sortTimeDesc')],
-        ['alpha-asc', t('events.sortAlphaAsc')],
-        ['alpha-desc', t('events.sortAlphaDesc')],
-        ['guests-desc', t('events.sortGuestsDesc')],
-        ['guests-asc', t('events.sortGuestsAsc')],
+        ['time-asc', 'Earliest first'],
+        ['time-desc', 'Latest first'],
+        ['alpha-asc', 'A → Z'],
+        ['alpha-desc', 'Z → A'],
+        ['guests-desc', 'Most guests'],
+        ['guests-asc', 'Fewest guests'],
       ] as [val, label]}
         <button
           class="pill"
@@ -250,26 +246,26 @@
 
   <!-- Clear filters -->
   {#if hasActiveFilters}
-    <button class="clear-filters" onclick={onClear}>{t('events.clearFilters')}</button>
+    <button class="clear-filters" onclick={onClear}>{'Clear filters'}</button>
   {/if}
 
   <div class="filter-row filter-row--stacked">
-    <span class="filter-label">{t('events.searchLabel')}</span>
+    <span class="filter-label">{'Search Events or Hosts'}</span>
     <input
       class="search-input"
       type="text"
-      placeholder={t('events.searchPlaceholder')}
+      placeholder={'e.g. hackathon, google, etc'}
       value={searchQuery}
       oninput={(e) => onSearchChange((e.target as HTMLInputElement).value)}
     />
   </div>
 
   <div class="filter-row filter-row--stacked">
-    <span class="filter-label">{t('events.excludeLabel')}</span>
+    <span class="filter-label">{'Exclude the event including...'}</span>
     <input
       class="search-input"
       type="text"
-      placeholder={t('events.excludePlaceholder')}
+      placeholder={'in case you don\'t enjoy happy hour'}
       bind:value={excludeInput}
       onkeydown={handleExcludeKeydown}
     />
@@ -312,10 +308,5 @@
 
   .time-sep {
     color: var(--text-light);
-  }
-
-  :global(html[data-lang="zh"]) .filter-controls {
-    font-family: var(--font-zh);
-    font-style: normal;
   }
 </style>
