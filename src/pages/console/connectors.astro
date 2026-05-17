@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ConnectorList from '../../components/connectors/ConnectorList.svelte';
+---
+
+<BaseLayout title="Claude Code Connectors — Console" description="New Claude Code connectors, grouped by discovery date.">
+  <main class="page-shell">
+    <a href="/console" class="back-link">&larr; Console</a>
+    <ConnectorList client:only="svelte" />
+  </main>
+</BaseLayout>
