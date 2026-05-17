@@ -24,10 +24,6 @@ GEO_SF = {"geo_latitude": 37.7749, "geo_longitude": -122.4194}
 SOURCES = [
     {"slug": "tech",     "label": "Tech Events (Bay Area)",          "pagination_limit": 50, **GEO_SF},
     {"slug": "ai",       "label": "AI Events (Bay Area)",            "pagination_limit": 50, **GEO_SF},
-    {"slug": "food",     "label": "Food & Drink Events (Bay Area)",  "pagination_limit": 50, **GEO_SF},
-    {"slug": "arts",     "label": "Arts & Culture Events (Bay Area)","pagination_limit": 50, **GEO_SF},
-    {"slug": "fitness",  "label": "Fitness Events (Bay Area)",       "pagination_limit": 50, **GEO_SF},
-    {"slug": "wellness", "label": "Wellness Events (Bay Area)",      "pagination_limit": 50, **GEO_SF},
 ]
 MAX_PAGES = 50  # effectively unlimited; stops when API returns has_more=false
 REQUEST_DELAY = 1.0
