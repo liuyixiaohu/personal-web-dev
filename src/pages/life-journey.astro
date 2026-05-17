@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ScrollArrow from '../components/ScrollArrow.astro';
 import { pins } from '../components/globe/pins';
 
 const LABEL_POS: Record<string, { dx: number; dy: number; anchor: string }> = {
@@ -11,129 +10,58 @@ const LABEL_POS: Record<string, { dx: number; dy: number; anchor: string }> = {
   fairfield: { dx: 16, dy: -16, anchor: 'start' },
   berkeley:  { dx: -16, dy: 30,  anchor: 'end' },
 };
-
-const RIPPLE_GAP = 1.2;
-const RIPPLE_CYCLE = pins.length * RIPPLE_GAP;
-const sortedByYear = [...pins].sort((a, b) => a.year - b.year);
-const rippleDelay: Record<string, number> = {};
-sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
 ---
 
-<BaseLayout title="Life Journey" description="Explore Kun's life journey through an interactive map: cities, stories, and experiences from around the world." hideFooter>
+<BaseLayout title="Life Journey" description="Six places I've called home." hideFooter>
   <main class="journey-page">
     <h1 class="sr-only">Life Journey</h1>
-    <p class="sr-only">An interactive map tracing Kun's journey from Jiaozhou, China through Shouguang, Qingdao, to Madison, Wisconsin, Fairfield and Berkeley, California. Click each pin to read the story behind each city.</p>
+    <p class="sr-only">A static map of six places: Jiaozhou, Shouguang, Qingdao in Shandong, China; Madison, Wisconsin; Fairfield and Berkeley, California.</p>
     <a href="/" class="back-link" data-i18n="nav.back">&larr; Back</a>
 
     <div class="country-pair" id="country-pair">
-      <p class="map-hint"><span data-i18n="journey.hint">Click a pin to read the story</span> (<strong data-i18n="journey.hintWip">ALL stories are still in progress</strong>)</p>
-
       <div class="panels">
-        <!-- China panel -->
         <div class="panel">
           <span class="panel-label" data-i18n="journey.china">China</span>
           <svg id="china-svg" class="country-svg"></svg>
         </div>
-
-        <ScrollArrow />
-
-        <!-- USA panel -->
         <div class="panel">
           <span class="panel-label" data-i18n="journey.usa">United States</span>
           <svg id="usa-svg" class="country-svg"></svg>
         </div>
       </div>
     </div>
-
-    <!-- Photo Lightbox -->
-    <div class="lightbox" id="photo-lightbox" aria-hidden="true">
-      <img class="lightbox-img" id="lightbox-img" alt="" />
-    </div>
-
-    <!-- Story Modal (always in DOM, hidden by default) -->
-    <div class="modal-overlay" id="story-modal" aria-hidden="true">
-      <div class="modal-card" role="dialog" aria-modal="true">
-        <div class="modal-header">
-          <div class="modal-location">
-            <span class="modal-city" id="modal-city"></span>
-            <span class="modal-sep">,&nbsp;</span>
-            <span class="modal-country" id="modal-country"></span>
-          </div>
-          <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
-        </div>
-        <div class="modal-divider"></div>
-        <h2 class="modal-title" id="modal-title"></h2>
-        <p class="modal-body" id="modal-body"></p>
-      </div>
-    </div>
   </main>
 </BaseLayout>
 
-<script define:vars={{ pins, LABEL_POS, rippleDelay, RIPPLE_CYCLE }}>
-  window.__journeyData = { pins, LABEL_POS, rippleDelay, RIPPLE_CYCLE };
+<script define:vars={{ pins, LABEL_POS }}>
+  window.__journeyData = { pins, LABEL_POS };
 </script>
 
 <script>
   import { buildSVG } from '../utils/journey/buildSVG';
-  import { initModal } from '../utils/journey/modal';
-  import { updateLabels } from '../utils/journey/updateLabels';
 
   function initJourney() {
     const data = (window as any).__journeyData;
     if (!data) return;
-    const { pins, LABEL_POS, rippleDelay, RIPPLE_CYCLE } = data;
-
-    const { openModal } = initModal();
+    const { pins, LABEL_POS } = data;
 
     fetch('/data/journey-countries.json')
       .then(res => res.json())
-      .then(geo => {
+      .then((geo: any) => {
         const chinaSvg = document.getElementById('china-svg') as unknown as SVGSVGElement;
         const usaSvg = document.getElementById('usa-svg') as unknown as SVGSVGElement;
         const chinaPins = pins.filter((p: any) => p.country.includes('China'));
         const usaPins = pins.filter((p: any) => p.country.includes('USA'));
 
-        buildSVG(chinaSvg, geo.china, geo.provinces, chinaPins, 'clip-china', 80, LABEL_POS, rippleDelay, RIPPLE_CYCLE, openModal);
-        buildSVG(usaSvg, geo.usa, geo.provinces, usaPins, 'clip-usa', 80, LABEL_POS, rippleDelay, RIPPLE_CYCLE, openModal);
+        buildSVG(chinaSvg, geo.china, geo.provinces, chinaPins, 'clip-china', 80, LABEL_POS);
+        buildSVG(usaSvg, geo.usa, geo.provinces, usaPins, 'clip-usa', 80, LABEL_POS);
 
         document.getElementById('country-pair')?.classList.add('loaded');
       });
-
-    document.addEventListener('lang-change', updateLabels);
   }
 
-  // Photo lightbox
-  function initLightbox() {
-    const lightbox = document.getElementById('photo-lightbox')!;
-    const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
-
-    document.getElementById('modal-body')?.addEventListener('click', (e) => {
-      const img = (e.target as HTMLElement).closest('.story-photo') as HTMLImageElement | null;
-      if (!img) return;
-      lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt;
-      lightbox.classList.add('visible');
-      lightbox.setAttribute('aria-hidden', 'false');
-    });
-
-    lightbox.addEventListener('click', () => {
-      lightbox.classList.remove('visible');
-      lightbox.setAttribute('aria-hidden', 'true');
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && lightbox.classList.contains('visible')) {
-        lightbox.classList.remove('visible');
-        lightbox.setAttribute('aria-hidden', 'true');
-      }
-    });
-  }
-
-  // Run on initial load
   initJourney();
-  initLightbox();
-  // Re-run after Astro View Transition
-  document.addEventListener('astro:after-swap', () => { initJourney(); initLightbox(); });
+  document.addEventListener('astro:after-swap', initJourney);
 </script>
 
 <style>
@@ -171,26 +99,6 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
     opacity: 1;
   }
 
-  .map-hint {
-    text-align: center;
-    font-size: var(--fs-xs);
-    color: var(--color-visual);
-    margin-bottom: 0;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* Pull first panel up to overlap with hint text */
-  .panels .panel:first-child {
-    margin-top: -1.5em;
-  }
-
-  @media (max-width: 32rem) {
-    .panels .panel:first-child {
-      margin-top: 0;
-    }
-  }
-
   .panels {
     display: flex;
     flex-direction: column;
@@ -210,7 +118,6 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
     font-size: var(--fs-md);
     color: var(--text-light);
     font-weight: 500;
-    letter-spacing: 0;
     padding-right: var(--space-md);
   }
 
@@ -219,177 +126,9 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
     height: auto;
     display: block;
   }
-
-
-  /* Modal */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(250, 247, 242, 0.45);
-    padding: 1.5rem;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease;
-  }
-
-  .modal-overlay.visible {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .modal-card {
-    background: rgba(255, 255, 255, 0.55);
-    backdrop-filter: blur(20px) saturate(1.4);
-    -webkit-backdrop-filter: blur(20px) saturate(1.4);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: var(--radius-lg);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
-    max-width: 42rem;
-    max-height: 80vh;
-    overflow-y: auto;
-    width: 100%;
-    padding: clamp(1.5rem, 3vw, 2.5rem);
-    font-family: inherit;
-    transform: translateY(20px);
-    transition: transform 0.4s ease;
-  }
-
-  .modal-overlay.visible .modal-card {
-    transform: translateY(0);
-  }
-
-  .modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.75rem;
-  }
-
-  .modal-location { color: var(--text-light); }
-  .modal-city { color: var(--text); font-weight: 500; }
-
-  .modal-close {
-    background: none;
-    border: none;
-    font-size: var(--fs-lg);
-    color: var(--text-light);
-    cursor: pointer;
-    padding: 0.2rem 0.5rem;
-    line-height: 1;
-    border-radius: var(--radius-md);
-    transition: all 0.2s ease;
-  }
-
-  .modal-close:hover {
-    color: var(--text);
-    background: rgba(0, 0, 0, 0.04);
-  }
-
-  .modal-divider {
-    height: 1px;
-    background: var(--border);
-    margin-bottom: 1.25rem;
-  }
-
-  .modal-title {
-    font-size: var(--fs-lg);
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 1rem;
-    line-height: 1.3;
-  }
-
-  :global(html[data-lang="zh"]) .modal-title {
-    font-family: var(--font-zh-heading);
-  }
-
-  .modal-body {
-    color: var(--text-light);
-    line-height: 1.7;
-  }
-
-  .modal-body :global(strong) {
-    font-weight: 500;
-    color: var(--text);
-  }
-
-  .modal-body :global(p) {
-    margin-bottom: 0.75em;
-  }
-
-  .modal-body :global(p:last-child) {
-    margin-bottom: 0;
-  }
-
-  .modal-body :global(a) {
-    color: var(--text);
-    text-decoration: underline;
-    text-decoration-color: var(--border);
-    text-underline-offset: 2px;
-    transition: text-decoration-color 0.15s ease;
-  }
-
-  .modal-body :global(a:hover) {
-    text-decoration-color: var(--text);
-    opacity: 1;
-  }
-
-  .modal-body :global(.story-photo) {
-    display: block;
-    max-width: 100%;
-    border-radius: var(--radius-lg);
-    margin: var(--space-sm) 0;
-    cursor: zoom-in;
-    transition: opacity 0.2s ease;
-  }
-
-  .modal-body :global(.story-photo:hover) {
-    opacity: 0.85;
-  }
-
-  /* Photo Lightbox */
-  .lightbox {
-    position: fixed;
-    inset: 0;
-    z-index: 2000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    cursor: zoom-out;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-
-  .lightbox.visible {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .lightbox-img {
-    max-width: 90vw;
-    max-height: 90vh;
-    object-fit: contain;
-    border-radius: var(--radius-md);
-    box-shadow: 0 16px 64px rgba(0, 0, 0, 0.4);
-    transform: scale(0.92);
-    transition: transform 0.3s ease;
-  }
-
-  .lightbox.visible .lightbox-img {
-    transform: scale(1);
-  }
 </style>
 
 <style is:global>
-  /* SVG styles for dynamically created elements */
   .country-fill {
     fill: var(--bubble-visual);
     stroke: var(--border);
@@ -403,39 +142,14 @@ sortedByYear.forEach((p, i) => { rippleDelay[p.id] = i * RIPPLE_GAP; });
     opacity: 0.5;
   }
 
-  .pin-ripple {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: ripple 2.5s ease-out infinite;
-    pointer-events: none;
-  }
-
-  @keyframes ripple {
-    0% { transform: scale(1); opacity: 0.6; }
-    12% { transform: scale(3); opacity: 0; }
-    100% { transform: scale(3); opacity: 0; }
-  }
-
   .pin-dot {
     pointer-events: none;
-    animation: pin-float 3s ease-in-out infinite;
-  }
-
-  @keyframes pin-float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
   }
 
   .map-label {
     font-size: var(--fs-lg);
     font-family: var(--font-body);
     fill: var(--text-light);
-    cursor: pointer;
-    transition: fill 0.15s ease;
     dominant-baseline: central;
-  }
-
-  .map-label:hover {
-    fill: var(--color-rose);
   }
 </style>
