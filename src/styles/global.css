@@ -327,14 +327,14 @@ a:hover {
 /* ============================================
    Chinese Font Overrides
    ============================================ */
-html[data-lang="zh"] body {
+html[lang="zh"] body {
   font-family: var(--font-zh-body);
 }
 
-html[data-lang="zh"] h1,
-html[data-lang="zh"] h2,
-html[data-lang="zh"] h3,
-html[data-lang="zh"] .home-title {
+html[lang="zh"] h1,
+html[lang="zh"] h2,
+html[lang="zh"] h3,
+html[lang="zh"] .home-title {
   font-family: var(--font-zh-heading);
 }
 
