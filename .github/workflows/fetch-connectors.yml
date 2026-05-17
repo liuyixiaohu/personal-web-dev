@@ -1,0 +1,37 @@
+name: Fetch Connectors
+
+on:
+  schedule:
+    # Every 3 days at 03:00 UTC (~8 PM PT previous day).
+    # GitHub may delay scheduled runs by 10-90 min during high load.
+    - cron: '0 3 */3 * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r scripts/connectors/requirements.txt
+
+      - name: Fetch connector directory
+        run: python scripts/connectors/fetch_connectors.py
+
+      - name: Commit updated connector data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/data/connectors.json
+          git diff --cached --quiet || git commit -m "chore: update connector data $(date -u +%Y-%m-%d)"
+          git push
