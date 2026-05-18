@@ -116,6 +116,38 @@
   color: var(--text);
 }
 
+.filter-actions {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 0.2rem;
+}
+
+.filter-io-btn {
+  font-family: inherit;
+  font-size: var(--fs-xs);
+  color: var(--text-light);
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-sm);
+  padding: 0.2em 0.55em;
+  cursor: pointer;
+  line-height: 1.4;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.filter-io-btn:hover {
+  border-color: rgba(0, 0, 0, 0.2);
+  color: var(--text);
+}
+
+.filter-io-error {
+  font-size: var(--fs-xs);
+  color: var(--color-pm, #9a6868);
+  margin-top: 0.4rem;
+}
+
 .search-input {
   font-family: inherit;
   font-size: var(--fs-xs);
