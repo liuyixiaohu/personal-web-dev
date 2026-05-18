@@ -23,6 +23,9 @@
     onAddExclude: (keyword: string) => void;
     onRemoveExclude: (keyword: string) => void;
     onClear: () => void;
+    onExport: () => void;
+    onImport: (file: File) => void;
+    ioError: string;
   }
 
   let {
@@ -47,7 +50,12 @@
     onAddExclude,
     onRemoveExclude,
     onClear,
+    onExport,
+    onImport,
+    ioError,
   }: Props = $props();
+
+  let fileInput: HTMLInputElement | undefined = $state();
 
   // Day-of-week labels (0=Sun ... 6=Sat)
   const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as const;
@@ -218,9 +226,27 @@
     </div>
   </div>
 
-  <!-- Clear filters -->
-  {#if hasActiveFilters}
-    <button class="clear-filters" onclick={onClear}>{'Clear filters'}</button>
+  <!-- Filter actions: clear / export / import -->
+  <div class="filter-actions">
+    {#if hasActiveFilters}
+      <button class="clear-filters" onclick={onClear}>{'Clear filters'}</button>
+    {/if}
+    <button class="filter-io-btn" onclick={onExport}>Export</button>
+    <button class="filter-io-btn" onclick={() => fileInput?.click()}>Import</button>
+    <input
+      bind:this={fileInput}
+      type="file"
+      accept=".json,application/json"
+      style="display:none"
+      onchange={(e) => {
+        const f = (e.target as HTMLInputElement).files?.[0];
+        if (f) onImport(f);
+        (e.target as HTMLInputElement).value = '';
+      }}
+    />
+  </div>
+  {#if ioError}
+    <div class="filter-io-error">{ioError}</div>
   {/if}
 
   <div class="filter-row filter-row--stacked">
