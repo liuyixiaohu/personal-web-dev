@@ -1,6 +1,5 @@
 <script lang="ts">
   import '../../styles/filters.css';
-  import Popup from './Popup.svelte';
 
   interface Props {
     allLocations: string[];
@@ -13,7 +12,6 @@
     onDayToggle: (day: number) => void;
     onSearchChange: (query: string) => void;
     onAddExclude: (keyword: string) => void;
-    onRemoveExclude: (keyword: string) => void;
   }
 
   let {
@@ -27,7 +25,6 @@
     onDayToggle,
     onSearchChange,
     onAddExclude,
-    onRemoveExclude,
   }: Props = $props();
 
   const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as const;
@@ -44,7 +41,6 @@
   });
 
   let excludeInput = $state('');
-  let excludePopupOpen = $state(false);
 
   function handleExcludeKeydown(e: KeyboardEvent) {
     if (e.key === 'Enter' && excludeInput.trim()) {
@@ -122,23 +118,6 @@
         bind:value={excludeInput}
         onkeydown={handleExcludeKeydown}
       />
-      {#if excludeKeywords.length > 0}
-        <span class="excluded-wrap">
-          <button class="excluded-btn" onclick={() => excludePopupOpen = !excludePopupOpen}>
-            {excludeKeywords.length} excluded
-          </button>
-          <Popup open={excludePopupOpen} title="Excluded keywords" onClose={() => excludePopupOpen = false}>
-            <div class="exclude-chips">
-              {#each excludeKeywords as kw}
-                <span class="exclude-chip">
-                  {kw}
-                  <button class="exclude-chip-remove" onclick={() => onRemoveExclude(kw)}>&times;</button>
-                </span>
-              {/each}
-            </div>
-          </Popup>
-        </span>
-      {/if}
     </div>
   </div>
 </div>
