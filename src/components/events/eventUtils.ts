@@ -48,7 +48,7 @@ export function loadPref<T>(key: string, fallback: T): T {
 }
 
 export function stripState(loc: string): string {
-  return loc.replace(/, California$/, '');
+  return loc.replace(/, (California|CA)$/, '');
 }
 
 // --- Formatting ---
@@ -95,14 +95,6 @@ export function formatDateGroup(dateKey: string): string {
   return date.toLocaleDateString(LOCALE, { weekday: 'long', month: 'short', day: 'numeric' });
 }
 
-// --- Filtering ---
-export function matchesPrice(event: LumaEvent, selectedPrice: string | null): boolean {
-  if (selectedPrice === null) return true;
-  if (selectedPrice === 'free-approval') return event.is_free || event.price_cents == null;
-  if (selectedPrice === 'paid') return !event.is_free && event.price_cents != null;
-  return true;
-}
-
 export function eventDateKey(event: LumaEvent): string {
   return event._dateKey!;
 }
@@ -129,15 +121,4 @@ export function buildLocationIndex(events: LumaEvent[]): { sorted: string[]; cou
   }
   const sorted = [...counts.keys()].sort((a, b) => counts.get(b)! - counts.get(a)!);
   return { sorted, counts };
-}
-
-/** Build price count map in a single pass. */
-export function buildPriceCounts(events: LumaEvent[]): Map<string, number> {
-  let freeApproval = 0;
-  let paid = 0;
-  for (const e of events) {
-    if (e.is_free || e.price_cents == null) freeApproval++;
-    if (!e.is_free && e.price_cents != null) paid++;
-  }
-  return new Map([['free-approval', freeApproval], ['paid', paid]]);
 }
