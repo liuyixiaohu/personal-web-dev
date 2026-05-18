@@ -30,6 +30,22 @@ const LABEL_POS: Record<string, { dx: number; dy: number; anchor: string }> = {
         </div>
       </div>
     </div>
+
+    <div class="modal-overlay" id="story-modal" aria-hidden="true">
+      <div class="modal-card" role="dialog" aria-modal="true">
+        <div class="modal-header">
+          <div class="modal-location">
+            <span class="modal-city" id="modal-city"></span>
+            <span class="modal-sep">,&nbsp;</span>
+            <span class="modal-country" id="modal-country"></span>
+          </div>
+          <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-divider"></div>
+        <h2 class="modal-title" id="modal-title"></h2>
+        <div class="modal-body" id="modal-body"></div>
+      </div>
+    </div>
   </main>
 </BaseLayout>
 
@@ -39,11 +55,14 @@ const LABEL_POS: Record<string, { dx: number; dy: number; anchor: string }> = {
 
 <script>
   import { buildSVG } from '../utils/journey/buildSVG';
+  import { initModal } from '../utils/journey/modal';
 
   function initJourney() {
     const data = (window as any).__journeyData;
     if (!data) return;
     const { pins, LABEL_POS } = data;
+
+    const { openModal } = initModal();
 
     fetch('/data/journey-countries.json')
       .then(res => res.json())
@@ -53,8 +72,8 @@ const LABEL_POS: Record<string, { dx: number; dy: number; anchor: string }> = {
         const chinaPins = pins.filter((p: any) => p.country.includes('China'));
         const usaPins = pins.filter((p: any) => p.country.includes('USA'));
 
-        buildSVG(chinaSvg, geo.china, geo.provinces, chinaPins, 'clip-china', 80, LABEL_POS);
-        buildSVG(usaSvg, geo.usa, geo.provinces, usaPins, 'clip-usa', 80, LABEL_POS);
+        buildSVG(chinaSvg, geo.china, geo.provinces, chinaPins, 'clip-china', 80, LABEL_POS, openModal);
+        buildSVG(usaSvg, geo.usa, geo.provinces, usaPins, 'clip-usa', 80, LABEL_POS, openModal);
 
         document.getElementById('country-pair')?.classList.add('loaded');
       });
@@ -126,6 +145,123 @@ const LABEL_POS: Record<string, { dx: number; dy: number; anchor: string }> = {
     height: auto;
     display: block;
   }
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(250, 247, 242, 0.45);
+    padding: 1.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .modal-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .modal-card {
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+    max-width: 42rem;
+    max-height: 80vh;
+    overflow-y: auto;
+    width: 100%;
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    transform: translateY(20px);
+    transition: transform 0.4s ease;
+  }
+
+  .modal-overlay.visible .modal-card {
+    transform: translateY(0);
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+
+  .modal-location { color: var(--text-light); }
+  .modal-city { color: var(--text); font-weight: 500; }
+
+  .modal-close {
+    background: none;
+    border: none;
+    font-size: var(--fs-lg);
+    color: var(--text-light);
+    cursor: pointer;
+    padding: 0.2rem 0.5rem;
+    line-height: 1;
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+  }
+
+  .modal-close:hover {
+    color: var(--text);
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  .modal-divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 1.25rem;
+  }
+
+  .modal-title {
+    font-size: var(--fs-lg);
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .modal-body {
+    color: var(--text-light);
+    line-height: 1.7;
+  }
+
+  .modal-body :global(strong) {
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .modal-body :global(p) {
+    margin-bottom: 0.75em;
+  }
+
+  .modal-body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .modal-body :global(a) {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 2px;
+    transition: text-decoration-color 0.15s ease;
+  }
+
+  .modal-body :global(a:hover) {
+    text-decoration-color: var(--text);
+  }
+
+  .modal-body :global(.story-photo) {
+    display: block;
+    max-width: 100%;
+    border-radius: var(--radius-lg);
+    margin: var(--space-sm) 0;
+  }
 </style>
 
 <style is:global>
@@ -143,7 +279,7 @@ const LABEL_POS: Record<string, { dx: number; dy: number; anchor: string }> = {
   }
 
   .pin-dot {
-    pointer-events: none;
+    cursor: pointer;
   }
 
   .map-label {
@@ -151,5 +287,21 @@ const LABEL_POS: Record<string, { dx: number; dy: number; anchor: string }> = {
     font-family: var(--font-body);
     fill: var(--text-light);
     dominant-baseline: central;
+    cursor: pointer;
+    transition: fill 0.15s ease;
+  }
+
+  .map-label:hover {
+    fill: var(--color-rose);
+  }
+
+  .map-label:focus {
+    outline: 2px solid var(--text);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  .map-label:focus:not(:focus-visible) {
+    outline: none;
   }
 </style>
