@@ -116,36 +116,50 @@
   color: var(--text);
 }
 
-.filter-actions {
+/* Side-by-side pair on desktop, stacked on narrow viewports */
+.filter-row-pair {
   display: flex;
-  gap: 0.4rem;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-top: 0.2rem;
+  flex-direction: row;
+  gap: var(--space-md);
+  align-items: flex-start;
 }
 
-.filter-io-btn {
+.filter-row-pair > .filter-row--stacked {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 600px) {
+  .filter-row-pair {
+    flex-direction: column;
+    gap: 0;
+    align-items: stretch;
+  }
+}
+
+/* "X excluded" button (opens popup with chip list) */
+.excluded-wrap {
+  position: relative;
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.excluded-btn {
   font-family: inherit;
   font-size: var(--fs-xs);
   color: var(--text-light);
-  background: transparent;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: none;
+  border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  padding: 0.2em 0.55em;
+  padding: 0.1em 0.4em;
   cursor: pointer;
-  line-height: 1.4;
   transition: border-color 0.15s, color 0.15s;
+  white-space: nowrap;
 }
 
-.filter-io-btn:hover {
-  border-color: rgba(0, 0, 0, 0.2);
+.excluded-btn:hover {
+  border-color: rgba(0, 0, 0, 0.25);
   color: var(--text);
-}
-
-.filter-io-error {
-  font-size: var(--fs-xs);
-  color: var(--color-pm, #9a6868);
-  margin-top: 0.4rem;
 }
 
 .search-input {
