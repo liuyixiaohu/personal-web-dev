@@ -137,30 +137,6 @@
   }
 }
 
-/* "X excluded" button (opens popup with chip list) */
-.excluded-wrap {
-  position: relative;
-  display: inline-block;
-  align-self: flex-start;
-}
-
-.excluded-btn {
-  font-family: inherit;
-  font-size: var(--fs-xs);
-  color: var(--text-light);
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 0.1em 0.4em;
-  cursor: pointer;
-  transition: border-color 0.15s, color 0.15s;
-  white-space: nowrap;
-}
-
-.excluded-btn:hover {
-  border-color: rgba(0, 0, 0, 0.25);
-  color: var(--text);
-}
 
 .search-input {
   font-family: inherit;

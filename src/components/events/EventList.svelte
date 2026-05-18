@@ -27,6 +27,7 @@
   let excludeKeywords = $state<string[]>(loadPref<string[]>(`${PFX}.exclude`, []));
 
   let whyOpen = $state(false);
+  let excludePopupOpen = $state(false);
 
   // --- Persist filter state to localStorage ---
   $effect(() => {
@@ -197,7 +198,6 @@
       onDayToggle={toggleDay}
       onSearchChange={(q) => { searchQuery = q; clearTimeout(searchDebounceTimer); if (q.trim()) searchDebounceTimer = setTimeout(() => pushFilter('search', q), 800); }}
       onAddExclude={(kw) => { excludeKeywords = [...excludeKeywords, kw.toLowerCase().trim()]; pushFilter('exclude', kw); }}
-      onRemoveExclude={(kw) => { excludeKeywords = excludeKeywords.filter(k => k !== kw); pushFilter('remove_exclude', kw); }}
     />
 
     {#if isStale}
@@ -205,10 +205,29 @@
     {/if}
 
     <div class="event-count">
-      {#if filteredEvents.length !== events.length}
-        {filteredEvents.length} / {events.length} events found
-      {:else}
-        {filteredEvents.length} events found
+      <span>
+        {#if filteredEvents.length !== events.length}
+          {filteredEvents.length} / {events.length} events found
+        {:else}
+          {filteredEvents.length} events found
+        {/if}
+      </span>
+      {#if excludeKeywords.length > 0}
+        <span class="why-wrap">
+          <button class="why-btn" onclick={() => excludePopupOpen = !excludePopupOpen}>
+            {excludeKeywords.length} excluded
+          </button>
+          <Popup open={excludePopupOpen} title="Excluded keywords" onClose={() => excludePopupOpen = false}>
+            <div class="exclude-chips">
+              {#each excludeKeywords as kw}
+                <span class="exclude-chip">
+                  {kw}
+                  <button class="exclude-chip-remove" onclick={() => { excludeKeywords = excludeKeywords.filter(k => k !== kw); pushFilter('remove_exclude', kw); }}>&times;</button>
+                </span>
+              {/each}
+            </div>
+          </Popup>
+        </span>
       {/if}
     </div>
 
@@ -311,6 +330,10 @@
   }
 
   .event-count {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
     font-size: var(--fs-xs);
     color: var(--text);
     font-weight: 500;
