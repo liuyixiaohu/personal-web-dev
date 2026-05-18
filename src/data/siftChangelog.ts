@@ -8,8 +8,8 @@ export const siftChangelog: SiftChangelogEntry[] = [
   {
     version: 'v2.9',
     why: {
-      en: 'New ways to control your feed — right-click to mute keywords, and unfollow directly from interaction posts.',
-      zh: '更多 Feed 掌控方式——右键屏蔽关键词，直接从互动帖中取消关注。',
+      en: 'Right-click to mute keywords. Unfollow directly from interaction posts.',
+      zh: '右键屏蔽关键词。直接从互动帖中取消关注。',
     },
     changes: {
       en: [
@@ -27,8 +27,8 @@ export const siftChangelog: SiftChangelogEntry[] = [
   {
     version: 'v2.8',
     why: {
-      en: 'LinkedIn completely restructured their DOM. Sift adapts — all filters restored and more reliable than ever.',
-      zh: 'LinkedIn 完全重构了页面结构。Sift 已适配——所有过滤器恢复且比以往更可靠。',
+      en: 'LinkedIn completely restructured their DOM. Sift adapts. All filters restored.',
+      zh: 'LinkedIn 完全重构了页面结构。Sift 已适配，所有过滤器已恢复。',
     },
     changes: {
       en: [
@@ -50,8 +50,8 @@ export const siftChangelog: SiftChangelogEntry[] = [
   {
     version: 'v2.7',
     why: {
-      en: 'Hide celebration posts and catch more feed noise. Your feed stays focused on what matters.',
-      zh: '隐藏庆祝帖和更多 Feed 噪音。让你的 Feed 只留下真正重要的内容。',
+      en: 'Hide celebration posts and catch more feed noise.',
+      zh: '隐藏庆祝帖和更多 Feed 噪音。',
     },
     changes: {
       en: [
@@ -67,8 +67,8 @@ export const siftChangelog: SiftChangelogEntry[] = [
   {
     version: 'v2.6',
     why: {
-      en: 'Post age filtering and upsell removal. Your feed, your rules.',
-      zh: '帖子时间过滤和推广隐藏。你的 Feed，你做主。',
+      en: 'Post age filtering and upsell removal.',
+      zh: '帖子时间过滤和推广隐藏。',
     },
     changes: {
       en: [
@@ -84,7 +84,7 @@ export const siftChangelog: SiftChangelogEntry[] = [
   {
     version: 'v2.5',
     why: {
-      en: 'Sift now cleans up your profile and My Network pages too — not just the feed and job search.',
+      en: 'Sift now cleans up your profile and My Network pages too, not just the feed and job search.',
       zh: 'Sift 现在也能清理个人主页和「我的人脉」页面，不只是 Feed 和求职搜索。',
     },
     changes: {
@@ -111,8 +111,8 @@ export const siftChangelog: SiftChangelogEntry[] = [
   {
     version: 'v2.3',
     why: {
-      en: 'Keyword filtering, icon badge, and a proper build system. Also: Sift is now open source!',
-      zh: '关键词过滤、图标徽章、正式构建系统。另外：Sift 现已开源！',
+      en: 'Keyword filtering, icon badge, and a proper build system. Sift is now open source.',
+      zh: '关键词过滤、图标徽章、正式构建系统。Sift 现已开源。',
     },
     changes: {
       en: [
@@ -161,12 +161,12 @@ export const siftChangelog: SiftChangelogEntry[] = [
   {
     version: 'v2.1',
     why: {
-      en: 'Fewer clicks, more control. Mute and Unfollow now live right on every post.',
-      zh: '更少点击，更多掌控。Mute 和 Unfollow 按钮现在直接显示在每条帖子上。',
+      en: 'Mute and Unfollow now live right on every post.',
+      zh: 'Mute 和 Unfollow 按钮现在直接显示在每条帖子上。',
     },
     changes: {
       en: [
-        'Inline Mute & Unfollow buttons on every post — no more hunting for the ... menu',
+        'Inline Mute & Unfollow buttons on every post, no more hunting for the ... menu',
         'Search your keyword rules from the popup',
         'Simplified popup: removed float toggles, split into clearer sections',
         'Narrowed job search scope to search results page for a more focused experience',
@@ -184,20 +184,20 @@ export const siftChangelog: SiftChangelogEntry[] = [
   {
     version: 'v2.0',
     why: {
-      en: 'LinkedIn isn\'t just job search — your feed is half ads too. Why not clean up both?',
+      en: 'LinkedIn isn\'t just job search. Your feed is half ads too. Why not clean up both?',
       zh: 'LinkedIn 不只有求职页面，你的 feed 也是一半广告。为什么不一起清理？',
     },
     changes: {
       en: [
-        'Feed cleanup: hide ads, suggested, recommended posts; mute keywords; one-click unfollow',
+        'Feed cleanup: hide ads/suggested/recommended posts, mute keywords, one-click unfollow',
         'Popup redesign: Controls, Stats, and Data tabs replace the floating panel',
-        'Removed mute-person feature in favor of unfollow; keyword muting kept for spam filtering',
+        'Removed mute-person feature in favor of unfollow. Keyword muting kept for spam filtering.',
         'Stats tracking: daily and all-time counts for all filter actions',
       ],
       zh: [
-        'Feed 清理：隐藏广告、推荐、建议帖子；关键词屏蔽；一键取消关注',
+        'Feed 清理：隐藏广告、推荐、建议帖子，关键词屏蔽，一键取消关注',
         '弹窗重新设计：Controls、Stats、Data 标签页取代浮动面板',
-        '移除了屏蔽人功能，改用取消关注；保留关键词屏蔽用于过滤垃圾内容',
+        '移除了屏蔽人功能，改用取消关注。保留关键词屏蔽用于过滤垃圾内容。',
         '统计追踪：所有过滤操作的每日和累计计数',
       ],
     },
