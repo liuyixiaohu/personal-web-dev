@@ -4,25 +4,15 @@
   interface Props {
     allLocations: string[];
     locationCounts: Map<string, number>;
-    priceCounts: Map<string, number>;
     selectedLocations: Set<string>;
-    selectedPrice: string | null;
     selectedDays: Set<number>;
-    selectedTimeStart: string;
-    selectedTimeEnd: string;
-    sortBy: string;
     searchQuery: string;
     excludeKeywords: string[];
     onLocationToggle: (loc: string) => void;
-    onPriceChange: (price: string | null) => void;
     onDayToggle: (day: number) => void;
-    onTimeStartChange: (v: string) => void;
-    onTimeEndChange: (v: string) => void;
-    onSortChange: (sort: string) => void;
     onSearchChange: (query: string) => void;
     onAddExclude: (keyword: string) => void;
     onRemoveExclude: (keyword: string) => void;
-    onClear: () => void;
     onExport: () => void;
     onImport: (file: File) => void;
     ioError: string;
@@ -31,25 +21,15 @@
   let {
     allLocations,
     locationCounts,
-    priceCounts,
     selectedLocations,
-    selectedPrice,
     selectedDays,
-    selectedTimeStart,
-    selectedTimeEnd,
-    sortBy,
     searchQuery,
     excludeKeywords,
     onLocationToggle,
-    onPriceChange,
     onDayToggle,
-    onTimeStartChange,
-    onTimeEndChange,
-    onSortChange,
     onSearchChange,
     onAddExclude,
     onRemoveExclude,
-    onClear,
     onExport,
     onImport,
     ioError,
@@ -57,35 +37,7 @@
 
   let fileInput: HTMLInputElement | undefined = $state();
 
-  // Day-of-week labels (0=Sun ... 6=Sat)
   const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as const;
-
-  // Hour (0–23) and minute (00/15/30/45) options for time dropdowns
-  const HOURS = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, '0'));
-  const MINUTES = ['00', '15', '30', '45'];
-
-  // Decompose "HH:MM" strings into hour/minute parts
-  let startH = $derived(selectedTimeStart ? selectedTimeStart.split(':')[0] : '');
-  let startM = $derived(selectedTimeStart ? selectedTimeStart.split(':')[1] : '');
-  let endH = $derived(selectedTimeEnd ? selectedTimeEnd.split(':')[0] : '');
-  let endM = $derived(selectedTimeEnd ? selectedTimeEnd.split(':')[1] : '');
-
-  function setStartHour(h: string) {
-    if (!h) { onTimeStartChange(''); return; }
-    onTimeStartChange(`${h}:${startM || '00'}`);
-  }
-  function setStartMin(m: string) {
-    if (!startH) return;
-    onTimeStartChange(`${startH}:${m}`);
-  }
-  function setEndHour(h: string) {
-    if (!h) { onTimeEndChange(''); return; }
-    onTimeEndChange(`${h}:${endM || '00'}`);
-  }
-  function setEndMin(m: string) {
-    if (!endH) return;
-    onTimeEndChange(`${endH}:${m}`);
-  }
 
   // --- Location collapse ---
   let locationExpanded = $state(false);
@@ -110,32 +62,9 @@
       excludeInput = '';
     }
   }
-
-  let hasActiveFilters = $derived(
-    selectedLocations.size > 0 || selectedPrice !== null ||
-    selectedDays.size > 0 || selectedTimeStart !== '' || selectedTimeEnd !== '' ||
-    searchQuery.trim() !== '' || excludeKeywords.length > 0
-  );
 </script>
 
 <div class="filter-controls">
-  <!-- Price filter -->
-  <div class="filter-row">
-    <span class="filter-label">{'Price'}</span>
-    <div class="filter-pills">
-      {#each ['free-approval', 'paid'] as priceOpt}
-        <button
-          class="pill"
-          class:pill--active={selectedPrice === priceOpt}
-          onclick={() => onPriceChange(selectedPrice === priceOpt ? null : priceOpt)}
-        >
-          {priceOpt === 'free-approval' ? 'Free (May Require Approval)' :
-           'Paid'} <span class="pill-count">({priceCounts.get(priceOpt) ?? 0})</span>
-        </button>
-      {/each}
-    </div>
-  </div>
-
   <!-- Location filter (multi-select, collapsible) -->
   {#if allLocations.length > 0}
     <div class="filter-row">
@@ -177,60 +106,8 @@
     </div>
   </div>
 
-  <!-- Time range filter (4 dropdowns: hour:min – hour:min) -->
-  <div class="filter-row">
-    <span class="filter-label">{'Time'}</span>
-    <div class="time-range">
-      <select class="time-select" value={startH}
-        onchange={(e) => setStartHour((e.target as HTMLSelectElement).value)}>
-        <option value="">{'Any'}</option>
-        {#each HOURS as h}<option value={h}>{h}</option>{/each}
-      </select>
-      <span class="time-sep">:</span>
-      <select class="time-select" value={startM || '00'} disabled={!startH}
-        onchange={(e) => setStartMin((e.target as HTMLSelectElement).value)}>
-        {#each MINUTES as m}<option value={m}>{m}</option>{/each}
-      </select>
-      <span class="time-sep">–</span>
-      <select class="time-select" value={endH}
-        onchange={(e) => setEndHour((e.target as HTMLSelectElement).value)}>
-        <option value="">{'Any'}</option>
-        {#each HOURS as h}<option value={h}>{h}</option>{/each}
-      </select>
-      <span class="time-sep">:</span>
-      <select class="time-select" value={endM || '00'} disabled={!endH}
-        onchange={(e) => setEndMin((e.target as HTMLSelectElement).value)}>
-        {#each MINUTES as m}<option value={m}>{m}</option>{/each}
-      </select>
-    </div>
-  </div>
-
-  <!-- Sort (pills) -->
-  <div class="filter-row">
-    <span class="filter-label">{'Sort'}</span>
-    <div class="filter-pills">
-      {#each [
-        ['time-asc', 'Earliest first'],
-        ['time-desc', 'Latest first'],
-        ['alpha-asc', 'A → Z'],
-        ['alpha-desc', 'Z → A'],
-        ['guests-desc', 'Most guests'],
-        ['guests-asc', 'Fewest guests'],
-      ] as [val, label]}
-        <button
-          class="pill"
-          class:pill--active={sortBy === val}
-          onclick={() => onSortChange(val)}
-        >{label}</button>
-      {/each}
-    </div>
-  </div>
-
-  <!-- Filter actions: clear / export / import -->
+  <!-- Filter actions: export / import -->
   <div class="filter-actions">
-    {#if hasActiveFilters}
-      <button class="clear-filters" onclick={onClear}>{'Clear filters'}</button>
-    {/if}
     <button class="filter-io-btn" onclick={onExport}>Export</button>
     <button class="filter-io-btn" onclick={() => fileInput?.click()}>Import</button>
     <input
@@ -281,32 +158,3 @@
     {/if}
   </div>
 </div>
-
-<style>
-  /* Event-specific styles only — shared styles come from filters.css */
-  .time-range {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-
-  .time-select {
-    font-family: inherit;
-    font-size: var(--fs-xs);
-    padding: 0.2em 0.4em;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: var(--radius-sm);
-    background: transparent;
-    color: var(--text);
-    cursor: pointer;
-    transition: border-color 0.15s;
-  }
-
-  .time-select:focus {
-    border-color: rgba(0, 0, 0, 0.25);
-  }
-
-  .time-sep {
-    color: var(--text-light);
-  }
-</style>

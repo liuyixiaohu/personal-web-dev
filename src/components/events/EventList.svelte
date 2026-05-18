@@ -3,15 +3,13 @@
   import {
     type LumaEvent, type EventData,
     DATA_URL, STALE_THRESHOLD_MS, BLOCKED_CALENDARS, BLOCKED_NAME_KEYWORDS,
-    loadPref, matchesPrice, enrichEvents,
-    buildLocationIndex, buildPriceCounts,
+    loadPref, enrichEvents,
+    buildLocationIndex,
     eventDateKey, formatUpdatedAt, formatDateGroup,
   } from './eventUtils';
   import EventFilters from './EventFilters.svelte';
   import EventCard from './EventCard.svelte';
-  import { VERSION, CHANGELOG } from './changelog';
   import Popup from './Popup.svelte';
-  import FeedbackForm from './FeedbackForm.svelte';
   import { track } from '../../utils/analytics';
   import { downloadJSON, readJSONFile, todayStamp, asArray, asString } from '../../utils/filterIO';
 
@@ -22,31 +20,20 @@
   let error = $state(false);
   let isStale = $state(false);
 
-  // --- Filter & Sort State (persisted via localStorage) ---
+  // --- Filter State (persisted via localStorage) ---
   const PFX = 'events';
   let selectedLocations = $state<Set<string>>(new Set(loadPref<string[]>(`${PFX}.locations`, [])));
-  let selectedPrice = $state<string | null>(loadPref(`${PFX}.price`, null));
   let selectedDays = $state<Set<number>>(new Set(loadPref<number[]>(`${PFX}.days`, [])));
-  let selectedTimeStart = $state<string>(loadPref(`${PFX}.timeStart`, ''));
-  let selectedTimeEnd = $state<string>(loadPref(`${PFX}.timeEnd`, ''));
-  let sortBy = $state<string>(loadPref(`${PFX}.sort`, 'time-asc'));
   let searchQuery = $state<string>('');
   let excludeKeywords = $state<string[]>(loadPref<string[]>(`${PFX}.exclude`, []));
 
-  let changelogOpen = $state(false);
   let whyOpen = $state(false);
-  let feedbackOpen = $state(false);
-  let feedbackFormRef: FeedbackForm | undefined = $state();
   let ioError = $state('');
 
-  // --- Persist filter/sort to localStorage ---
+  // --- Persist filter state to localStorage ---
   $effect(() => {
-    localStorage.setItem(`${PFX}.price`, JSON.stringify(selectedPrice));
-    localStorage.setItem(`${PFX}.sort`, JSON.stringify(sortBy));
     localStorage.setItem(`${PFX}.locations`, JSON.stringify([...selectedLocations]));
     localStorage.setItem(`${PFX}.days`, JSON.stringify([...selectedDays]));
-    localStorage.setItem(`${PFX}.timeStart`, JSON.stringify(selectedTimeStart));
-    localStorage.setItem(`${PFX}.timeEnd`, JSON.stringify(selectedTimeEnd));
     localStorage.setItem(`${PFX}.exclude`, JSON.stringify(excludeKeywords));
   });
 
@@ -100,27 +87,14 @@
   let locationIndex = $derived(buildLocationIndex(events));
   let allLocations = $derived(locationIndex.sorted);
   let locationCounts = $derived(locationIndex.counts);
-  let priceCounts = $derived(buildPriceCounts(events));
 
-  // --- Filtering & Sorting ---
+  // --- Filtering (always sorted earliest-first for date grouping) ---
   let filteredEvents = $derived.by(() => {
     const q = searchQuery.toLowerCase().trim();
 
-    let result = events.filter(e => {
+    const result = events.filter(e => {
       if (selectedLocations.size > 0 && !selectedLocations.has(e._strippedLocation!)) return false;
-      if (!matchesPrice(e, selectedPrice)) return false;
       if (selectedDays.size > 0 && !selectedDays.has(e._dayOfWeek!)) return false;
-      if (selectedTimeStart || selectedTimeEnd) {
-        const mins = e._timeMinutes!;
-        if (selectedTimeStart) {
-          const [sh, sm] = selectedTimeStart.split(':').map(Number);
-          if (mins < sh * 60 + sm) return false;
-        }
-        if (selectedTimeEnd) {
-          const [eh, em] = selectedTimeEnd.split(':').map(Number);
-          if (mins > eh * 60 + em) return false;
-        }
-      }
       const hostNames = e.host_names ?? [];
       if (q && !e.name.toLowerCase().includes(q) && !hostNames.some(h => h.toLowerCase().includes(q))) return false;
       if (excludeKeywords.length > 0) {
@@ -131,26 +105,7 @@
       return true;
     });
 
-    result.sort((a, b) => {
-      switch (sortBy) {
-        case 'alpha-asc': return a.name.localeCompare(b.name);
-        case 'alpha-desc': return b.name.localeCompare(a.name);
-        case 'time-asc': return a._startMs! - b._startMs!;
-        case 'time-desc': return b._startMs! - a._startMs!;
-        case 'guests-asc': {
-          if (a.guest_count === 0 && b.guest_count !== 0) return 1;
-          if (b.guest_count === 0 && a.guest_count !== 0) return -1;
-          return a.guest_count - b.guest_count;
-        }
-        case 'guests-desc': {
-          if (a.guest_count === 0 && b.guest_count !== 0) return 1;
-          if (b.guest_count === 0 && a.guest_count !== 0) return -1;
-          return b.guest_count - a.guest_count;
-        }
-        default: return 0;
-      }
-    });
-
+    result.sort((a, b) => a._startMs! - b._startMs!);
     return result;
   });
 
@@ -191,17 +146,6 @@
     pushFilter('day', day);
   }
 
-  function clearFilters() {
-    selectedLocations = new Set();
-    selectedPrice = null;
-    selectedDays = new Set();
-    selectedTimeStart = '';
-    selectedTimeEnd = '';
-    searchQuery = '';
-    excludeKeywords = [];
-    pushFilter('clear');
-  }
-
   function exportFilters() {
     downloadJSON(`events-filter-${todayStamp()}.json`, {
       _v: 1,
@@ -209,11 +153,7 @@
       exportedAt: new Date().toISOString(),
       filters: {
         locations: [...selectedLocations],
-        price: selectedPrice,
         days: [...selectedDays],
-        timeStart: selectedTimeStart,
-        timeEnd: selectedTimeEnd,
-        sortBy,
         searchQuery,
         excludeKeywords,
       },
@@ -230,11 +170,7 @@
       if (data._v !== 1) console.warn('[events] unknown filter version, best-effort import');
       const f = data.filters ?? {};
       selectedLocations = new Set(asArray<string>(f.locations));
-      selectedPrice = typeof f.price === 'string' ? f.price : null;
       selectedDays = new Set(asArray<unknown>(f.days).map(Number).filter(n => !Number.isNaN(n)));
-      selectedTimeStart = asString(f.timeStart);
-      selectedTimeEnd = asString(f.timeEnd);
-      sortBy = asString(f.sortBy, 'time-asc');
       searchQuery = asString(f.searchQuery);
       excludeKeywords = asArray<string>(f.excludeKeywords);
       track('filter_import', { page: 'events', success: true });
@@ -249,32 +185,6 @@
   <header class="event-header">
     <div class="event-title-row">
       <h2 class="event-title">Today's New Tech Events @Bay Area</h2>
-      <div class="version-wrap">
-        <button class="version-btn" onclick={() => changelogOpen = !changelogOpen}>
-          {VERSION}
-        </button>
-        <Popup open={changelogOpen} title="Changelog" onClose={() => changelogOpen = false}>
-          {#each CHANGELOG as release}
-            <div class="changelog-release">
-              <div class="changelog-version">{release.version}</div>
-              <p class="changelog-why">{release.why}</p>
-              <ul class="changelog-list">
-                {#each release.changes as change}
-                  <li>{change}</li>
-                {/each}
-              </ul>
-            </div>
-          {/each}
-        </Popup>
-      </div>
-      <span class="feedback-wrap">
-        <button class="why-btn" onclick={() => { feedbackOpen = !feedbackOpen; feedbackFormRef?.reset(); }}>
-          Feedback
-        </button>
-        <Popup open={feedbackOpen} title="Any Suggestion? Pls!!!" onClose={() => feedbackOpen = false} width="18rem">
-          <FeedbackForm bind:this={feedbackFormRef} />
-        </Popup>
-      </span>
     </div>
 
     <p class="event-subtitle">
@@ -310,29 +220,19 @@
       </div>
     {/if}
 
-    <!-- Filter & Sort Controls -->
+    <!-- Filter Controls -->
     <EventFilters
       {allLocations}
       {locationCounts}
-      {priceCounts}
       {selectedLocations}
-      {selectedPrice}
       {selectedDays}
-      {selectedTimeStart}
-      {selectedTimeEnd}
-      {sortBy}
       {searchQuery}
       {excludeKeywords}
       onLocationToggle={toggleLocation}
-      onPriceChange={(p) => { selectedPrice = p; pushFilter('price', p); }}
       onDayToggle={toggleDay}
-      onTimeStartChange={(v) => { selectedTimeStart = v; pushFilter('time_start', v); }}
-      onTimeEndChange={(v) => { selectedTimeEnd = v; pushFilter('time_end', v); }}
-      onSortChange={(s) => { sortBy = s; pushFilter('sort', s); }}
       onSearchChange={(q) => { searchQuery = q; clearTimeout(searchDebounceTimer); if (q.trim()) searchDebounceTimer = setTimeout(() => pushFilter('search', q), 800); }}
       onAddExclude={(kw) => { excludeKeywords = [...excludeKeywords, kw.toLowerCase().trim()]; pushFilter('exclude', kw); }}
       onRemoveExclude={(kw) => { excludeKeywords = excludeKeywords.filter(k => k !== kw); pushFilter('remove_exclude', kw); }}
-      onClear={clearFilters}
       onExport={exportFilters}
       onImport={importFilters}
       {ioError}
@@ -386,67 +286,6 @@
     align-items: baseline;
     gap: 0.5rem;
     flex-wrap: wrap;
-  }
-
-  .version-wrap {
-    position: relative;
-  }
-
-  .version-btn {
-    font-family: inherit;
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 0.1em 0.4em;
-    cursor: pointer;
-    transition: border-color 0.15s, color 0.15s;
-    white-space: nowrap;
-  }
-
-  .version-btn:hover {
-    border-color: rgba(0, 0, 0, 0.25);
-    color: var(--text);
-  }
-
-  .feedback-wrap {
-    position: relative;
-    display: inline-block;
-  }
-
-  .changelog-release {
-    margin-bottom: 0.6rem;
-  }
-
-  .changelog-release:last-child {
-    margin-bottom: 0;
-  }
-
-  .changelog-version {
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    color: var(--text);
-  }
-
-  .changelog-why {
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    font-style: italic;
-    margin: 0.15rem 0 0.2rem;
-    line-height: 1.4;
-  }
-
-  .changelog-list {
-    margin: 0.2rem 0 0 1rem;
-    padding: 0;
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    line-height: 1.5;
-  }
-
-  .changelog-list li {
-    margin-bottom: 0.1rem;
   }
 
   .event-title {
