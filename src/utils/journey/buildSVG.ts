@@ -1,12 +1,7 @@
-/**
- * SVG map builder for the Life Journey page.
- * Static country outlines, province boundaries, and labeled pins.
- */
 import { geoMercator, geoPath } from 'd3-geo';
 
 const NS = 'http://www.w3.org/2000/svg';
 
-/** Fit a country GeoJSON into a padded square and return projection + viewBox. */
 export function fitAndCrop(
   countryGeo: any,
   padPx: number,
@@ -27,7 +22,6 @@ export function fitAndCrop(
   return { proj, gen, vb: `${x0} ${y0} ${w} ${h}` };
 }
 
-/** Build a country SVG: outline, provinces, dot + label per pin. Non-interactive. */
 export function buildSVG(
   svgEl: SVGSVGElement,
   countryGeo: any,
@@ -36,6 +30,7 @@ export function buildSVG(
   clipId: string,
   padTop: number,
   labelPos: Record<string, { dx: number; dy: number; anchor: string }>,
+  onPinClick?: (pin: any) => void,
 ) {
   const PAD = 160;
   const { proj, gen, vb } = fitAndCrop(countryGeo, PAD, padTop);
@@ -80,7 +75,22 @@ export function buildSVG(
     label.setAttribute('y', String(y + lp.dy));
     label.setAttribute('text-anchor', lp.anchor);
     label.setAttribute('class', 'map-label');
+    label.setAttribute('data-pin-id', pin.id);
     label.textContent = `${pin.city} · ${pin.year}`;
+
+    if (onPinClick) {
+      label.setAttribute('role', 'button');
+      label.setAttribute('tabindex', '0');
+      label.addEventListener('click', () => onPinClick(pin));
+      label.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onPinClick(pin);
+        }
+      });
+      dot.addEventListener('click', () => onPinClick(pin));
+    }
+
     svgEl.appendChild(label);
   }
 }
