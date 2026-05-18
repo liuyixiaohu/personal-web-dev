@@ -1,7 +1,6 @@
 # Brand Guidelines: kunli.co
 
 > Visual design system for Kun Li's personal brand.
-> Live showcase: [kunli.co/brand](https://kunli.co/brand)
 
 ---
 
