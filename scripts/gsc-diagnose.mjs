@@ -19,11 +19,10 @@ import { google } from 'googleapis';
 const SITE_URL = process.env.GSC_SITE_URL || 'sc-domain:kunli.co';
 const SITEMAP_URLS = [
   'https://kunli.co/',
-  'https://kunli.co/brand',
-  'https://kunli.co/events',
-  'https://kunli.co/life-journey',
-  'https://kunli.co/sift',
-  'https://kunli.co/touch-fish',
+  'https://kunli.co/events/',
+  'https://kunli.co/life-journey/',
+  'https://kunli.co/sift/',
+  'https://kunli.co/touch-fish/',
 ];
 
 // Resolve service account key file

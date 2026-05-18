@@ -6,13 +6,16 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://kunli.co',
-  trailingSlash: 'never',
+  // Match Cloudflare Pages' default behavior (folder routes serve at /path/).
+  // Aligns sitemap, canonical URLs, and redirect targets so Google indexes
+  // the same URL it sees in the sitemap, instead of flagging "Page with redirect".
+  trailingSlash: 'always',
   redirects: {
     // Renamed products
-    '/job-lens': '/sift',
-    '/joblens': '/sift',
-    '/job-lens/privacy': '/sift/privacy',
-    '/shift': '/sift',
+    '/job-lens': '/sift/',
+    '/joblens': '/sift/',
+    '/job-lens/privacy': '/sift/privacy/',
+    '/shift': '/sift/',
 
     // Removed pages
     '/dream-job-monitor': '/',
@@ -35,7 +38,7 @@ export default defineConfig({
     '/professional/product-marketing': '/',
     '/professional/data-science': '/',
     '/professional/visual-design': '/',
-    '/professional/brand-narrative': '/brand',
+    '/professional/brand-narrative': '/',  // /brand page removed in 1a1f5dd
     '/professional/quant-insights': '/',
     '/professional/information-design': '/',
 
@@ -44,9 +47,9 @@ export default defineConfig({
     '/ingrain/privacy': '/',
 
     // Old map demos
-    '/map-demo-leaflet': '/life-journey',
-    '/map-demo-d3': '/life-journey',
-    '/map-demo-svg': '/life-journey',
+    '/map-demo-leaflet': '/life-journey/',
+    '/map-demo-d3': '/life-journey/',
+    '/map-demo-svg': '/life-journey/',
   },
   integrations: [
     svelte(),
