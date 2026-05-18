@@ -1,301 +1,116 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { siftChangelog } from '../../data/siftChangelog';
 ---
 
-<BaseLayout title="Sift" description="Clean up your LinkedIn feed. Hide ads, filter keywords, unfollow inline, and flag suspicious job listings. Open source.">
+<BaseLayout
+  title="Sift | Clean Up Your LinkedIn Feed (Chrome Extension)"
+  description="Sift is a Chrome extension that cleans up your LinkedIn feed and flags suspicious job listings. Free, open source, runs entirely in your browser. By Kun Li."
+>
   <main class="sift-page grid-page">
     <a href="/" class="back-link">← Home</a>
 
-    <!-- Header -->
-    <header class="sift-header">
+    <!-- Hero -->
+    <header class="sift-hero">
       <img src="/images/sift-icon.webp" alt="Sift icon" class="sift-logo" />
-      <div>
-        <div class="sift-title-row">
-          <h1>Sift</h1>
-          <div class="sift-version-wrap">
-            <button class="sift-version-btn" id="sift-changelog-toggle" aria-label="View changelog">v2.9</button>
-            <div class="sift-changelog-backdrop" id="sift-changelog-backdrop" hidden></div>
-            <div class="sift-changelog-popup" id="sift-changelog-popup" hidden>
-              <div class="sift-changelog-header">
-                <span class="sift-changelog-title">Changelog</span>
-                <button class="sift-changelog-close" id="sift-changelog-close" aria-label="Close changelog">&times;</button>
-              </div>
-              <div id="sift-changelog-content"></div>
-            </div>
-          </div>
-          <span class="sift-feedback-wrap">
-            <button class="sift-feedback-btn" id="sift-feedback-toggle" aria-label="Send feedback">Feedback</button>
-            <div class="sift-feedback-backdrop" id="sift-feedback-backdrop" hidden></div>
-            <div class="sift-feedback-popup" id="sift-feedback-popup" hidden>
-              <div class="sift-feedback-header">
-                <span class="sift-feedback-title">Any Suggestion? Pls!!!</span>
-                <button class="sift-feedback-close" id="sift-feedback-close" aria-label="Close feedback form">&times;</button>
-              </div>
-              <form id="sift-feedback-form">
-                <textarea name="message" required rows="4" class="sift-feedback-textarea" id="sift-feedback-textarea" placeholder="Bugs, ideas, anything..."></textarea>
-                <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-                <button type="submit" class="sift-feedback-submit" id="sift-feedback-submit">Send</button>
-              </form>
-              <p class="sift-feedback-success" id="sift-feedback-success" hidden>Thanks! Feedback sent.</p>
-              <p class="sift-feedback-error" id="sift-feedback-error" hidden>Failed to send. Try again?</p>
-            </div>
-          </span>
-        </div>
-        <p class="sift-subtitle">Take back a LinkedIn worth your time.</p>
+      <div class="sift-hero-title">
+        <h1>Sift <span class="sift-version">v2.9</span></h1>
+        <p class="sift-tagline">Take back a LinkedIn worth your time.</p>
       </div>
+      <div class="sift-hero-cta">
+        <a
+          href="https://chromewebstore.google.com/detail/ainpeagpaoafcblhcebbakofagiocooa?utm_source=kunli_website"
+          class="sift-cta sift-cta--primary"
+          target="_blank"
+          rel="noopener"
+        >
+          Install from Chrome Web Store
+        </a>
+        <a
+          href="https://github.com/liuyixiaohu/sift"
+          class="sift-cta sift-cta--secondary"
+          target="_blank"
+          rel="noopener"
+        >
+          GitHub
+        </a>
+        <a href="#feedback" class="sift-cta sift-cta--secondary">Feedback</a>
+      </div>
+      <p class="sift-maker">
+        Built and maintained by <a href="/">Kun Li</a>. Free, open source, runs entirely in your
+        browser. No data leaves your device.
+      </p>
     </header>
 
-    <!-- Inspiration -->
+    <!-- Changelog (inline) -->
     <section class="section">
-      <h2>Inspiration</h2>
-      <p>LinkedIn is great at surfacing relevant jobs and content. But the experience? Ads everywhere, "Suggested" posts from strangers, reposted job listings, no way to tell if a role sponsors visas without clicking through. Your feed is half noise, and your job search is mostly triage.</p>
-      <p>Sift exists because the platform is good but the workflow is broken. It cleans up both sides of LinkedIn: your feed and your job search.</p>
-    </section>
-
-    <!-- Feed Cleanup -->
-    <section class="section">
-      <h2>Feed Cleanup</h2>
-      <p>Sift automatically hides ads, suggested posts, recommended content, and posts matching your custom keywords. One-click Unfollow appears inline on every post — no digging through menus.</p>
-      <ul class="sift-features">
-        <li><strong>Hide Ads</strong>: removes Promoted posts automatically</li>
-        <li><strong>Hide Suggested & Recommended</strong>: filters non-connection noise</li>
-        <li><strong>Hide Strangers</strong>: filter posts from non-connections</li>
-        <li><strong>One-click Unfollow</strong>: appears next to "1st" on posts and interaction headers ("XXX likes this")</li>
-        <li><strong>Mute Keyword</strong>: right-click any text on LinkedIn to instantly add it to your keyword filter</li>
-        <li><strong>Auto-collapse</strong>: "You unfollowed X" confirmation cards collapse automatically</li>
-        <li><strong>Hide Sidebar</strong>: remove LinkedIn News and footer clutter</li>
-        <li><strong>Keyword Filter</strong>: define custom keywords to hide matching posts</li>
-        <li><strong>Live Badge</strong>: floating counter shows how many posts have been filtered</li>
-        <li><strong>Icon Badge</strong>: extension icon shows the filtered count at a glance</li>
-        <li><strong>Hide Polls</strong>: filter out LinkedIn polls from your feed</li>
-        <li><strong>Hide Celebrations</strong>: hide job updates, work anniversaries, birthdays, and promotions</li>
-        <li><strong>Hide Old Posts</strong>: hide posts older than 1 day, 3 days, 1 week, 2 weeks, or 1 month</li>
-        <li><strong>Hide Upsells</strong>: removes "Try Campaign Manager" and similar promotions</li>
-        <li><strong>Shift+J</strong>: pause/resume all filters instantly</li>
-      </ul>
-    </section>
-
-    <!-- Profile & Network -->
-    <section class="section">
-      <h2>Profile & Network</h2>
-      <p>Sift also cleans up your profile and My Network pages — hiding sidebar clutter, ads, analytics you don't need, and game promotions.</p>
-      <ul class="sift-features">
-        <li><strong>Hide Profile Sidebar</strong>: removes ads, "People you may know", and "You might like" panels</li>
-        <li><strong>Hide Analytics</strong>: hides profile views, impressions, and search appearances</li>
-        <li><strong>Hide Network Ads</strong>: removes Promoted ads from My Network</li>
-        <li><strong>Hide Game Promo</strong>: removes LinkedIn game promotions</li>
-      </ul>
-    </section>
-
-    <!-- Job Search -->
-    <section class="section">
-      <h2>Job Search Intelligence</h2>
-      <p>On LinkedIn's job search results page, Sift flags suspicious listings so you skip the ones not worth your time.</p>
-      <div class="sift-flags">
-        <div class="sift-flag">
-          <span class="sift-flag-badge" style="background:var(--color-rose)">Reposted</span>
-          <span class="sift-flag-desc">Job has been reposted — stale listing</span>
-        </div>
-        <div class="sift-flag">
-          <span class="sift-flag-badge" style="background:var(--color-rose)">Applied</span>
-          <span class="sift-flag-desc">You already applied to this one</span>
-        </div>
-        <div class="sift-flag">
-          <span class="sift-flag-badge" style="background:var(--color-rose)">No Sponsor</span>
-          <span class="sift-flag-desc">Description says visa sponsorship not available</span>
-        </div>
-        <div class="sift-flag">
-          <span class="sift-flag-badge" style="background:var(--color-rose)">Unpaid</span>
-          <span class="sift-flag-desc">Volunteer or unpaid position</span>
-        </div>
-        <div class="sift-flag">
-          <span class="sift-flag-badge" style="background:var(--color-rose)">Skipped Co.</span>
-          <span class="sift-flag-desc">Company on your skip list</span>
-        </div>
-        <div class="sift-flag">
-          <span class="sift-flag-badge" style="background:var(--color-rose)">Skipped Title</span>
-          <span class="sift-flag-desc">Title contains a keyword you're avoiding</span>
-        </div>
+      <h2>Changelog</h2>
+      <div class="sift-changelog-inline">
+        {siftChangelog.map((r) => (
+          <div class="sift-changelog-release">
+            <div class="sift-changelog-version">{r.version}</div>
+            {r.why?.en && <p class="sift-changelog-why">{r.why.en}</p>}
+            <ul class="sift-changelog-list">
+              {r.changes.en.map((c) => <li>{c}</li>)}
+            </ul>
+          </div>
+        ))}
       </div>
-    </section>
-
-    <!-- See It in Action -->
-    <section class="section">
-      <h2>See It in Action</h2>
-      <div class="sift-screenshots">
-        <figure class="sift-screenshot-figure">
-          <img src="/images/sift-dim-off.webp" alt="Sift badges on LinkedIn job cards" class="sift-screenshot" />
-          <figcaption>Badges flag issues at a glance</figcaption>
-        </figure>
-        <figure class="sift-screenshot-figure">
-          <img src="/images/sift-dim-on.webp" alt="Sift dim mode fading flagged cards" class="sift-screenshot" />
-          <figcaption>Dim mode fades flagged cards</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <!-- Get Started -->
-    <section class="section">
-      <h2>Get Started</h2>
-      <ol class="sift-steps">
-        <li>Install from the <a href="https://chromewebstore.google.com/detail/ainpeagpaoafcblhcebbakofagiocooa?utm_source=kunli_website" class="sift-link" target="_blank" rel="noopener">Chrome Web Store</a></li>
-        <li>Visit <strong>LinkedIn</strong> — your feed is automatically cleaned up</li>
-        <li>Go to <strong>Jobs → Search Results</strong> — cards are auto-flagged</li>
-        <li>Click the <strong>Sift icon</strong> to adjust settings, view stats, or export data</li>
-        <li>Hover any post to <strong>Unfollow</strong> the author with one click</li>
-      </ol>
-    </section>
-
-    <!-- How It Works -->
-    <section class="section">
-      <h2>How It Works</h2>
-      <div class="sift-pipeline">
-        <div class="sift-step">
-          <span class="sift-step-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          </span>
-          <span class="sift-step-label">Detect</span>
-        </div>
-        <span class="sift-arrow">&rarr;</span>
-        <div class="sift-step">
-          <span class="sift-step-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
-          </span>
-          <span class="sift-step-label">Badge</span>
-        </div>
-        <span class="sift-arrow">&rarr;</span>
-        <div class="sift-step">
-          <span class="sift-step-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
-          </span>
-          <span class="sift-step-label">Filter</span>
-        </div>
-        <span class="sift-arrow">&rarr;</span>
-        <div class="sift-step">
-          <span class="sift-step-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          </span>
-          <span class="sift-step-label">Focus</span>
-        </div>
-      </div>
-      <p>Reads page content directly in the browser. No external servers, no API calls. Everything runs locally. Your preferences are stored via Chrome's local storage.</p>
     </section>
 
     <!-- Privacy -->
     <section class="section">
       <h2>Privacy</h2>
-      <p>Sift runs entirely in your browser. No data is collected, transmitted, or stored externally. All preferences and stats stay on your device.</p>
-      <a href="/sift/privacy" class="sift-link" style="font-size:var(--fs-xs)">Full privacy policy →</a>
+      <p>
+        Sift runs entirely in your browser. No data is collected, transmitted, or stored
+        externally. All preferences and stats stay on your device.
+      </p>
+      <a href="/sift/privacy" class="sift-link">Full privacy policy →</a>
     </section>
 
     <!-- Open Source -->
     <section class="section">
-      <h2>Open Source</h2>
-      <p>Sift is open source under the MIT license. You can read every line of code, verify the privacy claims yourself, or contribute improvements.</p>
+      <h2>Open source</h2>
+      <p>
+        Sift is MIT-licensed. Read every line of code, verify the privacy claims, or contribute.
+      </p>
+      <a
+        href="https://github.com/liuyixiaohu/sift"
+        class="sift-link"
+        target="_blank"
+        rel="noopener"
+        >GitHub repository →</a
+      >
     </section>
 
-    <!-- CTA -->
-    <div class="sift-cta">
-      <a href="https://chromewebstore.google.com/detail/ainpeagpaoafcblhcebbakofagiocooa?utm_source=kunli_website" class="sift-store-link" target="_blank" rel="noopener">
-        <svg class="sift-store-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
-        <span>Chrome Web Store</span>
-      </a>
-      <a href="https://github.com/liuyixiaohu/sift" class="sift-github-link" target="_blank" rel="noopener">
-        <svg class="sift-store-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-        <span>GitHub</span>
-      </a>
-    </div>
-
-    <!-- Lightbox -->
-    <dialog class="sift-lightbox" id="sift-lightbox">
-      <img id="sift-lightbox-img" alt="" />
-    </dialog>
+    <!-- Feedback (inline) -->
+    <section class="section" id="feedback">
+      <h2>Feedback</h2>
+      <p>Bugs, ideas, anything. Goes straight to me.</p>
+      <form id="sift-feedback-form" class="sift-feedback-form">
+        <textarea
+          name="message"
+          required
+          rows="4"
+          class="sift-feedback-textarea"
+          id="sift-feedback-textarea"
+          placeholder="Bugs, ideas, anything..."></textarea>
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+        <button type="submit" class="sift-feedback-submit" id="sift-feedback-submit">Send</button>
+      </form>
+      <p class="sift-feedback-success" id="sift-feedback-success" hidden>Thanks! Feedback sent.</p>
+      <p class="sift-feedback-error" id="sift-feedback-error" hidden>Failed to send. Try again?</p>
+    </section>
 
   </main>
 </BaseLayout>
 
 <script>
-  import { siftChangelog } from '../../data/siftChangelog';
-
   document.addEventListener('astro:page-load', () => {
-    // --- Lightbox ---
-    const dialog = document.getElementById('sift-lightbox') as HTMLDialogElement | null;
-    const lbImg = document.getElementById('sift-lightbox-img') as HTMLImageElement | null;
-    if (dialog && lbImg) {
-      document.querySelectorAll('.sift-screenshot').forEach(img => {
-        img.addEventListener('click', () => {
-          lbImg.src = (img as HTMLImageElement).src;
-          lbImg.alt = (img as HTMLImageElement).alt;
-          dialog.showModal();
-        });
-      });
-      dialog.addEventListener('click', () => dialog.close());
-    }
-
-    // --- Changelog ---
-    const clToggle = document.getElementById('sift-changelog-toggle');
-    const clPopup = document.getElementById('sift-changelog-popup');
-    const clBackdrop = document.getElementById('sift-changelog-backdrop');
-    const clClose = document.getElementById('sift-changelog-close');
-    const clContent = document.getElementById('sift-changelog-content');
-
-    function renderChangelog() {
-      if (!clContent) return;
-      clContent.innerHTML = siftChangelog.map(r => `
-        <div class="sift-changelog-release">
-          <div class="sift-changelog-version">${r.version}</div>
-          <p class="sift-changelog-why">${r.why.en}</p>
-          <ul class="sift-changelog-list">
-            ${r.changes.en.map(c => `<li>${c}</li>`).join('')}
-          </ul>
-        </div>
-      `).join('');
-    }
-    renderChangelog();
-
-    function toggleChangelog() {
-      if (clPopup) clPopup.hidden = !clPopup.hidden;
-      if (clBackdrop) clBackdrop.hidden = !clBackdrop.hidden;
-    }
-    function closeChangelog() {
-      if (clPopup) clPopup.hidden = true;
-      if (clBackdrop) clBackdrop.hidden = true;
-    }
-
-    clToggle?.addEventListener('click', toggleChangelog);
-    clBackdrop?.addEventListener('click', closeChangelog);
-    clClose?.addEventListener('click', closeChangelog);
-
-    // --- Feedback ---
-    const fbToggle = document.getElementById('sift-feedback-toggle');
-    const fbPopup = document.getElementById('sift-feedback-popup');
-    const fbBackdrop = document.getElementById('sift-feedback-backdrop');
-    const fbClose = document.getElementById('sift-feedback-close');
     const form = document.getElementById('sift-feedback-form') as HTMLFormElement | null;
     const submitBtn = document.getElementById('sift-feedback-submit');
     const successMsg = document.getElementById('sift-feedback-success');
     const errorMsg = document.getElementById('sift-feedback-error');
-
-    function openFeedback() {
-      if (!fbPopup || !fbBackdrop) return;
-      fbPopup.hidden = false;
-      fbBackdrop.hidden = false;
-      if (successMsg) successMsg.hidden = true;
-      if (errorMsg) errorMsg.hidden = true;
-      if (form) form.hidden = false;
-    }
-
-    function closeFeedback() {
-      if (fbPopup) fbPopup.hidden = true;
-      if (fbBackdrop) fbBackdrop.hidden = true;
-    }
-
-    fbToggle?.addEventListener('click', () => {
-      if (fbPopup?.hidden) openFeedback();
-      else closeFeedback();
-    });
-    fbBackdrop?.addEventListener('click', closeFeedback);
-    fbClose?.addEventListener('click', closeFeedback);
 
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -317,16 +132,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         if (errorMsg) errorMsg.hidden = false;
       } finally {
         submitBtn.removeAttribute('disabled');
+        submitBtn.textContent = 'Send';
       }
     });
   });
 </script>
 
 <style>
-  .sift-header {
+  /* Hero */
+  .sift-hero {
     display: flex;
-    align-items: center;
-    gap: var(--space-md);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
     margin-bottom: var(--space-xl);
   }
 
@@ -336,23 +154,79 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     border-radius: var(--radius-lg);
   }
 
-  .sift-title-row {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .sift-header h1 {
+  .sift-hero-title h1 {
     font-size: var(--fs-xl);
     font-weight: 500;
     line-height: 1.2;
     color: var(--color-rose);
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
   }
 
-  .sift-subtitle {
+  .sift-version {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    font-weight: 400;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.1em 0.4em;
+  }
+
+  .sift-tagline {
     color: var(--text-light);
     margin-top: var(--space-xs);
+  }
+
+  .sift-hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: var(--space-xs);
+  }
+
+  .sift-cta {
+    display: inline-flex;
+    align-items: center;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    padding: 0.5em 1em;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: opacity 0.2s ease, border-color 0.2s ease;
+  }
+
+  .sift-cta--primary {
+    color: #fff;
+    background: var(--color-rose);
+  }
+
+  .sift-cta--primary:hover {
+    opacity: 0.85;
+  }
+
+  .sift-cta--secondary {
+    color: var(--text);
+    background: transparent;
+    border: 1px solid var(--border);
+  }
+
+  .sift-cta--secondary:hover {
+    border-color: var(--text-light);
+  }
+
+  .sift-maker {
+    color: var(--text-light);
+    font-size: var(--fs-xs);
+    line-height: 1.6;
+    margin-top: var(--space-xs);
+    max-width: 36rem;
+  }
+
+  .sift-maker a {
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
 
   /* Sections */
@@ -368,479 +242,75 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     margin-bottom: var(--space-sm);
   }
 
-  .section h3 {
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-light);
-    margin-top: var(--space-md);
-    margin-bottom: var(--space-xs);
-  }
-
   .section p {
     color: var(--text-light);
     line-height: 1.6;
     margin-bottom: var(--space-xs);
   }
 
-  /* Flag badges */
-  .sift-flags {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-  }
-
-  .sift-flag {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-  }
-
-  .sift-flag-badge {
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    padding: 0.15em 0.6em;
-    border-radius: var(--radius-lg);
-    color: #fff;
-    white-space: nowrap;
-    min-width: 5.5rem;
-    text-align: center;
-  }
-
-  .sift-flag-desc {
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-  }
-
-  /* Screenshots */
-  .sift-screenshots {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-md);
-  }
-
-  @media (max-width: 52rem) {
-    .sift-screenshots {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .sift-screenshot-figure {
-    margin: 0;
-  }
-
-  .sift-screenshot {
-    width: 100%;
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border);
-    cursor: zoom-in;
-    transition: opacity 0.2s ease;
-  }
-
-  .sift-screenshot:hover {
-    opacity: 0.85;
-  }
-
-  .sift-screenshot-figure figcaption {
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    text-align: center;
-    margin-top: var(--space-xs);
-  }
-
-  /* Pipeline */
-  .sift-pipeline {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    flex-wrap: wrap;
-    margin-bottom: var(--space-md);
-  }
-
-  .sift-step {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.3rem;
-  }
-
-  .sift-step-icon {
-    width: 2rem;
-    height: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-rose);
-  }
-
-  .sift-step-icon svg {
-    width: 1.4rem;
-    height: 1.4rem;
-  }
-
-  .sift-step-label {
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text);
-  }
-
-  .sift-arrow {
-    color: var(--text-light);
-    font-size: var(--fs-md);
-    margin-bottom: 1.2rem;
-  }
-
-  /* Steps */
-  .sift-steps {
-    padding-left: 1.5rem;
-  }
-
-  .sift-steps li {
-    margin-bottom: var(--space-xs);
-    line-height: 1.6;
-    color: var(--text-light);
-  }
-
-  .sift-steps li::marker {
-    color: var(--color-rose);
-    font-weight: 600;
-  }
-
-  .sift-steps code {
-    font-size: var(--fs-sm);
-    background: rgba(0, 0, 0, 0.04);
-    padding: 0.1em 0.4em;
-    border-radius: var(--radius-sm);
-  }
-
-  .sift-steps strong {
-    color: var(--text);
-    font-weight: 600;
-  }
-
   .sift-link {
     color: var(--color-rose);
     text-decoration: none;
     font-weight: 500;
+    font-size: var(--fs-sm);
   }
 
   .sift-link:hover {
     opacity: 0.7;
   }
 
-  /* Features list */
-  .sift-features {
-    padding-left: 1.5rem;
-    margin-top: var(--space-sm);
+  /* Changelog (inline) */
+  .sift-changelog-inline {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
   }
 
-  .sift-features li {
-    margin-bottom: var(--space-xs);
-    line-height: 1.6;
-    color: var(--text-light);
+  .sift-changelog-release {
+    border-left: 2px solid var(--border);
+    padding-left: var(--space-sm);
   }
 
-  .sift-features li::marker {
-    color: var(--color-rose);
-  }
-
-  .sift-features strong {
-    color: var(--text);
-    font-weight: 600;
-  }
-
-  .sift-features code {
+  .sift-changelog-version {
     font-size: var(--fs-sm);
-    background: rgba(0, 0, 0, 0.04);
-    padding: 0.1em 0.4em;
-    border-radius: var(--radius-sm);
-  }
-
-  /* CTA */
-  .sift-cta {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.75rem;
-    margin-top: var(--space-xl);
-    padding-bottom: var(--space-xl);
-  }
-
-  .sift-store-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5em;
-    font-size: var(--fs-md);
-    font-weight: 500;
-    color: #fff;
-    background: var(--color-rose);
-    padding: 0.5em 1.2em;
-    border-radius: var(--radius-md);
-    text-decoration: none;
-    transition: opacity 0.2s ease;
-  }
-
-  .sift-store-link:hover {
-    opacity: 0.85;
-  }
-
-  .sift-store-icon {
-    width: 1.2em;
-    height: 1.2em;
-  }
-
-  .sift-github-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5em;
-    font-size: var(--fs-md);
-    font-weight: 500;
-    color: var(--text);
-    background: transparent;
-    border: 1px solid var(--border);
-    padding: 0.5em 1.2em;
-    border-radius: var(--radius-md);
-    text-decoration: none;
-    transition: border-color 0.2s ease, opacity 0.2s ease;
-  }
-
-  .sift-github-link:hover {
-    border-color: var(--text-light);
-    opacity: 0.85;
-  }
-
-
-  /* Lightbox */
-  .sift-lightbox {
-    border: none;
-    background: none;
-    padding: 0;
-    max-width: 90vw;
-    max-height: 90vh;
-    cursor: zoom-out;
-  }
-
-  .sift-lightbox::backdrop {
-    background: rgba(0, 0, 0, 0.7);
-  }
-
-  .sift-lightbox img {
-    max-width: 90vw;
-    max-height: 90vh;
-    border-radius: var(--radius-lg);
-    object-fit: contain;
-  }
-
-  /* Version badge & changelog */
-  .sift-version-wrap {
-    position: relative;
-  }
-
-  .sift-version-btn {
-    font-family: inherit;
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 0.1em 0.4em;
-    cursor: pointer;
-    transition: border-color 0.15s, color 0.15s;
-    white-space: nowrap;
-  }
-
-  .sift-version-btn:hover {
-    border-color: rgba(0, 0, 0, 0.25);
-    color: var(--text);
-  }
-
-  .sift-changelog-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 99;
-  }
-
-  .sift-changelog-popup {
-    position: absolute;
-    top: calc(100% + 0.4rem);
-    left: 0;
-    z-index: 100;
-    width: min(22rem, calc(100vw - 2rem));
-    max-height: 28rem;
-    overflow-y: auto;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-    padding: 0.75rem;
-  }
-
-  @media (max-width: 52rem) {
-    .sift-changelog-popup {
-      position: fixed;
-      top: auto;
-      right: 1rem;
-      bottom: 1rem;
-      left: 1rem;
-      width: auto;
-      max-height: 70vh;
-    }
-  }
-
-  .sift-changelog-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-  }
-
-  .sift-changelog-title {
-    font-size: var(--fs-xs);
     font-weight: 600;
     color: var(--text);
+    margin-bottom: 0.2rem;
   }
 
-  .sift-changelog-close {
-    font-family: inherit;
-    font-size: var(--fs-md);
-    color: var(--text-light);
-    background: none;
-    border: none;
-    cursor: pointer;
-    line-height: 1;
-    padding: 0 0.15rem;
-  }
-
-  .sift-changelog-close:hover {
-    color: var(--text);
-  }
-
-  .sift-changelog-popup :global(.sift-changelog-release) {
-    margin-bottom: 0.6rem;
-  }
-
-  .sift-changelog-popup :global(.sift-changelog-release:last-child) {
-    margin-bottom: 0;
-  }
-
-  .sift-changelog-popup :global(.sift-changelog-version) {
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    color: var(--text);
-  }
-
-  .sift-changelog-popup :global(.sift-changelog-why) {
+  .sift-changelog-why {
     font-size: var(--fs-xs);
     color: var(--text-light);
     font-style: italic;
-    margin: 0.15rem 0 0.2rem;
-    line-height: 1.4;
-  }
-
-  .sift-changelog-popup :global(.sift-changelog-list) {
-    margin: 0.2rem 0 0 1rem;
-    padding: 0;
-    font-size: var(--fs-xs);
-    color: var(--text-light);
+    margin: 0.15rem 0 0.4rem;
     line-height: 1.5;
   }
 
-  .sift-changelog-popup :global(.sift-changelog-list li) {
-    margin-bottom: 0.1rem;
-  }
-
-  /* Feedback button & popup */
-  .sift-feedback-wrap {
-    position: relative;
-    display: inline-block;
-  }
-
-  .sift-feedback-btn {
-    font-family: inherit;
+  .sift-changelog-list {
+    margin: 0.2rem 0 0 1.2rem;
+    padding: 0;
     font-size: var(--fs-xs);
     color: var(--text-light);
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 0.1em 0.4em;
-    cursor: pointer;
-    transition: border-color 0.15s, color 0.15s;
-    white-space: nowrap;
+    line-height: 1.6;
   }
 
-  .sift-feedback-btn:hover {
-    border-color: rgba(0, 0, 0, 0.25);
-    color: var(--text);
+  .sift-changelog-list li {
+    margin-bottom: 0.15rem;
   }
 
-  .sift-feedback-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 99;
-  }
-
-  .sift-feedback-popup {
-    position: absolute;
-    top: calc(100% + 0.4rem);
-    right: 0;
-    z-index: 100;
-    width: min(18rem, calc(100vw - 2rem));
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-    padding: 0.75rem;
-  }
-
-  @media (max-width: 52rem) {
-    .sift-feedback-popup {
-      position: fixed;
-      top: auto;
-      right: 1rem;
-      bottom: 1rem;
-      left: 1rem;
-      width: auto;
-    }
-  }
-
-  .sift-feedback-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-  }
-
-  .sift-feedback-title {
-    font-size: var(--fs-xs);
-    font-weight: 500;
-    color: var(--text);
-  }
-
-  .sift-feedback-close {
-    font-family: inherit;
-    font-size: var(--fs-md);
-    background: none;
-    border: none;
-    color: var(--text-light);
-    cursor: pointer;
-    padding: 0 0.2em;
-    line-height: 1;
-  }
-
-  .sift-feedback-close:hover {
-    color: var(--text);
+  /* Feedback (inline) */
+  .sift-feedback-form {
+    margin-top: var(--space-sm);
+    max-width: 32rem;
   }
 
   .sift-feedback-textarea {
     width: 100%;
     font-family: inherit;
-    font-size: var(--fs-xs);
+    font-size: var(--fs-sm);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    padding: 0.5rem;
+    padding: 0.6rem;
     resize: vertical;
     background: var(--bg);
     color: var(--text);
@@ -849,23 +319,24 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   .sift-feedback-textarea:focus {
     border-color: var(--text-light);
+    outline: none;
   }
 
   .sift-feedback-submit {
     margin-top: 0.5rem;
     font-family: inherit;
-    font-size: var(--fs-xs);
+    font-size: var(--fs-sm);
     color: var(--text);
     background: none;
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    padding: 0.3em 0.8em;
+    padding: 0.4em 1em;
     cursor: pointer;
     transition: border-color 0.15s;
   }
 
   .sift-feedback-submit:hover {
-    border-color: rgba(0, 0, 0, 0.25);
+    border-color: var(--text-light);
   }
 
   .sift-feedback-submit:disabled {
@@ -875,13 +346,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   .sift-feedback-success {
     color: var(--color-ds-mid);
-    font-size: var(--fs-xs);
+    font-size: var(--fs-sm);
     margin: 0.5rem 0 0;
   }
 
   .sift-feedback-error {
     color: var(--color-pm);
-    font-size: var(--fs-xs);
+    font-size: var(--fs-sm);
     margin: 0.4rem 0 0;
   }
 </style>
