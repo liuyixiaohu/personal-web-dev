@@ -9,7 +9,7 @@
   } from './eventUtils';
   import EventFilters from './EventFilters.svelte';
   import EventCard from './EventCard.svelte';
-  import Popup from './Popup.svelte';
+  import Popup from '../Popup.svelte';
   import { track } from '../../utils/analytics';
 
   // --- State ---
