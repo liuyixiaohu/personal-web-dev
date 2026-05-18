@@ -49,26 +49,35 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:description" content={socialDescription} />
     <meta name="twitter:image" content="https://kunli.co/og-image.png" />
 
-    <!-- Fonts -->
+    <!-- Fonts: LXGW WenKai Light/Regular/Bold under unified family name -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
     <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/lxgwwenkai-regular/result.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-webfont/1.7.0/lxgwwenkai-light.css"
       rel="stylesheet"
       media="print"
       onload="this.media='all'"
-      integrity="sha384-v5ZbZkCab5P+xYwso/Wxd1zrfNqz5wGRZ0+1zWteIaYMCPlCFcZFFXQnaelYGJW5"
+      integrity="sha384-IlZgqBVXc/53BxMrn7k6DQ0Y62xboZTo7XXCh1gyLw39DKISAqHavnU1xjsyg8ox"
       crossorigin="anonymous"
     />
-    <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/lxgwwenkai-regular/result.css" rel="stylesheet" /></noscript>
+    <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-webfont/1.7.0/lxgwwenkai-light.css" rel="stylesheet" /></noscript>
     <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/lxgwwenkai-medium/result.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-webfont/1.7.0/lxgwwenkai-regular.css"
       rel="stylesheet"
       media="print"
       onload="this.media='all'"
-      integrity="sha384-j6bq+rD39UzfKEHlaNwaxGWpsMRor/oHSb5rwO8+Ah4n3YWmyOLMMRpSxgk7lpw7"
+      integrity="sha384-usAwS4GuP3EymPRjfL7yc7ZFZZl45NeR7Lbl/krLMVINoRHVKYgQG/6WTGXNyNOH"
       crossorigin="anonymous"
     />
-    <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-web/1.520.0/lxgwwenkai-medium/result.css" rel="stylesheet" /></noscript>
+    <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-webfont/1.7.0/lxgwwenkai-regular.css" rel="stylesheet" /></noscript>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-webfont/1.7.0/lxgwwenkai-bold.css"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+      integrity="sha384-wvyC9BCHtJEZ8WmLkhXV9p66P71K/TY9GjKAotcuTWdws6Bxynnh1tNPyc5+N9yA"
+      crossorigin="anonymous"
+    />
+    <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-webfont/1.7.0/lxgwwenkai-bold.css" rel="stylesheet" /></noscript>
 
     <ClientRouter />
     <title>{title}</title>
