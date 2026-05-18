@@ -11,7 +11,6 @@
   import EventCard from './EventCard.svelte';
   import Popup from './Popup.svelte';
   import { track } from '../../utils/analytics';
-  import { downloadJSON, readJSONFile, todayStamp, asArray, asString } from '../../utils/filterIO';
 
   // --- State ---
   let events = $state<LumaEvent[]>([]);
@@ -28,7 +27,6 @@
   let excludeKeywords = $state<string[]>(loadPref<string[]>(`${PFX}.exclude`, []));
 
   let whyOpen = $state(false);
-  let ioError = $state('');
 
   // --- Persist filter state to localStorage ---
   $effect(() => {
@@ -146,39 +144,6 @@
     pushFilter('day', day);
   }
 
-  function exportFilters() {
-    downloadJSON(`events-filter-${todayStamp()}.json`, {
-      _v: 1,
-      page: 'events',
-      exportedAt: new Date().toISOString(),
-      filters: {
-        locations: [...selectedLocations],
-        days: [...selectedDays],
-        searchQuery,
-        excludeKeywords,
-      },
-    });
-    track('filter_export', { page: 'events' });
-  }
-
-  async function importFilters(file: File) {
-    ioError = '';
-    try {
-      const data: any = await readJSONFile(file);
-      if (!data || typeof data !== 'object') throw new Error('Invalid filter file.');
-      if (data.page && data.page !== 'events') throw new Error('This file is for a different page.');
-      if (data._v !== 1) console.warn('[events] unknown filter version, best-effort import');
-      const f = data.filters ?? {};
-      selectedLocations = new Set(asArray<string>(f.locations));
-      selectedDays = new Set(asArray<unknown>(f.days).map(Number).filter(n => !Number.isNaN(n)));
-      searchQuery = asString(f.searchQuery);
-      excludeKeywords = asArray<string>(f.excludeKeywords);
-      track('filter_import', { page: 'events', success: true });
-    } catch (e) {
-      ioError = e instanceof Error ? e.message : 'Import failed.';
-      track('filter_import', { page: 'events', success: false });
-    }
-  }
 </script>
 
 <div class="event-list">
@@ -233,9 +198,6 @@
       onSearchChange={(q) => { searchQuery = q; clearTimeout(searchDebounceTimer); if (q.trim()) searchDebounceTimer = setTimeout(() => pushFilter('search', q), 800); }}
       onAddExclude={(kw) => { excludeKeywords = [...excludeKeywords, kw.toLowerCase().trim()]; pushFilter('exclude', kw); }}
       onRemoveExclude={(kw) => { excludeKeywords = excludeKeywords.filter(k => k !== kw); pushFilter('remove_exclude', kw); }}
-      onExport={exportFilters}
-      onImport={importFilters}
-      {ioError}
     />
 
     {#if isStale}

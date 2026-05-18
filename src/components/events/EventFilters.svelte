@@ -1,5 +1,6 @@
 <script lang="ts">
   import '../../styles/filters.css';
+  import Popup from './Popup.svelte';
 
   interface Props {
     allLocations: string[];
@@ -13,9 +14,6 @@
     onSearchChange: (query: string) => void;
     onAddExclude: (keyword: string) => void;
     onRemoveExclude: (keyword: string) => void;
-    onExport: () => void;
-    onImport: (file: File) => void;
-    ioError: string;
   }
 
   let {
@@ -30,12 +28,7 @@
     onSearchChange,
     onAddExclude,
     onRemoveExclude,
-    onExport,
-    onImport,
-    ioError,
   }: Props = $props();
-
-  let fileInput: HTMLInputElement | undefined = $state();
 
   const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as const;
 
@@ -51,6 +44,7 @@
   });
 
   let excludeInput = $state('');
+  let excludePopupOpen = $state(false);
 
   function handleExcludeKeydown(e: KeyboardEvent) {
     if (e.key === 'Enter' && excludeInput.trim()) {
@@ -106,55 +100,45 @@
     </div>
   </div>
 
-  <!-- Filter actions: export / import -->
-  <div class="filter-actions">
-    <button class="filter-io-btn" onclick={onExport}>Export</button>
-    <button class="filter-io-btn" onclick={() => fileInput?.click()}>Import</button>
-    <input
-      bind:this={fileInput}
-      type="file"
-      accept=".json,application/json"
-      style="display:none"
-      onchange={(e) => {
-        const f = (e.target as HTMLInputElement).files?.[0];
-        if (f) onImport(f);
-        (e.target as HTMLInputElement).value = '';
-      }}
-    />
-  </div>
-  {#if ioError}
-    <div class="filter-io-error">{ioError}</div>
-  {/if}
+  <!-- Search + Exclude (paired on desktop, stacked on mobile) -->
+  <div class="filter-row-pair">
+    <div class="filter-row filter-row--stacked">
+      <span class="filter-label">{'Search Events or Hosts'}</span>
+      <input
+        class="search-input"
+        type="text"
+        placeholder={'e.g. hackathon, google, etc'}
+        value={searchQuery}
+        oninput={(e) => onSearchChange((e.target as HTMLInputElement).value)}
+      />
+    </div>
 
-  <div class="filter-row filter-row--stacked">
-    <span class="filter-label">{'Search Events or Hosts'}</span>
-    <input
-      class="search-input"
-      type="text"
-      placeholder={'e.g. hackathon, google, etc'}
-      value={searchQuery}
-      oninput={(e) => onSearchChange((e.target as HTMLInputElement).value)}
-    />
-  </div>
-
-  <div class="filter-row filter-row--stacked">
-    <span class="filter-label">{'Exclude the event including...'}</span>
-    <input
-      class="search-input"
-      type="text"
-      placeholder={'in case you don\'t enjoy happy hour'}
-      bind:value={excludeInput}
-      onkeydown={handleExcludeKeydown}
-    />
-    {#if excludeKeywords.length > 0}
-      <div class="exclude-chips">
-        {#each excludeKeywords as kw}
-          <span class="exclude-chip">
-            {kw}
-            <button class="exclude-chip-remove" onclick={() => onRemoveExclude(kw)}>&times;</button>
-          </span>
-        {/each}
-      </div>
-    {/if}
+    <div class="filter-row filter-row--stacked">
+      <span class="filter-label">{'Exclude the event including...'}</span>
+      <input
+        class="search-input"
+        type="text"
+        placeholder={'in case you don\'t enjoy happy hour'}
+        bind:value={excludeInput}
+        onkeydown={handleExcludeKeydown}
+      />
+      {#if excludeKeywords.length > 0}
+        <span class="excluded-wrap">
+          <button class="excluded-btn" onclick={() => excludePopupOpen = !excludePopupOpen}>
+            {excludeKeywords.length} excluded
+          </button>
+          <Popup open={excludePopupOpen} title="Excluded keywords" onClose={() => excludePopupOpen = false}>
+            <div class="exclude-chips">
+              {#each excludeKeywords as kw}
+                <span class="exclude-chip">
+                  {kw}
+                  <button class="exclude-chip-remove" onclick={() => onRemoveExclude(kw)}>&times;</button>
+                </span>
+              {/each}
+            </div>
+          </Popup>
+        </span>
+      {/if}
+    </div>
   </div>
 </div>
