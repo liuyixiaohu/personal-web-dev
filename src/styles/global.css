@@ -26,7 +26,6 @@
   --font-body: 'LXGW WenKai', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --fs-base: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);  /* root font-size */
   --fs-xs: 0.75rem;    /* small : labels, tags, captions, secondary text */
-  --fs-sm: 0.8rem;     /* 1.25⁻¹ : secondary text, descriptions, captions */
   --fs-md: 1.25rem;    /* 1.25¹  : subheadings, nav titles */
   --fs-lg: clamp(1.4375rem, 1.39rem + 0.26vw, 1.563rem);  /* 1.25² : 23px→31px */
   --fs-xl: clamp(1.75rem, 1.7rem + 0.38vw, 1.953rem);    /* 1.25³ : 28px→39px */
