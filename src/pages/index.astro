@@ -14,9 +14,11 @@ import HintTooltip from '../components/HintTooltip.astro';
         </div>
 
         <nav class="home-nav">
-          <a href="/life-journey" class="nav-link nav-link--journey">Journey</a>
-          <span class="nav-dot">&middot;</span>
-          <a href="/touch-fish" class="nav-link nav-link--fish">Touch Fish!</a>
+          <a href="/life-journey" class="nav-primary nav-link--journey">Journey</a>
+
+          <div class="nav-secondary">
+            <a href="/touch-fish" class="nav-link nav-link--fish">Touch Fish!</a>
+          </div>
         </nav>
       </div>
     </section>
@@ -27,7 +29,7 @@ import HintTooltip from '../components/HintTooltip.astro';
 <script>
   import { track } from '../utils/analytics';
 
-  document.querySelectorAll('.nav-link').forEach((el) => {
+  document.querySelectorAll('.nav-primary, .nav-link').forEach((el) => {
     el.addEventListener('click', () => {
       const slug = (el as HTMLAnchorElement).getAttribute('href')?.replace(/^\//, '') || '';
       track('nav_click', { destination: slug });
@@ -66,16 +68,13 @@ import HintTooltip from '../components/HintTooltip.astro';
   }
 
   .home-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
     max-width: 40rem;
     width: 100%;
-  }
-
-  .home-tagline {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    gap: var(--space-xl);
   }
 
   .greeting-quote {
@@ -86,12 +85,27 @@ import HintTooltip from '../components/HintTooltip.astro';
   }
 
   .home-nav {
-    position: absolute;
-    top: 64%;
-    left: 0;
-    right: 0;
-    transform: translateY(-50%);
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .nav-primary {
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    line-height: 1.3;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .nav-primary:hover {
+    opacity: 0.6;
+  }
+
+  .nav-secondary {
+    display: flex;
+    flex-wrap: wrap;
     align-items: baseline;
     justify-content: center;
     gap: 1.2em;
