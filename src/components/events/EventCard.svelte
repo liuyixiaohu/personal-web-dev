@@ -51,8 +51,8 @@
   }
 
   .event-name {
-    font-size: var(--fs-base);
-    font-weight: 500;
+    font-size: var(--fs-md);
+    font-weight: 700;
     color: var(--text);
     text-decoration: none;
     line-height: 1.4;
@@ -64,6 +64,7 @@
 
   .event-price {
     font-size: var(--fs-xs);
+    line-height: 1.5;
     color: var(--text-light);
     white-space: nowrap;
     flex-shrink: 0;

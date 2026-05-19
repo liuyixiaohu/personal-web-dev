@@ -26,6 +26,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     padding: var(--content-padding);
   }
 
+  /* Decorative hero numeral — outside the type scale by design */
   h1 {
     font-family: var(--font-body);
     font-size: clamp(4rem, 10vw, 8rem);
@@ -37,14 +38,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   p {
     font-family: var(--font-body);
-    font-size: var(--fs-md);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.6;
     color: var(--text-light);
     margin: var(--space-sm) 0 var(--space-md);
   }
 
   a {
     font-family: var(--font-body);
-    font-size: var(--fs-base);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.6;
     color: var(--text);
     text-decoration: underline;
     text-underline-offset: 0.25em;

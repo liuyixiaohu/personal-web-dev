@@ -271,7 +271,8 @@
 
   .event-title {
     font-size: var(--fs-lg);
-    font-weight: 500;
+    font-weight: 700;
+    line-height: 1.3;
     color: var(--text);
     margin-bottom: var(--space-xs);
   }
@@ -285,7 +286,7 @@
 
   .newly-highlight {
     color: var(--color-pm);
-    font-weight: 500;
+    font-weight: 700;
   }
 
   .why-wrap {
@@ -296,6 +297,7 @@
   .why-btn {
     font-family: inherit;
     font-size: var(--fs-xs);
+    line-height: 1.5;
     color: var(--text-light);
     background: none;
     border: 1px solid var(--border);
@@ -325,6 +327,7 @@
 
   .event-meta-bar {
     font-size: var(--fs-xs);
+    line-height: 1.5;
     color: var(--text-light);
     margin-bottom: var(--space-sm);
   }
@@ -336,7 +339,8 @@
     gap: var(--space-sm);
     font-size: var(--fs-xs);
     color: var(--text);
-    font-weight: 500;
+    font-weight: 700;
+    line-height: 1.5;
     margin-top: var(--space-sm);
     margin-bottom: var(--space-xs);
     padding-bottom: var(--space-xs);
@@ -345,7 +349,10 @@
 
   .date-group-header {
     font-size: var(--fs-xs);
-    font-weight: 500;
+    font-weight: 700;
+    line-height: 1.5;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     color: var(--text-light);
     margin: var(--space-sm) 0 0.2rem;
     padding-bottom: 0.2rem;
@@ -355,7 +362,7 @@
   .event-status {
     font-size: var(--fs-xs);
     color: var(--text-light);
-    font-style: italic;
+    line-height: 1.5;
     text-align: center;
     padding: var(--space-xl) 0;
   }
@@ -372,11 +379,12 @@
   .event-empty p {
     font-size: var(--fs-xs);
     color: var(--text-light);
-    font-style: italic;
+    line-height: 1.5;
   }
 
   .event-meta {
     font-size: var(--fs-xs);
+    line-height: 1.5;
     color: var(--text-light);
     margin-top: var(--space-xs);
   }
@@ -384,7 +392,7 @@
   .event-stale {
     font-size: var(--fs-xs);
     color: var(--color-pm);
-    font-style: italic;
+    line-height: 1.5;
     margin-bottom: var(--space-sm);
     padding: var(--space-xs) var(--space-sm);
     background: rgba(240, 215, 215, 0.2);
@@ -422,7 +430,8 @@
 
   .privacy-heading {
     font-size: var(--fs-lg);
-    font-weight: 500;
+    font-weight: 700;
+    line-height: 1.3;
     margin-bottom: var(--space-sm);
   }
 
@@ -435,8 +444,9 @@
   .privacy-link {
     color: var(--color-rose);
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 700;
     font-size: var(--fs-xs);
+    line-height: 1.5;
   }
 
   .privacy-link:hover {
