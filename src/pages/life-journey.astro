@@ -137,6 +137,7 @@ const LABEL_POS: Record<string, { dx: number; dy: number; anchor: string }> = {
     font-size: var(--fs-md);
     color: var(--text-light);
     font-weight: 700;
+    line-height: 1.4;
     padding-right: var(--space-md);
   }
 
@@ -194,7 +195,7 @@ const LABEL_POS: Record<string, { dx: number; dy: number; anchor: string }> = {
   }
 
   .modal-location { color: var(--text-light); }
-  .modal-city { color: var(--text); font-weight: 500; }
+  .modal-city { color: var(--text); font-weight: 700; }
 
   .modal-close {
     background: none;
@@ -229,11 +230,11 @@ const LABEL_POS: Record<string, { dx: number; dy: number; anchor: string }> = {
 
   .modal-body {
     color: var(--text-light);
-    line-height: 1.7;
+    line-height: 1.6;
   }
 
   .modal-body :global(strong) {
-    font-weight: 500;
+    font-weight: 700;
     color: var(--text);
   }
 
