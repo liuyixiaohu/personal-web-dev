@@ -13,8 +13,8 @@ GitHub Actions cron), and a fully Cloudflare-native deploy (Pages + Functions
 
 The site is split into two repos:
 
-- **This repo** is the public site (homepage, brand showcase, life journey
-  map, events feed, Sift product page).
+- **This repo** is the public site (homepage, life journey map, events
+  feed, Sift product page).
 - A separate private repo serves [workbench.kunli.co](https://workbench.kunli.co),
   a personal workbench gated by Cloudflare Access.
 
@@ -56,7 +56,7 @@ src/
 scripts/          Daily fetch pipelines (Luma events, MCP connectors)
 functions/        Cloudflare Pages Functions (KV feedback inbox)
 .github/workflows/  Cron jobs
-docs/             Brand guidelines (live showcase at /brand)
+docs/             Brand guidelines
 ```
 
 ## Dev
@@ -76,8 +76,7 @@ npm run seo:resubmit    # request reindex of new/updated URLs
 
 ## Brand
 
-Full design system documented in [`docs/brand-guidelines.md`](docs/brand-guidelines.md)
-and showcased live at [kunli.co/brand](https://kunli.co/brand).
+Full design system documented in [`docs/brand-guidelines.md`](docs/brand-guidelines.md).
 
 ## License
 
