@@ -1,4 +1,5 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { pins } from '../components/globe/pins';
 
@@ -10,6 +11,19 @@ const LABEL_POS: Record<string, { dx: number; dy: number; anchor: string }> = {
   fairfield: { dx: 16, dy: -16, anchor: 'start' },
   berkeley:  { dx: -16, dy: 30,  anchor: 'end' },
 };
+
+const journeyEntries = await getCollection('journey');
+const journeyById = new Map(journeyEntries.map((entry) => [entry.id, entry]));
+const journeyPins = pins.map((pin) => {
+  const entry = journeyById.get(pin.id);
+  if (!entry) throw new Error(`Missing Journey MDX entry for pin "${pin.id}"`);
+  return {
+    ...pin,
+    title: entry.data.title,
+    summary: entry.data.summary,
+    href: `/life-journey/${pin.id}/`,
+  };
+});
 ---
 
 <BaseLayout title="Life Journey" description="Six places I've called home." hideFooter>
@@ -31,56 +45,131 @@ const LABEL_POS: Record<string, { dx: number; dy: number; anchor: string }> = {
       </div>
     </div>
 
-    <div class="modal-overlay" id="story-modal" aria-hidden="true">
-      <div class="modal-card" role="dialog" aria-modal="true">
-        <div class="modal-header">
-          <div class="modal-location">
-            <span class="modal-city" id="modal-city"></span>
-            <span class="modal-sep">,&nbsp;</span>
-            <span class="modal-country" id="modal-country"></span>
-          </div>
-          <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
-        </div>
-        <div class="modal-divider"></div>
-        <h2 class="modal-title" id="modal-title"></h2>
-        <div class="modal-body" id="modal-body"></div>
-      </div>
+    <div class="journey-tooltip" id="journey-tooltip" aria-hidden="true">
+      <span class="tooltip-title" id="tooltip-title"></span>
+      <span class="tooltip-summary" id="tooltip-summary"></span>
     </div>
   </main>
 </BaseLayout>
 
-<script is:inline define:vars={{ pins, LABEL_POS }}>
-  window.__journeyData = { pins, LABEL_POS };
+<script is:inline define:vars={{ journeyPins, LABEL_POS }}>
+  window.__journeyData = { pins: journeyPins, LABEL_POS };
 </script>
 
 <script>
   import { buildSVG } from '../utils/journey/buildSVG';
-  import { initModal } from '../utils/journey/modal';
+  import { track } from '../utils/analytics';
+
+  type JourneyData = {
+    pins: Array<{
+      id: string;
+      lat: number;
+      lng: number;
+      city: string;
+      country: string;
+      color: string;
+      year: number;
+      title: string;
+      summary: string;
+      href: string;
+    }>;
+    LABEL_POS: Record<string, { dx: number; dy: number; anchor: string }>;
+  };
+
+  const globalWindow = window as Window & {
+    __journeyData?: JourneyData;
+    __journeyAfterSwapBound?: boolean;
+  };
+
+  function getTooltip() {
+    const tooltip = document.getElementById('journey-tooltip');
+    const title = document.getElementById('tooltip-title');
+    const summary = document.getElementById('tooltip-summary');
+    if (!tooltip || !title || !summary) return null;
+    return { tooltip, title, summary };
+  }
+
+  function placeTooltip(x: number, y: number) {
+    const parts = getTooltip();
+    if (!parts) return;
+    const { tooltip } = parts;
+    const margin = 16;
+    const nextLeft = x + margin;
+    const nextTop = y + margin;
+    const maxLeft = window.innerWidth - tooltip.offsetWidth - margin;
+    const maxTop = window.innerHeight - tooltip.offsetHeight - margin;
+    tooltip.style.left = `${Math.max(margin, Math.min(nextLeft, maxLeft))}px`;
+    tooltip.style.top = `${Math.max(margin, Math.min(nextTop, maxTop))}px`;
+  }
+
+  function placeTooltipNearElement(element: Element) {
+    const rect = element.getBoundingClientRect();
+    placeTooltip(rect.left + rect.width / 2, rect.top + rect.height / 2);
+  }
+
+  function showTooltip(pin: JourneyData['pins'][number], event: MouseEvent | FocusEvent) {
+    const parts = getTooltip();
+    if (!parts) return;
+    parts.title.textContent = `${pin.city} · ${pin.year}`;
+    parts.summary.textContent = pin.summary;
+    parts.tooltip.classList.add('visible');
+    parts.tooltip.setAttribute('aria-hidden', 'false');
+
+    if (event instanceof MouseEvent) {
+      placeTooltip(event.clientX, event.clientY);
+      return;
+    }
+
+    if (event.currentTarget instanceof Element) {
+      placeTooltipNearElement(event.currentTarget);
+    }
+  }
+
+  function hideTooltip() {
+    const parts = getTooltip();
+    if (!parts) return;
+    parts.tooltip.classList.remove('visible');
+    parts.tooltip.setAttribute('aria-hidden', 'true');
+  }
+
+  function openPin(pin: JourneyData['pins'][number]) {
+    track('map_pin_click', { pin_city: pin.city, pin_id: pin.id });
+    window.location.assign(pin.href);
+  }
 
   function initJourney() {
-    const data = (window as any).__journeyData;
+    const data = globalWindow.__journeyData;
     if (!data) return;
     const { pins, LABEL_POS } = data;
-
-    const { openModal } = initModal();
 
     fetch('/data/journey-countries.json')
       .then(res => res.json())
       .then((geo: any) => {
-        const chinaSvg = document.getElementById('china-svg') as unknown as SVGSVGElement;
-        const usaSvg = document.getElementById('usa-svg') as unknown as SVGSVGElement;
-        const chinaPins = pins.filter((p: any) => p.country.includes('China'));
-        const usaPins = pins.filter((p: any) => p.country.includes('USA'));
+        const chinaSvg = document.getElementById('china-svg') as unknown as SVGSVGElement | null;
+        const usaSvg = document.getElementById('usa-svg') as unknown as SVGSVGElement | null;
+        if (!chinaSvg || !usaSvg) return;
 
-        buildSVG(chinaSvg, geo.china, geo.provinces, chinaPins, 'clip-china', 80, LABEL_POS, openModal);
-        buildSVG(usaSvg, geo.usa, geo.provinces, usaPins, 'clip-usa', 80, LABEL_POS, openModal);
+        const chinaPins = pins.filter((p) => p.country.includes('China'));
+        const usaPins = pins.filter((p) => p.country.includes('USA'));
+        const handlers = {
+          onPinActivate: openPin,
+          onPinEnter: showTooltip,
+          onPinMove: showTooltip,
+          onPinLeave: hideTooltip,
+        };
+
+        buildSVG(chinaSvg, geo.china, geo.provinces, chinaPins, 'clip-china', 80, LABEL_POS, handlers);
+        buildSVG(usaSvg, geo.usa, geo.provinces, usaPins, 'clip-usa', 80, LABEL_POS, handlers);
 
         document.getElementById('country-pair')?.classList.add('loaded');
       });
   }
 
   initJourney();
-  document.addEventListener('astro:after-swap', initJourney);
+  if (!globalWindow.__journeyAfterSwapBound) {
+    document.addEventListener('astro:after-swap', initJourney);
+    globalWindow.__journeyAfterSwapBound = true;
+  }
 </script>
 
 <style>
@@ -148,121 +237,42 @@ const LABEL_POS: Record<string, { dx: number; dy: number; anchor: string }> = {
     overflow: visible;
   }
 
-  .modal-overlay {
+  .journey-tooltip {
     position: fixed;
-    inset: 0;
     z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(250, 247, 242, 0.45);
-    padding: 1.5rem;
+    max-width: min(18rem, calc(100vw - 2rem));
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.78);
+    color: var(--text-light);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(16px) saturate(1.2);
+    -webkit-backdrop-filter: blur(16px) saturate(1.2);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.2s ease;
+    transform: translateY(0.25rem);
+    transition: opacity 0.15s ease, transform 0.15s ease;
   }
 
-  .modal-overlay.visible {
+  .journey-tooltip.visible {
     opacity: 1;
-    pointer-events: auto;
-  }
-
-  .modal-card {
-    background: rgba(255, 255, 255, 0.55);
-    backdrop-filter: blur(20px) saturate(1.4);
-    -webkit-backdrop-filter: blur(20px) saturate(1.4);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: var(--radius-lg);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
-    max-width: 42rem;
-    max-height: 80vh;
-    overflow-y: auto;
-    width: 100%;
-    padding: clamp(1.5rem, 3vw, 2.5rem);
-    transform: translateY(20px);
-    transition: transform 0.4s ease;
-  }
-
-  .modal-overlay.visible .modal-card {
     transform: translateY(0);
   }
 
-  .modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.75rem;
-  }
-
-  .modal-location { color: var(--text-light); }
-  .modal-city { color: var(--text); font-weight: 700; }
-
-  .modal-close {
-    background: none;
-    border: none;
-    font-size: var(--fs-lg);
-    color: var(--text-light);
-    cursor: pointer;
-    padding: 0.2rem 0.5rem;
-    line-height: 1;
-    border-radius: var(--radius-md);
-    transition: all 0.2s ease;
-  }
-
-  .modal-close:hover {
-    color: var(--text);
-    background: rgba(0, 0, 0, 0.04);
-  }
-
-  .modal-divider {
-    height: 1px;
-    background: var(--border);
-    margin-bottom: 1.25rem;
-  }
-
-  .modal-title {
-    font-size: var(--fs-lg);
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 1rem;
-    line-height: 1.3;
-  }
-
-  .modal-body {
-    color: var(--text-light);
-    line-height: 1.6;
-  }
-
-  .modal-body :global(strong) {
-    font-weight: 700;
-    color: var(--text);
-  }
-
-  .modal-body :global(p) {
-    margin-bottom: 0.75em;
-  }
-
-  .modal-body :global(p:last-child) {
-    margin-bottom: 0;
-  }
-
-  .modal-body :global(a) {
-    color: var(--text);
-    text-decoration: underline;
-    text-decoration-color: var(--border);
-    text-underline-offset: 2px;
-    transition: text-decoration-color 0.15s ease;
-  }
-
-  .modal-body :global(a:hover) {
-    text-decoration-color: var(--text);
-  }
-
-  .modal-body :global(.story-photo) {
+  .tooltip-title {
     display: block;
-    max-width: 100%;
-    border-radius: var(--radius-lg);
-    margin: var(--space-sm) 0;
+    color: var(--text);
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 0.35rem;
+  }
+
+  .tooltip-summary {
+    display: block;
+    font-size: var(--fs-xs);
+    line-height: 1.55;
   }
 </style>
 
@@ -280,6 +290,10 @@ const LABEL_POS: Record<string, { dx: number; dy: number; anchor: string }> = {
     opacity: 0.5;
   }
 
+  .pin-marker {
+    cursor: pointer;
+  }
+
   .pin-dot {
     cursor: pointer;
   }
@@ -293,7 +307,8 @@ const LABEL_POS: Record<string, { dx: number; dy: number; anchor: string }> = {
     transition: fill 0.15s ease;
   }
 
-  .map-label:hover {
+  .pin-marker:hover .map-label,
+  .map-label:focus {
     fill: var(--color-rose);
   }
 
