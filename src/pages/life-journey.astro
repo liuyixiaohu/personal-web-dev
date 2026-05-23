@@ -49,7 +49,7 @@ const LABEL_POS: Record<string, { dx: number; dy: number; anchor: string }> = {
   </main>
 </BaseLayout>
 
-<script define:vars={{ pins, LABEL_POS }}>
+<script is:inline define:vars={{ pins, LABEL_POS }}>
   window.__journeyData = { pins, LABEL_POS };
 </script>
 

@@ -323,9 +323,9 @@ try {
 
       // Live version
       try {
-        const { data: liveData } = await tagmanager.accounts.containers.versions.live({
-          parent: ctr.path,
-        });
+        const { data: liveData } = await Promise.resolve(
+          tagmanager.accounts.containers.versions.live({ parent: ctr.path })
+        );
         out.gtm.liveVersion = {
           name: liveData.name,
           versionId: liveData.containerVersionId,
@@ -359,9 +359,9 @@ try {
 
       // Workspaces (count != 1 means unmerged changes)
       try {
-        const { data: wsData } = await tagmanager.accounts.containers.workspaces.list({
-          parent: ctr.path,
-        });
+        const { data: wsData } = await Promise.resolve(
+          tagmanager.accounts.containers.workspaces.list({ parent: ctr.path })
+        );
         out.gtm.workspaces = (wsData.workspace || []).map(w => ({
           name: w.name, description: w.description, workspaceId: w.workspaceId,
         }));
@@ -370,9 +370,9 @@ try {
 
       // Recent versions (header only)
       try {
-        const { data: vh } = await tagmanager.accounts.containers.version_headers.list({
-          parent: ctr.path,
-        });
+        const { data: vh } = await Promise.resolve(
+          tagmanager.accounts.containers.version_headers.list({ parent: ctr.path })
+        );
         out.gtm.versionHeaders = (vh.containerVersionHeader || []).slice(0, 15).map(h => ({
           name: h.name, versionId: h.containerVersionId,
           deleted: h.deleted, numTags: h.numTags, numTriggers: h.numTriggers,
