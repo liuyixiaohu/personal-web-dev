@@ -9,6 +9,7 @@
     "astro": "astro",
     "check": "astro check",
     "test:journey": "node scripts/verify-journey-mdx.mjs",
+    "test:tooltips": "node scripts/verify-tooltip-style.mjs",
     "audit": "node scripts/audit.mjs",
     "seo:diagnose": "node scripts/gsc-diagnose.mjs",
     "seo:resubmit": "node scripts/gsc-reindex.mjs"

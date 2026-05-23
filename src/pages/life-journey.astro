@@ -45,7 +45,7 @@ const journeyPins = pins.map((pin) => {
       </div>
     </div>
 
-    <div class="journey-tooltip" id="journey-tooltip" aria-hidden="true">
+    <div class="journey-tooltip tooltip-card" id="journey-tooltip" aria-hidden="true">
       <span class="tooltip-title" id="tooltip-title"></span>
       <span class="tooltip-summary" id="tooltip-summary"></span>
     </div>
@@ -239,16 +239,7 @@ const journeyPins = pins.map((pin) => {
 
   .journey-tooltip {
     position: fixed;
-    z-index: 1000;
     max-width: min(18rem, calc(100vw - 2rem));
-    padding: 0.75rem 0.9rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    background: rgba(255, 255, 255, 0.78);
-    color: var(--text-light);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
-    backdrop-filter: blur(16px) saturate(1.2);
-    -webkit-backdrop-filter: blur(16px) saturate(1.2);
     opacity: 0;
     pointer-events: none;
     transform: translateY(0.25rem);
@@ -260,20 +251,6 @@ const journeyPins = pins.map((pin) => {
     transform: translateY(0);
   }
 
-  .tooltip-title {
-    display: block;
-    color: var(--text);
-    font-size: var(--fs-sm);
-    font-weight: 700;
-    line-height: 1.35;
-    margin-bottom: 0.35rem;
-  }
-
-  .tooltip-summary {
-    display: block;
-    font-size: var(--fs-xs);
-    line-height: 1.55;
-  }
 </style>
 
 <style is:global>
