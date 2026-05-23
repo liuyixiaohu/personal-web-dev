@@ -7,25 +7,31 @@
 
 <script>
   function setupBackToTop() {
+    const globalWindow = window as Window & { __backToTopController?: AbortController };
+    globalWindow.__backToTopController?.abort();
+
     const btn = document.getElementById('back-to-top');
-    if (!btn) return;
+    if (!(btn instanceof HTMLButtonElement)) return;
+    const button = btn;
 
     const threshold = 400;
+    const controller = new AbortController();
+    globalWindow.__backToTopController = controller;
 
     function onScroll() {
       if (window.scrollY > threshold) {
-        btn.classList.add('visible');
+        button.classList.add('visible');
       } else {
-        btn.classList.remove('visible');
+        button.classList.remove('visible');
       }
     }
 
-    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true, signal: controller.signal });
     onScroll(); // check initial position
 
-    btn.addEventListener('click', () => {
+    button.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    }, { signal: controller.signal });
   }
 
   // Run on initial load and after view transitions
