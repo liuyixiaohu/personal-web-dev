@@ -1,7 +1,7 @@
 // ============================================
 // Pin Data for Kun's Life Journey Globe
 // Each pin marks a place on the globe
-// Titles and stories live in translations.ts (SSOT)
+// Titles, summaries, and stories live in src/content/journey/*.mdx
 // ============================================
 
 export interface PinData {

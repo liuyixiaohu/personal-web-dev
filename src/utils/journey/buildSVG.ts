@@ -2,6 +2,26 @@ import { geoMercator, geoPath } from 'd3-geo';
 
 const NS = 'http://www.w3.org/2000/svg';
 
+export interface JourneyMapPin {
+  id: string;
+  lat: number;
+  lng: number;
+  city: string;
+  country: string;
+  color: string;
+  year: number;
+  title: string;
+  summary: string;
+  href: string;
+}
+
+export interface PinHandlers {
+  onPinActivate?: (pin: JourneyMapPin) => void;
+  onPinEnter?: (pin: JourneyMapPin, event: MouseEvent | FocusEvent) => void;
+  onPinMove?: (pin: JourneyMapPin, event: MouseEvent) => void;
+  onPinLeave?: (pin: JourneyMapPin, event: MouseEvent | FocusEvent) => void;
+}
+
 export function fitAndCrop(
   countryGeo: any,
   padPx: number,
@@ -26,14 +46,15 @@ export function buildSVG(
   svgEl: SVGSVGElement,
   countryGeo: any,
   provGeo: any,
-  countryPins: any[],
+  countryPins: JourneyMapPin[],
   clipId: string,
   padTop: number,
   labelPos: Record<string, { dx: number; dy: number; anchor: string }>,
-  onPinClick?: (pin: any) => void,
+  handlers: PinHandlers = {},
 ) {
   const PAD = 160;
   const { proj, gen, vb } = fitAndCrop(countryGeo, PAD, padTop);
+  svgEl.replaceChildren();
   svgEl.setAttribute('viewBox', vb);
 
   const countryPath = document.createElementNS(NS, 'path');
@@ -62,13 +83,17 @@ export function buildSVG(
     const [x, y] = proj([pin.lng, pin.lat]) ?? [0, 0];
     const lp = labelPos[pin.id] ?? { dx: 14, dy: -8, anchor: 'start' };
 
+    const marker = document.createElementNS(NS, 'g');
+    marker.setAttribute('class', 'pin-marker');
+    marker.setAttribute('data-pin-id', pin.id);
+
     const dot = document.createElementNS(NS, 'circle');
     dot.setAttribute('cx', String(x));
     dot.setAttribute('cy', String(y));
     dot.setAttribute('r', '8');
     dot.setAttribute('fill', pin.color);
     dot.setAttribute('class', 'pin-dot');
-    svgEl.appendChild(dot);
+    marker.appendChild(dot);
 
     const label = document.createElementNS(NS, 'text');
     label.setAttribute('x', String(x + lp.dx));
@@ -78,19 +103,26 @@ export function buildSVG(
     label.setAttribute('data-pin-id', pin.id);
     label.textContent = `${pin.city} · ${pin.year}`;
 
-    if (onPinClick) {
-      label.setAttribute('role', 'button');
+    if (handlers.onPinActivate) {
+      label.setAttribute('role', 'link');
       label.setAttribute('tabindex', '0');
-      label.addEventListener('click', () => onPinClick(pin));
+      label.setAttribute('aria-label', `${pin.city}, ${pin.year}. ${pin.title}`);
+
+      marker.addEventListener('click', () => handlers.onPinActivate?.(pin));
+      marker.addEventListener('mouseenter', (e) => handlers.onPinEnter?.(pin, e));
+      marker.addEventListener('mousemove', (e) => handlers.onPinMove?.(pin, e));
+      marker.addEventListener('mouseleave', (e) => handlers.onPinLeave?.(pin, e));
+      label.addEventListener('focus', (e) => handlers.onPinEnter?.(pin, e));
+      label.addEventListener('blur', (e) => handlers.onPinLeave?.(pin, e));
       label.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          onPinClick(pin);
+          handlers.onPinActivate?.(pin);
         }
       });
-      dot.addEventListener('click', () => onPinClick(pin));
     }
 
-    svgEl.appendChild(label);
+    marker.appendChild(label);
+    svgEl.appendChild(marker);
   }
 }

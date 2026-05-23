@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import mdx from '@astrojs/mdx';
 import svelte from '@astrojs/svelte';
 import sitemap from '@astrojs/sitemap';
 
@@ -52,6 +53,7 @@ export default defineConfig({
     '/map-demo-svg': '/life-journey/',
   },
   integrations: [
+    mdx(),
     svelte(),
     sitemap({
       filter: (page) => !page.includes('/privacy') && !page.includes('/console'),
