@@ -23,28 +23,28 @@ const checks = [
     test: () => tooltipStyles.includes('.tooltip-card'),
   },
   {
-    name: 'popup uses the shared tooltip-card class',
-    test: () => /class="[^"]*\btooltip-card\b[^"]*"/.test(tooltip),
+    name: 'home hint popup does not use the Journey card class',
+    test: () => !/class="[^"]*\btooltip-card\b[^"]*"/.test(tooltip),
   },
   {
-    name: 'popup uses the shared tooltip-summary class',
-    test: () => /class="[^"]*\btooltip-summary\b[^"]*"/.test(tooltip),
+    name: 'home hint popup keeps the lightweight inline popup class',
+    test: () => /class="hint-popup"/.test(tooltip),
   },
   {
     name: 'popup supports keyboard focus as well as hover',
     test: () => tooltip.includes('.hint-trigger:is(:hover, :focus-within) .hint-popup'),
   },
   {
-    name: 'popup uses the Journey card background',
-    test: () => tooltipStyles.includes('background: rgba(255, 255, 255, 0.78);'),
+    name: 'Journey card background is lighter glass',
+    test: () => tooltipStyles.includes('background: rgba(255, 255, 255, 0.58);'),
   },
   {
     name: 'popup width includes padding and border',
     test: () => tooltipStyles.includes('box-sizing: border-box;'),
   },
   {
-    name: 'popup uses the Journey card blur',
-    test: () => tooltipStyles.includes('backdrop-filter: blur(16px) saturate(1.2);'),
+    name: 'Journey card blur is stronger',
+    test: () => tooltipStyles.includes('backdrop-filter: blur(18px) saturate(1.25);'),
   },
   {
     name: 'popup keeps links readable inside the card',
@@ -55,8 +55,8 @@ const checks = [
     test: () => !tooltipStyles.includes('var(--fs-sm)'),
   },
   {
-    name: 'popup has a narrow-screen width cap',
-    test: () => tooltip.includes('@media (max-width: 40rem)') && tooltip.includes('width: min(19rem, calc(100vw - 2rem));'),
+    name: 'home hint popup is not card-width constrained',
+    test: () => !tooltip.includes('width: min(19rem, calc(100vw - 2rem));'),
   },
   {
     name: 'Journey tooltip uses the shared tooltip-card class',

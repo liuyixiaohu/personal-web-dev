@@ -13,7 +13,7 @@
  */
 ---
 
-<span class="hint-trigger" tabindex="0"><slot /><span class="hint-popup tooltip-card tooltip-summary"><slot name="popup" /></span></span>
+<span class="hint-trigger" tabindex="0"><slot /><span class="hint-popup"><slot name="popup" /></span></span>
 
 <style>
   .hint-trigger {
@@ -34,35 +34,49 @@
 
   .hint-popup {
     position: absolute;
-    top: calc(100% + 0.75rem);
-    left: 50%;
-    width: min(26rem, calc(100vw - 2rem));
+    top: calc(100% + 8px);
+    left: 0;
+    width: max-content;
+    max-width: 440px;
+    padding: var(--space-xs) var(--space-sm);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: var(--fs-xs);
+    font-weight: 400;
+    color: var(--gray-subtle);
+    line-height: 1.5;
+    white-space: normal;
+    text-align: left;
     opacity: 0;
     visibility: hidden;
-    transform: translate(-50%, 0.25rem);
-    transition: opacity 0.15s ease, visibility 0.15s ease, transform 0.15s ease;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
     pointer-events: none;
+    z-index: 10;
   }
 
   .hint-popup::before {
     content: '';
     position: absolute;
-    top: -0.75rem;
+    top: -8px;
     left: 0;
     right: 0;
-    height: 0.75rem;
+    height: 8px;
+  }
+
+  .hint-popup :global(a) {
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--text-light);
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
   }
 
   .hint-trigger:is(:hover, :focus-within) .hint-popup {
     opacity: 1;
     visibility: visible;
-    transform: translate(-50%, 0);
     pointer-events: auto;
-  }
-
-  @media (max-width: 40rem) {
-    .hint-popup {
-      width: min(19rem, calc(100vw - 2rem));
-    }
   }
 </style>
