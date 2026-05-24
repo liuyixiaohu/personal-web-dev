@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { siftChangelog } from '../../data/siftChangelog';
+
+const latestSiftVersion = siftChangelog[0]?.version ?? 'v3.1';
 ---
 
 <BaseLayout
@@ -14,7 +16,7 @@ import { siftChangelog } from '../../data/siftChangelog';
     <header class="sift-hero">
       <img src="/images/sift-icon.webp" alt="Sift icon" class="sift-logo" />
       <div class="sift-hero-title">
-        <h1>Sift <span class="sift-version">v2.9</span></h1>
+        <h1>Sift <span class="sift-version">{latestSiftVersion}</span></h1>
         <p class="sift-tagline">Take back a LinkedIn worth your time.</p>
       </div>
       <div class="sift-hero-cta">
