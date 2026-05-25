@@ -235,5 +235,3 @@ Colors: `--bg` (#FAF7F2) background, `--text` (#1F2328) fill.
 
 - Track: content engagement (pin clicks, filter use, language toggle, craft area interest)
 - Don't track: navigation clicks, outbound links, CTA clicks, or anything GA4 already captures via page_view
-- GA4 Property ID: `REDACTED`
-- Service account: `claude-analytics@<gcp-project>.iam.gserviceaccount.com`
