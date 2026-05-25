@@ -9,14 +9,7 @@ Personal site. *Who I am, not what I've done.*
 A hand-built personal site that doubles as a working portfolio of full-stack
 shipping: front-end design (Astro + Svelte), data pipelines (Python +
 GitHub Actions cron), and a fully Cloudflare-native deploy (Pages + Functions
-+ KV + Access).
-
-The site is split into two repos:
-
-- **This repo** is the public site (homepage, life journey map, events
-  feed, Sift product page).
-- A separate private repo serves [workbench.kunli.co](https://workbench.kunli.co),
-  a personal workbench gated by Cloudflare Access.
++ KV).
 
 ## Stack
 

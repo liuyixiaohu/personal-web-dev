@@ -304,11 +304,10 @@ a:hover {
 /* ============================================
    Page Shell : shared layout for centered pages
    ============================================
-   Single-column container used by Console modules
-   and any page that wraps a Svelte component or
-   short content. Deliberately NO min-height — that
-   pushes the footer below the fold when content
-   is short or pre-hydration.
+   Single-column container for pages that wrap a
+   Svelte component or short content. Deliberately
+   NO min-height — that pushes the footer below the
+   fold when content is short or pre-hydration.
    ============================================ */
 .page-shell {
   max-width: 42rem;
