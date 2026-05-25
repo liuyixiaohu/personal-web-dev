@@ -9,6 +9,9 @@ dist/
 # temp directory
 tmp/
 
+# local-only docs (audits, design plans with private context)
+docs/private/
+
 # playwright / test artifacts
 test-results/
 
