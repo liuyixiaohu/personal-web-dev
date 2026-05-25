@@ -68,7 +68,7 @@ Breakpoints unified to **52rem** (tablet) and **32rem** (mobile).
 
 ## Components
 
-The visual primitives are exercised in production on `/events` and `/console/jobs`. Refer to:
+The visual primitives are exercised in production on `/events`. Refer to:
 
 - `src/components/events/EventCard.svelte` — card / list-item pattern
 - `src/components/events/EventFilters.svelte` — pill / filter chip pattern

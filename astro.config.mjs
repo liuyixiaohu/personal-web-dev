@@ -56,7 +56,7 @@ export default defineConfig({
     mdx(),
     svelte(),
     sitemap({
-      filter: (page) => !page.includes('/privacy') && !page.includes('/console'),
+      filter: (page) => !page.includes('/privacy'),
     }),
   ]
 });
