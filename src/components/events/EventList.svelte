@@ -83,8 +83,17 @@
   });
 
   // --- Derived filter options (single-pass) ---
+  // Saved locations whose city has no events in today's data are appended at
+  // the end so the user can still see and click off filters they previously set.
   let locationIndex = $derived(buildLocationIndex(events));
-  let allLocations = $derived(locationIndex.sorted);
+  let allLocations = $derived.by(() => {
+    const base = locationIndex.sorted;
+    const orphans: string[] = [];
+    for (const loc of selectedLocations) {
+      if (!locationIndex.counts.has(loc)) orphans.push(loc);
+    }
+    return orphans.length ? [...base, ...orphans.sort()] : base;
+  });
   let locationCounts = $derived(locationIndex.counts);
 
   // --- Filtering (always sorted earliest-first for date grouping) ---
