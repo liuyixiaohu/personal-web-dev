@@ -64,11 +64,14 @@
              class:filter-pills--collapsed={!locationExpanded}
              bind:this={locationPillsEl}>
           {#each allLocations as loc}
+            {@const count = locationCounts.get(loc) ?? 0}
             <button
               class="pill"
               class:pill--active={selectedLocations.has(loc)}
+              class:pill--empty={count === 0}
+              title={count === 0 ? 'Saved filter — no matches in today\'s events' : undefined}
               onclick={() => onLocationToggle(loc)}
-            >{loc} <span class="pill-count">({locationCounts.get(loc) ?? 0})</span></button>
+            >{loc} <span class="pill-count">({count})</span></button>
           {/each}
         </div>
         {#if locationOverflows || locationExpanded}
