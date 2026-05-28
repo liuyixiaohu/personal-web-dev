@@ -1,0 +1,151 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const entries = (await getCollection('probes', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
+);
+
+const dateFmt = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout
+  title="Probes | Kun Li"
+  description="Data-driven probes into product, growth, and positioning questions."
+>
+  <main class="probes-index">
+    <a href="/" class="back-link">&larr; Home</a>
+
+    <header class="probes-header">
+      <h1>Probes</h1>
+      <p class="probes-lede">
+        Short, data-driven looks at product, growth, and positioning questions. Things I got
+        curious about, then went and checked.
+      </p>
+    </header>
+
+    {entries.length === 0 ? (
+      <p class="probes-empty">Drafting the first one. Check back soon.</p>
+    ) : (
+      <ul class="probes-list">
+        {entries.map((entry) => (
+          <li class="probe-item">
+            <a href={`/probes/${entry.id}/`} class="probe-link">
+              <time class="probe-date" datetime={entry.data.publishedAt.toISOString()}>
+                {dateFmt.format(entry.data.publishedAt)}
+              </time>
+              <h2 class="probe-title">{entry.data.title}</h2>
+              <p class="probe-summary">{entry.data.summary}</p>
+              {entry.data.tags.length > 0 && (
+                <ul class="probe-tags" aria-label="tags">
+                  {entry.data.tags.map((tag) => (
+                    <li>{tag}</li>
+                  ))}
+                </ul>
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </main>
+</BaseLayout>
+
+<style>
+  .probes-index {
+    min-height: 100dvh;
+    max-width: min(44rem, calc(100vw - var(--content-padding) * 2));
+    margin: 0 auto;
+    padding: clamp(4rem, 8vh, 6rem) 0 clamp(4rem, 10vh, 7rem);
+  }
+
+  .probes-header {
+    margin: clamp(2.5rem, 7vh, 5rem) 0 var(--space-xl);
+  }
+
+  .probes-header h1 {
+    color: var(--text);
+    font-size: var(--fs-xl);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .probes-lede {
+    color: var(--text-light);
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .probes-empty {
+    color: var(--text-light);
+    font-size: var(--fs-base);
+    line-height: 1.6;
+  }
+
+  .probes-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .probe-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .probe-link:hover .probe-title {
+    color: var(--color-rose, #c96b6d);
+  }
+
+  .probe-date {
+    display: block;
+    color: var(--text-light);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    margin-bottom: var(--space-xs);
+  }
+
+  .probe-title {
+    color: var(--text);
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0 0 var(--space-xs);
+    transition: color 0.15s ease;
+  }
+
+  .probe-summary {
+    color: var(--text-light);
+    font-size: var(--fs-base);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .probe-tags {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-sm) 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .probe-tags li {
+    font-size: 0.65rem;
+    color: var(--text-light);
+    background: rgba(0, 0, 0, 0.04);
+    padding: 0.1rem 0.45rem;
+    border-radius: var(--radius-sm);
+    text-transform: lowercase;
+  }
+</style>
