@@ -1,9 +1,9 @@
-"""Fetch Bay Area tech/AI events from Luma API and save for the website.
+"""Fetch Bay Area tech/AI events from Luma API.
 
-Tracks which events are new since the last fetch by reading the existing
-events.json before overwriting it. Each event gets a `first_seen_at`
-timestamp, and the output includes a `new_event_ids` array listing events
-that did not exist in the previous run.
+Writes data/luma_events.json as an in-CI intermediate (gitignored).
+The companion script scripts/merge_events.py reads it together with
+data/seen_events.json — the persistent "what we've already seen" state —
+and produces public/data/events.json with only today's net-new events.
 """
 
 import os
@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from common import load_old_events, stamp_first_seen, save_events, request_with_retry, merge_into
+from common import load_seen_events, stamp_first_seen, save_events, request_with_retry, merge_into
 
 # --- Configuration ---
 # Bay Area Luma categories. The Luma API filters by the `slug` query param,
@@ -28,6 +28,7 @@ SOURCES = [
 MAX_PAGES = 50  # effectively unlimited; stops when API returns has_more=false
 REQUEST_DELAY = 1.0
 DATA_FILE = Path(__file__).resolve().parent.parent.parent / "data" / "luma_events.json"
+SEEN_FILE = Path(__file__).resolve().parent.parent.parent / "data" / "seen_events.json"
 
 BASE_URL = os.environ.get("LUMA_API_URL", "")
 
@@ -101,10 +102,9 @@ def normalize_event(raw_entry: dict) -> dict:
 def main() -> None:
     now_iso = datetime.now(timezone.utc).isoformat()
 
-    # --- Load previous data for diff ---
-    old_map, old_updated_at = load_old_events(DATA_FILE)
-    old_ids = set(old_map.keys())
-    print(f"Previous run: {len(old_ids)} events (updated {old_updated_at or 'never'})")
+    # --- Load persistent seen-events state for first_seen_at preservation ---
+    seen_map, _ = load_seen_events(SEEN_FILE)
+    print(f"Previous state: {len(seen_map)} seen events")
 
     # --- Fetch current events ---
     merged: dict[str, dict] = {}
@@ -120,21 +120,16 @@ def main() -> None:
             print(f"  ERROR: {e}")
             continue
 
-    # --- Stamp first_seen_at & compute diff ---
-    stamp_first_seen(merged, old_map, now_iso)
-    # Preserve source from old data (in case it was manually corrected)
-    for aid, event in merged.items():
-        old_entry = old_map.get(aid)
-        if old_entry and old_entry.get("source"):
-            event["source"] = old_entry["source"]
+    # --- Stamp first_seen_at (preserve from seen state for known events) ---
+    stamp_first_seen(merged, seen_map, now_iso)
 
     current_ids = set(merged.keys())
-    new_ids = sorted(current_ids - old_ids)
+    new_ids = sorted(current_ids - set(seen_map.keys()))
 
     all_events = sorted(merged.values(), key=lambda e: e.get("start_at", ""))
     print(f"Total: {len(all_events)} unique events ({len(new_ids)} new)")
 
-    save_events(DATA_FILE, all_events, old_updated_at, now_iso, new_ids)
+    save_events(DATA_FILE, all_events, "", now_iso, new_ids)
 
 
 if __name__ == "__main__":

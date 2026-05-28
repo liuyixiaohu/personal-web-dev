@@ -148,3 +148,59 @@ def save_events(
     print(f"Saved {len(all_events)} events to {data_file}")
     if new_ids:
         print(f"New events: {', '.join(new_ids[:10])}{'...' if len(new_ids) > 10 else ''}")
+
+
+# --- Persistent state for "what we've already seen" ---
+# Lives in data/seen_events.json. Lets the public events.json stay tiny
+# (only today's net-new events) without losing the "is this new?" check.
+
+def load_seen_events(seen_file: Path) -> tuple[dict[str, dict], str]:
+    """Load seen-events state. Returns (events_map, last_pruned_at_iso).
+
+    events_map shape: {api_id: {"first_seen_at": iso, "end_at": iso | None}}
+    Returns ({}, "") if the file doesn't exist or is malformed.
+    """
+    if not seen_file.exists():
+        return {}, ""
+    try:
+        with open(seen_file) as f:
+            data = json.load(f)
+        return data.get("events", {}), data.get("last_pruned_at", "")
+    except (json.JSONDecodeError, KeyError) as e:
+        print(f"  Warning: could not read {seen_file.name}: {e}")
+        return {}, ""
+
+
+def save_seen_events(
+    seen_file: Path,
+    events_map: dict[str, dict],
+    last_pruned_at: str,
+) -> None:
+    """Write seen-events state. Keys sorted for stable diffs."""
+    output = {
+        "last_pruned_at": last_pruned_at,
+        "events": dict(sorted(events_map.items())),
+    }
+    seen_file.parent.mkdir(parents=True, exist_ok=True)
+    with open(seen_file, "w") as f:
+        json.dump(output, f, indent=2, ensure_ascii=False)
+    print(f"Saved {len(events_map)} seen IDs to {seen_file}")
+
+
+def prune_past_events(events_map: dict[str, dict], now: datetime) -> int:
+    """Drop entries whose end_at is in the past — they won't reappear in
+    Luma's catalog and we don't need to remember them. Returns count pruned.
+    """
+    pruned = 0
+    for aid in list(events_map.keys()):
+        end_at = events_map[aid].get("end_at")
+        if not end_at:
+            continue
+        try:
+            end_dt = datetime.fromisoformat(end_at.replace("Z", "+00:00"))
+        except (ValueError, AttributeError):
+            continue
+        if end_dt < now:
+            del events_map[aid]
+            pruned += 1
+    return pruned

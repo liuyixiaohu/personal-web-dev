@@ -12,6 +12,14 @@ tmp/
 # local-only docs (audits, design plans with private context)
 docs/private/
 
+# in-CI intermediate from fetch_events.py; merge_events.py reads this
+# but it never needs to be committed (seen_events.json holds the state)
+data/luma_events.json
+
+# Python bytecode
+__pycache__/
+*.pyc
+
 # playwright / test artifacts
 test-results/
 
