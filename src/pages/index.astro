@@ -14,10 +14,10 @@ import HintTooltip from '../components/HintTooltip.astro';
         </div>
 
         <nav class="home-nav">
-          <a href="/life-journey" class="nav-primary nav-link--journey">Journey</a>
+          <a href="/life-journey/" class="nav-primary nav-link--journey">Journey</a>
 
           <div class="nav-secondary">
-            <a href="/touch-fish" class="nav-link nav-link--fish">Touch Fish!</a>
+            <a href="/touch-fish/" class="nav-link nav-link--fish">Touch Fish!</a>
             <span class="nav-link nav-link--probes is-pending">
               Probes<span class="nav-tag">Drafting</span>
             </span>
@@ -111,7 +111,7 @@ import HintTooltip from '../components/HintTooltip.astro';
     right: -8%;
     bottom: -0.15em;
     height: 0.42em;
-    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 8' preserveAspectRatio='none'><path d='M 2 5 Q 18 1 34 4 Q 50 7 66 3 Q 82 0 96 4 L 99 5' stroke='%23c96b6d' stroke-width='1.7' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/100% 100% no-repeat;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 8' preserveAspectRatio='none'><path d='M 2 5 Q 18 1 34 4 Q 50 7 66 3 Q 82 0 96 4 L 99 5' stroke='%23D9797B' stroke-width='1.7' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/100% 100% no-repeat;
     pointer-events: none;
   }
 
@@ -139,7 +139,7 @@ import HintTooltip from '../components/HintTooltip.astro';
     opacity: 0.6;
   }
 
-  .nav-link--journey { color: #c96b6d; }
+  .nav-link--journey { color: var(--color-rose); }
   .nav-link--fish { color: var(--text-light); }
 
   .nav-link.is-pending {

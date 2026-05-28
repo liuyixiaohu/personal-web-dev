@@ -220,6 +220,21 @@ const journeyPins = pins.map((pin) => {
     position: relative;
   }
 
+  @media (min-width: 64rem) {
+    .country-pair {
+      max-width: 80rem;
+    }
+    .panels {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: var(--space-md);
+    }
+    .panel {
+      flex: 1;
+      max-width: none;
+    }
+  }
+
   .panel-label {
     display: block;
     text-align: right;

@@ -12,13 +12,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </header>
 
     <section class="projects">
-      <a href="/events" class="item item--events">
-        <span class="item-title">Today's New Tech Events @Bay Area</span>
+      <a href="/events/" class="item item--events">
+        <span class="item-title">Today's New Tech Events @Bay Area<span class="item-type">webapp</span></span>
         <span class="item-desc">No more doomscrolling event platforms into an existential crisis.</span>
       </a>
 
-      <a href="/sift" class="item item--sift">
-        <span class="item-title">Sift</span>
+      <a href="/sift/" class="item item--sift">
+        <span class="item-title">Sift<span class="item-type">extension</span></span>
         <span class="item-desc">Take back a LinkedIn worth your time.</span>
       </a>
     </section>
@@ -62,4 +62,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .item--events .item-title { color: var(--text); }
   .item--sift .item-title { color: var(--text); }
+
+  .item-type {
+    font-size: 0.65rem;
+    font-weight: 400;
+    color: var(--text-light);
+    background: rgba(0, 0, 0, 0.04);
+    padding: 0.05rem 0.4rem;
+    border-radius: var(--radius-sm);
+    margin-left: 0.5em;
+    vertical-align: middle;
+    text-transform: lowercase;
+    letter-spacing: 0.02em;
+  }
 </style>
