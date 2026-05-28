@@ -34,10 +34,26 @@ jobs:
       - name: Merge events
         run: python scripts/merge_events.py
 
-      - name: Commit updated event data
+      - name: Commit and push updated event data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add public/data/events.json data/luma_events.json
-          git diff --cached --quiet || git commit -m "chore: update event data $(date -u +%Y-%m-%d)"
-          git push
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "chore: update event data $(date -u +%Y-%m-%d)"
+          # Race against concurrent pushes (e.g. parallel cron, manual commits).
+          # Retry with rebase, preferring our generated data on conflict.
+          for attempt in 1 2 3 4 5; do
+            if git push; then
+              echo "Pushed on attempt $attempt"
+              exit 0
+            fi
+            echo "Push attempt $attempt failed; rebasing onto origin/main"
+            git pull --rebase -X ours origin main
+            sleep $((RANDOM % 15 + 5))
+          done
+          echo "Push failed after 5 attempts"
+          exit 1
