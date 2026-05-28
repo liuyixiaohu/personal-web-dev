@@ -270,16 +270,24 @@ const journeyPins = pins.map((pin) => {
       text-align: center;
       padding-right: 0;
     }
-    /* Equalize SVG heights so panels share total height: labels land on
-       the same Y, and the country shapes share a vertical centerline.
-       Without this the wider-aspect USA renders ~107px shorter than
-       China at equal width, throwing labels + visual centers out of
-       alignment. */
+    /* Width-auto + per-country heights. We tune China taller than USA
+       to compensate for its narrower aspect (1.36 vs USA's 1.75); at
+       equal heights China renders ~140px narrower and reads as
+       "smaller". With these clamps both maps end up at similar visual
+       widths (China ~607px, USA ~630px at 1440vp), so neither
+       dominates. Labels and SVG tops still align (panels flex-start);
+       China's bottom hangs slightly lower, which is the necessary
+       tradeoff for parity in horizontal extent. */
     .country-svg {
       width: auto;
-      height: clamp(15rem, 25vw, 22rem);
       max-width: 100%;
       margin: 0 auto;
+    }
+    #usa-svg {
+      height: clamp(15rem, 25vw, 22rem);
+    }
+    #china-svg {
+      height: clamp(18rem, 31vw, 26rem);
     }
   }
 

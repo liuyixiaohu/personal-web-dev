@@ -91,7 +91,10 @@ All vertical spacing uses `em` units (scales with font size).
 
 - No hardcoded font sizes; always use scale variables.
 - Chinese text: never italicize.
-- Use weight 500 or 600 for emphasis (never 700).
+- Weights by role:
+  - Page titles (h1) and section headings (h2): **700** acceptable for top-level emphasis.
+  - Sub-headings (h3), inline `<strong>`, primary buttons, table headers: **600**.
+  - Dates, captions, version badges, small utility labels: **500**.
 
 ---
 
