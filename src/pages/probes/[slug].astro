@@ -1,0 +1,276 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('probes', ({ data }) => !data.draft);
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'probes'>;
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const chapters = headings.filter((heading) => heading.depth === 2);
+const pageTitle = `${entry.data.title} | Probes`;
+
+const dateFmt = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={pageTitle} description={entry.data.summary} hideFooter>
+  <main class="probe-detail">
+    <a href="/probes/" class="back-link">&larr; Probes</a>
+
+    <header class="probe-detail-header">
+      <p class="probe-meta">
+        <time datetime={entry.data.publishedAt.toISOString()}>
+          {dateFmt.format(entry.data.publishedAt)}
+        </time>
+        {entry.data.updatedAt && (
+          <>
+            <span class="probe-meta-sep">·</span>
+            <span>Updated {dateFmt.format(entry.data.updatedAt)}</span>
+          </>
+        )}
+      </p>
+      <h1>{entry.data.title}</h1>
+      <p class="probe-summary">{entry.data.summary}</p>
+      {entry.data.tags.length > 0 && (
+        <ul class="probe-tags" aria-label="tags">
+          {entry.data.tags.map((tag) => (
+            <li>{tag}</li>
+          ))}
+        </ul>
+      )}
+    </header>
+
+    {chapters.length > 0 && (
+      <nav class="chapter-nav" aria-label="Sections">
+        {chapters.map((chapter) => (
+          <a href={`#${chapter.slug}`}>{chapter.text}</a>
+        ))}
+      </nav>
+    )}
+
+    <article class="probe-content">
+      <Content />
+    </article>
+  </main>
+</BaseLayout>
+
+<style>
+  .probe-detail {
+    min-height: 100dvh;
+    max-width: min(44rem, calc(100vw - var(--content-padding) * 2));
+    margin: 0 auto;
+    padding: clamp(4rem, 8vh, 6rem) 0 clamp(4rem, 10vh, 7rem);
+  }
+
+  .probe-detail-header {
+    margin: clamp(2.5rem, 7vh, 5rem) 0 var(--space-lg);
+  }
+
+  .probe-meta {
+    color: var(--text-light);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    line-height: 1.4;
+    margin: 0 0 var(--space-xs);
+  }
+
+  .probe-meta-sep {
+    margin: 0 0.4em;
+  }
+
+  .probe-detail-header h1 {
+    color: var(--text);
+    font-size: var(--fs-xl);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .probe-summary {
+    color: var(--text-light);
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .probe-tags {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-sm) 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .probe-tags li {
+    font-size: 0.65rem;
+    color: var(--text-light);
+    background: rgba(0, 0, 0, 0.04);
+    padding: 0.1rem 0.45rem;
+    border-radius: var(--radius-sm);
+    text-transform: lowercase;
+  }
+
+  .chapter-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 0.8rem;
+    margin: 0 0 var(--space-lg);
+  }
+
+  .chapter-nav a {
+    color: var(--text-light);
+    font-size: var(--fs-xs);
+    line-height: 1.4;
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+  }
+
+  .chapter-nav a:hover {
+    color: var(--text);
+    text-decoration-color: var(--text);
+  }
+
+  .probe-content {
+    color: var(--text-light);
+    font-size: var(--fs-base);
+    line-height: 1.7;
+  }
+
+  .probe-content :global(h2) {
+    color: var(--text);
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    line-height: 1.3;
+    margin: var(--space-xl) 0 var(--space-sm);
+  }
+
+  .probe-content :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .probe-content :global(h3) {
+    color: var(--text);
+    font-size: var(--fs-md);
+    font-weight: 700;
+    line-height: 1.4;
+    margin: var(--space-lg) 0 var(--space-xs);
+  }
+
+  .probe-content :global(p) {
+    margin: 0 0 0.9em;
+  }
+
+  .probe-content :global(strong) {
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  .probe-content :global(a) {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 2px;
+    transition: text-decoration-color 0.15s ease;
+  }
+
+  .probe-content :global(a:hover) {
+    text-decoration-color: var(--text);
+  }
+
+  .probe-content :global(ul),
+  .probe-content :global(ol) {
+    margin: 0 0 0.9em;
+    padding-left: 1.4em;
+  }
+
+  .probe-content :global(li) {
+    margin-bottom: 0.3em;
+  }
+
+  .probe-content :global(blockquote) {
+    margin: var(--space-md) 0;
+    padding-left: 1rem;
+    border-left: 2px solid var(--border);
+    color: var(--text-light);
+    font-style: italic;
+  }
+
+  .probe-content :global(code) {
+    font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+    font-size: 0.9em;
+    background: rgba(0, 0, 0, 0.04);
+    padding: 0.1em 0.35em;
+    border-radius: var(--radius-sm);
+  }
+
+  .probe-content :global(pre) {
+    overflow-x: auto;
+    background: rgba(0, 0, 0, 0.04);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    margin: var(--space-md) 0;
+    font-size: 0.9em;
+    line-height: 1.5;
+  }
+
+  .probe-content :global(pre code) {
+    background: none;
+    padding: 0;
+  }
+
+  .probe-content :global(figure) {
+    margin: var(--space-lg) 0;
+  }
+
+  .probe-content :global(figcaption) {
+    color: var(--text-light);
+    font-size: var(--fs-xs);
+    line-height: 1.5;
+    margin-top: var(--space-xs);
+    text-align: center;
+  }
+
+  .probe-content :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95em;
+    margin: var(--space-md) 0;
+  }
+
+  .probe-content :global(th),
+  .probe-content :global(td) {
+    text-align: left;
+    padding: 0.5em 0.7em;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .probe-content :global(th) {
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  @media (max-width: 40rem) {
+    .probe-detail {
+      padding-block-start: 3rem;
+    }
+
+    .probe-detail-header {
+      margin-top: var(--space-xl);
+    }
+  }
+</style>
