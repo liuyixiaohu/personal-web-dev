@@ -295,7 +295,7 @@
 
   .newly-highlight {
     color: var(--color-pm);
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .why-wrap {
@@ -348,7 +348,7 @@
     gap: var(--space-sm);
     font-size: var(--fs-xs);
     color: var(--text);
-    font-weight: 700;
+    font-weight: 500;
     line-height: 1.5;
     margin-top: var(--space-sm);
     margin-bottom: var(--space-xs);
@@ -358,7 +358,7 @@
 
   .date-group-header {
     font-size: var(--fs-xs);
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1.5;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -453,7 +453,7 @@
   .privacy-link {
     color: var(--color-rose);
     text-decoration: none;
-    font-weight: 700;
+    font-weight: 600;
     font-size: var(--fs-xs);
     line-height: 1.5;
   }
