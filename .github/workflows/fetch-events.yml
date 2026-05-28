@@ -2,9 +2,10 @@ name: Fetch Events
 
 on:
   schedule:
-    # 02:00 UTC = 7 PM PDT / 6 PM PST; with ~1h GitHub Actions queue delay
-    # the data usually lands around 7–8 PM PT.
-    - cron: '0 2 * * *'
+    # 02:13 UTC = 7:13 PM PDT. Off-the-hour to dodge GitHub's top-of-hour
+    # cron queue contention (recommended by GH docs). Switch to 03:13 UTC
+    # after DST ends in November so PST landings stay near 7 PM PT.
+    - cron: '13 2 * * *'
   workflow_dispatch: {}
 
 permissions:
