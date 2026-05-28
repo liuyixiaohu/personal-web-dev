@@ -285,6 +285,14 @@ const journeyPins = pins.map((pin) => {
     }
     #usa-svg {
       height: clamp(15rem, 25vw, 22rem);
+      /* USA is shorter than China by the difference of these two clamps.
+         Push USA down by half that diff so the two maps share a vertical
+         centerline (otherwise USA reads as floating above China). The
+         label-to-SVG gap this creates for USA is the necessary tradeoff:
+         either labels glued to maps + centers misaligned, or labels at
+         same Y + centers aligned + USA breathing room above. We prefer
+         the latter. */
+      margin-top: calc((clamp(18rem, 31vw, 26rem) - clamp(15rem, 25vw, 22rem)) / 2);
     }
     #china-svg {
       height: clamp(18rem, 31vw, 26rem);
