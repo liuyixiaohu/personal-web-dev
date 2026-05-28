@@ -1,6 +1,6 @@
 # Brand Guidelines: kunli.co
 
-> Visual design system for Kun Li's personal brand.
+> Internal design-system notes for kunli.co. Tokens live in `src/styles/global.css` — this doc is just a lookup.
 
 ---
 
@@ -33,6 +33,7 @@
 | `#7FB6DD` | - | Blue | Life Journey accent |
 | `#F0D7D7` | `--bubble-pm` | Pink | Light pink background |
 | `#D9797B` | `--color-rose` | Pink | Strong pink/rose accent |
+| `#8A939B` | - | Gray | Subtle / decorative |
 | `#5A636B` | `--text-light` | Text | Secondary/muted text (WCAG AA 5.73:1) |
 | `#1F2328` | `--text` | Text | Primary text |
 
@@ -151,6 +152,14 @@ Three content width tracks:
 - Links and opacity changes: `0.2s`
 - View transitions: `0.4s ease-in-out`
 
+### Reference implementations
+
+The visual primitives are exercised in production on `/events`. Refer to:
+
+- `src/components/events/EventCard.svelte` — card / list-item pattern
+- `src/components/events/EventFilters.svelte` — pill / filter chip pattern
+- `src/styles/global.css` — button, link, dot-separator styles
+
 ---
 
 ## Border Radius
@@ -224,7 +233,8 @@ Colors: `--bg` (#FAF7F2) background, `--text` (#1F2328) fill.
 ## Responsive Strategy
 
 - **Primary approach**: Fluid scaling via `clamp()`, no breakpoints for most things.
-- **Single breakpoint**: `480px` for layout-level changes only.
+- **System breakpoints**: `52rem` (tablet) and `32rem` (mobile), defined in `global.css`.
+- Some legacy components still use ad-hoc px-based breakpoints (`480px`, `600px`, etc.); migrate them when touched.
 - Grid system handles responsive content width automatically.
 
 ---
@@ -235,3 +245,9 @@ Colors: `--bg` (#FAF7F2) background, `--text` (#1F2328) fill.
 
 - Track: content engagement (pin clicks, filter use, language toggle, craft area interest)
 - Don't track: navigation clicks, outbound links, CTA clicks, or anything GA4 already captures via page_view
+
+---
+
+## History
+
+Earlier versions of these notes lived at the public `/brand` page (deleted v0.5 → 2026-05-17). The page was 731 lines of static markup for an audience of one; this Markdown lookup replaces it.
