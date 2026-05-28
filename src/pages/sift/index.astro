@@ -14,10 +14,12 @@ const latestSiftVersion = siftChangelog[0]?.version ?? 'v3.1';
 
     <!-- Hero -->
     <header class="sift-hero">
-      <img src="/images/sift-icon.webp" alt="Sift icon" class="sift-logo" />
-      <div class="sift-hero-title">
-        <h1>Sift <span class="sift-version">{latestSiftVersion}</span></h1>
-        <p class="sift-tagline">Take back a LinkedIn worth your time.</p>
+      <div class="sift-hero-top">
+        <img src="/images/sift-icon.webp" alt="Sift icon" class="sift-logo" />
+        <div class="sift-hero-title">
+          <h1>Sift <span class="sift-version">{latestSiftVersion}</span></h1>
+          <p class="sift-tagline">Take back a LinkedIn worth your time.</p>
+        </div>
       </div>
       <div class="sift-hero-cta">
         <a
@@ -38,8 +40,7 @@ const latestSiftVersion = siftChangelog[0]?.version ?? 'v3.1';
         </a>
       </div>
       <p class="sift-maker">
-        Built and maintained by <a href="/">Kun Li</a>. Free, open source, runs entirely in your
-        browser. No data leaves your device.
+        Built by <a href="/">Kun Li</a>. Free and open source.
       </p>
     </header>
 
@@ -97,10 +98,17 @@ const latestSiftVersion = siftChangelog[0]?.version ?? 'v3.1';
     margin-bottom: var(--space-xl);
   }
 
+  .sift-hero-top {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
   .sift-logo {
     width: 64px;
     height: 64px;
     border-radius: var(--radius-lg);
+    flex-shrink: 0;
   }
 
   .sift-hero-title h1 {

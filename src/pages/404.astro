@@ -5,8 +5,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title="Page Not Found | Kun Li" description="The page you're looking for doesn't exist." hideFooter={true}>
   <main class="not-found">
     <h1>404</h1>
-    <p>This page doesn't exist or has been moved.</p>
-    <a href="/">Back to Home</a>
+    <p>Even Walter Mitty took a wrong turn or two.</p>
+    <a href="/">← Back to Home</a>
   </main>
 </BaseLayout>
 
@@ -28,7 +28,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   /* Decorative hero numeral — outside the type scale by design */
   h1 {
-    font-family: var(--font-body);
     font-size: clamp(4rem, 10vw, 8rem);
     font-weight: 400;
     color: var(--border);
@@ -37,7 +36,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   p {
-    font-family: var(--font-body);
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.6;
@@ -46,7 +44,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   a {
-    font-family: var(--font-body);
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.6;
