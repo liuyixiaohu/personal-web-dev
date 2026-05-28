@@ -52,7 +52,7 @@
 
   .event-name {
     font-size: var(--fs-md);
-    font-weight: 700;
+    font-weight: 600;
     color: var(--text);
     text-decoration: none;
     line-height: 1.4;
