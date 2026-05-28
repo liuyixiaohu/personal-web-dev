@@ -220,25 +220,6 @@ const journeyPins = pins.map((pin) => {
     position: relative;
   }
 
-  @media (min-width: 64rem) {
-    .country-pair {
-      max-width: 80rem;
-    }
-    .panels {
-      flex-direction: row;
-      align-items: center;
-      gap: var(--space-md);
-    }
-    .panel {
-      flex: 1;
-      max-width: none;
-    }
-    .panel-label {
-      text-align: center;
-      padding-right: 0;
-    }
-  }
-
   .panel-label {
     display: block;
     text-align: right;
@@ -268,6 +249,38 @@ const journeyPins = pins.map((pin) => {
   .journey-tooltip.visible {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  /* Desktop: side-by-side panels. Placed AFTER all base rules so the
+     overrides actually take effect. */
+  @media (min-width: 64rem) {
+    .country-pair {
+      max-width: 80rem;
+    }
+    .panels {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: var(--space-md);
+    }
+    .panel {
+      flex: 1;
+      max-width: none;
+    }
+    .panel-label {
+      text-align: center;
+      padding-right: 0;
+    }
+    /* Equalize SVG heights so panels share total height: labels land on
+       the same Y, and the country shapes share a vertical centerline.
+       Without this the wider-aspect USA renders ~107px shorter than
+       China at equal width, throwing labels + visual centers out of
+       alignment. */
+    .country-svg {
+      width: auto;
+      height: clamp(15rem, 25vw, 22rem);
+      max-width: 100%;
+      margin: 0 auto;
+    }
   }
 
 </style>
