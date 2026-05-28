@@ -12,7 +12,7 @@ const journey = defineCollection({
 });
 
 const probes = defineCollection({
-  loader: glob({ pattern: '**/*.mdx', base: './src/content/probes', ignored: ['_*.mdx'] }),
+  loader: glob({ pattern: ['**/*.mdx', '!_*.mdx'], base: './src/content/probes' }),
   schema: z.object({
     title: z.string(),
     summary: z.string(),
