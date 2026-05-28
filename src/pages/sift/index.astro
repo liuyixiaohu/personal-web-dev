@@ -36,7 +36,6 @@ const latestSiftVersion = siftChangelog[0]?.version ?? 'v3.1';
         >
           GitHub
         </a>
-        <a href="#feedback" class="sift-cta sift-cta--secondary">Feedback</a>
       </div>
       <p class="sift-maker">
         Built and maintained by <a href="/">Kun Li</a>. Free, open source, runs entirely in your
@@ -85,60 +84,8 @@ const latestSiftVersion = siftChangelog[0]?.version ?? 'v3.1';
       >
     </section>
 
-    <!-- Feedback (inline) -->
-    <section class="section" id="feedback">
-      <h2>Feedback</h2>
-      <p>Bugs, ideas, anything. Goes straight to me.</p>
-      <form id="sift-feedback-form" class="sift-feedback-form">
-        <textarea
-          name="message"
-          required
-          rows="4"
-          class="sift-feedback-textarea"
-          id="sift-feedback-textarea"
-          placeholder="Bugs, ideas, anything..."></textarea>
-        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-        <button type="submit" class="sift-feedback-submit" id="sift-feedback-submit">Send</button>
-      </form>
-      <p class="sift-feedback-success" id="sift-feedback-success" hidden>Thanks! Feedback sent.</p>
-      <p class="sift-feedback-error" id="sift-feedback-error" hidden>Failed to send. Try again?</p>
-    </section>
-
   </main>
 </BaseLayout>
-
-<script>
-  document.addEventListener('astro:page-load', () => {
-    const form = document.getElementById('sift-feedback-form') as HTMLFormElement | null;
-    const submitBtn = document.getElementById('sift-feedback-submit');
-    const successMsg = document.getElementById('sift-feedback-success');
-    const errorMsg = document.getElementById('sift-feedback-error');
-
-    form?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      if (!submitBtn || !form) return;
-      submitBtn.setAttribute('disabled', '');
-      submitBtn.textContent = '...';
-      if (errorMsg) errorMsg.hidden = true;
-
-      try {
-        const res = await fetch('https://formspree.io/f/xreykpga', {
-          method: 'POST',
-          body: new FormData(form),
-          headers: { Accept: 'application/json' },
-        });
-        if (!res.ok) throw new Error();
-        form.hidden = true;
-        if (successMsg) successMsg.hidden = false;
-      } catch {
-        if (errorMsg) errorMsg.hidden = false;
-      } finally {
-        submitBtn.removeAttribute('disabled');
-        submitBtn.textContent = 'Send';
-      }
-    });
-  });
-</script>
 
 <style>
   /* Hero */
@@ -300,63 +247,5 @@ const latestSiftVersion = siftChangelog[0]?.version ?? 'v3.1';
 
   .sift-changelog-list li {
     margin-bottom: 0.15rem;
-  }
-
-  /* Feedback (inline) */
-  .sift-feedback-form {
-    margin-top: var(--space-sm);
-    max-width: 32rem;
-  }
-
-  .sift-feedback-textarea {
-    width: 100%;
-    font-family: inherit;
-    font-size: var(--fs-xs);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 0.6rem;
-    resize: vertical;
-    background: var(--bg);
-    color: var(--text);
-    box-sizing: border-box;
-  }
-
-  .sift-feedback-textarea:focus {
-    border-color: var(--text-light);
-    outline: none;
-  }
-
-  .sift-feedback-submit {
-    margin-top: 0.5rem;
-    font-family: inherit;
-    font-size: var(--fs-xs);
-    color: var(--text);
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 0.4em 1em;
-    cursor: pointer;
-    transition: border-color 0.15s;
-  }
-
-  .sift-feedback-submit:hover {
-    border-color: var(--text-light);
-  }
-
-  .sift-feedback-submit:disabled {
-    opacity: 0.5;
-    cursor: default;
-  }
-
-  .sift-feedback-success {
-    color: var(--color-ds-mid);
-    font-size: var(--fs-xs);
-    margin: 0.5rem 0 0;
-  }
-
-  .sift-feedback-error {
-    color: var(--color-pm);
-    font-size: var(--fs-xs);
-    margin: 0.4rem 0 0;
   }
 </style>

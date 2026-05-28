@@ -8,8 +8,7 @@ Personal site. *Who I am, not what I've done.*
 
 A hand-built personal site that doubles as a working portfolio of full-stack
 shipping: front-end design (Astro + Svelte), data pipelines (Python +
-GitHub Actions cron), and a fully Cloudflare-native deploy (Pages + Functions
-+ KV).
+GitHub Actions cron), and a Cloudflare Pages deploy.
 
 ## Stack
 
@@ -20,7 +19,7 @@ GitHub Actions cron), and a fully Cloudflare-native deploy (Pages + Functions
 | Maps | [D3-geo](https://d3js.org) for life-journey world map |
 | Pages | 8 routes incl. EN + ZH variants for select pages |
 | Data pipelines | Python scripts + GitHub Actions cron (daily) |
-| Hosting | Cloudflare Pages (static) + Functions (KV-backed APIs) |
+| Hosting | Cloudflare Pages (static) |
 | Analytics | GTM, with a thin typed wrapper in `src/utils/analytics.ts` |
 
 ## Data flow
@@ -47,8 +46,7 @@ src/
   utils/          Analytics, journey buildSVG, etc.
   data/           Sift changelog (typed TS data)
 scripts/          Daily fetch pipelines (Luma events, MCP connectors)
-functions/        Cloudflare Pages Functions (KV feedback inbox)
-.github/workflows/  Cron jobs
+.github/workflows/  Cron jobs + CI
 docs/             Brand guidelines
 ```
 
