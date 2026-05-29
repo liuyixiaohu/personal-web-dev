@@ -2,10 +2,10 @@ name: Fetch Events
 
 on:
   schedule:
-    # 02:13 UTC = 7:13 PM PDT. Off-the-hour to dodge GitHub's top-of-hour
-    # cron queue contention (recommended by GH docs). Switch to 03:13 UTC
-    # after DST ends in November so PST landings stay near 7 PM PT.
-    - cron: '13 2 * * *'
+    # 02:38 UTC = 7:38 PM PDT. Uncommon, off-the-hour minute to dodge
+    # GitHub's top-of-hour cron queue contention (recommended by GH docs).
+    # Switch to 03:38 UTC after DST ends in November so PST landings stay near 7 PM PT.
+    - cron: '38 2 * * *'
   workflow_dispatch: {}
 
 permissions:

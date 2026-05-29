@@ -184,14 +184,14 @@
     <div class="event-empty">
       <p>No new events discovered today. Check back tomorrow!</p>
       {#if updatedAt}
-        <p class="event-meta">Last checked: {formatUpdatedAt(updatedAt)} (Refreshes daily ~7 PM PT)</p>
+        <p class="event-meta">Last checked: {formatUpdatedAt(updatedAt)} (Refreshes once daily)</p>
       {/if}
     </div>
 
   {:else}
     {#if updatedAt}
       <div class="event-meta-bar">
-        <span class="event-updated">Last checked: {formatUpdatedAt(updatedAt)} (Refreshes daily ~7 PM PT)</span>
+        <span class="event-updated">Last checked: {formatUpdatedAt(updatedAt)} (Refreshes once daily)</span>
       </div>
     {/if}
 
