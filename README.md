@@ -14,7 +14,7 @@ GitHub Actions cron), and a Cloudflare Pages deploy.
 
 | Layer               | Tech                                                                   |
 | ------------------- | ---------------------------------------------------------------------- |
-| Framework           | [Astro 5](https://astro.build) (static output)                         |
+| Framework           | [Astro 6](https://astro.build) (static output)                         |
 | Interactive islands | [Svelte 5](https://svelte.dev) runes (`$state`, `$derived`, `$effect`) |
 | Maps                | [D3-geo](https://d3js.org) for life-journey world map                  |
 | Pages               | 8 routes incl. EN + ZH variants for select pages                       |
@@ -25,14 +25,12 @@ GitHub Actions cron), and a Cloudflare Pages deploy.
 ## Data flow
 
 ```
-Luma API ─┐
-          ├──► GitHub Actions (cron daily) ──► public/data/*.json ──► /events page
-Connector docs ─┘                                                 (Svelte islands)
+Luma API ──► GitHub Actions (cron daily) ──► public/data/events.json ──► /events (Svelte island)
 ```
 
-Two scheduled workflows fetch fresh data each day, merge with the prior
+A scheduled workflow fetches fresh events daily, merges with the prior
 day's snapshot to preserve `first_seen_at` (so "new today" works), and
-commit the result. The front-end reads only the final JSON; no runtime API
+commits the result. The front-end reads only the final JSON; no runtime API
 calls.
 
 ## Structure
@@ -45,7 +43,7 @@ src/
   styles/         Global CSS with design tokens
   utils/          Analytics, journey buildSVG, etc.
   data/           Sift changelog (typed TS data)
-scripts/          Daily fetch pipelines (Luma events, MCP connectors)
+scripts/          Daily fetch pipeline (Luma events)
 .github/workflows/  Cron jobs + CI
 docs/             Brand guidelines
 ```
