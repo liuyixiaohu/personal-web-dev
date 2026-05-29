@@ -28,8 +28,13 @@ const KEY_PATHS = [
   resolve(import.meta.dirname, '../.claude/gcp-service-account.json'),
   resolve(process.env.HOME, '.config/gcloud/kunli-analytics.json'),
 ];
-const keyPath = KEY_PATHS.find(p => {
-  try { readFileSync(p); return true; } catch { return false; }
+const keyPath = KEY_PATHS.find((p) => {
+  try {
+    readFileSync(p);
+    return true;
+  } catch {
+    return false;
+  }
 });
 if (!keyPath) {
   console.error('Service account key not found. Checked:', KEY_PATHS);

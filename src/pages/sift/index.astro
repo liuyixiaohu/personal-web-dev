@@ -48,15 +48,19 @@ const latestSiftVersion = siftChangelog[0]?.version ?? 'v3.1';
     <section class="section">
       <h2>Changelog</h2>
       <div class="sift-changelog-inline">
-        {siftChangelog.map((r) => (
-          <div class="sift-changelog-release">
-            <div class="sift-changelog-version">{r.version}</div>
-            {r.why?.en && <p class="sift-changelog-why">{r.why.en}</p>}
-            <ul class="sift-changelog-list">
-              {r.changes.en.map((c) => <li>{c}</li>)}
-            </ul>
-          </div>
-        ))}
+        {
+          siftChangelog.map((r) => (
+            <div class="sift-changelog-release">
+              <div class="sift-changelog-version">{r.version}</div>
+              {r.why?.en && <p class="sift-changelog-why">{r.why.en}</p>}
+              <ul class="sift-changelog-list">
+                {r.changes.en.map((c) => (
+                  <li>{c}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
       </div>
     </section>
 
@@ -64,8 +68,8 @@ const latestSiftVersion = siftChangelog[0]?.version ?? 'v3.1';
     <section class="section">
       <h2>Privacy</h2>
       <p>
-        Sift runs entirely in your browser. No data is collected, transmitted, or stored
-        externally. All preferences and stats stay on your device.
+        Sift runs entirely in your browser. No data is collected, transmitted, or stored externally.
+        All preferences and stats stay on your device.
       </p>
       <a href="/sift/privacy" class="sift-link">Full privacy policy →</a>
     </section>
@@ -76,15 +80,10 @@ const latestSiftVersion = siftChangelog[0]?.version ?? 'v3.1';
       <p>
         Sift is MIT-licensed. Read every line of code, verify the privacy claims, or contribute.
       </p>
-      <a
-        href="https://github.com/liuyixiaohu/sift"
-        class="sift-link"
-        target="_blank"
-        rel="noopener"
+      <a href="https://github.com/liuyixiaohu/sift" class="sift-link" target="_blank" rel="noopener"
         >GitHub repository →</a
       >
     </section>
-
   </main>
 </BaseLayout>
 
@@ -151,7 +150,9 @@ const latestSiftVersion = siftChangelog[0]?.version ?? 'v3.1';
     padding: 0.5em 1em;
     border-radius: var(--radius-md);
     text-decoration: none;
-    transition: opacity 0.2s ease, border-color 0.2s ease;
+    transition:
+      opacity 0.2s ease,
+      border-color 0.2s ease;
   }
 
   .sift-cta--primary {

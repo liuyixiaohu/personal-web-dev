@@ -18,9 +18,9 @@ export interface LumaEvent {
   first_seen_at?: string;
   // Pre-computed (set by enrichEvents)
   _startMs?: number;
-  _dayOfWeek?: number;    // 0=Sun..6=Sat, in LA timezone
-  _timeMinutes?: number;  // minutes since midnight, in LA timezone
-  _dateKey?: string;       // YYYY-MM-DD in LA timezone
+  _dayOfWeek?: number; // 0=Sun..6=Sat, in LA timezone
+  _timeMinutes?: number; // minutes since midnight, in LA timezone
+  _dateKey?: string; // YYYY-MM-DD in LA timezone
   _strippedLocation?: string;
 }
 
@@ -37,14 +37,16 @@ export const STALE_THRESHOLD_MS = 48 * 60 * 60 * 1000; // 48 hours
 export const TZ = 'America/Los_Angeles';
 export const LOCALE = 'en-US';
 export const BLOCKED_CALENDARS = new Set(['社交感染聚会']);
-export const BLOCKED_NAME_KEYWORDS = ['Kiehl\'s'];
+export const BLOCKED_NAME_KEYWORDS = ["Kiehl's"];
 
 // --- Helpers ---
 export function loadPref<T>(key: string, fallback: T): T {
   try {
     const v = localStorage.getItem(key);
     return v != null ? JSON.parse(v) : fallback;
-  } catch { return fallback; }
+  } catch {
+    return fallback;
+  }
 }
 
 export function stripState(loc: string): string {
@@ -57,20 +59,48 @@ export function formatEventRange(startIso: string, endIso: string, tz: string): 
     const effectiveTz = tz || TZ;
     const s = new Date(startIso);
     const e = new Date(endIso);
-    const sDate = s.toLocaleDateString(LOCALE, { weekday: 'short', month: 'short', day: 'numeric', timeZone: effectiveTz });
-    const eDate = e.toLocaleDateString(LOCALE, { weekday: 'short', month: 'short', day: 'numeric', timeZone: effectiveTz });
-    const sTime = s.toLocaleTimeString(LOCALE, { hour: 'numeric', minute: '2-digit', timeZone: effectiveTz });
-    const eTime = e.toLocaleTimeString(LOCALE, { hour: 'numeric', minute: '2-digit', timeZone: effectiveTz });
+    const sDate = s.toLocaleDateString(LOCALE, {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      timeZone: effectiveTz,
+    });
+    const eDate = e.toLocaleDateString(LOCALE, {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      timeZone: effectiveTz,
+    });
+    const sTime = s.toLocaleTimeString(LOCALE, {
+      hour: 'numeric',
+      minute: '2-digit',
+      timeZone: effectiveTz,
+    });
+    const eTime = e.toLocaleTimeString(LOCALE, {
+      hour: 'numeric',
+      minute: '2-digit',
+      timeZone: effectiveTz,
+    });
     if (sDate === eDate) return `${sDate}, ${sTime} – ${eTime}`;
     return `${sDate}, ${sTime} – ${eDate}, ${eTime}`;
-  } catch { return startIso; }
+  } catch {
+    return startIso;
+  }
 }
 
 export function formatUpdatedAt(isoStr: string): string {
   try {
     const d = new Date(isoStr);
-    return d.toLocaleDateString(LOCALE, { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
-  } catch { return isoStr; }
+    return d.toLocaleDateString(LOCALE, {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+    });
+  } catch {
+    return isoStr;
+  }
 }
 
 export function formatPrice(event: LumaEvent): string {
@@ -113,7 +143,10 @@ export function enrichEvents(events: LumaEvent[]): void {
 }
 
 /** Build location count map and sorted location list in a single pass. */
-export function buildLocationIndex(events: LumaEvent[]): { sorted: string[]; counts: Map<string, number> } {
+export function buildLocationIndex(events: LumaEvent[]): {
+  sorted: string[];
+  counts: Map<string, number>;
+} {
   const counts = new Map<string, number>();
   for (const e of events) {
     const loc = e._strippedLocation!;

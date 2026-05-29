@@ -10,24 +10,71 @@
 
 <li class="event-card" id="event-{event.api_id}">
   <div class="event-card-header">
-    <a href={event.url || '#'} target="_blank" rel="noopener noreferrer" class="event-name"
-      >
+    <a href={event.url || '#'} target="_blank" rel="noopener noreferrer" class="event-name">
       {event.name}
     </a>
-    <span class="event-price" class:event-price--free={event.is_free} class:event-price--approval={!event.is_free && event.price_cents == null} class:event-price--paid={!event.is_free && event.price_cents != null}>
+    <span
+      class="event-price"
+      class:event-price--free={event.is_free}
+      class:event-price--approval={!event.is_free && event.price_cents == null}
+      class:event-price--paid={!event.is_free && event.price_cents != null}
+    >
       {formatPrice(event)}
     </span>
   </div>
 
   <div class="event-card-details">
-    <span class="event-date"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>{formatEventRange(event.start_at, event.end_at, event.timezone)}</span>
+    <span class="event-date"
+      ><svg
+        class="icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        ><path d="M8 2v4" /><path d="M16 2v4" /><rect
+          width="18"
+          height="18"
+          x="3"
+          y="4"
+          rx="2"
+        /><path d="M3 10h18" /></svg
+      >{formatEventRange(event.start_at, event.end_at, event.timezone)}</span
+    >
 
     {#if locationDisplay(event)}
-      <span class="event-location"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>{locationDisplay(event)}</span>
+      <span class="event-location"
+        ><svg
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><path
+            d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"
+          /><circle cx="12" cy="10" r="3" /></svg
+        >{locationDisplay(event)}</span
+      >
     {/if}
 
     {#if event.guest_count > 0}
-      <span class="event-guests"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>{event.guest_count} guests</span>
+      <span class="event-guests"
+        ><svg
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path
+            d="M16 3.128a4 4 0 0 1 0 7.744"
+          /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg
+        >{event.guest_count} guests</span
+      >
     {/if}
   </div>
 </li>

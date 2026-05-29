@@ -1,11 +1,18 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import {
-    type LumaEvent, type EventData,
-    DATA_URL, STALE_THRESHOLD_MS, BLOCKED_CALENDARS, BLOCKED_NAME_KEYWORDS,
-    loadPref, enrichEvents,
+    type LumaEvent,
+    type EventData,
+    DATA_URL,
+    STALE_THRESHOLD_MS,
+    BLOCKED_CALENDARS,
+    BLOCKED_NAME_KEYWORDS,
+    loadPref,
+    enrichEvents,
     buildLocationIndex,
-    eventDateKey, formatUpdatedAt, formatDateGroup,
+    eventDateKey,
+    formatUpdatedAt,
+    formatDateGroup,
   } from './eventUtils';
   import EventFilters from './EventFilters.svelte';
   import EventCard from './EventCard.svelte';
@@ -55,18 +62,15 @@
 
       const notBlocked = (e: LumaEvent) =>
         !BLOCKED_CALENDARS.has(e.calendar_name) &&
-        !BLOCKED_NAME_KEYWORDS.some(kw => e.name.includes(kw));
+        !BLOCKED_NAME_KEYWORDS.some((kw) => e.name.includes(kw));
 
-      const prevCheck = data.previous_updated_at
-        ? new Date(data.previous_updated_at).getTime()
-        : 0;
+      const prevCheck = data.previous_updated_at ? new Date(data.previous_updated_at).getTime() : 0;
       const isNew = (e: LumaEvent) =>
-        prevCheck > 0 && e.first_seen_at
-          ? new Date(e.first_seen_at).getTime() > prevCheck
-          : false;
-      const filtered = prevCheck > 0
-        ? data.events.filter(e => notBlocked(e) && isNew(e) && isFuture(e))
-        : data.events.filter(e => notBlocked(e) && isFuture(e));
+        prevCheck > 0 && e.first_seen_at ? new Date(e.first_seen_at).getTime() > prevCheck : false;
+      const filtered =
+        prevCheck > 0
+          ? data.events.filter((e) => notBlocked(e) && isNew(e) && isFuture(e))
+          : data.events.filter((e) => notBlocked(e) && isFuture(e));
 
       enrichEvents(filtered);
       events = filtered;
@@ -100,15 +104,25 @@
   let filteredEvents = $derived.by(() => {
     const q = searchQuery.toLowerCase().trim();
 
-    const result = events.filter(e => {
+    const result = events.filter((e) => {
       if (selectedLocations.size > 0 && !selectedLocations.has(e._strippedLocation!)) return false;
       if (selectedDays.size > 0 && !selectedDays.has(e._dayOfWeek!)) return false;
       const hostNames = e.host_names ?? [];
-      if (q && !e.name.toLowerCase().includes(q) && !hostNames.some(h => h.toLowerCase().includes(q))) return false;
+      if (
+        q &&
+        !e.name.toLowerCase().includes(q) &&
+        !hostNames.some((h) => h.toLowerCase().includes(q))
+      )
+        return false;
       if (excludeKeywords.length > 0) {
         const nameLower = e.name.toLowerCase();
-        const hostsLower = hostNames.map(h => h.toLowerCase());
-        if (excludeKeywords.some(kw => nameLower.includes(kw) || hostsLower.some(h => h.includes(kw)))) return false;
+        const hostsLower = hostNames.map((h) => h.toLowerCase());
+        if (
+          excludeKeywords.some(
+            (kw) => nameLower.includes(kw) || hostsLower.some((h) => h.includes(kw)),
+          )
+        )
+          return false;
       }
       return true;
     });
@@ -142,18 +156,19 @@
 
   function toggleLocation(loc: string) {
     const next = new Set(selectedLocations);
-    if (next.has(loc)) next.delete(loc); else next.add(loc);
+    if (next.has(loc)) next.delete(loc);
+    else next.add(loc);
     selectedLocations = next;
     pushFilter('location', loc);
   }
 
   function toggleDay(day: number) {
     const next = new Set(selectedDays);
-    if (next.has(day)) next.delete(day); else next.add(day);
+    if (next.has(day)) next.delete(day);
+    else next.add(day);
     selectedDays = next;
     pushFilter('day', day);
   }
-
 </script>
 
 <div class="event-list">
@@ -163,12 +178,27 @@
     </div>
 
     <p class="event-subtitle">
-      Bay Area Tech & AI events from Luma, showing <span class="newly-highlight">only what's new since the last daily check</span>.
+      Bay Area Tech & AI events from Luma, showing <span class="newly-highlight"
+        >only what's new since the last daily check</span
+      >.
       <span class="why-wrap">
-        <button class="why-btn" onclick={() => whyOpen = !whyOpen}>Why?</button>
-        <Popup open={whyOpen} title="Why show only newly added events?" onClose={() => whyOpen = false}>
-          <p class="why-point">This page pulls from Luma's Bay Area Tech and AI categories once a day. It only shows events that appeared since the last check — not the full catalog. If you're looking for a specific event or topic outside Tech/AI, search directly on the platform.</p>
-          <p class="why-point">This page is intentionally designed to balance convenience and long-term availability. The data comes from an undisclosed endpoint. Keeping the feature restrained and differentiated, rather than building a full-featured alternative, helps reduce the risk of the data source being noticed and shut down.</p>
+        <button class="why-btn" onclick={() => (whyOpen = !whyOpen)}>Why?</button>
+        <Popup
+          open={whyOpen}
+          title="Why show only newly added events?"
+          onClose={() => (whyOpen = false)}
+        >
+          <p class="why-point">
+            This page pulls from Luma's Bay Area Tech and AI categories once a day. It only shows
+            events that appeared since the last check — not the full catalog. If you're looking for
+            a specific event or topic outside Tech/AI, search directly on the platform.
+          </p>
+          <p class="why-point">
+            This page is intentionally designed to balance convenience and long-term availability.
+            The data comes from an undisclosed endpoint. Keeping the feature restrained and
+            differentiated, rather than building a full-featured alternative, helps reduce the risk
+            of the data source being noticed and shut down.
+          </p>
         </Popup>
       </span>
     </p>
@@ -176,10 +206,10 @@
 
   {#if loading}
     <p class="event-status">Loading events...</p>
-
   {:else if error}
-    <p class="event-status event-status--error">Unable to load events right now. Please try again later.</p>
-
+    <p class="event-status event-status--error">
+      Unable to load events right now. Please try again later.
+    </p>
   {:else if events.length === 0}
     <div class="event-empty">
       <p>No new events discovered today. Check back tomorrow!</p>
@@ -187,11 +217,12 @@
         <p class="event-meta">Last checked: {formatUpdatedAt(updatedAt)} (Refreshes once daily)</p>
       {/if}
     </div>
-
   {:else}
     {#if updatedAt}
       <div class="event-meta-bar">
-        <span class="event-updated">Last checked: {formatUpdatedAt(updatedAt)} (Refreshes once daily)</span>
+        <span class="event-updated"
+          >Last checked: {formatUpdatedAt(updatedAt)} (Refreshes once daily)</span
+        >
       </div>
     {/if}
 
@@ -205,8 +236,15 @@
       {excludeKeywords}
       onLocationToggle={toggleLocation}
       onDayToggle={toggleDay}
-      onSearchChange={(q) => { searchQuery = q; clearTimeout(searchDebounceTimer); if (q.trim()) searchDebounceTimer = setTimeout(() => pushFilter('search', q), 800); }}
-      onAddExclude={(kw) => { excludeKeywords = [...excludeKeywords, kw.toLowerCase().trim()]; pushFilter('exclude', kw); }}
+      onSearchChange={(q) => {
+        searchQuery = q;
+        clearTimeout(searchDebounceTimer);
+        if (q.trim()) searchDebounceTimer = setTimeout(() => pushFilter('search', q), 800);
+      }}
+      onAddExclude={(kw) => {
+        excludeKeywords = [...excludeKeywords, kw.toLowerCase().trim()];
+        pushFilter('exclude', kw);
+      }}
     />
 
     {#if isStale}
@@ -223,15 +261,25 @@
       </span>
       {#if excludeKeywords.length > 0}
         <span class="why-wrap">
-          <button class="why-btn" onclick={() => excludePopupOpen = !excludePopupOpen}>
+          <button class="why-btn" onclick={() => (excludePopupOpen = !excludePopupOpen)}>
             {excludeKeywords.length} excluded
           </button>
-          <Popup open={excludePopupOpen} title="Excluded keywords" onClose={() => excludePopupOpen = false}>
+          <Popup
+            open={excludePopupOpen}
+            title="Excluded keywords"
+            onClose={() => (excludePopupOpen = false)}
+          >
             <div class="exclude-chips">
               {#each excludeKeywords as kw}
                 <span class="exclude-chip">
                   {kw}
-                  <button class="exclude-chip-remove" onclick={() => { excludeKeywords = excludeKeywords.filter(k => k !== kw); pushFilter('remove_exclude', kw); }}>&times;</button>
+                  <button
+                    class="exclude-chip-remove"
+                    onclick={() => {
+                      excludeKeywords = excludeKeywords.filter((k) => k !== kw);
+                      pushFilter('remove_exclude', kw);
+                    }}>&times;</button
+                  >
                 </span>
               {/each}
             </div>
@@ -255,10 +303,12 @@
 
     <section class="privacy-section">
       <h2 class="privacy-heading">Privacy</h2>
-      <p class="privacy-desc">This page runs entirely in your browser. Event data is fetched from a public source and displayed directly. No personal data is collected, transmitted, or stored.</p>
+      <p class="privacy-desc">
+        This page runs entirely in your browser. Event data is fetched from a public source and
+        displayed directly. No personal data is collected, transmitted, or stored.
+      </p>
       <a href="/events/privacy" class="privacy-link">Full privacy policy →</a>
     </section>
-
   {/if}
 </div>
 
@@ -313,7 +363,9 @@
     border-radius: var(--radius-sm);
     padding: 0.1em 0.4em;
     cursor: pointer;
-    transition: border-color 0.15s, color 0.15s;
+    transition:
+      border-color 0.15s,
+      color 0.15s;
     white-space: nowrap;
     margin-left: 0.3em;
   }
@@ -419,8 +471,12 @@
   }
 
   @keyframes highlight-fade {
-    0% { background: rgba(90, 138, 110, 0.15); }
-    100% { background: transparent; }
+    0% {
+      background: rgba(90, 138, 110, 0.15);
+    }
+    100% {
+      background: transparent;
+    }
   }
 
   /* Mobile */

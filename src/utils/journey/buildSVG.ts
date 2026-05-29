@@ -22,15 +22,14 @@ export interface PinHandlers {
   onPinLeave?: (pin: JourneyMapPin, event: MouseEvent | FocusEvent) => void;
 }
 
-export function fitAndCrop(
-  countryGeo: any,
-  padPx: number,
-  padTop?: number,
-) {
+export function fitAndCrop(countryGeo: any, padPx: number, padTop?: number) {
   const top = padTop ?? padPx;
   const BIG = 2000;
   const proj = geoMercator().fitExtent(
-    [[padPx, padPx], [BIG - padPx, BIG - padPx]],
+    [
+      [padPx, padPx],
+      [BIG - padPx, BIG - padPx],
+    ],
     countryGeo,
   );
   const gen = geoPath().projection(proj);

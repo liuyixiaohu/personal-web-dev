@@ -28,7 +28,15 @@
   }: Props = $props();
 
   const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as const;
-  const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] as const;
+  const DAY_NAMES = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ] as const;
 
   // --- Location collapse ---
   let locationExpanded = $state(false);
@@ -61,9 +69,11 @@
     <div class="filter-row">
       <span class="filter-label">{'Location'}</span>
       <div class="location-pills-wrap">
-        <div class="filter-pills filter-pills--wrap"
-             class:filter-pills--collapsed={!locationExpanded}
-             bind:this={locationPillsEl}>
+        <div
+          class="filter-pills filter-pills--wrap"
+          class:filter-pills--collapsed={!locationExpanded}
+          bind:this={locationPillsEl}
+        >
           {#each allLocations as loc}
             {@const count = locationCounts.get(loc) ?? 0}
             <button
@@ -71,15 +81,18 @@
               class:pill--active={selectedLocations.has(loc)}
               class:pill--empty={count === 0}
               aria-pressed={selectedLocations.has(loc)}
-              title={count === 0 ? 'Saved filter — no matches in today\'s events' : undefined}
+              title={count === 0 ? "Saved filter — no matches in today's events" : undefined}
               onclick={() => onLocationToggle(loc)}
-            >{loc} <span class="pill-count">({count})</span></button>
+              >{loc} <span class="pill-count">({count})</span></button
+            >
           {/each}
         </div>
         {#if locationOverflows || locationExpanded}
-          <button class="show-more-btn"
-                  class:show-more-btn--collapsed={!locationExpanded}
-                  onclick={() => locationExpanded = !locationExpanded}>
+          <button
+            class="show-more-btn"
+            class:show-more-btn--collapsed={!locationExpanded}
+            onclick={() => (locationExpanded = !locationExpanded)}
+          >
             {locationExpanded ? 'Less' : 'More'}
           </button>
         {/if}
@@ -97,8 +110,8 @@
           class:pill--active={selectedDays.has(i)}
           aria-pressed={selectedDays.has(i)}
           aria-label={DAY_NAMES[i]}
-          onclick={() => onDayToggle(i)}
-        >{dayLabel}</button>
+          onclick={() => onDayToggle(i)}>{dayLabel}</button
+        >
       {/each}
     </div>
   </div>
@@ -123,7 +136,7 @@
         class="search-input"
         type="text"
         aria-label="Exclude events containing a keyword"
-        placeholder={'in case you don\'t enjoy happy hour'}
+        placeholder={"in case you don't enjoy happy hour"}
         bind:value={excludeInput}
         onkeydown={handleExcludeKeydown}
       />

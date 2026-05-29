@@ -1,0 +1,11 @@
+# build + generated
+dist/
+.astro/
+node_modules/
+
+# data snapshots (fetched/committed JSON, not hand-edited)
+public/data/*.json
+data/
+
+# lockfile
+package-lock.json

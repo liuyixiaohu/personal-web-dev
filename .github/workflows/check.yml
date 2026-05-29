@@ -12,6 +12,8 @@ on:
       - 'astro.config.mjs'
       - 'tsconfig.json'
       - 'svelte.config.js'
+      - '.prettierrc.json'
+      - '.prettierignore'
       - '.github/workflows/check.yml'
   pull_request:
     branches: [main]
@@ -27,6 +29,7 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run check
+      - run: npm run format:check
       - run: npm run build
       - run: npm run test:journey
       - run: npm run test:tooltips

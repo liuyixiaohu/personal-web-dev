@@ -38,20 +38,24 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
     <time datetime={entry.data.publishedAt.toISOString()}>
       {dateFmt.format(entry.data.publishedAt)}
     </time>
-    {entry.data.updatedAt && (
-      <>
-        <span class="probe-meta-sep">·</span>
-        <span>Updated {dateFmt.format(entry.data.updatedAt)}</span>
-      </>
-    )}
+    {
+      entry.data.updatedAt && (
+        <>
+          <span class="probe-meta-sep">·</span>
+          <span>Updated {dateFmt.format(entry.data.updatedAt)}</span>
+        </>
+      )
+    }
   </p>
-  {entry.data.tags.length > 0 && (
-    <ul slot="tags" class="probe-tags" aria-label="tags">
-      {entry.data.tags.map((tag) => (
-        <li>{tag}</li>
-      ))}
-    </ul>
-  )}
+  {
+    entry.data.tags.length > 0 && (
+      <ul slot="tags" class="probe-tags" aria-label="tags">
+        {entry.data.tags.map((tag) => (
+          <li>{tag}</li>
+        ))}
+      </ul>
+    )
+  }
   <Content />
 </ArticleLayout>
 

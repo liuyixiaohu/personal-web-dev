@@ -14,7 +14,14 @@ interface Props {
   lang?: 'en' | 'zh';
 }
 
-const { title = "Kun Li", description = "Given the SEO Principals, I'm genuinely surprised you found this page. Welcome, I guess.", ogDescription, hideFooter = false, bodyClass, lang = 'en' } = Astro.props;
+const {
+  title = 'Kun Li',
+  description = "Given the SEO Principals, I'm genuinely surprised you found this page. Welcome, I guess.",
+  ogDescription,
+  hideFooter = false,
+  bodyClass,
+  lang = 'en',
+} = Astro.props;
 const socialDescription = ogDescription || description;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -25,7 +32,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="author" content="Likun" />
-    <meta name="theme-color" content="#FAF7F2" />
+    <meta name="theme-color" content="#faf7f2" />
     <link rel="canonical" href={canonicalURL} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -58,7 +65,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       integrity="sha384-IlZgqBVXc/53BxMrn7k6DQ0Y62xboZTo7XXCh1gyLw39DKISAqHavnU1xjsyg8ox"
       crossorigin="anonymous"
     />
-    <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-webfont/1.7.0/lxgwwenkai-light.css" rel="stylesheet" /></noscript>
+    <noscript
+      ><link
+        href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-webfont/1.7.0/lxgwwenkai-light.css"
+        rel="stylesheet"
+      /></noscript
+    >
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-webfont/1.7.0/lxgwwenkai-regular.css"
       rel="stylesheet"
@@ -67,7 +79,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       integrity="sha384-usAwS4GuP3EymPRjfL7yc7ZFZZl45NeR7Lbl/krLMVINoRHVKYgQG/6WTGXNyNOH"
       crossorigin="anonymous"
     />
-    <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-webfont/1.7.0/lxgwwenkai-regular.css" rel="stylesheet" /></noscript>
+    <noscript
+      ><link
+        href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-webfont/1.7.0/lxgwwenkai-regular.css"
+        rel="stylesheet"
+      /></noscript
+    >
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-webfont/1.7.0/lxgwwenkai-bold.css"
       rel="stylesheet"
@@ -76,37 +93,58 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       integrity="sha384-wvyC9BCHtJEZ8WmLkhXV9p66P71K/TY9GjKAotcuTWdws6Bxynnh1tNPyc5+N9yA"
       crossorigin="anonymous"
     />
-    <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-webfont/1.7.0/lxgwwenkai-bold.css" rel="stylesheet" /></noscript>
+    <noscript
+      ><link
+        href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-webfont/1.7.0/lxgwwenkai-bold.css"
+        rel="stylesheet"
+      /></noscript
+    >
 
     <ClientRouter />
     <title>{title}</title>
 
     {/* JSON-LD structured data (homepage only) */}
-    {Astro.url.pathname === '/' && (
-      <script is:inline type="application/ld+json" set:html={JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Kun Li",
-        "url": "https://kunli.co"
-      })} />
-    )}
+    {
+      Astro.url.pathname === '/' && (
+        <script
+          is:inline
+          type="application/ld+json"
+          set:html={JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Person',
+            name: 'Kun Li',
+            url: 'https://kunli.co',
+          })}
+        />
+      )
+    }
 
     <!-- Google Tag Manager -->
     <script is:inline>
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-PNCRCQBM');
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-PNCRCQBM');
     </script>
   </head>
   <body class={bodyClass} transition:animate={fade({ duration: '0.4s' })}>
     <a href="#main" class="skip-link">Skip to content</a>
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PNCRCQBM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-PNCRCQBM"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"></iframe></noscript
+    >
     <slot />
     {!hideFooter && <Footer />}
     <BackToTop />
-
   </body>
 </html>

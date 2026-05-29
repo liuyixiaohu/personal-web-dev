@@ -2,19 +2,29 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Touch Fish | Kun Li" description="Side projects built in the spirit of slacking off.">
+<BaseLayout
+  title="Touch Fish | Kun Li"
+  description="Side projects built in the spirit of slacking off."
+>
   <main id="main" class="touchfish-page grid-page">
     <a href="/" class="back-link">← Home</a>
 
     <header class="touchfish-header">
       <h1>Touch Fish!</h1>
-      <p class="explain-text">“Touch Fish” (摸鱼, mō yú) is Chinese internet slang for slacking off when you’re supposed to be doing real work. These tools were built in that spirit.</p>
+      <p class="explain-text">
+        “Touch Fish” (摸鱼, mō yú) is Chinese internet slang for slacking off when you’re supposed
+        to be doing real work. These tools were built in that spirit.
+      </p>
     </header>
 
     <section class="projects">
       <a href="/events/" class="item item--events">
-        <span class="item-title">Today's New Tech Events @Bay Area<span class="item-type">webapp</span></span>
-        <span class="item-desc">No more doomscrolling event platforms into an existential crisis.</span>
+        <span class="item-title"
+          >Today's New Tech Events @Bay Area<span class="item-type">webapp</span></span
+        >
+        <span class="item-desc"
+          >No more doomscrolling event platforms into an existential crisis.</span
+        >
       </a>
 
       <a href="/sift/" class="item item--sift">
@@ -22,10 +32,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <span class="item-desc">Take back a LinkedIn worth your time.</span>
       </a>
     </section>
-
   </main>
 </BaseLayout>
-
 
 <style>
   .touchfish-page {
@@ -60,8 +68,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     max-width: 28rem;
   }
 
-  .item--events .item-title { color: var(--text); }
-  .item--sift .item-title { color: var(--text); }
+  .item--events .item-title {
+    color: var(--text);
+  }
+  .item--sift .item-title {
+    color: var(--text);
+  }
 
   .item-type {
     font-size: 0.65rem;
