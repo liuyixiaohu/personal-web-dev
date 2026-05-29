@@ -39,7 +39,7 @@ export default defineConfig({
     '/professional/product-marketing': '/',
     '/professional/data-science': '/',
     '/professional/visual-design': '/',
-    '/professional/brand-narrative': '/',  // /brand page removed in 1a1f5dd
+    '/professional/brand-narrative': '/', // /brand page removed in 1a1f5dd
     '/professional/quant-insights': '/',
     '/professional/information-design': '/',
 
@@ -58,5 +58,5 @@ export default defineConfig({
     sitemap({
       filter: (page) => !page.includes('/privacy'),
     }),
-  ]
+  ],
 });

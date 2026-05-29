@@ -6,32 +6,32 @@
 
 :root {
   /* Colors */
-  --bg: #FAF7F2;
-  --text: #1F2328;
-  --text-light: #5A636B;
+  --bg: #faf7f2;
+  --text: #1f2328;
+  --text-light: #5a636b;
   --border: #e2ded8;
-  --gray-subtle: #8A939B;
+  --gray-subtle: #8a939b;
 
   /* Accent colors (deep) */
   --color-pm: #9a6868;
   --color-ds: #5a7a94;
   --color-ds-mid: #7a9ab4;
   --color-visual: #5a8a6e;
-  --color-journey: #7FB6DD;
-  --color-rose: #D9797B;
+  --color-journey: #7fb6dd;
+  --color-rose: #d9797b;
 
   /* Bubble colors (light backgrounds) */
-  --bubble-pm: #F0D7D7;
-  --bubble-ds: #D6E6F3;
-  --bubble-visual: #DDEEE7;
+  --bubble-pm: #f0d7d7;
+  --bubble-ds: #d6e6f3;
+  --bubble-visual: #ddeee7;
 
   /* Typography : Major Third modular scale (1.25×) */
   --font-body: 'LXGW WenKai', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  --fs-base: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);  /* root font-size */
-  --fs-xs: 0.75rem;    /* small : labels, tags, captions, secondary text */
-  --fs-md: 1.25rem;    /* 1.25¹  : subheadings, nav titles */
-  --fs-lg: clamp(1.4375rem, 1.39rem + 0.26vw, 1.563rem);  /* 1.25² : 23px→31px */
-  --fs-xl: clamp(1.75rem, 1.7rem + 0.38vw, 1.953rem);    /* 1.25³ : 28px→39px */
+  --fs-base: clamp(1rem, 0.9rem + 0.5vw, 1.25rem); /* root font-size */
+  --fs-xs: 0.75rem; /* small : labels, tags, captions, secondary text */
+  --fs-md: 1.25rem; /* 1.25¹  : subheadings, nav titles */
+  --fs-lg: clamp(1.4375rem, 1.39rem + 0.26vw, 1.563rem); /* 1.25² : 23px→31px */
+  --fs-xl: clamp(1.75rem, 1.7rem + 0.38vw, 1.953rem); /* 1.25³ : 28px→39px */
 
   /* Spacing : Fluid */
   --space-xs: clamp(0.5rem, 1vw, 0.75rem);
@@ -41,9 +41,9 @@
   --space-xl: clamp(2rem, 5vw, 5rem);
 
   /* Border-radius scale */
-  --radius-sm: 3px;   /* pills, badges, small controls */
-  --radius-md: 6px;   /* buttons, inputs, cards */
-  --radius-lg: 12px;  /* modals, overlays, large cards */
+  --radius-sm: 3px; /* pills, badges, small controls */
+  --radius-md: 6px; /* buttons, inputs, cards */
+  --radius-lg: 12px; /* modals, overlays, large cards */
   --radius-full: 50%; /* circles, avatars */
 
   /* Shadow / Elevation scale */
@@ -62,7 +62,9 @@
 }
 
 /* Reset */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -74,11 +76,16 @@ html {
 }
 
 @keyframes page-fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-html, body {
+html,
+body {
   font-family: var(--font-body);
   font-size: var(--fs-base);
   line-height: 1.6;
@@ -91,22 +98,40 @@ html, body {
 }
 
 /* Typography rhythm — line-height, spacing, letter-spacing */
-h1 { line-height: 1.2; letter-spacing: -0.01em; }
-h2 { line-height: 1.3; letter-spacing: -0.01em; }
-h3 { line-height: 1.5; }
+h1 {
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+h2 {
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+h3 {
+  line-height: 1.5;
+}
 
 /* Heading spacing: more above (new section), moderate below */
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   margin-top: 1.5em;
   margin-bottom: 0.75em;
 }
 
 /* First heading in a container needs no top margin */
-h1:first-child, h2:first-child, h3:first-child { margin-top: 0; }
+h1:first-child,
+h2:first-child,
+h3:first-child {
+  margin-top: 0;
+}
 
 /* Paragraph spacing: em-based, scales with font size */
-p { margin-bottom: 0.75em; }
-p:last-child { margin-bottom: 0; }
+p {
+  margin-bottom: 0.75em;
+}
+p:last-child {
+  margin-bottom: 0;
+}
 
 /* Accessibility: focus-visible ring for keyboard navigation */
 :focus-visible {
@@ -117,7 +142,9 @@ p:last-child { margin-bottom: 0; }
 
 /* Accessibility: respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -126,7 +153,9 @@ p:last-child { margin-bottom: 0; }
 }
 
 /* Flowed layout: images and media adapt */
-img, video, svg {
+img,
+video,
+svg {
   max-width: 100%;
   height: auto;
   display: block;
@@ -159,8 +188,13 @@ a:hover {
 }
 
 @keyframes scroll-arrow-bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(6px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
 }
 
 /* Selection */
@@ -266,15 +300,15 @@ a:hover {
   display: grid;
   grid-template-columns:
     [full-start]
-      minmax(0, 1fr)
+    minmax(0, 1fr)
     [wide-start]
-      minmax(0, calc((var(--grid-wide) - var(--grid-content)) / 2))
+    minmax(0, calc((var(--grid-wide) - var(--grid-content)) / 2))
     [content-start]
-      min(var(--grid-content), 100% - var(--grid-gutter) * 2)
+    min(var(--grid-content), 100% - var(--grid-gutter) * 2)
     [content-end]
-      minmax(0, calc((var(--grid-wide) - var(--grid-content)) / 2))
+    minmax(0, calc((var(--grid-wide) - var(--grid-content)) / 2))
     [wide-end]
-      minmax(0, 1fr)
+    minmax(0, 1fr)
     [full-end];
   min-height: 100dvh;
   padding-block: clamp(4rem, 8vh, 6rem) 4rem;

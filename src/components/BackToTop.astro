@@ -29,10 +29,14 @@
     window.addEventListener('scroll', onScroll, { passive: true, signal: controller.signal });
     onScroll(); // check initial position
 
-    button.addEventListener('click', () => {
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
-    }, { signal: controller.signal });
+    button.addEventListener(
+      'click',
+      () => {
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+      },
+      { signal: controller.signal },
+    );
   }
 
   // Run on initial load and after view transitions

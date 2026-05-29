@@ -1,6 +1,6 @@
 # kunli.co
 
-Personal site. *Who I am, not what I've done.*
+Personal site. _Who I am, not what I've done._
 
 **Live:** [kunli.co](https://kunli.co)
 
@@ -12,15 +12,15 @@ GitHub Actions cron), and a Cloudflare Pages deploy.
 
 ## Stack
 
-| Layer | Tech |
-|---|---|
-| Framework | [Astro 5](https://astro.build) (static output) |
+| Layer               | Tech                                                                   |
+| ------------------- | ---------------------------------------------------------------------- |
+| Framework           | [Astro 5](https://astro.build) (static output)                         |
 | Interactive islands | [Svelte 5](https://svelte.dev) runes (`$state`, `$derived`, `$effect`) |
-| Maps | [D3-geo](https://d3js.org) for life-journey world map |
-| Pages | 8 routes incl. EN + ZH variants for select pages |
-| Data pipelines | Python scripts + GitHub Actions cron (daily) |
-| Hosting | Cloudflare Pages (static) |
-| Analytics | GTM, with a thin typed wrapper in `src/utils/analytics.ts` |
+| Maps                | [D3-geo](https://d3js.org) for life-journey world map                  |
+| Pages               | 8 routes incl. EN + ZH variants for select pages                       |
+| Data pipelines      | Python scripts + GitHub Actions cron (daily)                           |
+| Hosting             | Cloudflare Pages (static)                                              |
+| Analytics           | GTM, with a thin typed wrapper in `src/utils/analytics.ts`             |
 
 ## Data flow
 

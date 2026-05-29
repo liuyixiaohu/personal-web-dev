@@ -15,36 +15,37 @@
 ## Colors
 
 **Rules:**
+
 - Never use `#000000`. Use `--text` (`#1F2328`) for all dark text.
 - Only use colors from this approved palette. No exceptions.
 - `rgba(0, 0, 0, 0.03-0.08)` is allowed for subtle borders, dividers, and hover backgrounds.
 - `#FFFFFF` is allowed for inverse text on colored backgrounds only.
 
-| Hex | CSS Variable | Category | Usage |
-|---|---|---|---|
-| `#FAF7F2` | `--bg` | Warm Neutral | Page background |
-| `#F3EFE7` | - | Warm Neutral | Subtle background variation |
-| `#E4DDD2` | - | Warm Neutral | Warm border / card background |
-| `#E2DED8` | `--border` | Warm Neutral | Default border color |
-| `#DDEEE7` | `--bubble-visual` | Green | Light green background |
-| `#A8D7C6` | - | Green | Mid green accent |
-| `#D6E6F3` | `--bubble-ds` | Blue | Light blue background |
-| `#7A9AB4` | `--color-ds-mid` | Blue | Mid blue interactive text |
-| `#7FB6DD` | - | Blue | Life Journey accent |
-| `#F0D7D7` | `--bubble-pm` | Pink | Light pink background |
-| `#D9797B` | `--color-rose` | Pink | Strong pink/rose accent |
-| `#8A939B` | - | Gray | Subtle / decorative |
-| `#5A636B` | `--text-light` | Text | Secondary/muted text (WCAG AA 5.73:1) |
-| `#1F2328` | `--text` | Text | Primary text |
+| Hex       | CSS Variable      | Category     | Usage                                 |
+| --------- | ----------------- | ------------ | ------------------------------------- |
+| `#FAF7F2` | `--bg`            | Warm Neutral | Page background                       |
+| `#F3EFE7` | -                 | Warm Neutral | Subtle background variation           |
+| `#E4DDD2` | -                 | Warm Neutral | Warm border / card background         |
+| `#E2DED8` | `--border`        | Warm Neutral | Default border color                  |
+| `#DDEEE7` | `--bubble-visual` | Green        | Light green background                |
+| `#A8D7C6` | -                 | Green        | Mid green accent                      |
+| `#D6E6F3` | `--bubble-ds`     | Blue         | Light blue background                 |
+| `#7A9AB4` | `--color-ds-mid`  | Blue         | Mid blue interactive text             |
+| `#7FB6DD` | -                 | Blue         | Life Journey accent                   |
+| `#F0D7D7` | `--bubble-pm`     | Pink         | Light pink background                 |
+| `#D9797B` | `--color-rose`    | Pink         | Strong pink/rose accent               |
+| `#8A939B` | -                 | Gray         | Subtle / decorative                   |
+| `#5A636B` | `--text-light`    | Text         | Secondary/muted text (WCAG AA 5.73:1) |
+| `#1F2328` | `--text`          | Text         | Primary text                          |
 
 ### Professional Area Accents
 
-| Area | Hex |
-|---|---|
+| Area              | Hex       |
+| ----------------- | --------- |
 | Product Marketing | `#9a6868` |
-| Data Science | `#5a7a94` |
-| Visual Design | `#5a8a6e` |
-| Life Journey | `#7FB6DD` |
+| Data Science      | `#5a7a94` |
+| Visual Design     | `#5a8a6e` |
+| Life Journey      | `#7FB6DD` |
 
 ---
 
@@ -64,24 +65,24 @@ Source: cdnjs CDN.
 
 Root font-size is fluid: `clamp(1rem, 0.9rem + 0.5vw, 1.25rem)`
 
-| Level | Size | Usage |
-|---|---|---|
-| `--fs-xs` | `0.75rem` | Labels, tags, badges |
-| `--fs-sm` | `0.8rem` | Descriptions, captions |
-| (base) | `1rem` | Body text |
-| `--fs-md` | `1.25rem` | Subheadings, nav titles |
-| `--fs-lg` | `1.563rem` | Page headings |
+| Level     | Size       | Usage                   |
+| --------- | ---------- | ----------------------- |
+| `--fs-xs` | `0.75rem`  | Labels, tags, badges    |
+| `--fs-sm` | `0.8rem`   | Descriptions, captions  |
+| (base)    | `1rem`     | Body text               |
+| `--fs-md` | `1.25rem`  | Subheadings, nav titles |
+| `--fs-lg` | `1.563rem` | Page headings           |
 | `--fs-xl` | `1.953rem` | Hero / display headings |
 
 ### Typography Rhythm
 
 All vertical spacing uses `em` units (scales with font size).
 
-| Relationship | Spacing |
-|---|---|
+| Relationship          | Spacing  |
+| --------------------- | -------- |
 | Paragraph → Paragraph | `0.75em` |
-| Heading → Body | `0.75em` |
-| Body → Heading | `1.5em` |
+| Heading → Body        | `0.75em` |
+| Body → Heading        | `1.5em`  |
 
 **Letter-spacing:** `-0.01em` (large headings), `0` (default), `0.05em` (small uppercase)
 
@@ -102,13 +103,13 @@ All vertical spacing uses `em` units (scales with font size).
 
 Fluid scale using `clamp()`, adapts to viewport width.
 
-| Variable | Value |
-|---|---|
-| `--space-xs` | `clamp(0.5rem, 1vw, 0.75rem)` |
+| Variable     | Value                            |
+| ------------ | -------------------------------- |
+| `--space-xs` | `clamp(0.5rem, 1vw, 0.75rem)`    |
 | `--space-sm` | `clamp(0.75rem, 1.5vw, 1.25rem)` |
-| `--space-md` | `clamp(1rem, 2vw, 2rem)` |
-| `--space-lg` | `clamp(1.5rem, 3vw, 3rem)` |
-| `--space-xl` | `clamp(2rem, 5vw, 5rem)` |
+| `--space-md` | `clamp(1rem, 2vw, 2rem)`         |
+| `--space-lg` | `clamp(1.5rem, 3vw, 3rem)`       |
+| `--space-xl` | `clamp(2rem, 5vw, 5rem)`         |
 
 ---
 
@@ -116,11 +117,11 @@ Fluid scale using `clamp()`, adapts to viewport width.
 
 Three content width tracks:
 
-| Track | Width | Usage |
-|---|---|---|
-| Content | 36rem | Body text, prose, navigation |
-| Wide | 44rem | Tools, tables, wider media |
-| Full | 100% | Full-bleed images, immersive sections |
+| Track   | Width | Usage                                 |
+| ------- | ----- | ------------------------------------- |
+| Content | 36rem | Body text, prose, navigation          |
+| Wide    | 44rem | Tools, tables, wider media            |
+| Full    | 100%  | Full-bleed images, immersive sections |
 
 ---
 
@@ -167,12 +168,12 @@ The visual primitives are exercised in production on `/events`. Refer to:
 
 ## Border Radius
 
-| Variable | Value | Usage |
-|---|---|---|
-| `--radius-sm` | `3px` | Pills, badges, small controls |
-| `--radius-md` | `6px` | Buttons, inputs, cards |
-| `--radius-lg` | `12px` | Modals, overlays, large cards |
-| `--radius-full` | `50%` | Circles, avatars |
+| Variable        | Value  | Usage                         |
+| --------------- | ------ | ----------------------------- |
+| `--radius-sm`   | `3px`  | Pills, badges, small controls |
+| `--radius-md`   | `6px`  | Buttons, inputs, cards        |
+| `--radius-lg`   | `12px` | Modals, overlays, large cards |
+| `--radius-full` | `50%`  | Circles, avatars              |
 
 ---
 
@@ -180,11 +181,11 @@ The visual primitives are exercised in production on `/events`. Refer to:
 
 All shadows use black at 0.04-0.08 opacity for warmth.
 
-| Variable | Value | Usage |
-|---|---|---|
-| `--shadow-sm` | `0 2px 12px rgba(0,0,0,0.08)` | Dropdowns, tooltips |
-| `--shadow-md` | `0 4px 16px rgba(0,0,0,0.08)` | Popups, floating cards |
-| `--shadow-lg` | `0 8px 40px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04)` | Modals, full overlays |
+| Variable      | Value                                                     | Usage                  |
+| ------------- | --------------------------------------------------------- | ---------------------- |
+| `--shadow-sm` | `0 2px 12px rgba(0,0,0,0.08)`                             | Dropdowns, tooltips    |
+| `--shadow-md` | `0 4px 16px rgba(0,0,0,0.08)`                             | Popups, floating cards |
+| `--shadow-lg` | `0 8px 40px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04)` | Modals, full overlays  |
 
 ---
 
@@ -192,12 +193,12 @@ All shadows use black at 0.04-0.08 opacity for warmth.
 
 ### Color Contrast (WCAG AA)
 
-| Color | Ratio | Status |
-|---|---|---|
-| `--text` (#1F2328) | 14.78:1 | AA pass |
-| `--text-light` (#5A636B) | 5.73:1 | AA pass |
-| Accent colors (#5a7a94, #5a8a6e) | 3.7-4.2:1 | AA large only |
-| Rose (#D9797B) | 2.82:1 | Decorative only |
+| Color                            | Ratio     | Status          |
+| -------------------------------- | --------- | --------------- |
+| `--text` (#1F2328)               | 14.78:1   | AA pass         |
+| `--text-light` (#5A636B)         | 5.73:1    | AA pass         |
+| Accent colors (#5a7a94, #5a8a6e) | 3.7-4.2:1 | AA large only   |
+| Rose (#D9797B)                   | 2.82:1    | Decorative only |
 
 ### Focus States
 
@@ -222,12 +223,12 @@ All animations and transitions disabled when user prefers reduced motion.
 
 **Mark:** Serif "K" in EB Garamond on cream background.
 
-| Format | Size | Usage |
-|---|---|---|
-| SVG | scalable | Modern browsers (preferred) |
-| PNG | 32px | Browser tab fallback |
-| PNG | 256px | High-res, social sharing |
-| PNG | 180px | iOS home screen |
+| Format | Size     | Usage                       |
+| ------ | -------- | --------------------------- |
+| SVG    | scalable | Modern browsers (preferred) |
+| PNG    | 32px     | Browser tab fallback        |
+| PNG    | 256px    | High-res, social sharing    |
+| PNG    | 180px    | iOS home screen             |
 
 Colors: `--bg` (#FAF7F2) background, `--text` (#1F2328) fill.
 
@@ -244,7 +245,7 @@ Colors: `--bg` (#FAF7F2) background, `--text` (#1F2328) fill.
 
 ## Analytics
 
-**Guiding principle**: Only track what answers *"Which content are people truly reading?"*
+**Guiding principle**: Only track what answers _"Which content are people truly reading?"_
 
 - Track: content engagement (pin clicks, filter use, language toggle, craft area interest)
 - Don't track: navigation clicks, outbound links, CTA clicks, or anything GA4 already captures via page_view

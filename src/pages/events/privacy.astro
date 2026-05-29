@@ -3,7 +3,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/privacy.css';
 ---
 
-<BaseLayout title="Events Privacy Policy" description="Bay Area Events Monitor privacy policy. No personal data collected.">
+<BaseLayout
+  title="Events Privacy Policy"
+  description="Bay Area Events Monitor privacy policy. No personal data collected."
+>
   <main id="main" class="privacy-page grid-page">
     <a href="/events/" class="back-link">&larr; Events</a>
 
@@ -14,28 +17,53 @@ import '../../styles/privacy.css';
 
     <section class="section">
       <h2>What This Page Does</h2>
-      <p>The Bay Area Events Monitor displays newly discovered tech and AI events from Luma. It runs entirely in your browser.</p>
+      <p>
+        The Bay Area Events Monitor displays newly discovered tech and AI events from Luma. It runs
+        entirely in your browser.
+      </p>
     </section>
 
     <section class="section">
       <h2>Data Collection</h2>
-      <p>This page does <strong>not</strong> use accounts or sign-in, and it does not ask for contact information. It does make the network requests needed to load event data and run website analytics:</p>
+      <p>
+        This page does <strong>not</strong> use accounts or sign-in, and it does not ask for contact information.
+        It does make the network requests needed to load event data and run website analytics:
+      </p>
       <ul class="privacy-list">
         <li>Event data is fetched from this website's public data files</li>
-        <li>Filter, search, and exclude interactions may be sent to Google Analytics through Google Tag Manager</li>
+        <li>
+          Filter, search, and exclude interactions may be sent to Google Analytics through Google
+          Tag Manager
+        </li>
         <li>No cookies set by this page</li>
       </ul>
-      <p>This website uses Google Analytics via Google Tag Manager to understand page visits and interactions. Google's <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" class="privacy-link">privacy policy</a> applies to that data. Analytics events are used to improve the page, such as refining popular filters or removing underused features.</p>
+      <p>
+        This website uses Google Analytics via Google Tag Manager to understand page visits and
+        interactions. Google's <a
+          href="https://policies.google.com/privacy"
+          target="_blank"
+          rel="noopener"
+          class="privacy-link">privacy policy</a
+        > applies to that data. Analytics events are used to improve the page, such as refining popular
+        filters or removing underused features.
+      </p>
     </section>
 
     <section class="section">
       <h2>Event Data</h2>
-      <p>Event listings are fetched from a public source and displayed directly in your browser. No personal data is included in these requests.</p>
+      <p>
+        Event listings are fetched from a public source and displayed directly in your browser. No
+        personal data is included in these requests.
+      </p>
     </section>
 
     <section class="section">
       <h2>Local Storage</h2>
-      <p>Your selected locations, selected days, and excluded keywords are saved using the browser's local storage. This keeps your filters in place between visits. Local storage data stays on your device unless you clear it in your browser.</p>
+      <p>
+        Your selected locations, selected days, and excluded keywords are saved using the browser's
+        local storage. This keeps your filters in place between visits. Local storage data stays on
+        your device unless you clear it in your browser.
+      </p>
     </section>
 
     <section class="section">
@@ -47,6 +75,5 @@ import '../../styles/privacy.css';
       <h2>Contact</h2>
       <p>Questions? Reach out at <a href="/events/" class="privacy-link">kunli.co/events</a>.</p>
     </section>
-
   </main>
 </BaseLayout>

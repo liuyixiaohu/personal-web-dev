@@ -20,8 +20,8 @@ for (const id of ids) {
 
   const mdx = read(path);
   assert(/^---\n[\s\S]*?\n---/.test(mdx), `${path} is missing frontmatter`);
-  assert(/^title:\s*".+"/m.test(mdx), `${path} is missing title`);
-  assert(/^summary:\s*".+"/m.test(mdx), `${path} is missing summary`);
+  assert(/^title:\s*['"].+['"]/m.test(mdx), `${path} is missing title`);
+  assert(/^summary:\s*['"].+['"]/m.test(mdx), `${path} is missing summary`);
 
   // Coming-soon chapters intentionally have no body yet; everything else needs a chapter.
   const isComingSoon = /^status:\s*["']?coming-soon["']?/m.test(mdx);
@@ -41,8 +41,14 @@ if (existsSync(join(root, detailPage))) {
 const indexPage = read('src/pages/life-journey.astro');
 assert(indexPage.includes('journey-tooltip'), 'Journey page needs a hover/focus tooltip');
 assert(!indexPage.includes('story-modal'), 'Journey page should not render the old story modal');
-assert(!existsSync(join(root, 'src/data/journeyStories.ts')), 'Old journeyStories.ts should be removed');
-assert(!existsSync(join(root, 'src/utils/journey/modal.ts')), 'Old journey modal utility should be removed');
+assert(
+  !existsSync(join(root, 'src/data/journeyStories.ts')),
+  'Old journeyStories.ts should be removed',
+);
+assert(
+  !existsSync(join(root, 'src/utils/journey/modal.ts')),
+  'Old journey modal utility should be removed',
+);
 
 if (failures.length) {
   console.error(`Journey MDX verification failed (${failures.length}):`);

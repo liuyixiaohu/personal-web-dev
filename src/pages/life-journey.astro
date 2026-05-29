@@ -4,12 +4,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { pins } from '../components/globe/pins';
 
 const LABEL_POS: Record<string, { dx: number; dy: number; anchor: string }> = {
-  shouguang: { dx: 16,  dy: -22, anchor: 'start' },
-  qingdao:   { dx: 16,  dy: 12,  anchor: 'start' },
-  jiaozhou:  { dx: -16, dy: 34,  anchor: 'end' },
-  madison:   { dx: 16,  dy: -16, anchor: 'start' },
+  shouguang: { dx: 16, dy: -22, anchor: 'start' },
+  qingdao: { dx: 16, dy: 12, anchor: 'start' },
+  jiaozhou: { dx: -16, dy: 34, anchor: 'end' },
+  madison: { dx: 16, dy: -16, anchor: 'start' },
   fairfield: { dx: 16, dy: -16, anchor: 'start' },
-  berkeley:  { dx: -16, dy: 30,  anchor: 'end' },
+  berkeley: { dx: -16, dy: 30, anchor: 'end' },
 };
 
 const journeyEntries = await getCollection('journey');
@@ -29,7 +29,10 @@ const journeyPins = pins.map((pin) => {
 <BaseLayout title="Life Journey" description="Six places I've called home." hideFooter>
   <main id="main" class="journey-page">
     <h1 class="sr-only">Life Journey</h1>
-    <p class="sr-only">A static map of six places: Jiaozhou, Shouguang, Qingdao in Shandong, China; Madison, Wisconsin; Fairfield and Berkeley, California.</p>
+    <p class="sr-only">
+      A static map of six places: Jiaozhou, Shouguang, Qingdao in Shandong, China; Madison,
+      Wisconsin; Fairfield and Berkeley, California.
+    </p>
     <a href="/" class="back-link">← Home</a>
 
     <div class="country-pair" id="country-pair">
@@ -143,7 +146,7 @@ const journeyPins = pins.map((pin) => {
     const { pins, LABEL_POS } = data;
 
     fetch('/data/journey-countries.json')
-      .then(res => res.json())
+      .then((res) => res.json())
       .then((geo: any) => {
         const chinaSvg = document.getElementById('china-svg') as unknown as SVGSVGElement | null;
         const usaSvg = document.getElementById('usa-svg') as unknown as SVGSVGElement | null;
@@ -158,7 +161,16 @@ const journeyPins = pins.map((pin) => {
           onPinLeave: hideTooltip,
         };
 
-        buildSVG(chinaSvg, geo.china, geo.provinces, chinaPins, 'clip-china', 80, LABEL_POS, handlers);
+        buildSVG(
+          chinaSvg,
+          geo.china,
+          geo.provinces,
+          chinaPins,
+          'clip-china',
+          80,
+          LABEL_POS,
+          handlers,
+        );
         buildSVG(usaSvg, geo.usa, geo.provinces, usaPins, 'clip-usa', 80, LABEL_POS, handlers);
 
         document.getElementById('country-pair')?.classList.add('loaded');
@@ -243,7 +255,9 @@ const journeyPins = pins.map((pin) => {
     opacity: 0;
     pointer-events: none;
     transform: translateY(0.25rem);
-    transition: opacity 0.15s ease, transform 0.15s ease;
+    transition:
+      opacity 0.15s ease,
+      transform 0.15s ease;
   }
 
   .journey-tooltip.visible {
@@ -298,7 +312,6 @@ const journeyPins = pins.map((pin) => {
       height: clamp(18rem, 31vw, 26rem);
     }
   }
-
 </style>
 
 <style is:global>

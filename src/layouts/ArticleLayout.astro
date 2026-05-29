@@ -17,7 +17,16 @@ interface Props {
   comingSoon?: boolean;
 }
 
-const { title, headline, summary, backHref, backLabel, headings, chapterNavLabel, comingSoon = false } = Astro.props;
+const {
+  title,
+  headline,
+  summary,
+  backHref,
+  backLabel,
+  headings,
+  chapterNavLabel,
+  comingSoon = false,
+} = Astro.props;
 const chapters = headings.filter((heading) => heading.depth === 2);
 ---
 
@@ -32,23 +41,25 @@ const chapters = headings.filter((heading) => heading.depth === 2);
       <slot name="tags" />
     </header>
 
-    {comingSoon ? (
-      <p class="article-comingsoon">This chapter is still being written — check back.</p>
-    ) : (
-      <Fragment>
-        {chapters.length > 0 && (
-          <nav class="chapter-nav" aria-label={chapterNavLabel}>
-            {chapters.map((chapter) => (
-              <a href={`#${chapter.slug}`}>{chapter.text}</a>
-            ))}
-          </nav>
-        )}
+    {
+      comingSoon ? (
+        <p class="article-comingsoon">This chapter is still being written — check back.</p>
+      ) : (
+        <Fragment>
+          {chapters.length > 0 && (
+            <nav class="chapter-nav" aria-label={chapterNavLabel}>
+              {chapters.map((chapter) => (
+                <a href={`#${chapter.slug}`}>{chapter.text}</a>
+              ))}
+            </nav>
+          )}
 
-        <article class="article-content">
-          <slot />
-        </article>
-      </Fragment>
-    )}
+          <article class="article-content">
+            <slot />
+          </article>
+        </Fragment>
+      )
+    }
   </main>
 </BaseLayout>
 

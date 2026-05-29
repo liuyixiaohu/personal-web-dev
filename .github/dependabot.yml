@@ -1,32 +1,32 @@
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: 'weekly'
+      day: 'monday'
     open-pull-requests-limit: 5
     groups:
       minor-and-patch:
-        update-types: ["minor", "patch"]
+        update-types: ['minor', 'patch']
 
-  - package-ecosystem: "pip"
-    directory: "/scripts/luma"
+  - package-ecosystem: 'pip'
+    directory: '/scripts/luma'
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: 'weekly'
+      day: 'monday'
     open-pull-requests-limit: 3
 
-  - package-ecosystem: "pip"
-    directory: "/scripts/connectors"
+  - package-ecosystem: 'pip'
+    directory: '/scripts/connectors'
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: 'weekly'
+      day: 'monday'
     open-pull-requests-limit: 3
 
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: 'github-actions'
+    directory: '/'
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: 'weekly'
+      day: 'monday'
     open-pull-requests-limit: 3

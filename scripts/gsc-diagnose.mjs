@@ -30,8 +30,13 @@ const KEY_PATHS = [
   resolve(import.meta.dirname, '../.claude/gcp-service-account.json'),
   resolve(process.env.HOME, '.config/gcloud/kunli-analytics.json'),
 ];
-const keyPath = KEY_PATHS.find(p => {
-  try { readFileSync(p); return true; } catch { return false; }
+const keyPath = KEY_PATHS.find((p) => {
+  try {
+    readFileSync(p);
+    return true;
+  } catch {
+    return false;
+  }
 });
 if (!keyPath) {
   console.error('Service account key not found. Checked:', KEY_PATHS);
@@ -141,7 +146,7 @@ try {
     for (const row of data.rows) {
       const page = row.keys[0].replace(SITE_URL, '') || '/';
       console.log(
-        `  ${page.padEnd(35)} ${String(row.clicks).padStart(6)}  ${String(row.impressions).padStart(11)}  ${(row.ctr * 100).toFixed(1).padStart(5)}%  ${row.position.toFixed(1).padStart(8)}`
+        `  ${page.padEnd(35)} ${String(row.clicks).padStart(6)}  ${String(row.impressions).padStart(11)}  ${(row.ctr * 100).toFixed(1).padStart(5)}%  ${row.position.toFixed(1).padStart(8)}`,
       );
     }
   } else {
@@ -158,7 +163,9 @@ for (const url of [PROD_ORIGIN, `${PROD_ORIGIN}/sift`, `${PROD_ORIGIN}/events`])
   try {
     const res = await fetch(url, { method: 'HEAD', redirect: 'follow' });
     const xRobots = res.headers.get('x-robots-tag');
-    console.log(`  ${url}  -->  ${xRobots ? `X-Robots-Tag: ${xRobots}` : 'no X-Robots-Tag (good)'}`);
+    console.log(
+      `  ${url}  -->  ${xRobots ? `X-Robots-Tag: ${xRobots}` : 'no X-Robots-Tag (good)'}`,
+    );
   } catch (err) {
     console.error(`  ${url}  -->  fetch error: ${err.message}`);
   }
@@ -166,9 +173,9 @@ for (const url of [PROD_ORIGIN, `${PROD_ORIGIN}/sift`, `${PROD_ORIGIN}/events`])
 
 // ── Summary ────────────────────────────────────────────────────────
 console.log('\n=== Summary ===\n');
-const indexed = inspectionResults.filter(r => r.verdict === 'PASS').length;
-const failed = inspectionResults.filter(r => r.verdict && r.verdict !== 'PASS').length;
-const errors = inspectionResults.filter(r => r.error).length;
+const indexed = inspectionResults.filter((r) => r.verdict === 'PASS').length;
+const failed = inspectionResults.filter((r) => r.verdict && r.verdict !== 'PASS').length;
+const errors = inspectionResults.filter((r) => r.error).length;
 console.log(`  Total URLs checked: ${inspectionResults.length}`);
 console.log(`  Indexed (PASS):     ${indexed}`);
 console.log(`  Not indexed:        ${failed}`);

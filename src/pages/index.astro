@@ -3,14 +3,27 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HintTooltip from '../components/HintTooltip.astro';
 ---
 
-<BaseLayout title="Kun Li" description="Given the SEO Principals, I'm genuinely surprised you found this page. Welcome, I guess." ogDescription="Some stories off the record." bodyClass="home">
+<BaseLayout
+  title="Kun Li"
+  description="Given the SEO Principals, I'm genuinely surprised you found this page. Welcome, I guess."
+  ogDescription="Some stories off the record."
+  bodyClass="home"
+>
   <main id="main">
     <h1 class="sr-only">Kun Li</h1>
 
     <section class="home-hero">
       <div class="home-content">
         <div class="home-tagline">
-          <p class="greeting-quote"><span>Where’s your </span><HintTooltip><span>Negative #25</span><span slot="popup">From <a href="https://www.imdb.com/title/tt0359950/" target="_blank">The Secret Life of Walter Mitty</a>, a film that has been encouraging me to explore the world, find myself.</span></HintTooltip><span>?</span></p>
+          <p class="greeting-quote">
+            <span>Where’s your </span><HintTooltip
+              ><span>Negative #25</span><span slot="popup"
+                >From <a href="https://www.imdb.com/title/tt0359950/" target="_blank"
+                  >The Secret Life of Walter Mitty</a
+                >, a film that has been encouraging me to explore the world, find myself.</span
+              ></HintTooltip
+            ><span>?</span>
+          </p>
         </div>
 
         <nav class="home-nav">
@@ -25,7 +38,6 @@ import HintTooltip from '../components/HintTooltip.astro';
         </nav>
       </div>
     </section>
-
   </main>
 </BaseLayout>
 
@@ -111,7 +123,8 @@ import HintTooltip from '../components/HintTooltip.astro';
     right: -8%;
     bottom: -0.15em;
     height: 0.42em;
-    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 8' preserveAspectRatio='none'><path d='M 2 5 Q 18 1 34 4 Q 50 7 66 3 Q 82 0 96 4 L 99 5' stroke='%23D9797B' stroke-width='1.7' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/100% 100% no-repeat;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 8' preserveAspectRatio='none'><path d='M 2 5 Q 18 1 34 4 Q 50 7 66 3 Q 82 0 96 4 L 99 5' stroke='%23D9797B' stroke-width='1.7' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>")
+      center/100% 100% no-repeat;
     pointer-events: none;
   }
 
@@ -139,8 +152,12 @@ import HintTooltip from '../components/HintTooltip.astro';
     opacity: 0.6;
   }
 
-  .nav-link--journey { color: var(--color-rose); }
-  .nav-link--fish { color: var(--text-light); }
+  .nav-link--journey {
+    color: var(--color-rose);
+  }
+  .nav-link--fish {
+    color: var(--text-light);
+  }
 
   .nav-link.is-pending {
     color: var(--text-light);

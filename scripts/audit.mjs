@@ -25,7 +25,7 @@ const OUT_PATH = resolve(OUT_DIR, 'audit-output.json');
 // ── Time window ────────────────────────────────────────────────────
 const endDate = new Date();
 const startDate = new Date(Date.now() - 90 * 86400000);
-const fmt = d => d.toISOString().split('T')[0];
+const fmt = (d) => d.toISOString().split('T')[0];
 const START = fmt(startDate);
 const END = fmt(endDate);
 
@@ -50,7 +50,10 @@ const out = {
   errors: {},
 };
 
-const ok = (label, data) => { console.log(`  ✓ ${label}`); return data; };
+const ok = (label, data) => {
+  console.log(`  ✓ ${label}`);
+  return data;
+};
 const fail = (bucket, label, err) => {
   console.log(`  ✗ ${label}: ${err.message}`);
   out.errors[`${bucket}:${label}`] = err.message;
@@ -71,28 +74,48 @@ async function gscQuery(dimensions, rowLimit = 50, extra = {}) {
   return data.rows || [];
 }
 
-try { out.gsc.byQuery = ok('queries (top 50 by impressions)', await gscQuery(['query'])); }
-catch (e) { fail('gsc', 'byQuery', e); }
+try {
+  out.gsc.byQuery = ok('queries (top 50 by impressions)', await gscQuery(['query']));
+} catch (e) {
+  fail('gsc', 'byQuery', e);
+}
 
-try { out.gsc.byPage = ok('pages (top 50)', await gscQuery(['page'])); }
-catch (e) { fail('gsc', 'byPage', e); }
+try {
+  out.gsc.byPage = ok('pages (top 50)', await gscQuery(['page']));
+} catch (e) {
+  fail('gsc', 'byPage', e);
+}
 
-try { out.gsc.byQueryPage = ok('query↔page pairs (top 100)', await gscQuery(['query', 'page'], 100)); }
-catch (e) { fail('gsc', 'byQueryPage', e); }
+try {
+  out.gsc.byQueryPage = ok('query↔page pairs (top 100)', await gscQuery(['query', 'page'], 100));
+} catch (e) {
+  fail('gsc', 'byQueryPage', e);
+}
 
-try { out.gsc.byCountry = ok('countries', await gscQuery(['country'], 25)); }
-catch (e) { fail('gsc', 'byCountry', e); }
+try {
+  out.gsc.byCountry = ok('countries', await gscQuery(['country'], 25));
+} catch (e) {
+  fail('gsc', 'byCountry', e);
+}
 
-try { out.gsc.byDevice = ok('device split', await gscQuery(['device'], 10)); }
-catch (e) { fail('gsc', 'byDevice', e); }
+try {
+  out.gsc.byDevice = ok('device split', await gscQuery(['device'], 10));
+} catch (e) {
+  fail('gsc', 'byDevice', e);
+}
 
-try { out.gsc.byDate = ok('daily series', await gscQuery(['date'], 1000)); }
-catch (e) { fail('gsc', 'byDate', e); }
+try {
+  out.gsc.byDate = ok('daily series', await gscQuery(['date'], 1000));
+} catch (e) {
+  fail('gsc', 'byDate', e);
+}
 
 try {
   const { data } = await webmasters.sitemaps.list({ siteUrl: SITE });
   out.gsc.sitemaps = ok('sitemaps', data.sitemap || []);
-} catch (e) { fail('gsc', 'sitemaps', e); }
+} catch (e) {
+  fail('gsc', 'sitemaps', e);
+}
 
 // URL inspection for the 5 live pages
 const LIVE_URLS = [
@@ -176,10 +199,17 @@ if (propertyId) {
 
   out.ga4.totals = await runReport('totals', {
     metrics: [
-      'totalUsers','newUsers','sessions','engagedSessions','engagementRate',
-      'averageSessionDuration','screenPageViews','screenPageViewsPerSession',
-      'eventCount','bounceRate',
-    ].map(name => ({ name })),
+      'totalUsers',
+      'newUsers',
+      'sessions',
+      'engagedSessions',
+      'engagementRate',
+      'averageSessionDuration',
+      'screenPageViews',
+      'screenPageViewsPerSession',
+      'eventCount',
+      'bounceRate',
+    ].map((name) => ({ name })),
   });
 
   out.ga4.byDate = await runReport('byDate', {
@@ -192,8 +222,11 @@ if (propertyId) {
   out.ga4.byPage = await runReport('byPage', {
     dimensions: [{ name: 'pagePath' }],
     metrics: [
-      { name: 'screenPageViews' }, { name: 'sessions' }, { name: 'totalUsers' },
-      { name: 'engagementRate' }, { name: 'averageSessionDuration' },
+      { name: 'screenPageViews' },
+      { name: 'sessions' },
+      { name: 'totalUsers' },
+      { name: 'engagementRate' },
+      { name: 'averageSessionDuration' },
       { name: 'bounceRate' },
     ],
     orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
@@ -203,8 +236,11 @@ if (propertyId) {
   out.ga4.byLanding = await runReport('byLanding', {
     dimensions: [{ name: 'landingPage' }],
     metrics: [
-      { name: 'sessions' }, { name: 'engagedSessions' }, { name: 'engagementRate' },
-      { name: 'bounceRate' }, { name: 'averageSessionDuration' },
+      { name: 'sessions' },
+      { name: 'engagedSessions' },
+      { name: 'engagementRate' },
+      { name: 'bounceRate' },
+      { name: 'averageSessionDuration' },
     ],
     orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
     limit: 30,
@@ -213,7 +249,9 @@ if (propertyId) {
   out.ga4.bySourceMedium = await runReport('bySourceMedium', {
     dimensions: [{ name: 'sessionSource' }, { name: 'sessionMedium' }],
     metrics: [
-      { name: 'sessions' }, { name: 'totalUsers' }, { name: 'engagementRate' },
+      { name: 'sessions' },
+      { name: 'totalUsers' },
+      { name: 'engagementRate' },
       { name: 'averageSessionDuration' },
     ],
     orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
@@ -249,7 +287,12 @@ if (propertyId) {
 
   out.ga4.byDevice = await runReport('byDevice', {
     dimensions: [{ name: 'deviceCategory' }],
-    metrics: [{ name: 'totalUsers' }, { name: 'sessions' }, { name: 'engagementRate' }, { name: 'bounceRate' }],
+    metrics: [
+      { name: 'totalUsers' },
+      { name: 'sessions' },
+      { name: 'engagementRate' },
+      { name: 'bounceRate' },
+    ],
   });
 
   out.ga4.byBrowser = await runReport('byBrowser', {
@@ -286,20 +329,26 @@ if (propertyId) {
     const { data } = await analyticsAdmin.properties.customDimensions.list({ parent: PROP });
     out.ga4.customDimensions = data.customDimensions || [];
     console.log(`  ✓ customDimensions (${out.ga4.customDimensions.length})`);
-  } catch (e) { fail('ga4', 'customDimensions', e); }
+  } catch (e) {
+    fail('ga4', 'customDimensions', e);
+  }
 
   try {
     const { data } = await analyticsAdmin.properties.customMetrics.list({ parent: PROP });
     out.ga4.customMetrics = data.customMetrics || [];
     console.log(`  ✓ customMetrics (${out.ga4.customMetrics.length})`);
-  } catch (e) { fail('ga4', 'customMetrics', e); }
+  } catch (e) {
+    fail('ga4', 'customMetrics', e);
+  }
 
   // Data streams (to confirm GA4 is receiving from the right domain)
   try {
     const { data } = await analyticsAdmin.properties.dataStreams.list({ parent: PROP });
     out.ga4.dataStreams = data.dataStreams || [];
     console.log(`  ✓ dataStreams (${out.ga4.dataStreams.length})`);
-  } catch (e) { fail('ga4', 'dataStreams', e); }
+  } catch (e) {
+    fail('ga4', 'dataStreams', e);
+  }
 }
 
 // ── 3. GTM ─────────────────────────────────────────────────────────
@@ -324,7 +373,7 @@ try {
       // Live version
       try {
         const { data: liveData } = await Promise.resolve(
-          tagmanager.accounts.containers.versions.live({ parent: ctr.path })
+          tagmanager.accounts.containers.versions.live({ parent: ctr.path }),
         );
         out.gtm.liveVersion = {
           name: liveData.name,
@@ -335,51 +384,71 @@ try {
           triggerCount: liveData.trigger?.length || 0,
           variableCount: liveData.variable?.length || 0,
           builtInVariableCount: liveData.builtInVariable?.length || 0,
-          tags: (liveData.tag || []).map(t => ({
-            name: t.name, type: t.type, paused: t.paused,
+          tags: (liveData.tag || []).map((t) => ({
+            name: t.name,
+            type: t.type,
+            paused: t.paused,
             firingTriggerId: t.firingTriggerId,
             blockingTriggerId: t.blockingTriggerId,
             tagFiringOption: t.tagFiringOption,
             fingerprint: t.fingerprint,
             parameter: t.parameter,
           })),
-          triggers: (liveData.trigger || []).map(t => ({
-            name: t.name, type: t.type, triggerId: t.triggerId,
-            filter: t.filter, customEventFilter: t.customEventFilter,
+          triggers: (liveData.trigger || []).map((t) => ({
+            name: t.name,
+            type: t.type,
+            triggerId: t.triggerId,
+            filter: t.filter,
+            customEventFilter: t.customEventFilter,
             autoEventFilter: t.autoEventFilter,
           })),
-          variables: (liveData.variable || []).map(v => ({
-            name: v.name, type: v.type, variableId: v.variableId,
+          variables: (liveData.variable || []).map((v) => ({
+            name: v.name,
+            type: v.type,
+            variableId: v.variableId,
             parameter: v.parameter,
           })),
-          builtInVariables: (liveData.builtInVariable || []).map(b => b.type),
+          builtInVariables: (liveData.builtInVariable || []).map((b) => b.type),
         };
-        console.log(`    → live v${liveData.containerVersionId}: ${out.gtm.liveVersion.tagCount} tags, ${out.gtm.liveVersion.triggerCount} triggers, ${out.gtm.liveVersion.variableCount} variables`);
-      } catch (e) { fail('gtm', 'liveVersion', e); }
+        console.log(
+          `    → live v${liveData.containerVersionId}: ${out.gtm.liveVersion.tagCount} tags, ${out.gtm.liveVersion.triggerCount} triggers, ${out.gtm.liveVersion.variableCount} variables`,
+        );
+      } catch (e) {
+        fail('gtm', 'liveVersion', e);
+      }
 
       // Workspaces (count != 1 means unmerged changes)
       try {
         const { data: wsData } = await Promise.resolve(
-          tagmanager.accounts.containers.workspaces.list({ parent: ctr.path })
+          tagmanager.accounts.containers.workspaces.list({ parent: ctr.path }),
         );
-        out.gtm.workspaces = (wsData.workspace || []).map(w => ({
-          name: w.name, description: w.description, workspaceId: w.workspaceId,
+        out.gtm.workspaces = (wsData.workspace || []).map((w) => ({
+          name: w.name,
+          description: w.description,
+          workspaceId: w.workspaceId,
         }));
         console.log(`    → workspaces: ${out.gtm.workspaces.length}`);
-      } catch (e) { fail('gtm', 'workspaces', e); }
+      } catch (e) {
+        fail('gtm', 'workspaces', e);
+      }
 
       // Recent versions (header only)
       try {
         const { data: vh } = await Promise.resolve(
-          tagmanager.accounts.containers.version_headers.list({ parent: ctr.path })
+          tagmanager.accounts.containers.version_headers.list({ parent: ctr.path }),
         );
-        out.gtm.versionHeaders = (vh.containerVersionHeader || []).slice(0, 15).map(h => ({
-          name: h.name, versionId: h.containerVersionId,
-          deleted: h.deleted, numTags: h.numTags, numTriggers: h.numTriggers,
+        out.gtm.versionHeaders = (vh.containerVersionHeader || []).slice(0, 15).map((h) => ({
+          name: h.name,
+          versionId: h.containerVersionId,
+          deleted: h.deleted,
+          numTags: h.numTags,
+          numTriggers: h.numTriggers,
           numVariables: h.numVariables,
         }));
         console.log(`    → version history: ${vh.containerVersionHeader?.length || 0} versions`);
-      } catch (e) { fail('gtm', 'versionHeaders', e); }
+      } catch (e) {
+        fail('gtm', 'versionHeaders', e);
+      }
     }
   }
 } catch (e) {

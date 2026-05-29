@@ -23,35 +23,37 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
     <header class="probes-header">
       <h1>Probes</h1>
       <p class="probes-lede">
-        Short, data-driven looks at product, growth, and positioning questions. Things I got
-        curious about, then went and checked.
+        Short, data-driven looks at product, growth, and positioning questions. Things I got curious
+        about, then went and checked.
       </p>
     </header>
 
-    {entries.length === 0 ? (
-      <p class="probes-empty">Drafting the first one. Check back soon.</p>
-    ) : (
-      <ul class="probes-list">
-        {entries.map((entry) => (
-          <li class="probe-item">
-            <a href={`/probes/${entry.id}/`} class="probe-link">
-              <time class="probe-date" datetime={entry.data.publishedAt.toISOString()}>
-                {dateFmt.format(entry.data.publishedAt)}
-              </time>
-              <h2 class="probe-title">{entry.data.title}</h2>
-              <p class="probe-summary">{entry.data.summary}</p>
-              {entry.data.tags.length > 0 && (
-                <ul class="probe-tags" aria-label="tags">
-                  {entry.data.tags.map((tag) => (
-                    <li>{tag}</li>
-                  ))}
-                </ul>
-              )}
-            </a>
-          </li>
-        ))}
-      </ul>
-    )}
+    {
+      entries.length === 0 ? (
+        <p class="probes-empty">Drafting the first one. Check back soon.</p>
+      ) : (
+        <ul class="probes-list">
+          {entries.map((entry) => (
+            <li class="probe-item">
+              <a href={`/probes/${entry.id}/`} class="probe-link">
+                <time class="probe-date" datetime={entry.data.publishedAt.toISOString()}>
+                  {dateFmt.format(entry.data.publishedAt)}
+                </time>
+                <h2 class="probe-title">{entry.data.title}</h2>
+                <p class="probe-summary">{entry.data.summary}</p>
+                {entry.data.tags.length > 0 && (
+                  <ul class="probe-tags" aria-label="tags">
+                    {entry.data.tags.map((tag) => (
+                      <li>{tag}</li>
+                    ))}
+                  </ul>
+                )}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
   </main>
 </BaseLayout>
 
