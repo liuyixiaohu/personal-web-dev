@@ -16,27 +16,27 @@
 
 **Rules:**
 
-- Never use `#000000`. Use `--text` (`#1F2328`) for all dark text.
+- Never use `#000000`. Use `--text` (`#1f2328`) for all dark text.
 - Only use colors from this approved palette. No exceptions.
 - `rgba(0, 0, 0, 0.03-0.08)` is allowed for subtle borders, dividers, and hover backgrounds.
-- `#FFFFFF` is allowed for inverse text on colored backgrounds only.
+- `#ffffff` is allowed for inverse text on colored backgrounds only.
 
 | Hex       | CSS Variable      | Category     | Usage                                 |
 | --------- | ----------------- | ------------ | ------------------------------------- |
-| `#FAF7F2` | `--bg`            | Warm Neutral | Page background                       |
-| `#F3EFE7` | -                 | Warm Neutral | Subtle background variation           |
-| `#E4DDD2` | -                 | Warm Neutral | Warm border / card background         |
-| `#E2DED8` | `--border`        | Warm Neutral | Default border color                  |
-| `#DDEEE7` | `--bubble-visual` | Green        | Light green background                |
-| `#A8D7C6` | -                 | Green        | Mid green accent                      |
-| `#D6E6F3` | `--bubble-ds`     | Blue         | Light blue background                 |
-| `#7A9AB4` | `--color-ds-mid`  | Blue         | Mid blue interactive text             |
-| `#7FB6DD` | -                 | Blue         | Life Journey accent                   |
-| `#F0D7D7` | `--bubble-pm`     | Pink         | Light pink background                 |
-| `#D9797B` | `--color-rose`    | Pink         | Strong pink/rose accent               |
-| `#8A939B` | -                 | Gray         | Subtle / decorative                   |
-| `#5A636B` | `--text-light`    | Text         | Secondary/muted text (WCAG AA 5.73:1) |
-| `#1F2328` | `--text`          | Text         | Primary text                          |
+| `#faf7f2` | `--bg`            | Warm Neutral | Page background                       |
+| `#f3efe7` | -                 | Warm Neutral | Subtle background variation           |
+| `#e4ddd2` | -                 | Warm Neutral | Warm border / card background         |
+| `#e2ded8` | `--border`        | Warm Neutral | Default border color                  |
+| `#ddeee7` | `--bubble-visual` | Green        | Light green background                |
+| `#a8d7c6` | -                 | Green        | Mid green accent                      |
+| `#d6e6f3` | `--bubble-ds`     | Blue         | Light blue background                 |
+| `#7a9ab4` | `--color-ds-mid`  | Blue         | Mid blue interactive text             |
+| `#7fb6dd` | -                 | Blue         | Life Journey accent                   |
+| `#f0d7d7` | `--bubble-pm`     | Pink         | Light pink background                 |
+| `#d9797b` | `--color-rose`    | Pink         | Strong pink/rose accent               |
+| `#8a939b` | -                 | Gray         | Subtle / decorative                   |
+| `#5a636b` | `--text-light`    | Text         | Secondary/muted text (WCAG AA 5.73:1) |
+| `#1f2328` | `--text`          | Text         | Primary text                          |
 
 ### Professional Area Accents
 
@@ -45,7 +45,7 @@
 | Product Marketing | `#9a6868` |
 | Data Science      | `#5a7a94` |
 | Visual Design     | `#5a8a6e` |
-| Life Journey      | `#7FB6DD` |
+| Life Journey      | `#7fb6dd` |
 
 ---
 
@@ -195,10 +195,10 @@ All shadows use black at 0.04-0.08 opacity for warmth.
 
 | Color                            | Ratio     | Status          |
 | -------------------------------- | --------- | --------------- |
-| `--text` (#1F2328)               | 14.78:1   | AA pass         |
-| `--text-light` (#5A636B)         | 5.73:1    | AA pass         |
+| `--text` (#1f2328)               | 14.78:1   | AA pass         |
+| `--text-light` (#5a636b)         | 5.73:1    | AA pass         |
 | Accent colors (#5a7a94, #5a8a6e) | 3.7-4.2:1 | AA large only   |
-| Rose (#D9797B)                   | 2.82:1    | Decorative only |
+| Rose (#d9797b)                   | 2.82:1    | Decorative only |
 
 ### Focus States
 
@@ -230,7 +230,7 @@ All animations and transitions disabled when user prefers reduced motion.
 | PNG    | 256px    | High-res, social sharing    |
 | PNG    | 180px    | iOS home screen             |
 
-Colors: `--bg` (#FAF7F2) background, `--text` (#1F2328) fill.
+Colors: `--bg` (#faf7f2) background, `--text` (#1f2328) fill.
 
 ---
 
