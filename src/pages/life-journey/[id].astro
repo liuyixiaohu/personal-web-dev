@@ -38,6 +38,7 @@ const pageTitle = `${pin.city} - Life Journey`;
   backLabel="← Journey"
   headings={headings}
   chapterNavLabel={`${pin.city} chapters`}
+  comingSoon={entry.data.status === 'coming-soon'}
 >
   <p slot="meta" class="journey-location">{pin.city} · {pin.year}</p>
   <Content />
