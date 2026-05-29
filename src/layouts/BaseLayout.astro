@@ -101,6 +101,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     </script>
   </head>
   <body class={bodyClass} transition:animate={fade({ duration: '0.4s' })}>
+    <a href="#main" class="skip-link">Skip to content</a>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PNCRCQBM" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <slot />
