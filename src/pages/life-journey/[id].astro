@@ -1,6 +1,6 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
 import { pins, type PinData } from '../../components/globe/pins';
 
 export async function getStaticPaths() {
@@ -27,144 +27,28 @@ interface Props {
 
 const { entry, pin } = Astro.props;
 const { Content, headings } = await render(entry);
-const chapters = headings.filter((heading) => heading.depth === 2);
 const pageTitle = `${pin.city} - Life Journey`;
 ---
 
-<BaseLayout title={pageTitle} description={entry.data.summary} hideFooter>
-  <main id="main" class="journey-detail">
-    <a href="/life-journey/" class="back-link">← Journey</a>
-
-    <header class="journey-detail-header">
-      <p class="journey-location">{pin.city} · {pin.year}</p>
-      <h1>{entry.data.title}</h1>
-      <p class="journey-summary">{entry.data.summary}</p>
-    </header>
-
-    {chapters.length > 0 && (
-      <nav class="chapter-nav" aria-label={`${pin.city} chapters`}>
-        {chapters.map((chapter) => (
-          <a href={`#${chapter.slug}`}>{chapter.text}</a>
-        ))}
-      </nav>
-    )}
-
-    <article class="journey-story">
-      <Content />
-    </article>
-  </main>
-</BaseLayout>
+<ArticleLayout
+  title={pageTitle}
+  headline={entry.data.title}
+  summary={entry.data.summary}
+  backHref="/life-journey/"
+  backLabel="← Journey"
+  headings={headings}
+  chapterNavLabel={`${pin.city} chapters`}
+>
+  <p slot="meta" class="journey-location">{pin.city} · {pin.year}</p>
+  <Content />
+</ArticleLayout>
 
 <style>
-  .journey-detail {
-    min-height: 100dvh;
-    max-width: min(44rem, calc(100vw - var(--content-padding) * 2));
-    margin: 0 auto;
-    padding: clamp(4rem, 8vh, 6rem) 0 clamp(4rem, 10vh, 7rem);
-  }
-
-  .journey-detail-header {
-    margin: clamp(2.5rem, 7vh, 5rem) 0 var(--space-lg);
-  }
-
   .journey-location {
     color: var(--text-light);
     font-size: var(--fs-sm);
     font-weight: 500;
     line-height: 1.4;
     margin-bottom: var(--space-xs);
-  }
-
-  .journey-detail-header h1 {
-    color: var(--text);
-    font-size: var(--fs-xl);
-    font-weight: 700;
-    line-height: 1.15;
-    margin: 0 0 var(--space-sm);
-  }
-
-  .journey-summary {
-    color: var(--text-light);
-    font-size: var(--fs-md);
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  .chapter-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem 0.8rem;
-    margin: 0 0 var(--space-lg);
-  }
-
-  .chapter-nav a {
-    color: var(--text-light);
-    font-size: var(--fs-xs);
-    line-height: 1.4;
-    text-decoration: underline;
-    text-decoration-color: var(--border);
-    text-underline-offset: 3px;
-  }
-
-  .chapter-nav a:hover {
-    color: var(--text);
-    text-decoration-color: var(--text);
-  }
-
-  .journey-story {
-    color: var(--text-light);
-    font-size: var(--fs-base);
-    line-height: 1.7;
-  }
-
-  .journey-story :global(h2) {
-    color: var(--text);
-    font-size: var(--fs-lg);
-    font-weight: 700;
-    line-height: 1.3;
-    margin: var(--space-xl) 0 var(--space-sm);
-  }
-
-  .journey-story :global(h2:first-child) {
-    margin-top: 0;
-  }
-
-  .journey-story :global(p) {
-    margin: 0 0 0.9em;
-  }
-
-  .journey-story :global(strong) {
-    color: var(--text);
-    font-weight: 600;
-  }
-
-  .journey-story :global(a) {
-    color: var(--text);
-    text-decoration: underline;
-    text-decoration-color: var(--border);
-    text-underline-offset: 2px;
-    transition: text-decoration-color 0.15s ease;
-  }
-
-  .journey-story :global(a:hover) {
-    text-decoration-color: var(--text);
-  }
-
-  .journey-story :global(.story-photo) {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    border-radius: var(--radius-lg);
-    margin: var(--space-md) 0;
-  }
-
-  @media (max-width: 40rem) {
-    .journey-detail {
-      padding-block-start: 3rem;
-    }
-
-    .journey-detail-header {
-      margin-top: var(--space-xl);
-    }
   }
 </style>

@@ -1,0 +1,231 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  /** <title> / social description source. */
+  title: string;
+  /** Visible page heading. */
+  headline: string;
+  summary: string;
+  backHref: string;
+  backLabel: string;
+  /** Headings from render(entry); depth-2 entries become the chapter nav. */
+  headings: MarkdownHeading[];
+  chapterNavLabel: string;
+}
+
+const { title, headline, summary, backHref, backLabel, headings, chapterNavLabel } = Astro.props;
+const chapters = headings.filter((heading) => heading.depth === 2);
+---
+
+<BaseLayout title={title} description={summary} hideFooter>
+  <main id="main" class="article-detail">
+    <a href={backHref} class="back-link">{backLabel}</a>
+
+    <header class="article-detail-header">
+      <slot name="meta" />
+      <h1>{headline}</h1>
+      <p class="article-summary">{summary}</p>
+      <slot name="tags" />
+    </header>
+
+    {chapters.length > 0 && (
+      <nav class="chapter-nav" aria-label={chapterNavLabel}>
+        {chapters.map((chapter) => (
+          <a href={`#${chapter.slug}`}>{chapter.text}</a>
+        ))}
+      </nav>
+    )}
+
+    <article class="article-content">
+      <slot />
+    </article>
+  </main>
+</BaseLayout>
+
+<style>
+  .article-detail {
+    min-height: 100dvh;
+    max-width: min(44rem, calc(100vw - var(--content-padding) * 2));
+    margin: 0 auto;
+    padding: clamp(4rem, 8vh, 6rem) 0 clamp(4rem, 10vh, 7rem);
+  }
+
+  .article-detail-header {
+    margin: clamp(2.5rem, 7vh, 5rem) 0 var(--space-lg);
+  }
+
+  .article-detail-header h1 {
+    color: var(--text);
+    font-size: var(--fs-xl);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .article-summary {
+    color: var(--text-light);
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .chapter-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 0.8rem;
+    margin: 0 0 var(--space-lg);
+  }
+
+  .chapter-nav a {
+    color: var(--text-light);
+    font-size: var(--fs-xs);
+    line-height: 1.4;
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 3px;
+  }
+
+  .chapter-nav a:hover {
+    color: var(--text);
+    text-decoration-color: var(--text);
+  }
+
+  .article-content {
+    color: var(--text-light);
+    font-size: var(--fs-base);
+    line-height: 1.7;
+  }
+
+  .article-content :global(h2) {
+    color: var(--text);
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    line-height: 1.3;
+    margin: var(--space-xl) 0 var(--space-sm);
+  }
+
+  .article-content :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .article-content :global(h3) {
+    color: var(--text);
+    font-size: var(--fs-md);
+    font-weight: 600;
+    line-height: 1.4;
+    margin: var(--space-lg) 0 var(--space-xs);
+  }
+
+  .article-content :global(p) {
+    margin: 0 0 0.9em;
+  }
+
+  .article-content :global(strong) {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .article-content :global(a) {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 2px;
+    transition: text-decoration-color 0.15s ease;
+  }
+
+  .article-content :global(a:hover) {
+    text-decoration-color: var(--text);
+  }
+
+  .article-content :global(ul),
+  .article-content :global(ol) {
+    margin: 0 0 0.9em;
+    padding-left: 1.4em;
+  }
+
+  .article-content :global(li) {
+    margin-bottom: 0.3em;
+  }
+
+  .article-content :global(blockquote) {
+    margin: var(--space-md) 0;
+    padding-left: 1rem;
+    border-left: 2px solid var(--border);
+    color: var(--text-light);
+    font-style: italic;
+  }
+
+  .article-content :global(code) {
+    font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+    font-size: 0.9em;
+    background: rgba(0, 0, 0, 0.04);
+    padding: 0.1em 0.35em;
+    border-radius: var(--radius-sm);
+  }
+
+  .article-content :global(pre) {
+    overflow-x: auto;
+    background: rgba(0, 0, 0, 0.04);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    margin: var(--space-md) 0;
+    font-size: 0.9em;
+    line-height: 1.5;
+  }
+
+  .article-content :global(pre code) {
+    background: none;
+    padding: 0;
+  }
+
+  .article-content :global(figure) {
+    margin: var(--space-lg) 0;
+  }
+
+  .article-content :global(figcaption) {
+    color: var(--text-light);
+    font-size: var(--fs-xs);
+    line-height: 1.5;
+    margin-top: var(--space-xs);
+    text-align: center;
+  }
+
+  .article-content :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95em;
+    margin: var(--space-md) 0;
+  }
+
+  .article-content :global(th),
+  .article-content :global(td) {
+    text-align: left;
+    padding: 0.5em 0.7em;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .article-content :global(th) {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .article-content :global(.story-photo) {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    border-radius: var(--radius-lg);
+    margin: var(--space-md) 0;
+  }
+
+  @media (max-width: 40rem) {
+    .article-detail {
+      padding-block-start: 3rem;
+    }
+
+    .article-detail-header {
+      margin-top: var(--space-xl);
+    }
+  }
+</style>
