@@ -28,6 +28,7 @@
   }: Props = $props();
 
   const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as const;
+  const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] as const;
 
   // --- Location collapse ---
   let locationExpanded = $state(false);
@@ -69,6 +70,7 @@
               class="pill"
               class:pill--active={selectedLocations.has(loc)}
               class:pill--empty={count === 0}
+              aria-pressed={selectedLocations.has(loc)}
               title={count === 0 ? 'Saved filter — no matches in today\'s events' : undefined}
               onclick={() => onLocationToggle(loc)}
             >{loc} <span class="pill-count">({count})</span></button>
@@ -93,6 +95,8 @@
         <button
           class="pill"
           class:pill--active={selectedDays.has(i)}
+          aria-pressed={selectedDays.has(i)}
+          aria-label={DAY_NAMES[i]}
           onclick={() => onDayToggle(i)}
         >{dayLabel}</button>
       {/each}
@@ -106,6 +110,7 @@
       <input
         class="search-input"
         type="text"
+        aria-label="Search events or hosts"
         placeholder={'e.g. hackathon, google, etc'}
         value={searchQuery}
         oninput={(e) => onSearchChange((e.target as HTMLInputElement).value)}
@@ -117,6 +122,7 @@
       <input
         class="search-input"
         type="text"
+        aria-label="Exclude events containing a keyword"
         placeholder={'in case you don\'t enjoy happy hour'}
         bind:value={excludeInput}
         onkeydown={handleExcludeKeydown}
