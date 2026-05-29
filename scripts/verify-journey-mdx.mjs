@@ -22,7 +22,12 @@ for (const id of ids) {
   assert(/^---\n[\s\S]*?\n---/.test(mdx), `${path} is missing frontmatter`);
   assert(/^title:\s*".+"/m.test(mdx), `${path} is missing title`);
   assert(/^summary:\s*".+"/m.test(mdx), `${path} is missing summary`);
-  assert(/^##\s+\S+/m.test(mdx), `${path} needs at least one ## chapter`);
+
+  // Coming-soon chapters intentionally have no body yet; everything else needs a chapter.
+  const isComingSoon = /^status:\s*["']?coming-soon["']?/m.test(mdx);
+  if (!isComingSoon) {
+    assert(/^##\s+\S+/m.test(mdx), `${path} needs at least one ## chapter`);
+  }
 }
 
 const detailPage = 'src/pages/life-journey/[id].astro';

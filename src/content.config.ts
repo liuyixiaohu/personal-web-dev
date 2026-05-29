@@ -8,6 +8,7 @@ const journey = defineCollection({
     title: z.string(),
     summary: z.string(),
     heroImage: z.string().optional(),
+    status: z.enum(['published', 'coming-soon']).default('published'),
   }),
 });
 
