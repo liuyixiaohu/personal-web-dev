@@ -8,7 +8,7 @@
   let { event }: Props = $props();
 </script>
 
-<li class="event-card" id="event-{event.api_id}">
+<li class="event-card list-row" id="event-{event.api_id}">
   <div class="event-card-header">
     <a href={event.url || '#'} target="_blank" rel="noopener noreferrer" class="event-name">
       {event.name}
@@ -80,15 +80,6 @@
 </li>
 
 <style>
-  .event-card {
-    padding: var(--space-sm) 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-  }
-
-  .event-card:last-child {
-    border-bottom: none;
-  }
-
   .event-card-header {
     display: flex;
     justify-content: space-between;
