@@ -199,6 +199,16 @@ a:hover {
   opacity: 1;
 }
 
+/* List row : shared list-item pattern (job listings, events, …) */
+.list-row {
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.list-row:last-child {
+  border-bottom: none;
+}
+
 /* Item list : used in touch-fish index page */
 .item {
   display: block;
