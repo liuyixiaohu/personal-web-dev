@@ -8,6 +8,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
+    "lint:css": "stylelint \"src/**/*.{css,astro,svelte}\"",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test:journey": "node scripts/verify-journey-mdx.mjs",
@@ -30,9 +31,12 @@
     "@cloudflare/workers-types": "^4.20260529.1",
     "@types/d3-geo": "^3.1.0",
     "googleapis": "^173.0.0",
+    "postcss-html": "^1.8.1",
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-svelte": "^4.0.1"
+    "prettier-plugin-svelte": "^4.0.1",
+    "stylelint": "^17.12.0",
+    "stylelint-declaration-strict-value": "^1.11.1"
   },
   "overrides": {
     "yaml": "2.9.0"

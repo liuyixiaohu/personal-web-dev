@@ -160,7 +160,6 @@ const chapters = headings.filter((heading) => heading.depth === 2);
   .article-toc a::before {
     content: counter(toc, decimal-leading-zero);
     flex-shrink: 0;
-    font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
     font-size: 0.7rem;
     color: var(--text-light);
     opacity: 0.55;
@@ -271,6 +270,7 @@ const chapters = headings.filter((heading) => heading.depth === 2);
   }
 
   .article-content :global(code) {
+    /* stylelint-disable-next-line declaration-property-value-disallowed-list -- code needs a monospace font */
     font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
     font-size: 0.9em;
     background: rgba(0, 0, 0, 0.04);
