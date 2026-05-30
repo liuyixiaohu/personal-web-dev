@@ -245,10 +245,12 @@ Colors: `--bg` (#faf7f2) background, `--text` (#1f2328) fill.
 
 ## Analytics
 
-**Guiding principle**: Only track what answers _"Which content are people truly reading?"_
+**Guiding principle**: Track only which pages people visit and how long they stay — nothing else.
 
-- Track: content engagement (pin clicks, filter use, language toggle, craft area interest)
-- Don't track: navigation clicks, outbound links, CTA clicks, or anything GA4 already captures via page_view
+- Stack: a single `gtag.js` snippet for GA4 (no Tag Manager, no `dataLayer` wrapper) — see `BaseLayout.astro`.
+- Track: `page_view` (sent on each view-transition navigation) + automatic engagement time.
+- Don't track: custom interaction events, scroll, outbound clicks, or form events. Disable GA4 Enhanced Measurement sub-events except Page views.
+- Skipped hosts: `localhost` and `*.pages.dev` preview deploys — only real `kunli.co` visits count.
 
 ---
 
