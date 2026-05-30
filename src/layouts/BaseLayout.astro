@@ -119,30 +119,41 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       )
     }
 
-    <!-- Google Tag Manager -->
+    <!-- Google Analytics (gtag.js) — direct, no Tag Manager. Tracks page_view + engagement only. -->
     <script is:inline>
-      (function (w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != 'dataLayer' ? '&l=' + l : '';
-        j.async = true;
-        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-        f.parentNode.insertBefore(j, f);
-      })(window, document, 'script', 'dataLayer', 'GTM-PNCRCQBM');
+      (function () {
+        var GA_ID = 'G-KFH5JNT2RC';
+        // Only count real visits: skip local dev and Cloudflare preview deploys.
+        var host = location.hostname;
+        if (/^(localhost|127\.0\.0\.1)$/.test(host) || /\.pages\.dev$/.test(host)) return;
+        if (window.__gaInit) return;
+        window.__gaInit = true;
+
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () {
+          window.dataLayer.push(arguments);
+        };
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(s);
+
+        window.gtag('js', new Date());
+        // ClientRouter does SPA-style navigation, so disable the automatic
+        // page_view and send one manually on every view-transition load below.
+        window.gtag('config', GA_ID, { send_page_view: false });
+
+        document.addEventListener('astro:page-load', function () {
+          window.gtag('event', 'page_view', {
+            page_location: location.href,
+            page_title: document.title,
+          });
+        });
+      })();
     </script>
   </head>
   <body class={bodyClass} transition:animate={fade({ duration: '0.4s' })}>
     <a href="#main" class="skip-link">Skip to content</a>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript
-      ><iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-PNCRCQBM"
-        height="0"
-        width="0"
-        style="display:none;visibility:hidden"></iframe></noscript
-    >
     <slot />
     {!hideFooter && <Footer />}
     <BackToTop />

@@ -17,7 +17,6 @@
   import EventFilters from './EventFilters.svelte';
   import EventCard from './EventCard.svelte';
   import Popup from '../Popup.svelte';
-  import { track } from '../../utils/analytics';
 
   // --- State ---
   let events = $state<LumaEvent[]>([]);
@@ -148,18 +147,11 @@
   });
 
   // --- Filter callbacks ---
-  function pushFilter(filter_type: string, filter_value?: string | number | null) {
-    track('filter_use', { filter_type, filter_value: filter_value ?? undefined });
-  }
-
-  let searchDebounceTimer: ReturnType<typeof setTimeout> | undefined;
-
   function toggleLocation(loc: string) {
     const next = new Set(selectedLocations);
     if (next.has(loc)) next.delete(loc);
     else next.add(loc);
     selectedLocations = next;
-    pushFilter('location', loc);
   }
 
   function toggleDay(day: number) {
@@ -167,7 +159,6 @@
     if (next.has(day)) next.delete(day);
     else next.add(day);
     selectedDays = next;
-    pushFilter('day', day);
   }
 </script>
 
@@ -238,12 +229,9 @@
       onDayToggle={toggleDay}
       onSearchChange={(q) => {
         searchQuery = q;
-        clearTimeout(searchDebounceTimer);
-        if (q.trim()) searchDebounceTimer = setTimeout(() => pushFilter('search', q), 800);
       }}
       onAddExclude={(kw) => {
         excludeKeywords = [...excludeKeywords, kw.toLowerCase().trim()];
-        pushFilter('exclude', kw);
       }}
     />
 
@@ -277,7 +265,6 @@
                     class="exclude-chip-remove"
                     onclick={() => {
                       excludeKeywords = excludeKeywords.filter((k) => k !== kw);
-                      pushFilter('remove_exclude', kw);
                     }}>&times;</button
                   >
                 </span>
