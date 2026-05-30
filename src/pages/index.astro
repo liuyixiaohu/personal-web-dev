@@ -41,17 +41,6 @@ import HintTooltip from '../components/HintTooltip.astro';
   </main>
 </BaseLayout>
 
-<script>
-  import { track } from '../utils/analytics';
-
-  document.querySelectorAll<HTMLAnchorElement>('a.nav-primary, a.nav-link').forEach((el) => {
-    el.addEventListener('click', () => {
-      const slug = el.getAttribute('href')?.replace(/^\//, '') || '';
-      track('nav_click', { destination: slug });
-    });
-  });
-</script>
-
 <style>
   /* Single-screen flex layout: body is the column, hero fills remaining space */
   :global(body.home) {

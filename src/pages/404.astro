@@ -14,11 +14,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </main>
 </BaseLayout>
 
-<script>
-  import { track } from '../utils/analytics';
-  track('404_not_found', { path: window.location.pathname });
-</script>
-
 <style>
   .not-found {
     display: flex;
