@@ -165,7 +165,7 @@
 <div class="event-list">
   <header class="event-header">
     <div class="event-title-row">
-      <h2 class="event-title">Today's New Tech Events @Bay Area</h2>
+      <h2 class="event-title">Newly Added Tech Events · Bay Area</h2>
     </div>
 
     <p class="event-subtitle">
