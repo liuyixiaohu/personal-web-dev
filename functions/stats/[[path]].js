@@ -33,13 +33,19 @@ export async function onRequest(context) {
     return new Response('Not found', { status: 404 });
   }
 
-  const headers = new Headers(request.headers);
+  // Build a clean header set. Replaying the raw browser/Cloudflare headers
+  // (the inbound Host in particular) makes Google's frontend fail to route the
+  // request and return a generic 404 — so forward only a minimal known-good set
+  // and let fetch derive the correct Host from the upstream URL.
+  const headers = new Headers();
+  const forward = ['User-Agent', 'Accept-Language', 'Content-Type', 'Referer'];
+  for (const name of forward) {
+    const value = request.headers.get(name);
+    if (value) headers.set(name, value);
+  }
   // Forward the visitor's real IP so GA geolocates them, not Cloudflare's edge.
   const ip = request.headers.get('CF-Connecting-IP');
   if (ip) headers.set('X-Forwarded-For', ip);
-  // Strip headers that should not be replayed to the upstream origin.
-  headers.delete('host');
-  headers.delete('cookie');
 
   const isBodyless = request.method === 'GET' || request.method === 'HEAD';
   const upstreamResponse = await fetch(upstream, {
@@ -48,9 +54,12 @@ export async function onRequest(context) {
     body: isBodyless ? undefined : await request.arrayBuffer(),
   });
 
-  // Pass the response through; drop any cookies the upstream tries to set.
+  // Pass the response through; drop cookies and stale encoding/length headers
+  // (fetch has already decoded the body for us).
   const responseHeaders = new Headers(upstreamResponse.headers);
   responseHeaders.delete('set-cookie');
+  responseHeaders.delete('content-encoding');
+  responseHeaders.delete('content-length');
   return new Response(upstreamResponse.body, {
     status: upstreamResponse.status,
     statusText: upstreamResponse.statusText,
