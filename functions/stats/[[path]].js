@@ -64,9 +64,9 @@ export async function onRequest(context) {
           bodyHead: body.slice(0, 300),
         },
         null,
-        2
+        2,
       ),
-      { status: 200, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } }
+      { status: 200, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } },
     );
   }
 
