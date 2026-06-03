@@ -47,6 +47,29 @@ export async function onRequest(context) {
   const ip = request.headers.get('CF-Connecting-IP');
   if (ip) headers.set('X-Forwarded-For', ip);
 
+  // TEMP diagnostics: /stats/gtag/js?id=...&__debug=1 dumps what the proxy
+  // actually sends upstream and what Google returns. Removed before merge.
+  if (url.searchParams.has('__debug')) {
+    const probe = await fetch(upstream, { method: 'GET', headers });
+    const body = await probe.text();
+    return new Response(
+      JSON.stringify(
+        {
+          requestPath: url.pathname,
+          rest,
+          upstream,
+          sentHeaders: Object.fromEntries(headers),
+          upstreamStatus: probe.status,
+          upstreamContentType: probe.headers.get('content-type'),
+          bodyHead: body.slice(0, 300),
+        },
+        null,
+        2
+      ),
+      { status: 200, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } }
+    );
+  }
+
   const isBodyless = request.method === 'GET' || request.method === 'HEAD';
   const upstreamResponse = await fetch(upstream, {
     method: request.method,
