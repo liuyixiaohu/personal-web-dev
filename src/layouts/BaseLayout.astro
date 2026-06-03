@@ -120,6 +120,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     }
 
     <!-- Google Analytics (gtag.js) — direct, no Tag Manager. Tracks page_view + engagement only. -->
+    <!-- Loader script and collect beacon are proxied first-party through /stats so DNS/extension -->
+    <!-- blocking of google domains (ERR_BLOCKED_BY_ORB) doesn't zero out our own measurement. -->
     <script is:inline>
       (function () {
         var GA_ID = 'G-KFH5JNT2RC';
@@ -135,13 +137,17 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         };
         var s = document.createElement('script');
         s.async = true;
-        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        s.src = '/stats/gtag/js?id=' + GA_ID;
         document.head.appendChild(s);
 
         window.gtag('js', new Date());
         // ClientRouter does SPA-style navigation, so disable the automatic
         // page_view and send one manually on every view-transition load below.
-        window.gtag('config', GA_ID, { send_page_view: false });
+        // transport_url routes the collect beacon back through our first-party proxy.
+        window.gtag('config', GA_ID, {
+          send_page_view: false,
+          transport_url: window.location.origin + '/stats',
+        });
 
         document.addEventListener('astro:page-load', function () {
           window.gtag('event', 'page_view', {
