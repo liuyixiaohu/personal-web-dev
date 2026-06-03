@@ -38,14 +38,6 @@ import HintTooltip from '../components/HintTooltip.astro';
         </nav>
       </div>
     </section>
-
-    {/* TEMP layout A/B comparison — /?v=a or /?v=b toggles centering variants */}
-    <script is:inline>
-      (function () {
-        var v = new URLSearchParams(location.search).get('v');
-        if (v === 'a' || v === 'b') document.body.classList.add('home--' + v);
-      })();
-    </script>
   </main>
 </BaseLayout>
 
@@ -86,7 +78,8 @@ import HintTooltip from '../components/HintTooltip.astro';
     text-align: center;
     max-width: 40rem;
     width: 100%;
-    gap: clamp(3rem, 8vw, 7rem);
+    /* Quote + Journey read as one tight, centered pair. */
+    gap: clamp(2rem, 5vw, 3rem);
   }
 
   .greeting-quote {
@@ -100,7 +93,6 @@ import HintTooltip from '../components/HintTooltip.astro';
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: clamp(3rem, 8vw, 7rem);
   }
 
   .nav-primary {
@@ -129,7 +121,13 @@ import HintTooltip from '../components/HintTooltip.astro';
     opacity: 0.6;
   }
 
+  /* Secondary links sit near the bottom of the hero, de-emphasized, so the
+     quote + Journey pair owns the vertical center. */
   .nav-secondary {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(2rem, 6vw, 4rem);
+    transform: translateX(-50%);
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
@@ -176,41 +174,5 @@ import HintTooltip from '../components/HintTooltip.astro';
     color: var(--text-light);
     font-size: var(--fs-md);
     user-select: none;
-  }
-
-  /* TEMP variant A: quote vertically centered, nav grouped just below it */
-  :global(body.home--a) .home-hero {
-    align-items: stretch;
-  }
-  :global(body.home--a) .home-content {
-    height: 100%;
-    display: grid;
-    grid-template-rows: 1fr auto 1fr;
-    justify-items: center;
-    gap: 0;
-  }
-  :global(body.home--a) .home-tagline {
-    grid-row: 2;
-    align-self: center;
-  }
-  :global(body.home--a) .home-nav {
-    grid-row: 3;
-    align-self: start;
-    margin-top: clamp(2.5rem, 7vw, 4.5rem);
-    gap: clamp(2rem, 5vw, 3rem);
-  }
-
-  /* TEMP variant B: quote + Journey tight at center, secondary links near bottom */
-  :global(body.home--b) .home-content {
-    gap: clamp(2rem, 5vw, 3rem);
-  }
-  :global(body.home--b) .home-nav {
-    gap: 0;
-  }
-  :global(body.home--b) .nav-secondary {
-    position: absolute;
-    left: 50%;
-    bottom: clamp(2rem, 6vw, 4rem);
-    transform: translateX(-50%);
   }
 </style>
