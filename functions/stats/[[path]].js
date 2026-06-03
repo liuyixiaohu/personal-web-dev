@@ -53,11 +53,17 @@ export async function onRequest(context) {
     const id = url.searchParams.get('id') || 'G-KFH5JNT2RC';
     const TEST = GTM_ORIGIN + '/gtag/js?id=' + id;
     const browserUA = request.headers.get('User-Agent') || '';
+    const cb = Date.now();
     const variants = {
-      bare: () => fetch(TEST),
-      uaOnly: () => fetch(TEST, { headers: { 'User-Agent': browserUA, Accept: '*/*' } }),
-      inherit: () => fetch(new Request(TEST, request)),
-      cleanMinimal: () => fetch(TEST, { headers }),
+      cacheBust: () => fetch(TEST + '&_cb=' + cb, { headers: { 'User-Agent': browserUA } }),
+      cfNoCache: () =>
+        fetch(TEST, {
+          headers: { 'User-Agent': browserUA },
+          cf: { cacheTtl: 0, cacheEverything: false },
+        }),
+      bothCbAndCf: () =>
+        fetch(TEST + '&_cb2=' + cb, { headers: { 'User-Agent': browserUA }, cf: { cacheTtl: 0 } }),
+      plainAgain: () => fetch(TEST, { headers: { 'User-Agent': browserUA } }),
     };
     const results = {};
     for (const [name, run] of Object.entries(variants)) {
