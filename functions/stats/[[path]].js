@@ -47,27 +47,41 @@ export async function onRequest(context) {
   const ip = request.headers.get('CF-Connecting-IP');
   if (ip) headers.set('X-Forwarded-For', ip);
 
-  // TEMP diagnostics: /stats/gtag/js?id=...&__debug=1 dumps what the proxy
-  // actually sends upstream and what Google returns. Removed before merge.
+  // TEMP diagnostics: /stats/gtag/js?id=...&__debug=1 tries several fetch
+  // strategies for gtag.js and probes the collect host. Removed before merge.
   if (url.searchParams.has('__debug')) {
-    const probe = await fetch(upstream, { method: 'GET', headers });
-    const body = await probe.text();
-    return new Response(
-      JSON.stringify(
-        {
-          requestPath: url.pathname,
-          rest,
-          upstream,
-          sentHeaders: Object.fromEntries(headers),
-          upstreamStatus: probe.status,
-          upstreamContentType: probe.headers.get('content-type'),
-          bodyHead: body.slice(0, 300),
-        },
-        null,
-        2,
-      ),
-      { status: 200, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } },
-    );
+    const id = url.searchParams.get('id') || 'G-KFH5JNT2RC';
+    const TEST = GTM_ORIGIN + '/gtag/js?id=' + id;
+    const browserUA = request.headers.get('User-Agent') || '';
+    const variants = {
+      bare: () => fetch(TEST),
+      uaOnly: () => fetch(TEST, { headers: { 'User-Agent': browserUA, Accept: '*/*' } }),
+      inherit: () => fetch(new Request(TEST, request)),
+      cleanMinimal: () => fetch(TEST, { headers }),
+    };
+    const results = {};
+    for (const [name, run] of Object.entries(variants)) {
+      try {
+        const r = await run();
+        results[name] = { status: r.status, ct: r.headers.get('content-type') };
+      } catch (e) {
+        results[name] = { error: String(e) };
+      }
+    }
+    let collect;
+    try {
+      const c = await fetch(GA_ORIGIN + '/g/collect?v=2&tid=' + id + '&cid=555.555&en=__probe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+      });
+      collect = { status: c.status };
+    } catch (e) {
+      collect = { error: String(e) };
+    }
+    return new Response(JSON.stringify({ TEST, variants: results, collect }, null, 2), {
+      status: 200,
+      headers: { 'content-type': 'application/json', 'cache-control': 'no-store' },
+    });
   }
 
   const isBodyless = request.method === 'GET' || request.method === 'HEAD';
