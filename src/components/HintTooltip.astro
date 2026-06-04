@@ -10,10 +10,17 @@
  *       <span data-i18n="greeting.popup">From The Secret Life...</span>
  *     </Fragment>
  *   </HintTooltip>
+ *
+ * placement: 'below' (default) opens downward; 'above' opens upward (e.g. in a
+ * footer where there's no room below).
  */
+interface Props {
+  placement?: 'below' | 'above';
+}
+const { placement = 'below' } = Astro.props;
 ---
 
-<span class="hint-trigger" tabindex="0"
+<span class:list={['hint-trigger', { 'hint-trigger--above': placement === 'above' }]} tabindex="0"
   ><slot /><span class="hint-popup"><slot name="popup" /></span></span
 >
 
@@ -82,5 +89,16 @@
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
+  }
+
+  /* Open upward when there's no room below (e.g. in the footer). */
+  .hint-trigger--above .hint-popup {
+    top: auto;
+    bottom: calc(100% + 8px);
+  }
+
+  .hint-trigger--above .hint-popup::before {
+    top: auto;
+    bottom: -8px;
   }
 </style>
