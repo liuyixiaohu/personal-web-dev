@@ -93,6 +93,18 @@ body {
   animation: page-fade-in 0.4s ease-out;
 }
 
+/* Sticky footer: the body is a column and the page's <main> grows to fill the
+   space, so the footer rests at the bottom of the viewport even when content
+   is short — without forcing a scroll when content already fits. */
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+body > main {
+  flex: 1 0 auto;
+}
+
 /* Typography rhythm — line-height, spacing, letter-spacing */
 h1 {
   line-height: 1.2;
@@ -283,7 +295,6 @@ a:hover {
     [wide-end]
     minmax(0, 1fr)
     [full-end];
-  min-height: 100dvh;
   padding-block: clamp(4rem, 8vh, 6rem) 4rem;
 }
 
@@ -312,9 +323,9 @@ a:hover {
    Page Shell : shared layout for centered pages
    ============================================
    Single-column container for pages that wrap a
-   Svelte component or short content. Deliberately
-   NO min-height — that pushes the footer below the
-   fold when content is short or pre-hydration.
+   Svelte component or short content. No min-height
+   needed — the flex sticky-footer layout (body > main)
+   already keeps the footer at the bottom.
    ============================================ */
 .page-shell {
   max-width: 42rem;
