@@ -181,14 +181,12 @@
         >
           <p class="why-point">
             This page pulls from Luma's Bay Area Tech and AI categories once a day. It only shows
-            events that appeared since the last check — not the full catalog. If you're looking for
-            a specific event or topic outside Tech/AI, search directly on the platform.
+            events that appeared since the last check, not the full catalog. If you're looking for a
+            specific event or topic outside Tech/AI, search directly on the platform.
           </p>
           <p class="why-point">
-            This page is intentionally designed to balance convenience and long-term availability.
-            The data comes from an undisclosed endpoint. Keeping the feature restrained and
-            differentiated, rather than building a full-featured alternative, helps reduce the risk
-            of the data source being noticed and shut down.
+            It's intentionally lightweight: a daily-refreshed glance at Luma's public Bay Area Tech
+            and AI listings, not a full-featured alternative to the platform.
           </p>
         </Popup>
       </span>

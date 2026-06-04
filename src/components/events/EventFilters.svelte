@@ -131,7 +131,7 @@
     </div>
 
     <div class="filter-row filter-row--stacked">
-      <span class="filter-label">{'Exclude the event including...'}</span>
+      <span class="filter-label">{'Exclude events containing...'}</span>
       <input
         class="search-input"
         type="text"
