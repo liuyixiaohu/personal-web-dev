@@ -172,6 +172,11 @@ const journeyPins = pins.map((pin) => {
         buildSVG(usaSvg, geo.usa, geo.provinces, usaPins, 'clip-usa', 80, LABEL_POS, handlers);
 
         document.getElementById('country-pair')?.classList.add('loaded');
+      })
+      .catch((err) => {
+        console.error('Failed to load journey map data:', err);
+        // Don't leave the map area stuck invisible (opacity:0) if the fetch fails.
+        document.getElementById('country-pair')?.classList.add('loaded');
       });
   }
 
