@@ -1,14 +1,33 @@
 ---
 // Shared site footer — included via BaseLayout on all pages.
+interface Props {
+  /** 'home' lists the site's own pages; 'default' lists social links. */
+  variant?: 'default' | 'home';
+}
+const { variant = 'default' } = Astro.props;
 ---
 
 <footer class="site-footer">
   <nav class="footer-nav">
-    <a href="https://www.linkedin.com/in/kun-l/" target="_blank" rel="noopener noreferrer"
-      >LinkedIn</a
-    >
-    <span class="dot">&middot;</span>
-    <a href="https://github.com/liuyixiaohu" target="_blank" rel="noopener noreferrer">GitHub</a>
+    {
+      variant === 'home' ? (
+        <>
+          <a href="/touch-fish/">Touch Fish!</a>
+          <span class="dot">&middot;</span>
+          <span class="footer-pending">Probes</span>
+        </>
+      ) : (
+        <>
+          <a href="https://www.linkedin.com/in/kun-l/" target="_blank" rel="noopener noreferrer">
+            LinkedIn
+          </a>
+          <span class="dot">&middot;</span>
+          <a href="https://github.com/liuyixiaohu" target="_blank" rel="noopener noreferrer">
+            GitHub
+          </a>
+        </>
+      )
+    }
   </nav>
 </footer>
 
@@ -39,6 +58,12 @@
 
   .footer-nav a:hover {
     opacity: 0.5;
+  }
+
+  /* Probes isn't live yet — show it muted and non-interactive. */
+  .footer-pending {
+    color: var(--gray-subtle);
+    opacity: 0.6;
   }
 
   .dot {

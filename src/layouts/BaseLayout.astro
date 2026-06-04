@@ -10,6 +10,8 @@ interface Props {
   ogDescription?: string;
   hideFooter?: boolean;
   bodyClass?: string;
+  /** Footer content variant. 'home' shows the site's own pages; 'default' shows social links. */
+  footerVariant?: 'default' | 'home';
   /** Page language for the <html> tag. Defaults to 'en'; pass 'zh' on Chinese-only pages. */
   lang?: 'en' | 'zh';
 }
@@ -20,6 +22,7 @@ const {
   ogDescription,
   hideFooter = false,
   bodyClass,
+  footerVariant = 'default',
   lang = 'en',
 } = Astro.props;
 const socialDescription = ogDescription || description;
@@ -155,7 +158,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <body class={bodyClass} transition:animate={fade({ duration: '0.4s' })}>
     <a href="#main" class="skip-link">Skip to content</a>
     <slot />
-    {!hideFooter && <Footer />}
+    {!hideFooter && <Footer variant={footerVariant} />}
     <BackToTop />
   </body>
 </html>
