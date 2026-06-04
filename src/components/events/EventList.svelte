@@ -298,10 +298,6 @@
 </div>
 
 <style>
-  .event-list {
-    /* container managed by parent page */
-  }
-
   .event-header {
     margin-bottom: var(--space-sm);
   }

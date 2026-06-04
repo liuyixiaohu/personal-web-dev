@@ -20,7 +20,7 @@ GitHub Actions cron), and a Cloudflare Pages deploy.
 | Pages               | 8 routes incl. EN + ZH variants for select pages                       |
 | Data pipelines      | Python scripts + GitHub Actions cron (daily)                           |
 | Hosting             | Cloudflare Pages (static)                                              |
-| Analytics           | GTM, with a thin typed wrapper in `src/utils/analytics.ts`             |
+| Analytics           | Google Analytics 4 via a direct gtag.js snippet (no Tag Manager)       |
 
 ## Data flow
 

@@ -109,22 +109,6 @@
   bottom: 0;
 }
 
-.clear-filters {
-  font-family: inherit;
-  font-size: var(--fs-xs);
-  color: var(--text-light);
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  text-decoration: underline;
-  align-self: flex-start;
-}
-
-.clear-filters:hover {
-  color: var(--text);
-}
-
 /* Side-by-side pair on desktop, stacked on narrow viewports */
 .filter-row-pair {
   display: flex;
