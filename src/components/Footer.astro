@@ -1,6 +1,5 @@
 ---
 // Shared site footer — included via BaseLayout on all pages.
-import HintTooltip from './HintTooltip.astro';
 interface Props {
   /** 'home' lists the site's own pages; 'default' lists social links. */
   variant?: 'default' | 'home';
@@ -15,10 +14,9 @@ const { variant = 'default' } = Astro.props;
         <>
           <a href="/touch-fish/">Touch Fish!</a>
           <span class="dot">&middot;</span>
-          <HintTooltip placement="above">
-            <span class="footer-pending">Probes</span>
-            <Fragment slot="popup">Still being drafted — check back soon.</Fragment>
-          </HintTooltip>
+          <span class="footer-pending">
+            Probes<span class="footer-tag">Drafting</span>
+          </span>
         </>
       ) : (
         <>
@@ -64,9 +62,18 @@ const { variant = 'default' } = Astro.props;
     opacity: 0.5;
   }
 
-  /* Probes isn't live yet — muted, with a hover/focus hint via HintTooltip. */
+  /* Probes isn't live yet — muted, tagged "Drafting". */
   .footer-pending {
     color: var(--gray-subtle);
+  }
+
+  .footer-tag {
+    color: var(--gray-subtle);
+    background: rgba(0, 0, 0, 0.04);
+    padding: 0.05rem 0.4rem;
+    border-radius: var(--radius-sm);
+    margin-left: 0.5em;
+    vertical-align: middle;
   }
 
   .dot {
