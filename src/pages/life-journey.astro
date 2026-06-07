@@ -2,8 +2,9 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { pins } from '../components/globe/pins';
+import type { LabelPos } from '../utils/journey/buildSVG';
 
-const LABEL_POS: Record<string, { dx: number; dy: number; anchor: string }> = {
+const LABEL_POS: LabelPos = {
   shouguang: { dx: 16, dy: -22, anchor: 'start' },
   qingdao: { dx: 16, dy: 12, anchor: 'start' },
   jiaozhou: { dx: -16, dy: 34, anchor: 'end' },
@@ -60,22 +61,18 @@ const journeyPins = pins.map((pin) => {
 </script>
 
 <script>
-  import { buildSVG } from '../utils/journey/buildSVG';
+  import { buildSVG, type JourneyMapPin, type LabelPos } from '../utils/journey/buildSVG';
+  import type { GeoPermissibleObjects } from 'd3-geo';
 
   type JourneyData = {
-    pins: Array<{
-      id: string;
-      lat: number;
-      lng: number;
-      city: string;
-      country: string;
-      color: string;
-      year: number;
-      title: string;
-      summary: string;
-      href: string;
-    }>;
-    LABEL_POS: Record<string, { dx: number; dy: number; anchor: string }>;
+    pins: JourneyMapPin[];
+    LABEL_POS: LabelPos;
+  };
+
+  type JourneyCountries = {
+    china: GeoPermissibleObjects;
+    usa: GeoPermissibleObjects;
+    provinces?: GeoPermissibleObjects;
   };
 
   const globalWindow = window as Window & {
@@ -144,8 +141,8 @@ const journeyPins = pins.map((pin) => {
     const { pins, LABEL_POS } = data;
 
     fetch('/data/journey-countries.json')
-      .then((res) => res.json())
-      .then((geo: any) => {
+      .then((res) => res.json() as Promise<JourneyCountries>)
+      .then((geo) => {
         const chinaSvg = document.getElementById('china-svg') as unknown as SVGSVGElement | null;
         const usaSvg = document.getElementById('usa-svg') as unknown as SVGSVGElement | null;
         if (!chinaSvg || !usaSvg) return;
