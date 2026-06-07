@@ -1,4 +1,4 @@
-import { geoMercator, geoPath } from 'd3-geo';
+import { geoMercator, geoPath, type GeoPermissibleObjects } from 'd3-geo';
 
 const NS = 'http://www.w3.org/2000/svg';
 
@@ -22,7 +22,9 @@ export interface PinHandlers {
   onPinLeave?: (pin: JourneyMapPin, event: MouseEvent | FocusEvent) => void;
 }
 
-export function fitAndCrop(countryGeo: any, padPx: number, padTop?: number) {
+export type LabelPos = Record<string, { dx: number; dy: number; anchor: string }>;
+
+export function fitAndCrop(countryGeo: GeoPermissibleObjects, padPx: number, padTop?: number) {
   const top = padTop ?? padPx;
   const BIG = 2000;
   const proj = geoMercator().fitExtent(
@@ -43,12 +45,12 @@ export function fitAndCrop(countryGeo: any, padPx: number, padTop?: number) {
 
 export function buildSVG(
   svgEl: SVGSVGElement,
-  countryGeo: any,
-  provGeo: any,
+  countryGeo: GeoPermissibleObjects,
+  provGeo: GeoPermissibleObjects | null | undefined,
   countryPins: JourneyMapPin[],
   clipId: string,
   padTop: number,
-  labelPos: Record<string, { dx: number; dy: number; anchor: string }>,
+  labelPos: LabelPos,
   handlers: PinHandlers = {},
 ) {
   const PAD = 160;

@@ -1,0 +1,20 @@
+/* ============================================
+   Shared Probes Page Styles
+   ============================================ */
+.probe-tags {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-sm) 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.probe-tags li {
+  font-size: 0.65rem;
+  color: var(--text-light);
+  background: rgba(0, 0, 0, 0.04);
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--radius-sm);
+  text-transform: lowercase;
+}

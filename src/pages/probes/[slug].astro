@@ -1,6 +1,8 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { formatLongDate } from '../../utils/dateFormat';
+import '../../styles/probes.css';
 
 export async function getStaticPaths() {
   const entries = await getCollection('probes', ({ data }) => !data.draft);
@@ -17,12 +19,6 @@ interface Props {
 const { entry } = Astro.props;
 const { Content, headings } = await render(entry);
 const pageTitle = `${entry.data.title} | Probes`;
-
-const dateFmt = new Intl.DateTimeFormat('en-US', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
 ---
 
 <ArticleLayout
@@ -36,13 +32,13 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
 >
   <p slot="meta" class="probe-meta">
     <time datetime={entry.data.publishedAt.toISOString()}>
-      {dateFmt.format(entry.data.publishedAt)}
+      {formatLongDate(entry.data.publishedAt)}
     </time>
     {
       entry.data.updatedAt && (
         <>
           <span class="probe-meta-sep">·</span>
-          <span>Updated {dateFmt.format(entry.data.updatedAt)}</span>
+          <span>Updated {formatLongDate(entry.data.updatedAt)}</span>
         </>
       )
     }
@@ -70,23 +66,5 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
 
   .probe-meta-sep {
     margin: 0 0.4em;
-  }
-
-  .probe-tags {
-    list-style: none;
-    padding: 0;
-    margin: var(--space-sm) 0 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-
-  .probe-tags li {
-    font-size: 0.65rem;
-    color: var(--text-light);
-    background: rgba(0, 0, 0, 0.04);
-    padding: 0.1rem 0.45rem;
-    border-radius: var(--radius-sm);
-    text-transform: lowercase;
   }
 </style>
