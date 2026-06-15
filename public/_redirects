@@ -1,0 +1,74 @@
+# 301 redirects for kunli.co — applied at Cloudflare Pages' edge as true 301s.
+#
+# Moved out of astro.config.mjs: in static output, Astro's `redirects` only
+# emit <meta http-equiv="refresh"> HTML pages, which are weaker for SEO than a
+# real 301. This file gives proper edge redirects instead.
+#
+# Both slash forms are listed for each rule: Cloudflare matches `/x` and `/x/`
+# as DISTINCT paths, and the site runs trailingSlash: 'always'.
+
+# Renamed products → Sift
+/job-lens           /sift/          301
+/job-lens/          /sift/          301
+/joblens            /sift/          301
+/joblens/           /sift/          301
+/job-lens/privacy   /sift/privacy/  301
+/job-lens/privacy/  /sift/privacy/  301
+/shift              /sift/          301
+/shift/             /sift/          301
+
+# Removed pages → home
+/dream-job-monitor   /  301
+/dream-job-monitor/  /  301
+/chaguan             /  301
+/chaguan/            /  301
+/tools/excel         /  301
+/tools/excel/        /  301
+/tools               /  301
+/tools/              /  301
+/tool                /  301
+/tool/               /  301
+/craft               /  301
+/craft/              /  301
+/special-thanks                /  301
+/special-thanks/               /  301
+/special-thanks/yan-zhang      /  301
+/special-thanks/yan-zhang/     /  301
+/special-thanks/zach-beasley   /  301
+/special-thanks/zach-beasley/  /  301
+/visual-design                 /  301
+/visual-design/                /  301
+/visual-design/sprint-cadence   /  301
+/visual-design/sprint-cadence/  /  301
+/privacy   /  301
+/privacy/  /  301
+
+# Old /professional/* structure → home
+/professional                      /  301
+/professional/                     /  301
+/professional/product-marketing    /  301
+/professional/product-marketing/   /  301
+/professional/data-science         /  301
+/professional/data-science/        /  301
+/professional/visual-design        /  301
+/professional/visual-design/       /  301
+/professional/brand-narrative      /  301
+/professional/brand-narrative/     /  301
+/professional/quant-insights       /  301
+/professional/quant-insights/      /  301
+/professional/information-design   /  301
+/professional/information-design/  /  301
+
+# Removed products
+/ingrain           /  301
+/ingrain/          /  301
+/ingrain/privacy   /  301
+/ingrain/privacy/  /  301
+
+# Old map demos → life journey
+/map-demo-leaflet   /life-journey/  301
+/map-demo-leaflet/  /life-journey/  301
+/map-demo-d3        /life-journey/  301
+/map-demo-d3/       /life-journey/  301
+/map-demo-svg       /life-journey/  301
+/map-demo-svg/      /life-journey/  301
