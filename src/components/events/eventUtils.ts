@@ -19,7 +19,6 @@ export interface LumaEvent {
   // Pre-computed (set by enrichEvents)
   _startMs?: number;
   _dayOfWeek?: number; // 0=Sun..6=Sat, in LA timezone
-  _timeMinutes?: number; // minutes since midnight, in LA timezone
   _dateKey?: string; // YYYY-MM-DD in LA timezone
   _strippedLocation?: string;
 }
@@ -136,7 +135,6 @@ export function enrichEvents(events: LumaEvent[]): void {
     e._startMs = d.getTime();
     const local = new Date(d.toLocaleString('en-US', { timeZone: TZ }));
     e._dayOfWeek = local.getDay();
-    e._timeMinutes = local.getHours() * 60 + local.getMinutes();
     e._dateKey = `${local.getFullYear()}-${String(local.getMonth() + 1).padStart(2, '0')}-${String(local.getDate()).padStart(2, '0')}`;
     e._strippedLocation = stripState(e.location || '');
   }
