@@ -11,47 +11,9 @@ export default defineConfig({
   // Aligns sitemap, canonical URLs, and redirect targets so Google indexes
   // the same URL it sees in the sitemap, instead of flagging "Page with redirect".
   trailingSlash: 'always',
-  redirects: {
-    // Renamed products
-    '/job-lens': '/sift/',
-    '/joblens': '/sift/',
-    '/job-lens/privacy': '/sift/privacy/',
-    '/shift': '/sift/',
-
-    // Removed pages
-    '/dream-job-monitor': '/',
-    '/chaguan': '/',
-    '/tools/excel': '/',
-    '/tools': '/',
-    '/tool': '/',
-
-    // Removed pages
-    '/craft': '/',
-    '/special-thanks': '/',
-    '/special-thanks/yan-zhang': '/',
-    '/special-thanks/zach-beasley': '/',
-    '/visual-design': '/',
-    '/visual-design/sprint-cadence': '/',
-    '/privacy': '/',
-
-    // Old /professional/* structure → homepage
-    '/professional': '/',
-    '/professional/product-marketing': '/',
-    '/professional/data-science': '/',
-    '/professional/visual-design': '/',
-    '/professional/brand-narrative': '/', // /brand page removed in 1a1f5dd
-    '/professional/quant-insights': '/',
-    '/professional/information-design': '/',
-
-    // Removed products
-    '/ingrain': '/',
-    '/ingrain/privacy': '/',
-
-    // Old map demos
-    '/map-demo-leaflet': '/life-journey/',
-    '/map-demo-d3': '/life-journey/',
-    '/map-demo-svg': '/life-journey/',
-  },
+  // 301 redirects live in public/_redirects — true edge 301s on Cloudflare
+  // Pages, rather than the <meta http-equiv="refresh"> HTML pages Astro emits
+  // for static `redirects`. Keep both slash forms in sync there.
   integrations: [
     mdx(),
     svelte(),
