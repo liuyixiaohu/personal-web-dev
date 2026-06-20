@@ -29,3 +29,5 @@ These rules apply to every human and coding agent working in this repository.
   personal access tokens.
 - Changes to enforcement-critical files require the `policy-change-approved`
   pull-request label.
+
+<!-- policy-guard smoke test; this branch will not be merged -->
