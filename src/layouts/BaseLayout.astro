@@ -36,6 +36,7 @@ const ogImageURL = new URL('/og-image.png', Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="author" content="Kun Li" />
+    <!-- design-lint-disable-next-line literal-color -- HTML metadata cannot consume CSS custom properties -->
     <meta name="theme-color" content="#faf7f2" />
     <link rel="canonical" href={canonicalURL} />
 

@@ -1,6 +1,9 @@
 # Brand Guidelines: kunli.co
 
-> Internal design-system notes for kunli.co. Tokens live in `src/styles/global.css` — this doc is just a lookup.
+> Historical lookup for kunli.co. The authoritative cross-repository Design
+> System is `personal-web-console/src/pages/design-system.astro`, published at
+> `workbench.kunli.co/design-system`. Tokens live in `src/styles/global.css` and
+> must match the Console repository exactly.
 
 ---
 
@@ -65,14 +68,13 @@ Source: cdnjs CDN.
 
 Root font-size is fluid: `clamp(1rem, 0.9rem + 0.5vw, 1.25rem)`
 
-| Level     | Size       | Usage                   |
-| --------- | ---------- | ----------------------- |
-| `--fs-xs` | `0.75rem`  | Labels, tags, badges    |
-| `--fs-sm` | `0.8rem`   | Descriptions, captions  |
-| (base)    | `1rem`     | Body text               |
-| `--fs-md` | `1.25rem`  | Subheadings, nav titles |
-| `--fs-lg` | `1.563rem` | Page headings           |
-| `--fs-xl` | `1.953rem` | Hero / display headings |
+| Level       | Size                                           | Usage                   |
+| ----------- | ---------------------------------------------- | ----------------------- |
+| `--fs-base` | `clamp(1rem, 0.9rem + 0.5vw, 1.25rem)`         | Body text               |
+| `--fs-xs`   | `0.75rem`                                      | Labels, tags, badges    |
+| `--fs-md`   | `1.25rem`                                      | Subheadings, nav titles |
+| `--fs-lg`   | `clamp(1.4375rem, 1.39rem + 0.26vw, 1.563rem)` | Page headings           |
+| `--fs-xl`   | `clamp(1.75rem, 1.7rem + 0.38vw, 1.953rem)`    | Hero / display headings |
 
 ### Typography Rhythm
 
@@ -91,6 +93,9 @@ All vertical spacing uses `em` units (scales with font size).
 ### Rules
 
 - No hardcoded font sizes; always use scale variables.
+- Decorative display type and relative `em` sizing may be exceptions only when
+  an inline lint suppression explains why a token would change the intended
+  relationship.
 - Chinese text: never italicize.
 - Weights by role:
   - Page titles (h1) and section headings (h2): **700** acceptable for top-level emphasis.
@@ -181,11 +186,9 @@ The visual primitives are exercised in production on `/events`. Refer to:
 
 All shadows use black at 0.04-0.08 opacity for warmth.
 
-| Variable      | Value                                                     | Usage                  |
-| ------------- | --------------------------------------------------------- | ---------------------- |
-| `--shadow-sm` | `0 2px 12px rgba(0,0,0,0.08)`                             | Dropdowns, tooltips    |
-| `--shadow-md` | `0 4px 16px rgba(0,0,0,0.08)`                             | Popups, floating cards |
-| `--shadow-lg` | `0 8px 40px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04)` | Modals, full overlays  |
+| Variable      | Value                         | Usage                  |
+| ------------- | ----------------------------- | ---------------------- |
+| `--shadow-md` | `0 4px 16px rgba(0,0,0,0.08)` | Popups, floating cards |
 
 ---
 

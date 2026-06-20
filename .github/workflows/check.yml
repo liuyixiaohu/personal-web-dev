@@ -1,22 +1,31 @@
 name: Check
 
 on:
+  workflow_dispatch: {}
   push:
     branches: [main]
     paths:
       - 'src/**'
       - 'public/**'
-      - 'scripts/verify-*.mjs'
+      - 'data/**'
+      - 'docs/brand-guidelines.md'
+      - 'scripts/**'
       - 'package.json'
       - 'package-lock.json'
+      - 'stylelint.config.js'
+      - 'AGENTS.md'
       - 'astro.config.mjs'
       - 'tsconfig.json'
       - 'svelte.config.js'
       - '.prettierrc.json'
       - '.prettierignore'
-      - '.github/workflows/check.yml'
+      - '.github/workflows/**'
   pull_request:
     branches: [main]
+
+concurrency:
+  group: check-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   check:
@@ -27,10 +36,7 @@ jobs:
         with:
           node-version: '22'
           cache: 'npm'
-      - run: npm ci
-      - run: npm run check
-      - run: npm run lint:css
-      - run: npm run format:check
-      - run: npm run build
-      - run: npm run test:journey
-      - run: npm run test:tooltips
+      - name: Install dependencies
+        run: npm ci
+      - name: Run required checks
+        run: npm run check:all

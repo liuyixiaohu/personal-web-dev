@@ -9,7 +9,13 @@ on:
   workflow_dispatch: {}
 
 permissions:
+  actions: write
   contents: write
+  pull-requests: write
+
+concurrency:
+  group: fetch-events
+  cancel-in-progress: false
 
 jobs:
   fetch:
@@ -34,26 +40,84 @@ jobs:
       - name: Merge events
         run: python scripts/merge_events.py
 
-      - name: Commit and push updated event data
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Validate generated data
+        run: |
+          npm ci
+          npm run test:event-data
+          npm run build
+
+      - name: Commit event data to automation branch
+        id: update
+        env:
+          AUTOMATION_BRANCH: automation/event-data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add public/data/events.json data/seen_events.json
           if git diff --cached --quiet; then
             echo "No changes to commit"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
+
+          git fetch origin \
+            "$AUTOMATION_BRANCH:refs/remotes/origin/$AUTOMATION_BRANCH" || true
+          git checkout -B "$AUTOMATION_BRANCH"
           git commit -m "chore: update event data $(date -u +%Y-%m-%d)"
-          # Race against concurrent pushes (e.g. parallel cron, manual commits).
-          # Retry with rebase, preferring our generated data on conflict.
-          for attempt in 1 2 3 4 5; do
-            if git push; then
-              echo "Pushed on attempt $attempt"
-              exit 0
-            fi
-            echo "Push attempt $attempt failed; rebasing onto origin/main"
-            git pull --rebase -X ours origin main
-            sleep $((RANDOM % 15 + 5))
-          done
-          echo "Push failed after 5 attempts"
-          exit 1
+          git push --force-with-lease origin "HEAD:$AUTOMATION_BRANCH"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Create or reuse event-data pull request
+        if: steps.update.outputs.changed == 'true'
+        id: pull-request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          AUTOMATION_BRANCH: automation/event-data
+        run: |
+          PR_NUMBER="$(gh pr list \
+            --head "$AUTOMATION_BRANCH" \
+            --base main \
+            --state open \
+            --json number \
+            --jq '.[0].number')"
+
+          if [ -z "$PR_NUMBER" ]; then
+            gh pr create \
+              --head "$AUTOMATION_BRANCH" \
+              --base main \
+              --title "chore: update event data" \
+              --body "Automated event-data update. Generated data was validated before this pull request was opened."
+            PR_NUMBER="$(gh pr list \
+              --head "$AUTOMATION_BRANCH" \
+              --base main \
+              --state open \
+              --json number \
+              --jq '.[0].number')"
+          fi
+
+          test -n "$PR_NUMBER"
+          echo "number=$PR_NUMBER" >> "$GITHUB_OUTPUT"
+
+      - name: Dispatch required checks
+        if: steps.update.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          AUTOMATION_BRANCH: automation/event-data
+        run: |
+          gh workflow run check.yml --ref "$AUTOMATION_BRANCH"
+          gh workflow run policy-guard.yml \
+            --ref "$AUTOMATION_BRANCH" \
+            -f base_ref=main
+
+      - name: Enable auto-merge after checks pass
+        if: steps.update.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ steps.pull-request.outputs.number }}
+        run: gh pr merge "$PR_NUMBER" --auto --squash --delete-branch

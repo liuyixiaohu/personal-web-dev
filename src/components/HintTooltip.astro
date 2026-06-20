@@ -38,6 +38,7 @@ const { placement = 'below' } = Astro.props;
   .hint-trigger:focus-visible {
     outline: 2px solid var(--text);
     outline-offset: 0.18em;
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value -- inline focus ring scales with the text glyphs */
     border-radius: 0.12em;
   }
 
