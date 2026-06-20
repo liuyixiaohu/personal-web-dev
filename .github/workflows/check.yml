@@ -23,6 +23,10 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+  statuses: write
+
 concurrency:
   group: check-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -37,6 +41,37 @@ jobs:
           node-version: '22'
           cache: 'npm'
       - name: Install dependencies
+        id: dependencies
+        continue-on-error: true
         run: npm ci
       - name: Run required checks
+        id: required-checks
+        if: steps.dependencies.outcome == 'success'
+        continue-on-error: true
         run: npm run check:all
+
+      - name: Publish required status
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependencies.outcome }}
+          CHECK_OUTCOME: ${{ steps.required-checks.outcome }}
+        run: |
+          if [ "$DEPENDENCY_OUTCOME" = "success" ] && [ "$CHECK_OUTCOME" = "success" ]; then
+            state=success
+            description="Repository checks passed"
+          else
+            state=failure
+            description="Repository checks failed"
+          fi
+
+          gh api --method POST \
+            "repos/${GITHUB_REPOSITORY}/statuses/${COMMIT_SHA}" \
+            -f state="$state" \
+            -f context="Required Check" \
+            -f description="$description"
+
+      - name: Fail workflow when checks fail
+        if: always() && (steps.dependencies.outcome != 'success' || steps.required-checks.outcome != 'success')
+        run: exit 1
