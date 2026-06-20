@@ -27,6 +27,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   /* Decorative hero numeral — outside the type scale by design */
   h1 {
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value -- decorative display numeral intentionally exceeds the type scale */
     font-size: clamp(4rem, 10vw, 8rem);
     font-weight: 400;
     color: var(--border);
@@ -35,6 +36,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   p {
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value -- supporting copy stays fixed beside the fluid display numeral */
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.6;
@@ -43,6 +45,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 
   a {
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value -- recovery link matches the fixed supporting copy */
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.6;

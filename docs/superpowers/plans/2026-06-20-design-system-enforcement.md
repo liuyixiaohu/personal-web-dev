@@ -4,7 +4,7 @@
 
 **Goal:** Make design-system, build, and data validation mandatory before any commit reaches `main`, while preserving unattended daily event updates through validated auto-merge pull requests.
 
-**Architecture:** GitHub rules protect `main` and require two stable checks: `Check / check` and `Policy Guard / policy-guard`. Code rules run inside the existing CI job; the event workflow writes to `automation/event-data`, creates or updates one PR, explicitly dispatches both required workflows, and enables auto-merge. A repository-level `AGENTS.md` tells coding agents not to weaken or bypass the gate.
+**Architecture:** GitHub rules protect `main` and require two stable results: the `check` Actions job and the trusted `Policy Guard` commit status. Code rules run inside the existing CI job; the event workflow writes to `automation/event-data`, creates or updates one PR, explicitly dispatches both required workflows, and enables auto-merge. A repository-level `AGENTS.md` tells coding agents not to weaken or bypass the gate.
 
 **Tech Stack:** GitHub Actions, repository rulesets, Node.js 22 built-ins (`node:test`, `fs`, `path`), Astro, Svelte, Stylelint, Python 3.12, Cloudflare Pages.
 
@@ -14,6 +14,7 @@
 
 - Create `AGENTS.md`: permanent operating rules for humans and coding agents.
 - Create `scripts/lib/design-system-audit.mjs`: pure design-token and non-CSS color auditing functions.
+- Create `scripts/design-system-tokens.json`: canonical snapshot of the 33 tokens from `personal-web-console`.
 - Create `scripts/verify-design-system.mjs`: CLI wrapper over the pure audit module.
 - Create `scripts/tests/design-system-audit.test.mjs`: unit tests for the design audit.
 - Create `scripts/lib/event-data-validation.mjs`: pure event JSON validation functions.
@@ -26,7 +27,7 @@
 - Modify `.github/workflows/fetch-events.yml`: replace direct `main` pushes with one auto-merge PR.
 - Modify `package.json`: add test and enforcement scripts.
 - Modify `stylelint.config.js`: require tokens for font size, radius, shadow, family, and colors.
-- Modify `src/styles/global.css`: add missing documented tokens needed by current intentional variants.
+- Modify `src/styles/global.css`: align token definitions exactly with the Console source of truth.
 - Modify current Astro/CSS files: convert values to tokens or add reasoned one-line suppressions.
 - Modify `docs/brand-guidelines.md`: document the enforced rules and intentional exceptions.
 - Remove unused literal pin colors from `src/components/globe/pins.ts`.
@@ -35,6 +36,7 @@
 ### Task 1: Establish agent operating rules
 
 **Files:**
+
 - Create: `AGENTS.md`
 
 - [ ] **Step 1: Add the repository instructions**
@@ -83,6 +85,7 @@ git commit -m "docs: define repository enforcement rules"
 ### Task 2: Add design-system audit tests first
 
 **Files:**
+
 - Create: `scripts/tests/design-system-audit.test.mjs`
 - Create: `scripts/lib/design-system-audit.mjs`
 - Create: `scripts/verify-design-system.mjs`
@@ -118,7 +121,8 @@ test('undefined design tokens are reported but local component variables are ign
 test('literal colors in TypeScript and markup are reported', () => {
   assert.equal(findLiteralColorsOutsideStyles('src/a.ts', "const color = '#d9797b';").length, 1);
   assert.equal(
-    findLiteralColorsOutsideStyles('src/a.astro', '<meta name="theme-color" content="#faf7f2">').length,
+    findLiteralColorsOutsideStyles('src/a.astro', '<meta name="theme-color" content="#faf7f2">')
+      .length,
     1,
   );
 });
@@ -147,8 +151,19 @@ Implement exactly these behaviors:
 
 ```js
 const TOKEN_PREFIXES = [
-  '--bg', '--text', '--border', '--gray-', '--color-', '--bubble-', '--font-',
-  '--fs-', '--space-', '--radius-', '--shadow-', '--grid-', '--content-',
+  '--bg',
+  '--text',
+  '--border',
+  '--gray-',
+  '--color-',
+  '--bubble-',
+  '--font-',
+  '--fs-',
+  '--space-',
+  '--radius-',
+  '--shadow-',
+  '--grid-',
+  '--content-',
 ];
 const HEX = /#[0-9a-fA-F]{3,8}\b/g;
 
@@ -194,7 +209,8 @@ export function findLiteralColorsOutsideStyles(path, source) {
     }
     HEX.lastIndex = 0;
     const previous = lines[index - 1] ?? '';
-    const suppressed = previous.includes('design-lint-disable-next-line literal-color --') &&
+    const suppressed =
+      previous.includes('design-lint-disable-next-line literal-color --') &&
       previous.split('--').at(-1).trim().length > 0;
     if (suppressed) continue;
     for (const match of line.matchAll(HEX)) {
@@ -227,9 +243,10 @@ git add scripts/lib/design-system-audit.mjs scripts/verify-design-system.mjs scr
 git commit -m "test: define design-system audit behavior"
 ```
 
-### Task 3: Enforce CSS tokens and migrate current exceptions
+### Task 3: Enforce Console tokens and migrate current exceptions
 
 **Files:**
+
 - Modify: `stylelint.config.js`
 - Modify: `src/styles/global.css`
 - Modify: `src/layouts/ArticleLayout.astro`
@@ -249,41 +266,25 @@ git commit -m "test: define design-system audit behavior"
 Change the Stylelint strict-value property list to:
 
 ```js
-[
-  '/color$/',
-  'fill',
-  'stroke',
-  'font-size',
-  '/border.*radius$/',
-  'box-shadow',
-  'font-family',
-]
+['/color$/', 'fill', 'stroke', 'font-size', '/border.*radius$/', 'box-shadow', 'font-family'];
 ```
 
 Keep only semantic CSS keywords in `ignoreValues`; remove literal black and white exceptions. Token definitions remain unaffected because they are custom-property declarations.
 
-- [ ] **Step 2: Add missing intentional tokens**
+- [ ] **Step 2: Snapshot and enforce the Console token map**
 
-Add to `:root` in `src/styles/global.css`:
-
-```css
---font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
---fs-2xs: 0.65rem;
---fs-sm: 0.875rem;
---shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.08);
---shadow-tooltip: 0 12px 32px rgba(0, 0, 0, 0.08);
-```
+Copy the complete token map from `liuyixiaohu/personal-web-console/src/styles/global.css` into `scripts/design-system-tokens.json`. Extend the audit so missing, changed, or additional tokens in this repository fail CI. Do not invent local design-system tokens.
 
 - [ ] **Step 3: Replace straightforward literals with tokens**
 
 Apply these mappings:
 
 ```text
-0.65rem -> var(--fs-2xs)
-0.875rem -> var(--fs-sm)
-tooltip 0 12px 32px rgba(...) -> var(--shadow-tooltip)
+0.65rem -> var(--fs-xs)
+0.875rem tooltip text -> var(--fs-xs)
+tooltip shadow -> var(--shadow-md)
 var(--color-rose, #c96b6d) -> var(--color-rose)
-var(--font-mono, ...) -> var(--font-mono)
+code font stack -> documented code-only inline exception
 ```
 
 Remove the unused `color` field from `PinData` and all six pin objects because no consumer reads it.
@@ -300,7 +301,7 @@ Add this before the theme-color meta tag:
 
 - [ ] **Step 5: Update the brand documentation**
 
-Document `--fs-2xs`, `--fs-sm`, `--font-mono` for code only, and `--shadow-tooltip`. State that relative `em` sizing and decorative display type require an inline reasoned suppression.
+State that the Console design-system page and token file are authoritative, record the local enforcement behavior, and document that relative `em` sizing, decorative display type, and code font stacks require an inline reasoned suppression.
 
 - [ ] **Step 6: Verify all design checks pass**
 
@@ -337,6 +338,7 @@ git commit -m "feat: enforce design tokens in styles and markup"
 ### Task 4: Validate event data with tests first
 
 **Files:**
+
 - Create: `scripts/tests/event-data-validation.test.mjs`
 - Create: `scripts/lib/event-data-validation.mjs`
 - Create: `scripts/verify-event-data.mjs`
@@ -411,6 +413,7 @@ git commit -m "test: validate generated event data"
 ### Task 5: Add scripts and the stable Check workflow
 
 **Files:**
+
 - Modify: `package.json`
 - Modify: `.github/workflows/check.yml`
 
@@ -471,6 +474,7 @@ git commit -m "ci: make repository checks a single required gate"
 ### Task 6: Add the policy guard with tests first
 
 **Files:**
+
 - Create: `scripts/tests/policy-change.test.mjs`
 - Create: `scripts/verify-policy-change.mjs`
 - Create: `.github/workflows/policy-guard.yml`
@@ -507,7 +511,7 @@ Export `isProtectedPolicyPath` and `evaluatePolicyChange`. When run as a CLI, re
 
 - [ ] **Step 4: Create the workflow**
 
-Use stable names `Policy Guard` and job id `policy-guard`. Trigger on:
+Use workflow name `Policy Guard Runner`; it publishes the stable commit status `Policy Guard`. Trigger on:
 
 ```yaml
 pull_request_target:
@@ -520,7 +524,7 @@ workflow_dispatch:
       default: main
 ```
 
-Give only `contents: read` and `pull-requests: read`. For `pull_request_target`, use `gh api --paginate` to write PR filenames to `$RUNNER_TEMP/changed-files.txt` and derive approval from the PR labels. For `workflow_dispatch`, fetch the base and diff `${base_ref}...${GITHUB_SHA}`. Checkout and execute the verifier from `main`, never from an untrusted PR head.
+Give `contents: read`, `pull-requests: read`, and `statuses: write`. For `pull_request_target`, use `gh api --paginate` to write PR filenames to `$RUNNER_TEMP/changed-files.txt` and derive approval from the PR labels. For `workflow_dispatch`, compare the base and dispatched commit. Checkout and execute the verifier from `main`, never from an untrusted PR head, then publish success or failure as `Policy Guard` on the tested head commit.
 
 - [ ] **Step 5: Verify locally**
 
@@ -546,6 +550,7 @@ git commit -m "ci: guard enforcement policy changes"
 ### Task 7: Convert the event workflow to an auto-merge PR
 
 **Files:**
+
 - Modify: `.github/workflows/fetch-events.yml`
 
 - [ ] **Step 1: Set minimal explicit permissions and concurrency**
@@ -676,7 +681,7 @@ deletion: blocked
 non_fast_forward: blocked
 pull_request.required_approving_review_count: 0
 required_status_checks.strict_required_status_checks_policy: true
-required checks: Check / check, Policy Guard / policy-guard
+required checks: the observed `check` job context and `Policy Guard`
 ```
 
 Do not require signed commits or human approval in this solo repository.

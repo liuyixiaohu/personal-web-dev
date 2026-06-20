@@ -51,8 +51,9 @@ const checks = [
     test: () => tooltipStyles.includes('.tooltip-card a'),
   },
   {
-    name: 'shared tooltip styles avoid undefined font tokens',
-    test: () => !tooltipStyles.includes('var(--fs-sm)'),
+    name: 'shared tooltip styles use the defined small font token',
+    test: () =>
+      globalStyles.includes('--fs-xs: 0.75rem;') && tooltipStyles.includes('var(--fs-xs)'),
   },
   {
     name: 'home hint popup is not card-width constrained',

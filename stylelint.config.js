@@ -3,10 +3,10 @@
  * (Prettier owns formatting). Deliberately minimal: only rules that catch
  * design drift, so it stays low-noise.
  *
- *  - Colors must come from tokens (var(--color-*) / var(--bg) / …), not literal
- *    hex or named colors. rgba()/rgb()/gradients (functions) and the keywords
- *    below are allowed — they cover one-off overlays/dividers with no token.
- *  - One typeface: no monospace font stacks (see Design System v0.6).
+ *  - Colors, type sizes, radii, shadows, and font stacks must come from tokens.
+ *    rgba()/rgb()/gradients (functions) and the semantic keywords below remain
+ *    available for one-off overlays and inherited values.
+ *  - Monospace remains limited to the explicitly suppressed code treatment.
  *
  * Token DEFINITIONS in global.css (`--color-pm: #9a6868`) are custom-property
  * declarations, not `color:` declarations, so they're not flagged.
@@ -16,13 +16,6 @@ export default {
   overrides: [
     { files: ['**/*.astro'], customSyntax: 'postcss-html' },
     { files: ['**/*.svelte'], customSyntax: 'postcss-html' },
-    // The design-system catalog legitimately displays raw hex (the color
-    // palette swatches) — it documents the tokens, so it's exempt from the
-    // "use a token, not a literal" colour rule. The monospace rule still applies.
-    {
-      files: ['**/design-system.astro'],
-      rules: { 'scale-unlimited/declaration-strict-value': null },
-    },
   ],
   rules: {
     'scale-unlimited/declaration-strict-value': [
@@ -30,7 +23,7 @@ export default {
       // + svg fill/stroke. The `background` SHORTHAND is intentionally NOT
       // enforced — it legitimately mixes url()/gradients/keywords (e.g. an
       // inline SVG underline), which aren't single tokens.
-      ['/color$/', 'fill', 'stroke'],
+      ['/color$/', 'fill', 'stroke', 'font-size', '/border.*radius$/', 'box-shadow', 'font-family'],
       {
         ignoreValues: [
           'transparent',
@@ -39,7 +32,6 @@ export default {
           'initial',
           'unset',
           'none',
-          // pure black / white are universal primitives, not brand palette colors
           '#fff',
           '#ffffff',
           'white',
@@ -48,7 +40,7 @@ export default {
           'black',
         ],
         message:
-          'Use a design token (e.g. var(--color-pm), var(--bg)) instead of a literal color — see /design-system.',
+          'Use a documented design token instead of a literal value — see workbench.kunli.co/design-system.',
       },
     ],
     'declaration-property-value-disallowed-list': [

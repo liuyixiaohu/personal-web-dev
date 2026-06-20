@@ -11,7 +11,7 @@
 }
 
 .probe-tags li {
-  font-size: 0.65rem;
+  font-size: var(--fs-xs);
   color: var(--text-light);
   background: rgba(0, 0, 0, 0.04);
   padding: 0.1rem 0.45rem;

@@ -160,6 +160,7 @@ const chapters = headings.filter((heading) => heading.depth === 2);
   .article-toc a::before {
     content: counter(toc, decimal-leading-zero);
     flex-shrink: 0;
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value -- compact generated index sits below the type scale */
     font-size: 0.7rem;
     color: var(--text-light);
     opacity: 0.55;
@@ -270,8 +271,9 @@ const chapters = headings.filter((heading) => heading.depth === 2);
   }
 
   .article-content :global(code) {
-    /* stylelint-disable-next-line declaration-property-value-disallowed-list -- code needs a monospace font */
-    font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+    /* stylelint-disable-next-line declaration-property-value-disallowed-list, scale-unlimited/declaration-strict-value -- code blocks are the documented monospace exception */
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value -- inline code scales relative to surrounding prose */
     font-size: 0.9em;
     background: rgba(0, 0, 0, 0.04);
     padding: 0.1em 0.35em;
@@ -284,6 +286,7 @@ const chapters = headings.filter((heading) => heading.depth === 2);
     padding: var(--space-sm) var(--space-md);
     border-radius: var(--radius-md);
     margin: var(--space-md) 0;
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value -- code blocks scale relative to surrounding prose */
     font-size: 0.9em;
     line-height: 1.5;
   }
@@ -308,6 +311,7 @@ const chapters = headings.filter((heading) => heading.depth === 2);
   .article-content :global(table) {
     width: 100%;
     border-collapse: collapse;
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value -- tables stay slightly below surrounding prose */
     font-size: 0.95em;
     margin: var(--space-md) 0;
   }

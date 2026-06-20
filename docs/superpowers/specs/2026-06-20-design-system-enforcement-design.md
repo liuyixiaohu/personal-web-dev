@@ -1,6 +1,6 @@
 # Design System Enforcement Design
 
-**Date:** 2026-06-20  
+**Date:** 2026-06-20
 **Status:** Approved for implementation
 
 ## Objective
@@ -31,7 +31,7 @@ Required rules:
 - Require a pull request before merging.
 - Require zero approving reviews.
 - Require the branch to be up to date before merging.
-- Require the `Check / check` and `Policy Guard / policy-guard` status checks.
+- Require the observed CI check context for job `check` and the trusted commit status `Policy Guard`.
 - Block force pushes.
 - Block branch deletion.
 
@@ -61,24 +61,25 @@ The workflow path filter must include the lint configuration, design-system docu
 
 ## Design-system enforcement
 
-The existing Stylelint rules remain the first layer and continue rejecting literal brand colors and monospace font stacks.
+The private `liuyixiaohu/personal-web-console` repository is the design-system source of truth. Its `src/pages/design-system.astro` page defines the documented system and its `src/styles/global.css` currently defines the canonical set of 33 tokens. This repository keeps a machine-readable snapshot of those tokens so its public CI can detect drift without a private-repository credential.
 
-Add a dedicated `npm run lint:design` verifier for rules that Stylelint does not reliably express across Astro, Svelte, CSS, TypeScript, SVG, and HTML:
+Stylelint rejects non-token values for colors, font sizes, border radii, box shadows, and font families, with the documented Console exceptions for gradients, `rgba()`, code font stacks, and pure black or white. A dedicated `npm run lint:design` verifier covers rules that Stylelint does not reliably express across Astro, Svelte, CSS, TypeScript, SVG, and HTML:
 
 - no new hardcoded font sizes outside token definitions;
 - no new hardcoded brand colors in script or markup files;
 - border radii use the documented radius tokens;
 - box shadows use the documented shadow tokens;
 - design-token references resolve to definitions in `src/styles/global.css`;
+- the complete `:root` token map exactly matches `scripts/design-system-tokens.json`;
 - explicit exceptions require a local suppression comment with a reason.
 
-Existing violations are recorded in a machine-readable ratchet baseline. CI permits only the recorded count or fewer; new violations or an increased count fail. Reducing violations updates the baseline downward. Increasing or regenerating the baseline requires explicit user approval and is treated as a policy change.
+The canonical snapshot is enforcement policy. Updating it requires explicit owner review and must reflect an intentional change made first in the Console source of truth.
 
 Rules that require human visual judgment—composition, warmth, hierarchy, or whether a new component should exist—remain documented guidance. Screenshot regression testing is excluded from this first implementation because dynamic event content and external fonts would make it noisy; it can be added later for selected deterministic pages.
 
 ## Policy guard
 
-Add a separate required `Policy Guard / policy-guard` check. It fails when a pull request modifies enforcement-critical files without the `policy-change-approved` label.
+Add a separate required commit status named `Policy Guard`. It fails when a pull request modifies enforcement-critical files without the `policy-change-approved` label.
 
 Protected paths include:
 
@@ -89,7 +90,7 @@ Protected paths include:
 - `docs/brand-guidelines.md`;
 - `AGENTS.md`.
 
-The guard inspects filenames only and never executes code from the pull-request branch. This keeps `pull_request_target` safe. The repository owner applies `policy-change-approved` only when intentionally changing policy.
+The guard inspects filenames only and never executes code from the pull-request branch. The `pull_request_target` workflow checks out the trusted verifier from `main`, then publishes the result onto the PR head commit as a custom status. This keeps a PR from weakening its own guard while still producing a required status on the correct commit. The repository owner applies `policy-change-approved` only when intentionally changing policy.
 
 For manual automation runs, the same guard logic compares the automation branch with `main` and attaches the required check to the branch head.
 
