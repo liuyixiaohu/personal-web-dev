@@ -8,7 +8,6 @@ export interface JourneyMapPin {
   lng: number;
   city: string;
   country: string;
-  color: string;
   year: number;
   title: string;
   summary: string;
@@ -88,11 +87,22 @@ export function buildSVG(
     marker.setAttribute('class', 'pin-marker');
     marker.setAttribute('data-pin-id', pin.id);
 
+    // Ripple rings — invisible at rest, animated only on hover/focus (see
+    // life-journey.astro). Two staggered rings sit behind the solid dot so the
+    // hovered pin reads as emitting a ripple. Dot colour is owned by CSS.
+    for (let i = 0; i < 2; i++) {
+      const ripple = document.createElementNS(NS, 'circle');
+      ripple.setAttribute('cx', String(x));
+      ripple.setAttribute('cy', String(y));
+      ripple.setAttribute('r', '8');
+      ripple.setAttribute('class', i === 0 ? 'pin-ripple' : 'pin-ripple pin-ripple-2');
+      marker.appendChild(ripple);
+    }
+
     const dot = document.createElementNS(NS, 'circle');
     dot.setAttribute('cx', String(x));
     dot.setAttribute('cy', String(y));
     dot.setAttribute('r', '8');
-    dot.setAttribute('fill', pin.color);
     dot.setAttribute('class', 'pin-dot');
     marker.appendChild(dot);
 
