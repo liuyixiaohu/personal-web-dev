@@ -331,22 +331,56 @@ const journeyPins = pins.map((pin) => {
     cursor: pointer;
   }
 
+  /* Dots and labels share one brand colour in every state — no hover swap. */
   .pin-dot {
     cursor: pointer;
+    fill: var(--color-rose);
+  }
+
+  /* Ripple rings: invisible at rest, expand and fade out only while the pin is
+     hovered or keyboard-focused. The sole hover affordance. Reduced-motion is
+     handled globally (global.css neutralises animations). */
+  .pin-ripple {
+    fill: none;
+    stroke: var(--color-rose);
+    stroke-width: 2;
+    opacity: 0;
+    pointer-events: none;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .pin-marker:hover .pin-ripple,
+  .pin-marker:focus-within .pin-ripple {
+    animation: journey-ripple 1.6s ease-out infinite;
+  }
+
+  /* Second ring starts half a cycle later so the pair reads as a continuous
+     ripple. Scoped to the active state and placed after the shorthand above —
+     the `animation` shorthand resets animation-delay to 0, so a plain
+     `.pin-ripple-2` rule would be overridden. */
+  .pin-marker:hover .pin-ripple-2,
+  .pin-marker:focus-within .pin-ripple-2 {
+    animation-delay: 0.8s;
+  }
+
+  @keyframes journey-ripple {
+    from {
+      transform: scale(1);
+      opacity: 0.55;
+    }
+    to {
+      transform: scale(3.2);
+      opacity: 0;
+    }
   }
 
   .map-label {
     font-size: var(--fs-lg);
     font-family: var(--font-body);
-    fill: var(--text-light);
+    fill: var(--color-rose);
     dominant-baseline: central;
     cursor: pointer;
-    transition: fill 0.15s ease;
-  }
-
-  .pin-marker:hover .map-label,
-  .map-label:focus {
-    fill: var(--color-rose);
   }
 
   .map-label:focus {

@@ -10,7 +10,6 @@ export interface PinData {
   lng: number;
   city: string;
   country: string;
-  color: string;
   year: number;
 }
 
@@ -21,7 +20,6 @@ export const pins: PinData[] = [
     lng: 120.0,
     city: 'Jiaozhou',
     country: 'Shandong, China',
-    color: '#d9797b',
     year: 1996,
   },
   {
@@ -30,7 +28,6 @@ export const pins: PinData[] = [
     lng: 118.73,
     city: 'Shouguang',
     country: 'Shandong, China',
-    color: '#d9797b',
     year: 2014,
   },
   {
@@ -39,7 +36,6 @@ export const pins: PinData[] = [
     lng: 120.38,
     city: 'Qingdao',
     country: 'Shandong, China',
-    color: '#d9797b',
     year: 2018,
   },
   {
@@ -48,7 +44,6 @@ export const pins: PinData[] = [
     lng: -89.4,
     city: 'Madison',
     country: 'Wisconsin, USA',
-    color: '#d9797b',
     year: 2021,
   },
   {
@@ -57,7 +52,6 @@ export const pins: PinData[] = [
     lng: -122.04,
     city: 'Fairfield',
     country: 'California, USA',
-    color: '#d9797b',
     year: 2023,
   },
   {
@@ -66,7 +60,6 @@ export const pins: PinData[] = [
     lng: -122.27,
     city: 'Berkeley',
     country: 'California, USA',
-    color: '#d9797b',
     year: 2025,
   },
 ];
