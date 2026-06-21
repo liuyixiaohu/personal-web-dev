@@ -331,7 +331,8 @@ const journeyPins = pins.map((pin) => {
     cursor: pointer;
   }
 
-  /* Dots and labels share one brand colour in every state — no hover swap. */
+  /* Dots stay brand rose in every state — no hover swap. Labels are brand
+     black (see .map-label); only the dot + its ripple carry the accent. */
   .pin-dot {
     cursor: pointer;
     fill: var(--color-rose);
@@ -378,7 +379,7 @@ const journeyPins = pins.map((pin) => {
   .map-label {
     font-size: var(--fs-lg);
     font-family: var(--font-body);
-    fill: var(--color-rose);
+    fill: var(--text);
     dominant-baseline: central;
     cursor: pointer;
   }
