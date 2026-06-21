@@ -1,0 +1,74 @@
+name: Policy Guard Runner
+
+on:
+  pull_request_target:
+    branches: [main]
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+  workflow_dispatch:
+    inputs:
+      base_ref:
+        description: Base branch used to identify changed files
+        required: false
+        default: main
+
+permissions:
+  contents: read
+  pull-requests: read
+  statuses: write
+
+concurrency:
+  group: policy-guard-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  policy-guard-runner:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout trusted policy from main
+        uses: actions/checkout@v6
+        with:
+          ref: main
+
+      - name: Collect changed files
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          BASE_REF: ${{ inputs.base_ref || 'main' }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request_target" ]; then
+            gh api --paginate \
+              "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}/files" \
+              --jq '.[].filename' > "$RUNNER_TEMP/changed-files.txt"
+          else
+            gh api --paginate \
+              "repos/${GITHUB_REPOSITORY}/compare/${BASE_REF}...${COMMIT_SHA}" \
+              --jq '.files[].filename' > "$RUNNER_TEMP/changed-files.txt"
+          fi
+
+      - name: Evaluate policy and publish trusted status
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          POLICY_CHANGE_APPROVED: ${{ contains(github.event.pull_request.labels.*.name, 'policy-change-approved') }}
+        run: |
+          set +e
+          node scripts/verify-policy-change.mjs "$RUNNER_TEMP/changed-files.txt"
+          policy_exit=$?
+          set -e
+
+          if [ "$policy_exit" -eq 0 ]; then
+            state=success
+            description="No unapproved enforcement-policy changes"
+          else
+            state=failure
+            description="Enforcement-policy changes require owner approval"
+          fi
+
+          gh api --method POST \
+            "repos/${GITHUB_REPOSITORY}/statuses/${COMMIT_SHA}" \
+            -f state="$state" \
+            -f context="Policy Guard" \
+            -f description="$description"
+
+          exit "$policy_exit"

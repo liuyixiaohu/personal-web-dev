@@ -1,22 +1,35 @@
 name: Check
 
 on:
+  workflow_dispatch: {}
   push:
     branches: [main]
     paths:
       - 'src/**'
       - 'public/**'
-      - 'scripts/verify-*.mjs'
+      - 'data/**'
+      - 'docs/brand-guidelines.md'
+      - 'scripts/**'
       - 'package.json'
       - 'package-lock.json'
+      - 'stylelint.config.js'
+      - 'AGENTS.md'
       - 'astro.config.mjs'
       - 'tsconfig.json'
       - 'svelte.config.js'
       - '.prettierrc.json'
       - '.prettierignore'
-      - '.github/workflows/check.yml'
+      - '.github/workflows/**'
   pull_request:
     branches: [main]
+
+permissions:
+  contents: read
+  statuses: write
+
+concurrency:
+  group: check-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   check:
@@ -27,10 +40,38 @@ jobs:
         with:
           node-version: '22'
           cache: 'npm'
-      - run: npm ci
-      - run: npm run check
-      - run: npm run lint:css
-      - run: npm run format:check
-      - run: npm run build
-      - run: npm run test:journey
-      - run: npm run test:tooltips
+      - name: Install dependencies
+        id: dependencies
+        continue-on-error: true
+        run: npm ci
+      - name: Run required checks
+        id: required-checks
+        if: steps.dependencies.outcome == 'success'
+        continue-on-error: true
+        run: npm run check:all
+
+      - name: Publish required status
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          DEPENDENCY_OUTCOME: ${{ steps.dependencies.outcome }}
+          CHECK_OUTCOME: ${{ steps.required-checks.outcome }}
+        run: |
+          if [ "$DEPENDENCY_OUTCOME" = "success" ] && [ "$CHECK_OUTCOME" = "success" ]; then
+            state=success
+            description="Repository checks passed"
+          else
+            state=failure
+            description="Repository checks failed"
+          fi
+
+          gh api --method POST \
+            "repos/${GITHUB_REPOSITORY}/statuses/${COMMIT_SHA}" \
+            -f state="$state" \
+            -f context="Required Check" \
+            -f description="$description"
+
+      - name: Fail workflow when checks fail
+        if: always() && (steps.dependencies.outcome != 'success' || steps.required-checks.outcome != 'success')
+        run: exit 1
