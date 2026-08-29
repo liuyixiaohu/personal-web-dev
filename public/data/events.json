@@ -1,382 +1,59 @@
 {
-  "updated_at": "2026-08-28T14:33:32.314132+00:00",
-  "previous_updated_at": "2026-08-27T13:02:50.682123+00:00",
+  "updated_at": "2026-08-29T09:19:49.621297+00:00",
+  "previous_updated_at": "2026-08-28T14:33:32.314132+00:00",
   "new_event_ids": [
-    "evt-0WQ3ijcHXOchYBH",
-    "evt-4qxgLhwEvQJ6RsL",
-    "evt-5NMDNJ3gBQFBqmr",
-    "evt-5iCx6WQGBwVgDql",
-    "evt-6PisX8lQAkKrl2L",
-    "evt-6RecgleC5rFb7tN",
-    "evt-79usmOqNlLiJvos",
-    "evt-7xSp88HCo2xw1pU",
-    "evt-8kjBPLVqjqyyHAK",
-    "evt-8xp6C7FwWpWaILC",
-    "evt-9G13qSATpaiBBSX",
-    "evt-9i8xkDBWUGUFipQ",
-    "evt-AdkTQJ8h87Hi4Ks",
-    "evt-B3ynj85Hs7TZOuw",
-    "evt-B5dsQo0b3TCukfx",
-    "evt-BKTA54jjlLAPc1m",
-    "evt-CPiZMQLmOzAI0uV",
-    "evt-EEHprCaPKFtgHqY",
-    "evt-EW8Dfk2eK0nMWdl",
-    "evt-G9rlOXvLu8yOChT",
-    "evt-GGFl3T1FLpcJTCt",
-    "evt-GKUgNnlR4RYsS5r",
-    "evt-GUBx1d92TZVCk2I",
-    "evt-HeHjcMF9hQY8HgD",
-    "evt-Ks1XgEhMaGtqKer",
-    "evt-QKyH2G6UssFdCtT",
-    "evt-Qgk4orNcH45t3LX",
-    "evt-QnKbn39kUm8E1ws",
-    "evt-RSiBl6QUE0vfTZj",
-    "evt-RxVwfBPRhuaGCt9",
-    "evt-UgeSLZo7YfrQVM2",
-    "evt-VcpyfOM9tAtGEBi",
-    "evt-ViW3RB33UaqTv2J",
-    "evt-WyCjvylN6X9vVXT",
-    "evt-XZ2oXqrLC5EBkx6",
-    "evt-XsIJD5No1bSkFJf",
-    "evt-Y9oJb5001ZiOQUf",
-    "evt-YSJI2pNxij0P5GN",
-    "evt-YkxlOMGjsaG0E3w",
-    "evt-dbFEF0PDCSELvt0",
-    "evt-duXXe6Tsda17GPD",
-    "evt-e3OGLXg4PWM5DmW",
-    "evt-e47fTCiiilJbJnY",
-    "evt-erC1BEn1N9fA3dA",
-    "evt-gSqCRnttw8SUrGu",
-    "evt-iWGJmsIPKKUYCE0",
-    "evt-ibBgrkmKPaw1B4C",
-    "evt-iwerkloaoEi5m9P",
-    "evt-jLsDfleyD4ZqlMT",
-    "evt-jUCb7a1QvwVr6hN",
-    "evt-kIHkL9oIXl4NWiA",
-    "evt-lI6G2KHwbiOUATZ",
-    "evt-lNPT5nHMuIB9taJ",
-    "evt-lmuElednEYzUbSx",
-    "evt-lqr9vIlooakduEg",
-    "evt-mdBbtXmDpw27aw1",
-    "evt-oKYhLsBQUFt6fQa",
-    "evt-paOVT9EUOj7qSTp",
-    "evt-qrIcAbk1Jq9ZSQ2",
-    "evt-sFgQ4ZC88GlBIrp",
-    "evt-tBDJucyC87iSB1J",
-    "evt-ulxTVdAeks833r8",
-    "evt-vlxY1sjENfo7O5T"
+    "evt-0GlqYTkB0J5qPf5",
+    "evt-0iKpBHIXJLXmULb",
+    "evt-0je14UkbC3SKtRN",
+    "evt-1kHJnlcPeOiTQFJ",
+    "evt-1kzl903war36yBT",
+    "evt-3Aq91jXSv5Epunm",
+    "evt-4qPFJob4yvlJDEJ",
+    "evt-5dojuDZllEtwUxf",
+    "evt-9lFwteHbQF6NbbE",
+    "evt-9xsUDNEwBQBbOTE",
+    "evt-Bfr9yEabdwuQAiW",
+    "evt-DgqcTGziGp6q1Wl",
+    "evt-E7VKz9p6n6sfJ43",
+    "evt-E7ZczP6Y0hwTsJ0",
+    "evt-F7a7A7vBtrRCDpD",
+    "evt-FZEsfq8Ps6VQDYr",
+    "evt-I3znjd9H1QapHj9",
+    "evt-KlSwWYrXBRhSU9Z",
+    "evt-LrM2h5xqqzrRsMl",
+    "evt-PIhNiH8vJ8axnTE",
+    "evt-SDOJWCGzGPmpWdh",
+    "evt-T8jvG7h5xieJmQL",
+    "evt-UDhd7lk7DWdUZiV",
+    "evt-Uh8OfqPbU6hJG9y",
+    "evt-WWGHFURSnoytdIb",
+    "evt-ZQT0BDdFq0Fcujs",
+    "evt-aaV2F2Nz6cRJHbr",
+    "evt-azBIZi4UjPPHMY2",
+    "evt-cQrIXrpwxF3GkF0",
+    "evt-iOwlNKole3pAmBe",
+    "evt-iXcStNTE7XW5Btb",
+    "evt-jCJjku9B32NCqB8",
+    "evt-qjTpe2BhysxVwGq",
+    "evt-tJ5GU2W5F2TIvnJ",
+    "evt-uKK7Y6eBiMh2oRO",
+    "evt-vB7Sll5T9OCSe1O",
+    "evt-xNsKTAPHAeUtpgq",
+    "evt-ysitfcSTyKBq1UV"
   ],
   "events": [
     {
-      "api_id": "evt-YkxlOMGjsaG0E3w",
-      "name": "Breakfast at Rachel's - August Edition",
-      "url": "https://lu.ma/6ll0v5o4",
-      "start_at": "2026-08-28T17:00:00.000Z",
-      "end_at": "2026-08-28T19:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Generationship",
-      "host_names": [
-        "Michelle Yi",
-        "Rachel Chalmers"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-6RecgleC5rFb7tN",
-      "name": "TSVC夏淳博士《Personal Agent和Social》创业交流会 - 硅谷清华校友会",
-      "url": "https://lu.ma/49ir53m9",
-      "start_at": "2026-08-29T21:00:00.000Z",
-      "end_at": "2026-08-29T22:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "Mountain View, CA",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "硅谷清华校友会"
-      ],
-      "guest_count": 8,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-QKyH2G6UssFdCtT",
-      "name": "NSBE BAY AREA PRESENTS: LEVERAGE",
-      "url": "https://lu.ma/na3c1fak",
-      "start_at": "2026-08-29T22:30:00.000Z",
-      "end_at": "2026-08-30T00:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "Oakland, CA",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "NSBE Bay Area Professionals"
-      ],
-      "guest_count": 5,
-      "is_free": false,
-      "price_cents": 1000,
-      "price_currency": "usd",
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-vlxY1sjENfo7O5T",
-      "name": "Recursive Self Improvement Hack: Harnesses",
-      "url": "https://lu.ma/7cacs0ez",
-      "start_at": "2026-08-30T17:00:00.000Z",
-      "end_at": "2026-08-31T03:00:00.000Z",
+      "api_id": "evt-0je14UkbC3SKtRN",
+      "name": "StartOut HikeOut @ Lands End Trail, SF",
+      "url": "https://lu.ma/idbe7ycb",
+      "start_at": "2026-08-29T16:30:00.000Z",
+      "end_at": "2026-08-29T19:30:00.000Z",
       "timezone": "America/Los_Angeles",
       "location": "San Francisco, CA",
       "location_type": "offline",
       "calendar_name": "Personal",
       "host_names": [
-        "Serge Alexander Didenko",
-        "Artem Lukoianov",
-        "Sean Klein",
-        "European Startup Embassy",
-        "Pushti Vora"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-9i8xkDBWUGUFipQ",
-      "name": "The Ultimate Catan Tournament w/ Corgi & Gutgutgoose",
-      "url": "https://lu.ma/rg5z9vyc",
-      "start_at": "2026-09-01T00:00:00.000Z",
-      "end_at": "2026-09-01T03:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Corgi",
-      "host_names": [
-        "Anamika Khaleghian",
-        "Anis Mihrshahi"
-      ],
-      "guest_count": 25,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-lI6G2KHwbiOUATZ",
-      "name": "Women Tech Meetup: Who’s Betting Big on AI?",
-      "url": "https://lu.ma/kmq8ra7u",
-      "start_at": "2026-09-01T00:30:00.000Z",
-      "end_at": "2026-09-01T03:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Women Tech Meetup",
-      "host_names": [
-        "Dasha Shunina",
-        "Emily, Workato",
-        "Kayla Hamahashi"
-      ],
-      "guest_count": 315,
-      "is_free": false,
-      "price_cents": 1500,
-      "price_currency": "usd",
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-sFgQ4ZC88GlBIrp",
-      "name": "90/30 Club Reading - Robots Need More than VLA and World Models",
-      "url": "https://lu.ma/je0wu83j",
-      "start_at": "2026-09-01T02:00:00.000Z",
-      "end_at": "2026-09-01T05:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "90/30 Club",
-      "host_names": [
-        "Toby Watson",
-        "Gerardo Salazar"
-      ],
-      "guest_count": 13,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-EW8Dfk2eK0nMWdl",
-      "name": "Secrets of Best-in-Class Ai-Pilled Companies",
-      "url": "https://lu.ma/1a6a0ysf",
-      "start_at": "2026-09-02T01:00:00.000Z",
-      "end_at": "2026-09-02T03:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "Helen Moore"
-      ],
-      "guest_count": 35,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-mdBbtXmDpw27aw1",
-      "name": "Tech Executives Meetup: Usher & Chris Brown Live @ Private Suite at Levi Stadium - **Bring a +1 Night**",
-      "url": "https://lu.ma/5o804cev",
-      "start_at": "2026-09-02T01:00:00.000Z",
-      "end_at": "2026-09-02T05:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "Santa Clara, CA",
-      "location_type": "offline",
-      "calendar_name": "Dining Series",
-      "host_names": [
-        "Brett Foreman"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-qrIcAbk1Jq9ZSQ2",
-      "name": "AI Founder, Researcher, & Builder Back to School Happy Hour",
-      "url": "https://lu.ma/9at29alg",
-      "start_at": "2026-09-02T01:00:00.000Z",
-      "end_at": "2026-09-02T03:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "Berkeley, California",
-      "location_type": "offline",
-      "calendar_name": "The House Fund Events Calendar",
-      "host_names": [
-        "The House Fund"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-B3ynj85Hs7TZOuw",
-      "name": "Creative Intelligent Machines Continuum: Luma maker night #2",
-      "url": "https://lu.ma/cimc2",
-      "start_at": "2026-09-02T01:30:00.000Z",
-      "end_at": "2026-09-02T03:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "tiat (the intersection of art & technology)",
-      "host_names": [
-        "ash",
-        "Prince Boucher"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-jLsDfleyD4ZqlMT",
-      "name": "Coffee Chat: AI x Personal Growth",
-      "url": "https://lu.ma/n7t8d1o4",
-      "start_at": "2026-09-02T21:00:00.000Z",
-      "end_at": "2026-09-02T23:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Mateo, CA",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "Claire Zeng"
-      ],
-      "guest_count": 4,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-6PisX8lQAkKrl2L",
-      "name": "AI Tech & Startup Night — San Francisco",
-      "url": "https://lu.ma/jjys158h",
-      "start_at": "2026-09-03T01:00:00.000Z",
-      "end_at": "2026-09-03T04:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "NOMAD STARTUP & INVESTOR EVENTS",
-      "host_names": [
-        "NomadGlobalHub"
-      ],
-      "guest_count": 9,
-      "is_free": false,
-      "price_cents": 2900,
-      "price_currency": "usd",
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-ViW3RB33UaqTv2J",
-      "name": "TechWalk | Silicon Valley, 9/2",
-      "url": "https://lu.ma/6fypen0l",
-      "start_at": "2026-09-03T01:00:00.000Z",
-      "end_at": "2026-09-03T02:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "Mountain View, California",
-      "location_type": "offline",
-      "calendar_name": "TechWalk",
-      "host_names": [
-        "Caroline Gomes",
-        "Christine Farrier Rosemin",
-        "Rupa Bhagwat"
+        "StartOut San Francisco"
       ],
       "guest_count": 3,
       "is_free": true,
@@ -385,20 +62,21 @@
       "categories": [
         "Tech Events (Bay Area)"
       ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
     },
     {
-      "api_id": "evt-e47fTCiiilJbJnY",
-      "name": "Humanmade Founder Session - Financial Strategy w/ Lauren Dermody",
-      "url": "https://lu.ma/lxqhfmo6",
-      "start_at": "2026-09-03T23:30:00.000Z",
-      "end_at": "2026-09-04T01:30:00.000Z",
+      "api_id": "evt-1kHJnlcPeOiTQFJ",
+      "name": "Neurotech Follow Up",
+      "url": "https://lu.ma/nq6yhrk9",
+      "start_at": "2026-08-29T19:00:00.000Z",
+      "end_at": "2026-08-29T22:00:00.000Z",
       "timezone": "America/Los_Angeles",
       "location": "San Francisco, CA",
       "location_type": "offline",
       "calendar_name": "Personal",
       "host_names": [
-        "Humanmade Information"
+        "Marion Moranetz",
+        "Mango S"
       ],
       "guest_count": 8,
       "is_free": true,
@@ -407,24 +85,69 @@
       "categories": [
         "Tech Events (Bay Area)"
       ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
     },
     {
-      "api_id": "evt-BKTA54jjlLAPc1m",
-      "name": "Bay Area Frontier Research Club #21 | Voice Research Club Launch: Models, Evals & Real-Time Interaction",
-      "url": "https://lu.ma/nbaa4d7r",
-      "start_at": "2026-09-04T00:30:00.000Z",
-      "end_at": "2026-09-04T03:30:00.000Z",
+      "api_id": "evt-0iKpBHIXJLXmULb",
+      "name": "SF Formal Math with Lean",
+      "url": "https://lu.ma/cqeoqbpu",
+      "start_at": "2026-09-01T02:00:00.000Z",
+      "end_at": "2026-09-01T04:00:00.000Z",
       "timezone": "America/Los_Angeles",
       "location": "San Francisco, CA",
       "location_type": "offline",
-      "calendar_name": "The Frontier Syndicate",
+      "calendar_name": "Personal",
       "host_names": [
-        "Shobhit Banga",
-        "Dylan Toumayan",
-        "Kristopher Floyd",
-        "Rajarshi Roy",
-        "Nishant Nikhil"
+        "Rado Kirov"
+      ],
+      "guest_count": 4,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-vB7Sll5T9OCSe1O",
+      "name": "Learning Layer Paper Reading Club - Week 30 - ARIS: Autonomous Research via Adversarial Multi-Agent Collaboration",
+      "url": "https://lu.ma/learning-layer-labs-sept01",
+      "start_at": "2026-09-02T00:30:00.000Z",
+      "end_at": "2026-09-02T02:30:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, CA",
+      "location_type": "offline",
+      "calendar_name": "Learning Layer Labs",
+      "host_names": [
+        "Thomas",
+        "Mat Allen",
+        "Devinder Sodhi (LLL)",
+        "The Fold SF",
+        "Apollo Commons"
+      ],
+      "guest_count": 3,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-DgqcTGziGp6q1Wl",
+      "name": "The Agent Has Entered the Chat",
+      "url": "https://lu.ma/vercel-plain-sf-fireside",
+      "start_at": "2026-09-02T21:00:00.000Z",
+      "end_at": "2026-09-03T00:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, CA",
+      "location_type": "offline",
+      "calendar_name": "Vercel Events",
+      "host_names": [
+        "Vercel Events",
+        "Plain"
       ],
       "guest_count": 0,
       "is_free": true,
@@ -433,205 +156,47 @@
       "categories": [
         "AI Events (Bay Area)"
       ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
     },
     {
-      "api_id": "evt-8kjBPLVqjqyyHAK",
-      "name": "From Signed to Paid: The Messy Middle of Enterprise Deals",
-      "url": "https://lu.ma/b552314x",
-      "start_at": "2026-09-04T01:00:00.000Z",
+      "api_id": "evt-azBIZi4UjPPHMY2",
+      "name": "Deploying Physical AI in the Real World w Skild AI, Dexterity, Weave Robotics & Instawork",
+      "url": "https://lu.ma/7b9joney",
+      "start_at": "2026-09-04T00:30:00.000Z",
       "end_at": "2026-09-04T04:00:00.000Z",
       "timezone": "America/Los_Angeles",
       "location": "San Francisco, CA",
       "location_type": "offline",
-      "calendar_name": "TinyFish Events",
+      "calendar_name": "Savant VC",
       "host_names": [
-        "TinyFish",
-        "Sky Zhang",
-        "Oliver Camargo",
-        "Michael Morgenstern"
-      ],
-      "guest_count": 6,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-G9rlOXvLu8yOChT",
-      "name": "Rich People Meetup",
-      "url": "https://lu.ma/e401hp6y",
-      "start_at": "2026-09-04T21:00:00.000Z",
-      "end_at": "2026-09-05T02:15:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "festa"
+        "Jeson Lee",
+        "Gary Kagan"
       ],
       "guest_count": 0,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
-        "Tech Events (Bay Area)"
+        "AI Events (Bay Area)"
       ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
     },
     {
-      "api_id": "evt-Qgk4orNcH45t3LX",
-      "name": "Dublin HacX",
-      "url": "https://lu.ma/8ckb6ebv",
-      "start_at": "2026-09-05T16:30:00.000Z",
-      "end_at": "2026-09-05T17:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "Pleasanton, CA",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "Dublin HacX"
-      ],
-      "guest_count": 3,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-79usmOqNlLiJvos",
-      "name": "Mentor Roulette Luncheon",
-      "url": "https://lu.ma/pktff0m0",
-      "start_at": "2026-09-08T20:00:00.000Z",
-      "end_at": "2026-09-08T22:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "South San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "Bonneville Labs",
-        "Ash Kumra",
-        "Svetlana Kolés"
-      ],
-      "guest_count": 3,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-erC1BEn1N9fA3dA",
-      "name": "Bay Area Founders Pitch & Startup Networking",
-      "url": "https://lu.ma/25odwnxl",
-      "start_at": "2026-09-09T00:00:00.000Z",
-      "end_at": "2026-09-09T03:00:00.000Z",
+      "api_id": "evt-9xsUDNEwBQBbOTE",
+      "name": "Abaka AI VIP Dinner",
+      "url": "https://lu.ma/sept-vip-dinner",
+      "start_at": "2026-09-04T02:00:00.000Z",
+      "end_at": "2026-09-04T04:00:00.000Z",
       "timezone": "America/Los_Angeles",
       "location": "Mountain View, CA",
       "location_type": "offline",
-      "calendar_name": "startupa2z.org",
+      "calendar_name": "Abaka AI",
       "host_names": [
-        "satish govindappa"
-      ],
-      "guest_count": 3,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-iWGJmsIPKKUYCE0",
-      "name": "🌐 Energy Generation Cluster: Plug-in Solar 101, Live Demo, & Deep Dive Q&A",
-      "url": "https://lu.ma/m4hetq6h",
-      "start_at": "2026-09-09T00:00:00.000Z",
-      "end_at": "2026-09-09T02:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, California",
-      "location_type": "offline",
-      "calendar_name": "9Zero - San Francisco",
-      "host_names": [
-        "9Zero",
-        "Nick Rojas"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-paOVT9EUOj7qSTp",
-      "name": "Tech Leader Dinner Series - San Francisco",
-      "url": "https://lu.ma/revelo-dinner-san-francisco-090826",
-      "start_at": "2026-09-09T01:45:00.000Z",
-      "end_at": "2026-09-09T04:45:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Revelo",
-      "host_names": [
-        "Cooper Dadami"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-kIHkL9oIXl4NWiA",
-      "name": "Innovation Connect",
-      "url": "https://lu.ma/lc7siykc",
-      "start_at": "2026-09-09T19:30:00.000Z",
-      "end_at": "2026-09-10T02:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "Sunnyvale, CA",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "Michelle Kang",
-        "Woosuk Chang"
-      ],
-      "guest_count": 8,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-oKYhLsBQUFt6fQa",
-      "name": "\"How I\" Happy Hour with Claire Vo",
-      "url": "https://lu.ma/how-i-happy-hour",
-      "start_at": "2026-09-10T00:00:00.000Z",
-      "end_at": "2026-09-10T03:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Amplitude Community",
-      "host_names": [
-        "Amplitude Community",
-        "Claire Vo",
-        "Mary Tan"
+        "Abaka AI",
+        "Martina Beg",
+        "Gonzalo Flores",
+        "Rahul Suresh",
+        "J. Rhoads"
       ],
       "guest_count": 0,
       "is_free": true,
@@ -640,712 +205,44 @@
       "categories": [
         "AI Events (Bay Area)"
       ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
     },
     {
-      "api_id": "evt-gSqCRnttw8SUrGu",
-      "name": "In Production",
-      "url": "https://lu.ma/openro-8qy3",
-      "start_at": "2026-09-10T01:00:00.000Z",
-      "end_at": "2026-09-10T04:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "OpenRouter Events",
-      "host_names": [
-        "OpenRouter"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-iwerkloaoEi5m9P",
-      "name": "Software Factories Meet Production",
-      "url": "https://lu.ma/87no10np",
-      "start_at": "2026-09-10T01:00:00.000Z",
-      "end_at": "2026-09-10T03:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "Cleric",
-        "Datadog",
-        "Willem Pienaar",
-        "Agentic AI Foundation"
-      ],
-      "guest_count": 3,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-GGFl3T1FLpcJTCt",
-      "name": "Product & Design Exec Leaders Dinner",
-      "url": "https://lu.ma/wjm02oc4",
-      "start_at": "2026-09-10T01:30:00.000Z",
-      "end_at": "2026-09-10T04:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Brderless",
-      "host_names": [
-        "Amy Quan",
-        "Brderless",
-        "Alyosha Makarov",
-        "Idan Benishu",
-        "Ohad Biron"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-8xp6C7FwWpWaILC",
-      "name": "The True Cost of Every Prompt: The Sustainability of AI and Data Centers",
-      "url": "https://lu.ma/nqcd5thf",
-      "start_at": "2026-09-10T02:00:00.000Z",
-      "end_at": "2026-09-10T04:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, California",
-      "location_type": "offline",
-      "calendar_name": "Big Brain Lectures - Bay Area",
-      "host_names": [
-        "Big Brain SF"
-      ],
-      "guest_count": 27,
-      "is_free": false,
-      "price_cents": 2700,
-      "price_currency": "usd",
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-UgeSLZo7YfrQVM2",
-      "name": "GTM 201: Strategy’s Set. Now Go Get Revenue.",
-      "url": "https://lu.ma/2mytg4nv",
-      "start_at": "2026-09-10T23:30:00.000Z",
-      "end_at": "2026-09-11T02:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "Pleasanton, California",
-      "location_type": "offline",
-      "calendar_name": "Silicon Valley East Bay Founders Meetups",
-      "host_names": [
-        "Sugata Sanyal",
-        "Raj Badarinath"
-      ],
-      "guest_count": 11,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-RxVwfBPRhuaGCt9",
-      "name": "THE SF DATABASE MEETUP: Neki Edition",
-      "url": "https://lu.ma/tym2h9zq",
-      "start_at": "2026-09-11T00:30:00.000Z",
-      "end_at": "2026-09-11T03:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "PlanetScale",
-      "host_names": [
-        "PlanetScale",
-        "Christian Glassiognon",
-        "Sam Lambert",
-        "Ben Dicken",
-        "Nick Van Wiggeren"
-      ],
-      "guest_count": 8,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-Y9oJb5001ZiOQUf",
-      "name": "Designing with AI: Panel hosted by Amplitude",
-      "url": "https://lu.ma/hc9mndo1",
-      "start_at": "2026-09-11T00:30:00.000Z",
-      "end_at": "2026-09-11T03:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "Maya Brennan",
-        "Chethana Kandula"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-9G13qSATpaiBBSX",
-      "name": "The AI Commerce Gallery - Hackathon",
-      "url": "https://lu.ma/6bbloggr",
-      "start_at": "2026-09-12T16:00:00.000Z",
-      "end_at": "2026-09-13T04:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "AI Valley",
-      "host_names": [
-        "AI Valley"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-5iCx6WQGBwVgDql",
-      "name": "Design Safari - Inner Sunset | Career Camp Bay Area",
-      "url": "https://lu.ma/yjrpe1lg",
-      "start_at": "2026-09-12T18:00:00.000Z",
-      "end_at": "2026-09-12T20:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "Kat Ward",
-        "Lucy Chen"
-      ],
-      "guest_count": 19,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-jUCb7a1QvwVr6hN",
-      "name": "San Francisco | Claude Workshop for Moms - Let's Build Your Work + Life Blueprint",
-      "url": "https://lu.ma/claude-4dty",
-      "start_at": "2026-09-12T21:00:00.000Z",
-      "end_at": "2026-09-12T23:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Claude Community Events",
-      "host_names": [
-        "Claude Community",
-        "Arjita Sethi",
-        "Rhythm Gandhi",
-        "Katie"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-HeHjcMF9hQY8HgD",
-      "name": "GMI Summer Signal '26 - The Modern Renaissance",
-      "url": "https://lu.ma/gmicloud-ysuc",
-      "start_at": "2026-09-14T19:00:00.000Z",
-      "end_at": "2026-09-15T03:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "GMI Cloud",
-      "host_names": [
-        "Nicole Gong",
-        "GMI Cloud",
-        "Yuqi Hou"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-ibBgrkmKPaw1B4C",
-      "name": "🌷\"Flourishing by Design\" Presents: Hopeful Futures Game Night",
-      "url": "https://lu.ma/the-efn3",
-      "start_at": "2026-09-16T01:00:00.000Z",
-      "end_at": "2026-09-16T04:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "The Flourishing Systems Foundation",
-      "host_names": [
-        "Ming",
-        "Flourishing Systems Foundation",
-        "Sara Blenkhorn",
-        "The Regenerative Technology Project"
-      ],
-      "guest_count": 18,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-e3OGLXg4PWM5DmW",
-      "name": "The Autonomous Economy",
-      "url": "https://lu.ma/mfx5ssys",
-      "start_at": "2026-09-16T23:00:00.000Z",
-      "end_at": "2026-09-17T02:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "QuantumLight Capital"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-lNPT5nHMuIB9taJ",
-      "name": "AI Infrastructure Executive Networking Event hosted by vCluster and Netris",
-      "url": "https://lu.ma/7djqpn9h",
-      "start_at": "2026-09-17T01:00:00.000Z",
-      "end_at": "2026-09-17T04:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "Sunnyvale, CA",
-      "location_type": "offline",
-      "calendar_name": "vCluster",
-      "host_names": [
-        "vCluster",
-        "Netris"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-ulxTVdAeks833r8",
-      "name": "OpenAI × Khosla Ventures: Healthcare & Life Sciences Dinner",
-      "url": "https://lu.ma/inf1uvfi",
-      "start_at": "2026-09-17T01:00:00.000Z",
-      "end_at": "2026-09-17T04:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "Khosla Ventures",
-        "Yin He",
-        "Alex Morgan ",
-        "Hal Paz"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-tBDJucyC87iSB1J",
-      "name": "AI Journal Club ft. Google + NVIDIA",
-      "url": "https://lu.ma/0460rgnq",
-      "start_at": "2026-09-18T00:30:00.000Z",
-      "end_at": "2026-09-18T03:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Workato Community",
-      "host_names": [
-        "Kayla Hamahashi",
-        "Emily, Workato"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-0WQ3ijcHXOchYBH",
-      "name": "Legal AI Vibe Lab #5: Agents, Workflows, and the Future of Legal Work",
-      "url": "https://lu.ma/legal-ai",
-      "start_at": "2026-09-18T01:00:00.000Z",
-      "end_at": "2026-09-18T05:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Vibe House",
-      "host_names": [
-        "Daniel Aydin"
-      ],
-      "guest_count": 24,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-GUBx1d92TZVCk2I",
-      "name": "The Council Angels: Move & Gather",
-      "url": "https://lu.ma/94bi4tif",
-      "start_at": "2026-09-18T18:00:00.000Z",
-      "end_at": "2026-09-18T20:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "The Council Community",
-        "Erin Lashbrook",
-        "Nykole Prevost",
-        "Amber Illig",
-        "Vanessa Samaniego",
-        "Rachel Tsui"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-XsIJD5No1bSkFJf",
-      "name": "The AI Future of Healthcare: Voice Edition",
-      "url": "https://lu.ma/65hodpiq",
-      "start_at": "2026-09-19T01:00:00.000Z",
-      "end_at": "2026-09-19T04:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Noah Labs Events",
-      "host_names": [
-        "Marcus Hott",
-        "Alexia Bernhardt-Lanier",
-        "Oliver Piepenstock",
-        "Dr. Leonhard Riehle"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-EEHprCaPKFtgHqY",
-      "name": "The Curious Agents Club Meetup",
-      "url": "https://lu.ma/8bdy35rc",
-      "start_at": "2026-09-25T00:30:00.000Z",
-      "end_at": "2026-09-25T03:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "Mountain View, CA",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "Aishwarya srinivasan"
-      ],
-      "guest_count": 13,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-duXXe6Tsda17GPD",
-      "name": "San Francisco | Claude Meetup - For the Business Moms: The AI Back Office You Didn't Know You Had",
-      "url": "https://lu.ma/claude-aly0",
-      "start_at": "2026-09-25T21:00:00.000Z",
-      "end_at": "2026-09-25T23:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Claude Community Events",
-      "host_names": [
-        "Claude Community",
-        "Arjita Sethi",
-        "Rhythm Gandhi",
-        "Katie"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-CPiZMQLmOzAI0uV",
-      "name": "Emotion By Design",
-      "url": "https://lu.ma/emotionbydesign",
-      "start_at": "2026-09-26T00:30:00.000Z",
-      "end_at": "2026-09-26T05:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Blendbound Inc",
-      "host_names": [
-        "Samah Damanhoori",
-        "Natalie Pan",
-        "Funding Breakthrough Lab",
-        "Dr Pavel Vinitsky",
-        "Hesam Jafari"
-      ],
-      "guest_count": 4,
-      "is_free": false,
-      "price_cents": 4000,
-      "price_currency": "usd",
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-Ks1XgEhMaGtqKer",
-      "name": "Collaborative Agent Hackathon @ Stanford",
-      "url": "https://lu.ma/flwrlabs-bamu",
-      "start_at": "2026-09-29T16:30:00.000Z",
-      "end_at": "2026-09-30T02:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "Stanford, CA",
-      "location_type": "offline",
-      "calendar_name": "Flower Labs",
-      "host_names": [
-        "Nicolas Heinz",
-        "Nic Lane",
-        "Ruth Galindo",
-        "Pedro Mesa"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-WyCjvylN6X9vVXT",
-      "name": "Twilio Startup Labs: Where Startup Builders Connect",
-      "url": "https://lu.ma/r99axui8",
-      "start_at": "2026-09-29T23:00:00.000Z",
-      "end_at": "2026-09-30T02:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Twilio San Francisco",
-      "host_names": [
-        "Twilio"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-lmuElednEYzUbSx",
-      "name": "AI powered Autonomous Home Energy",
-      "url": "https://lu.ma/4q2186m6",
-      "start_at": "2026-09-30T00:30:00.000Z",
-      "end_at": "2026-09-30T02:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Personal",
-      "host_names": [
-        "Mind the Bridge"
-      ],
-      "guest_count": 5,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-YSJI2pNxij0P5GN",
-      "name": "SF Founders Brew Mixer",
-      "url": "https://lu.ma/03k1rbkr",
-      "start_at": "2026-09-30T01:30:00.000Z",
-      "end_at": "2026-09-30T04:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Founders Brew",
-      "host_names": [
-        "Lareina Xu",
-        "Atharva Shrivastava",
-        "Daivik Goel"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-GKUgNnlR4RYsS5r",
-      "name": "Flower AI Day: Collaborative Superintelligence",
-      "url": "https://lu.ma/flwrlabs-uygg",
-      "start_at": "2026-09-30T19:00:00.000Z",
-      "end_at": "2026-10-01T03:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "Flower Labs",
-      "host_names": [
-        "Nicolas Heinz",
-        "Nic Lane",
-        "Ruth Galindo",
-        "Pedro Mesa"
-      ],
-      "guest_count": 0,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "AI Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-AdkTQJ8h87Hi4Ks",
-      "name": "Founder × Investor Mixer. Palo Alto.",
-      "url": "https://lu.ma/v5xp8mzp",
-      "start_at": "2026-10-01T00:30:00.000Z",
-      "end_at": "2026-10-01T02:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "Palo Alto, CA",
-      "location_type": "offline",
-      "calendar_name": "SF Startup Labs",
-      "host_names": [
-        "Aggie Krajewska"
-      ],
-      "guest_count": 27,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-QnKbn39kUm8E1ws",
-      "name": "How to get press without a PR agency",
-      "url": "https://lu.ma/press",
-      "start_at": "2026-10-01T00:30:00.000Z",
-      "end_at": "2026-10-01T03:00:00.000Z",
+      "api_id": "evt-Bfr9yEabdwuQAiW",
+      "name": "Women in AI in Clay 🏺",
+      "url": "https://lu.ma/0zfgtlso",
+      "start_at": "2026-09-09T01:30:00.000Z",
+      "end_at": "2026-09-09T03:30:00.000Z",
       "timezone": "America/Los_Angeles",
       "location": "San Francisco, CA",
       "location_type": "offline",
       "calendar_name": "Women in AI",
       "host_names": [
-        "Claire Xie",
-        "Women in AI Club",
-        "Kathy Wang",
-        "Sarina",
-        "Dafne"
+        "Joy Wang",
+        "Claire Xie"
       ],
       "guest_count": 0,
       "is_free": false,
-      "price_cents": 2500,
+      "price_cents": 6500,
       "price_currency": "usd",
       "categories": [
         "AI Events (Bay Area)"
       ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
     },
     {
-      "api_id": "evt-5NMDNJ3gBQFBqmr",
-      "name": "Squint Industrial Leaders Offsite",
-      "url": "https://lu.ma/mriz9b2n",
-      "start_at": "2026-10-01T01:00:00.000Z",
-      "end_at": "2026-10-02T15:00:00.000Z",
+      "api_id": "evt-tJ5GU2W5F2TIvnJ",
+      "name": "SPC Post-Training Forum: Mercor CEO, Brendan Foody",
+      "url": "https://lu.ma/spcforummercor9-9",
+      "start_at": "2026-09-09T20:30:00.000Z",
+      "end_at": "2026-09-09T21:30:00.000Z",
       "timezone": "America/Los_Angeles",
       "location": "San Francisco, CA",
       "location_type": "offline",
-      "calendar_name": "Personal",
+      "calendar_name": "South Park Commons",
       "host_names": [
-        "Bridget Williams"
+        "South Park Commons",
+        "Nick Mecklenburg"
       ],
       "guest_count": 0,
       "is_free": true,
@@ -1354,86 +251,46 @@
       "categories": [
         "AI Events (Bay Area)"
       ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
     },
     {
-      "api_id": "evt-7xSp88HCo2xw1pU",
-      "name": "Stifel Steins",
-      "url": "https://lu.ma/ul39qz0d",
-      "start_at": "2026-10-01T23:00:00.000Z",
-      "end_at": "2026-10-02T03:00:00.000Z",
+      "api_id": "evt-3Aq91jXSv5Epunm",
+      "name": "PMM Leaders Dinner by 3AM Recruiting",
+      "url": "https://lu.ma/s656pzkn",
+      "start_at": "2026-09-10T01:30:00.000Z",
+      "end_at": "2026-09-10T03:30:00.000Z",
       "timezone": "America/Los_Angeles",
       "location": "San Francisco, CA",
       "location_type": "offline",
       "calendar_name": "Personal",
       "host_names": [
-        "Stifel Venture Banking",
-        "Andy McLoughlin",
-        "Ted Wilson"
+        "Jonathan Pipek",
+        "Yi Lin Pei"
       ],
-      "guest_count": 11,
+      "guest_count": 0,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
         "Tech Events (Bay Area)"
       ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
     },
     {
-      "api_id": "evt-XZ2oXqrLC5EBkx6",
-      "name": "Personalized Medicine Builders: Demos, Discussion and Social",
-      "url": "https://lu.ma/o9hcn6kk",
-      "start_at": "2026-10-03T01:00:00.000Z",
-      "end_at": "2026-10-03T04:00:00.000Z",
+      "api_id": "evt-ysitfcSTyKBq1UV",
+      "name": "engineering serendipity",
+      "url": "https://lu.ma/zxehiwrp",
+      "start_at": "2026-09-10T01:30:00.000Z",
+      "end_at": "2026-09-10T04:00:00.000Z",
       "timezone": "America/Los_Angeles",
       "location": "San Francisco, CA",
       "location_type": "offline",
-      "calendar_name": "Research to the People Patient Hackathons",
+      "calendar_name": "agency",
       "host_names": [
-        "Pete Kane"
-      ],
-      "guest_count": 3,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-B5dsQo0b3TCukfx",
-      "name": "🪩 Love is Our LLM After Party",
-      "url": "https://lu.ma/ttww-afterparty",
-      "start_at": "2026-10-03T04:00:00.000Z",
-      "end_at": "2026-10-03T08:00:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
-      "location_type": "offline",
-      "calendar_name": "The Tech We Want",
-      "host_names": [],
-      "guest_count": 5,
-      "is_free": true,
-      "price_cents": null,
-      "price_currency": null,
-      "categories": [
-        "Tech Events (Bay Area)"
-      ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
-    },
-    {
-      "api_id": "evt-lqr9vIlooakduEg",
-      "name": "AI is already making decisions at work. The question is which ones stay human.",
-      "url": "https://lu.ma/3opqgkwt",
-      "start_at": "2026-10-14T00:30:00.000Z",
-      "end_at": "2026-10-14T03:30:00.000Z",
-      "timezone": "America/Los_Angeles",
-      "location": "Palo Alto, CA",
-      "location_type": "offline",
-      "calendar_name": "Northeastern University Silicon Valley Campus",
-      "host_names": [
-        "Silicon Valley Campus"
+        "Hardik Mittal",
+        "Erin Lashbrook",
+        "Aaron Ranck",
+        "Denise Teng"
       ],
       "guest_count": 7,
       "is_free": true,
@@ -1442,45 +299,46 @@
       "categories": [
         "AI Events (Bay Area)"
       ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
     },
     {
-      "api_id": "evt-VcpyfOM9tAtGEBi",
-      "name": "Navigating Career Transitions in the Age of AI: Defining Your Professional Narrative",
-      "url": "https://lu.ma/5rg1dsx5",
-      "start_at": "2026-10-14T17:00:00.000Z",
-      "end_at": "2026-10-14T20:00:00.000Z",
+      "api_id": "evt-WWGHFURSnoytdIb",
+      "name": "B2B Founders Chocolate Tasting 🍫",
+      "url": "https://lu.ma/takdk0x1",
+      "start_at": "2026-09-10T23:00:00.000Z",
+      "end_at": "2026-09-11T01:00:00.000Z",
       "timezone": "America/Los_Angeles",
-      "location": "Sunnyvale, CA",
+      "location": "Palo Alto, California",
       "location_type": "offline",
-      "calendar_name": "Plug and Play Foundation",
+      "calendar_name": "BDev Ventures | SF",
       "host_names": [
-        "Yeyang Zhang",
-        "Sophie Chen",
-        "Dominique Reese",
-        "Rahul Kay"
+        "BDev Ventures",
+        "Keshia Theobald-van Gent",
+        "Sonja Gould"
       ],
-      "guest_count": 6,
+      "guest_count": 0,
       "is_free": true,
       "price_cents": null,
       "price_currency": null,
       "categories": [
-        "AI Events (Bay Area)"
+        "Tech Events (Bay Area)"
       ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
     },
     {
-      "api_id": "evt-RSiBl6QUE0vfTZj",
-      "name": "From Kyiv to SF: YEP Accelerator Demo Day",
-      "url": "https://lu.ma/nlwq6dlp",
-      "start_at": "2026-10-21T00:00:00.000Z",
-      "end_at": "2026-10-21T03:00:00.000Z",
+      "api_id": "evt-iXcStNTE7XW5Btb",
+      "name": "BDR Speed Networking with incident.io 🔥",
+      "url": "https://lu.ma/tnadukoa",
+      "start_at": "2026-09-11T00:30:00.000Z",
+      "end_at": "2026-09-11T02:30:00.000Z",
       "timezone": "America/Los_Angeles",
       "location": "San Francisco, CA",
       "location_type": "offline",
       "calendar_name": "Personal",
       "host_names": [
-        "YEP Accelerator"
+        "Malaika Ramachandran",
+        "Sawyer Celentano",
+        "Alyssa Samia"
       ],
       "guest_count": 3,
       "is_free": true,
@@ -1489,47 +347,260 @@
       "categories": [
         "Tech Events (Bay Area)"
       ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
     },
     {
-      "api_id": "evt-dbFEF0PDCSELvt0",
-      "name": "Aureum x Pilot — The CEO's Guide to Financial Clarity w/ Katie Nowak",
-      "url": "https://lu.ma/fb4jwlxs",
-      "start_at": "2026-10-27T00:30:00.000Z",
-      "end_at": "2026-12-01T04:00:00.000Z",
+      "api_id": "evt-E7VKz9p6n6sfJ43",
+      "name": "K-AI Tech Week - Silicon Valley",
+      "url": "https://lu.ma/w7tae05o",
+      "start_at": "2026-09-11T16:00:00.000Z",
+      "end_at": "2026-09-12T00:00:00.000Z",
       "timezone": "America/Los_Angeles",
-      "location": "San Francisco, CA",
+      "location": "Santa Clara, CA",
       "location_type": "offline",
-      "calendar_name": "Aureum Leaders Circle",
+      "calendar_name": "Personal",
       "host_names": [
-        "Aureum Circle",
-        "Julie Amelie Real",
-        "Astrid Arias",
-        "Katerina Abdrashitova",
-        "Mohammad Hasham",
-        "Imad Ansari"
+        "Brian Sparkes",
+        "Alan Park"
       ],
-      "guest_count": 17,
+      "guest_count": 248,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-E7ZczP6Y0hwTsJ0",
+      "name": "The Meridian Open",
+      "url": "https://lu.ma/kb2u75jm",
+      "start_at": "2026-09-11T20:00:00.000Z",
+      "end_at": "2026-09-12T00:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "Tiburon, CA",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Sophia Gazor",
+        "Blake Rowland"
+      ],
+      "guest_count": 0,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-9lFwteHbQF6NbbE",
+      "name": "TSVC x TYCon Pitch Competition",
+      "url": "https://lu.ma/rkj2z92q",
+      "start_at": "2026-09-12T21:00:00.000Z",
+      "end_at": "2026-09-13T00:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "Los Altos, CA",
+      "location_type": "offline",
+      "calendar_name": "Tsinghua Youth Connect (TYCon)",
+      "host_names": [
+        "Jett Wang",
+        "Shelby Xu",
+        "Alexander Zhang"
+      ],
+      "guest_count": 13,
       "is_free": false,
-      "price_cents": 5500,
+      "price_cents": 3500,
       "price_currency": "usd",
       "categories": [
         "Tech Events (Bay Area)"
       ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
     },
     {
-      "api_id": "evt-4qxgLhwEvQJ6RsL",
-      "name": "Code Engineering: From Coding Agents to Software Factories",
-      "url": "https://lu.ma/cico2dxy",
-      "start_at": "2026-10-28T01:00:00.000Z",
-      "end_at": "2026-10-28T03:30:00.000Z",
+      "api_id": "evt-5dojuDZllEtwUxf",
+      "name": "Jacobs Makerspace Fall 2026 Open House",
+      "url": "https://lu.ma/xer5c03d",
+      "start_at": "2026-09-15T19:00:00.000Z",
+      "end_at": "2026-09-15T22:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "Berkeley, California",
+      "location_type": "offline",
+      "calendar_name": "Jacobs Institute for Design Innovation",
+      "host_names": [
+        "Jacobs Institute for Design Innovation"
+      ],
+      "guest_count": 0,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-Uh8OfqPbU6hJG9y",
+      "name": "Your New Everyday Assistant - A free, hands-on intro to Claude AI.",
+      "url": "https://lu.ma/xkcvfs1h",
+      "start_at": "2026-09-16T01:00:00.000Z",
+      "end_at": "2026-09-16T03:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "Alameda, CA",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Kali Fields Williams",
+        "Sophie Mitchell"
+      ],
+      "guest_count": 5,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-iOwlNKole3pAmBe",
+      "name": "Dream State: AI After Dark Opening Party",
+      "url": "https://lu.ma/51nqsmin",
+      "start_at": "2026-09-16T01:00:00.000Z",
+      "end_at": "2026-09-16T04:00:00.000Z",
       "timezone": "America/Los_Angeles",
       "location": "San Francisco, CA",
       "location_type": "offline",
-      "calendar_name": "Agent Engineering HQ",
+      "calendar_name": "Tech Brews",
       "host_names": [
-        "Shashi Jagtap"
+        "Charleston Wong",
+        "Samantha Lee",
+        "Adriel",
+        "Vincent Song"
+      ],
+      "guest_count": 9,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-FZEsfq8Ps6VQDYr",
+      "name": "Biotech @Berkeley - Intro to Networking Workshop",
+      "url": "https://lu.ma/rtvxlfd0",
+      "start_at": "2026-09-16T19:00:00.000Z",
+      "end_at": "2026-09-16T20:30:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "Berkeley, CA",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Biotech at Berkeley",
+        "Iyla Rossi",
+        "Julia Jamieson",
+        "Anthony Brites",
+        "Alina Tiemroth"
+      ],
+      "guest_count": 5,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-SDOJWCGzGPmpWdh",
+      "name": "🔗 Founder Peer Group Meetup",
+      "url": "https://lu.ma/joxi6n07",
+      "start_at": "2026-09-17T00:00:00.000Z",
+      "end_at": "2026-09-17T02:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, California",
+      "location_type": "offline",
+      "calendar_name": "9Zero - San Francisco",
+      "host_names": [
+        "9Zero"
+      ],
+      "guest_count": 0,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-qjTpe2BhysxVwGq",
+      "name": "SF Fintech Coffee",
+      "url": "https://lu.ma/hz11zhyg",
+      "start_at": "2026-09-17T15:30:00.000Z",
+      "end_at": "2026-09-17T18:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, CA",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "This Week in Fintech"
+      ],
+      "guest_count": 3,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-1kzl903war36yBT",
+      "name": "Antler SF After Dark",
+      "url": "https://lu.ma/antlerus-2x9i",
+      "start_at": "2026-09-17T23:00:00.000Z",
+      "end_at": "2026-09-18T05:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, CA",
+      "location_type": "offline",
+      "calendar_name": "Antler US",
+      "host_names": [
+        "Helen Park",
+        "Ryan Green",
+        "Alina Knobloch",
+        "Greg Kress",
+        "Dan Messina",
+        "Roohbani Kaur",
+        "Team Sprinto"
+      ],
+      "guest_count": 6,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-KlSwWYrXBRhSU9Z",
+      "name": "AI Demo Series: September Edition - Startup Grind",
+      "url": "https://lu.ma/e36889su",
+      "start_at": "2026-09-18T00:30:00.000Z",
+      "end_at": "2026-09-18T03:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, CA",
+      "location_type": "offline",
+      "calendar_name": "Startup Grind",
+      "host_names": [
+        "Startup Grind",
+        "James Gee",
+        "Sahar Mor (Bond AI)"
       ],
       "guest_count": 0,
       "is_free": true,
@@ -1538,7 +609,325 @@
       "categories": [
         "AI Events (Bay Area)"
       ],
-      "first_seen_at": "2026-08-28T14:33:15.456820+00:00"
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-4qPFJob4yvlJDEJ",
+      "name": "Samosas & Chai: IIT Founders + Tech Leaders Mixer",
+      "url": "https://lu.ma/s701cow7",
+      "start_at": "2026-09-18T23:00:00.000Z",
+      "end_at": "2026-09-19T01:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, CA",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Avee Dey",
+        "Megha Agarwal"
+      ],
+      "guest_count": 0,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-I3znjd9H1QapHj9",
+      "name": "Building the Future of AI: Frontier Research Panel",
+      "url": "https://lu.ma/zba4aoe2",
+      "start_at": "2026-09-19T01:00:00.000Z",
+      "end_at": "2026-09-19T03:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "Berkeley, CA",
+      "location_type": "offline",
+      "calendar_name": "Hello World Mentorship",
+      "host_names": [
+        "Arda Hoke",
+        "Heba Alazzeh"
+      ],
+      "guest_count": 12,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-aaV2F2Nz6cRJHbr",
+      "name": "Byteport Poker Night: Founders & Engineers",
+      "url": "https://lu.ma/i4nkgal5",
+      "start_at": "2026-09-19T01:30:00.000Z",
+      "end_at": "2026-09-19T04:30:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, CA",
+      "location_type": "offline",
+      "calendar_name": "Byteport",
+      "host_names": [
+        "Alex N",
+        "Byteport",
+        "Jayram Palamadai"
+      ],
+      "guest_count": 4,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-0GlqYTkB0J5qPf5",
+      "name": "SF AI Code And Coffee Sunday September 20th!",
+      "url": "https://lu.ma/fxkf0luc",
+      "start_at": "2026-09-20T21:00:00.000Z",
+      "end_at": "2026-09-21T00:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, CA",
+      "location_type": "offline",
+      "calendar_name": "San Francisco AI Code And Coffee",
+      "host_names": [
+        "John Komarnicki"
+      ],
+      "guest_count": 116,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-ZQT0BDdFq0Fcujs",
+      "name": "Wine Tasting: Marketers & VC Networking",
+      "url": "https://lu.ma/igqy6i1v",
+      "start_at": "2026-09-22T23:00:00.000Z",
+      "end_at": "2026-09-23T01:30:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, CA",
+      "location_type": "offline",
+      "calendar_name": "Edgar Allan",
+      "host_names": [
+        "Danielle",
+        "Krista Peters"
+      ],
+      "guest_count": 6,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-UDhd7lk7DWdUZiV",
+      "name": "Building a Career in Taiwan",
+      "url": "https://lu.ma/g016t68g",
+      "start_at": "2026-09-24T00:30:00.000Z",
+      "end_at": "2026-09-24T03:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, CA",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Talent Taiwan"
+      ],
+      "guest_count": 4,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-uKK7Y6eBiMh2oRO",
+      "name": "Private Founder × Investor Mixer",
+      "url": "https://lu.ma/9x8owdoa",
+      "start_at": "2026-09-30T01:00:00.000Z",
+      "end_at": "2026-09-30T03:30:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, CA",
+      "location_type": "offline",
+      "calendar_name": "SF Startup Labs",
+      "host_names": [
+        "Aggie Krajewska",
+        "Clarifi VC",
+        "Mujahed Aghbar"
+      ],
+      "guest_count": 0,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-cQrIXrpwxF3GkF0",
+      "name": "DEMOQED",
+      "url": "https://lu.ma/uxyn1kg1",
+      "start_at": "2026-10-08T19:30:00.000Z",
+      "end_at": "2026-10-09T00:30:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, CA",
+      "location_type": "offline",
+      "calendar_name": "Demuxed",
+      "host_names": [],
+      "guest_count": 0,
+      "is_free": false,
+      "price_cents": 9900,
+      "price_currency": "usd",
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-T8jvG7h5xieJmQL",
+      "name": "Fincantieri Maritime Dual-Use Hackathon | Build the Software-Defined Vessel",
+      "url": "https://lu.ma/mvcg9eyw",
+      "start_at": "2026-10-16T23:30:00.000Z",
+      "end_at": "2026-10-18T23:30:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, CA",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Mind the Bridge",
+        "Luisa Caluri"
+      ],
+      "guest_count": 3,
+      "is_free": false,
+      "price_cents": 2000,
+      "price_currency": "usd",
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-LrM2h5xqqzrRsMl",
+      "name": "October 2026: AI on the Hunt: Using Claude to Unmask the hackerbot_claw Attack Campaign",
+      "url": "https://lu.ma/kszd8yw7",
+      "start_at": "2026-10-21T00:30:00.000Z",
+      "end_at": "2026-10-21T03:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Jose, CA",
+      "location_type": "offline",
+      "calendar_name": "Silicon Valley ISSA Chapter",
+      "host_names": [
+        "Silicon Valley ISSA Chapter"
+      ],
+      "guest_count": 0,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-jCJjku9B32NCqB8",
+      "name": "Builder's Day - AI Developer Conference",
+      "url": "https://lu.ma/builders-day-2026",
+      "start_at": "2026-10-26T16:00:00.000Z",
+      "end_at": "2026-10-27T00:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, CA",
+      "location_type": "offline",
+      "calendar_name": "Prisma",
+      "host_names": [
+        "Tyler Benfield"
+      ],
+      "guest_count": 0,
+      "is_free": false,
+      "price_cents": 25000,
+      "price_currency": "usd",
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-PIhNiH8vJ8axnTE",
+      "name": "Agentic Infrastructure Stack Summit",
+      "url": "https://lu.ma/69r7rj77",
+      "start_at": "2026-10-28T16:00:00.000Z",
+      "end_at": "2026-10-29T01:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, CA",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "VentureBeat"
+      ],
+      "guest_count": 0,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-F7a7A7vBtrRCDpD",
+      "name": "AI in Finance Lab: San Francisco",
+      "url": "https://lu.ma/6hlxlyli",
+      "start_at": "2026-10-28T20:00:00.000Z",
+      "end_at": "2026-10-29T01:30:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, CA",
+      "location_type": "offline",
+      "calendar_name": "Gaapsavvy Calendar",
+      "host_names": [
+        "Angela Liu",
+        "M.G. Thibaut"
+      ],
+      "guest_count": 3,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
+    },
+    {
+      "api_id": "evt-xNsKTAPHAeUtpgq",
+      "name": "LDES Executive Summit",
+      "url": "https://lu.ma/2p0y5n1l",
+      "start_at": "2026-11-05T17:00:00.000Z",
+      "end_at": "2026-11-06T04:00:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "location": "San Francisco, CA",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "The Battery Saloon",
+        "Adam Shaw",
+        "Sama Aghniaey",
+        "9Zero"
+      ],
+      "guest_count": 5,
+      "is_free": false,
+      "price_cents": 9900,
+      "price_currency": "usd",
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-08-29T09:19:32.219449+00:00"
     }
   ]
 }
