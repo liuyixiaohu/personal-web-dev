@@ -1,6 +1,55 @@
 {
-  "updated_at": "2026-09-10T07:28:43.000076+00:00",
-  "previous_updated_at": "2026-09-09T07:32:40.341314+00:00",
-  "new_event_ids": [],
-  "events": []
+  "updated_at": "2026-09-11T07:26:57.654976+00:00",
+  "previous_updated_at": "2026-09-10T07:28:43.000076+00:00",
+  "new_event_ids": [
+    "evt-aonzCNABqOZXyyW",
+    "evt-dZSeByolCG3pDQ8"
+  ],
+  "events": [
+    {
+      "api_id": "evt-aonzCNABqOZXyyW",
+      "name": "Buyer's Club Showcase",
+      "url": "https://lu.ma/2ad1iqx5",
+      "start_at": "2026-09-30T13:00:00.000Z",
+      "end_at": "2026-09-30T22:00:00.000Z",
+      "timezone": "America/Chicago",
+      "location": "Des Moines, IA",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Kaylee Williams"
+      ],
+      "guest_count": 12,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-09-11T07:26:56.787010+00:00"
+    },
+    {
+      "api_id": "evt-dZSeByolCG3pDQ8",
+      "name": "Databricks CampusConnect: Iowa State University",
+      "url": "https://lu.ma/741cvyke",
+      "start_at": "2026-10-10T13:30:00.000Z",
+      "end_at": "2026-10-11T00:00:00.000Z",
+      "timezone": "America/Chicago",
+      "location": "Ames, IA",
+      "location_type": "offline",
+      "calendar_name": "Databricks CampusConnect",
+      "host_names": [
+        "Elise Hollowed",
+        "Nicole Hayungs"
+      ],
+      "guest_count": 9,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-09-11T07:26:56.787010+00:00"
+    }
+  ]
 }
