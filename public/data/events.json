@@ -1,6 +1,465 @@
 {
-  "updated_at": "2026-09-16T07:52:23.590013+00:00",
-  "previous_updated_at": "2026-09-15T07:59:37.677007+00:00",
-  "new_event_ids": [],
-  "events": []
+  "updated_at": "2026-09-17T07:57:03.038043+00:00",
+  "previous_updated_at": "2026-09-16T07:52:23.590013+00:00",
+  "new_event_ids": [
+    "evt-4b8Q81BxTbsUA3G",
+    "evt-B05RVY4Vdr69WIT",
+    "evt-Cqbdc8j43JZdt5X",
+    "evt-CtiKn9ejfPrJwGG",
+    "evt-D3I9jBbxXIrF6tR",
+    "evt-IMv9lwCtUvfLths",
+    "evt-QkzAPYuYfirLAG6",
+    "evt-X6nDSihtroaDtES",
+    "evt-ZDcFwaHaFdJZFpe",
+    "evt-l7ea9GF5csRdQkz",
+    "evt-lVo8549ujImnERk",
+    "evt-o4YYLSWsOSHoE0d",
+    "evt-r0PCn31MzpHqJGQ",
+    "evt-rEmnnaonth8ay5E",
+    "evt-tY7YbMIIJ4Dol1V",
+    "evt-viBwfGxm0tgWOJn",
+    "evt-wD9gSfeLDQc3H2u",
+    "evt-xlKRwzKso7MprET",
+    "evt-zbl9GLpHzLK2Vbz"
+  ],
+  "events": [
+    {
+      "api_id": "evt-ZDcFwaHaFdJZFpe",
+      "name": "PIC MC Presents: The Tour (Group B)",
+      "url": "https://lu.ma/fsme8yju",
+      "start_at": "2026-09-17T17:00:00.000Z",
+      "end_at": "2026-09-17T19:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Germantown, Maryland",
+      "location_type": "offline",
+      "calendar_name": "PIC MC",
+      "host_names": [
+        "Staci Griffin"
+      ],
+      "guest_count": 7,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-09-17T07:57:00.950512+00:00"
+    },
+    {
+      "api_id": "evt-B05RVY4Vdr69WIT",
+      "name": "Cocktails and Compliance",
+      "url": "https://lu.ma/stationdc-pnm5",
+      "start_at": "2026-09-17T21:00:00.000Z",
+      "end_at": "2026-09-17T23:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, DC",
+      "location_type": "offline",
+      "calendar_name": "STATION DC",
+      "host_names": [
+        "Bobbye Jo Green"
+      ],
+      "guest_count": 123,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-09-17T07:57:00.950512+00:00"
+    },
+    {
+      "api_id": "evt-IMv9lwCtUvfLths",
+      "name": "Z Fellows: Fireside Chat with Cory Levy",
+      "url": "https://lu.ma/1ullb6fo",
+      "start_at": "2026-09-17T22:00:00.000Z",
+      "end_at": "2026-09-17T23:30:00.000Z",
+      "timezone": "America/New_York",
+      "location": "College Park, MD",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Aadi Krishna",
+        "Avi Yadava",
+        "Cory Levy"
+      ],
+      "guest_count": 0,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-09-17T07:57:00.950512+00:00"
+    },
+    {
+      "api_id": "evt-zbl9GLpHzLK2Vbz",
+      "name": "Before the Breach: Securing Critical Systems for the Next Cryptographic Era",
+      "url": "https://lu.ma/qowymp30",
+      "start_at": "2026-09-22T13:00:00.000Z",
+      "end_at": "2026-09-22T16:30:00.000Z",
+      "timezone": "America/New_York",
+      "location": "College Park, MD",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Connected DMV"
+      ],
+      "guest_count": 0,
+      "is_free": false,
+      "price_cents": 19900,
+      "price_currency": "usd",
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-09-17T07:57:00.950512+00:00"
+    },
+    {
+      "api_id": "evt-viBwfGxm0tgWOJn",
+      "name": "Hot Topics & Hot Bites",
+      "url": "https://lu.ma/ik3yzjy2",
+      "start_at": "2026-09-22T20:00:00.000Z",
+      "end_at": "2026-09-22T22:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, DC",
+      "location_type": "offline",
+      "calendar_name": "CTA GLA Events",
+      "host_names": [
+        "CTA Innovation House"
+      ],
+      "guest_count": 28,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-09-17T07:57:00.950512+00:00"
+    },
+    {
+      "api_id": "evt-xlKRwzKso7MprET",
+      "name": "AI-Native Product Discovery with Codex Workshop (in-person)",
+      "url": "https://lu.ma/cskciav8",
+      "start_at": "2026-09-26T14:30:00.000Z",
+      "end_at": "2026-09-26T16:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Arlington, VA",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Ukrainian Tech Space"
+      ],
+      "guest_count": 27,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-09-17T07:57:00.950512+00:00"
+    },
+    {
+      "api_id": "evt-QkzAPYuYfirLAG6",
+      "name": "🧠 AI Founders Roundtable with The AI Collective DC x Avahi",
+      "url": "https://lu.ma/avahi-dc-0926",
+      "start_at": "2026-09-29T21:00:00.000Z",
+      "end_at": "2026-09-30T00:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Arlington, VA",
+      "location_type": "offline",
+      "calendar_name": "The AI Collective",
+      "host_names": [
+        "The AI Collective",
+        "Catherine McMillan",
+        "Avahi AI"
+      ],
+      "guest_count": 0,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-09-17T07:57:00.950512+00:00"
+    },
+    {
+      "api_id": "evt-D3I9jBbxXIrF6tR",
+      "name": "GRC Engineering Club: Washington, DC Chapter Kickoff",
+      "url": "https://lu.ma/ooazxbtb",
+      "start_at": "2026-09-29T22:00:00.000Z",
+      "end_at": "2026-09-30T00:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "McLean, VA",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "GRC Eng Club Washington DC"
+      ],
+      "guest_count": 5,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-09-17T07:57:00.950512+00:00"
+    },
+    {
+      "api_id": "evt-X6nDSihtroaDtES",
+      "name": "The AI Era & What It Means To Be Human (w/ The AI Collective)",
+      "url": "https://lu.ma/aic-dc-9-30",
+      "start_at": "2026-09-30T21:00:00.000Z",
+      "end_at": "2026-10-01T00:30:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, DC",
+      "location_type": "offline",
+      "calendar_name": "The AI Collective",
+      "host_names": [
+        "The AI Collective",
+        "Catherine McMillan",
+        "Manas Ram",
+        "Jackie",
+        "Kelley Vargo"
+      ],
+      "guest_count": 0,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-09-17T07:57:00.950512+00:00"
+    },
+    {
+      "api_id": "evt-o4YYLSWsOSHoE0d",
+      "name": "Health2Tech & Founder Institute DC, September 30, 2026",
+      "url": "https://lu.ma/2lov8rc0",
+      "start_at": "2026-09-30T21:30:00.000Z",
+      "end_at": "2026-10-01T00:30:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, DC",
+      "location_type": "offline",
+      "calendar_name": "Alex Koshykov",
+      "host_names": [
+        "Guc Ozenci",
+        "Alex Koshykov",
+        "Health2Tech"
+      ],
+      "guest_count": 58,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-09-17T07:57:00.950512+00:00"
+    },
+    {
+      "api_id": "evt-r0PCn31MzpHqJGQ",
+      "name": "Human Friendly Tech Mixer",
+      "url": "https://lu.ma/398nwqca",
+      "start_at": "2026-10-05T21:30:00.000Z",
+      "end_at": "2026-10-06T00:30:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, DC",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "David Sandson"
+      ],
+      "guest_count": 20,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-09-17T07:57:00.950512+00:00"
+    },
+    {
+      "api_id": "evt-tY7YbMIIJ4Dol1V",
+      "name": "Reshoring the U.S. Consumer Technology Industry: Costs, Constraints and the Realistic Path",
+      "url": "https://lu.ma/CTAReshoringStudyLaunchReception",
+      "start_at": "2026-10-06T21:30:00.000Z",
+      "end_at": "2026-10-06T23:30:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, DC",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Meg Czaikoski"
+      ],
+      "guest_count": 0,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-09-17T07:57:00.950512+00:00"
+    },
+    {
+      "api_id": "evt-CtiKn9ejfPrJwGG",
+      "name": "Make with Notion — AI, APIs & Developer Platform",
+      "url": "https://lu.ma/ga02rzpj",
+      "start_at": "2026-10-06T22:00:00.000Z",
+      "end_at": "2026-10-07T00:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, DC",
+      "location_type": "offline",
+      "calendar_name": "AI Hub DMV",
+      "host_names": [
+        "Jabari Grubb"
+      ],
+      "guest_count": 14,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-09-17T07:57:00.950512+00:00"
+    },
+    {
+      "api_id": "evt-l7ea9GF5csRdQkz",
+      "name": "Membership World Leaders Forum Washington",
+      "url": "https://lu.ma/uqqkef0q",
+      "start_at": "2026-10-07T12:30:00.000Z",
+      "end_at": "2026-10-07T21:30:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Arlington, VA",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Gordon Glenister"
+      ],
+      "guest_count": 0,
+      "is_free": false,
+      "price_cents": 9900,
+      "price_currency": "usd",
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-09-17T07:57:00.950512+00:00"
+    },
+    {
+      "api_id": "evt-wD9gSfeLDQc3H2u",
+      "name": "Biomanufacturing in LEO: Building the Next Frontier in Human Health",
+      "url": "https://lu.ma/x547jlst",
+      "start_at": "2026-10-07T12:30:00.000Z",
+      "end_at": "2026-10-07T14:30:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, DC",
+      "location_type": "offline",
+      "calendar_name": "Pathway Policy Group",
+      "host_names": [
+        "Ellen Carlin",
+        "Anne Cheever",
+        "Jennifer Alton",
+        "Josh Martin"
+      ],
+      "guest_count": 6,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-09-17T07:57:00.950512+00:00"
+    },
+    {
+      "api_id": "evt-4b8Q81BxTbsUA3G",
+      "name": "Civic Tech DC Project Night",
+      "url": "https://lu.ma/amvotldt",
+      "start_at": "2026-10-14T22:00:00.000Z",
+      "end_at": "2026-10-15T00:30:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, District of Columbia",
+      "location_type": "offline",
+      "calendar_name": "Civic Tech DC",
+      "host_names": [
+        "Nick Stoler",
+        "Helen Glover",
+        "Evan Tung",
+        "Michael Deeb",
+        "Justin Mezetin"
+      ],
+      "guest_count": 4,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-09-17T07:57:00.950512+00:00"
+    },
+    {
+      "api_id": "evt-lVo8549ujImnERk",
+      "name": "Real Talk: AI Workflows for VC & Startup Operators",
+      "url": "https://lu.ma/r52837uu",
+      "start_at": "2026-10-21T12:30:00.000Z",
+      "end_at": "2026-10-21T14:30:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, DC",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "VIA: Venture. Influence. Ambition.",
+        "Operators Guild"
+      ],
+      "guest_count": 6,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-09-17T07:57:00.950512+00:00"
+    },
+    {
+      "api_id": "evt-Cqbdc8j43JZdt5X",
+      "name": "Defense Tech DC 020",
+      "url": "https://lu.ma/dtdc020",
+      "start_at": "2026-10-27T21:30:00.000Z",
+      "end_at": "2026-10-27T23:30:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, DC",
+      "location_type": "offline",
+      "calendar_name": "Defense Tech DC",
+      "host_names": [
+        "Margaret Roth",
+        "Stephen Babcock",
+        "Dominic Ventimiglia"
+      ],
+      "guest_count": 22,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-09-17T07:57:00.950512+00:00"
+    },
+    {
+      "api_id": "evt-rEmnnaonth8ay5E",
+      "name": "DC AI Week: Code for Planet",
+      "url": "https://lu.ma/6odxmb7t",
+      "start_at": "2027-04-22T13:00:00.000Z",
+      "end_at": "2027-04-22T23:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, DC",
+      "location_type": "offline",
+      "calendar_name": "Hackathons with ProgramEarth",
+      "host_names": [
+        "Manisha Priyadarshini"
+      ],
+      "guest_count": 4,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-09-17T07:57:00.950512+00:00"
+    }
+  ]
 }
