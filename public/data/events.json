@@ -1,6 +1,58 @@
 {
-  "updated_at": "2026-10-05T09:33:35.478234+00:00",
-  "previous_updated_at": "2026-10-04T08:42:25.170444+00:00",
-  "new_event_ids": [],
-  "events": []
+  "updated_at": "2026-10-06T09:19:19.459984+00:00",
+  "previous_updated_at": "2026-10-05T09:33:35.478234+00:00",
+  "new_event_ids": [
+    "evt-IYD3m6mWPBPyp4G",
+    "evt-zUWeCcVcwZF6Imb"
+  ],
+  "events": [
+    {
+      "api_id": "evt-IYD3m6mWPBPyp4G",
+      "name": "The Nevado Exchange | Hosted by: Nevado AI",
+      "url": "https://lu.ma/mllm7leg",
+      "start_at": "2026-10-20T02:00:00.000Z",
+      "end_at": "2026-10-20T05:00:00.000Z",
+      "timezone": "America/Phoenix",
+      "location": "Scottsdale, AZ",
+      "location_type": "offline",
+      "calendar_name": "NevadoAI Events",
+      "host_names": [
+        "Sharon Rodriguez"
+      ],
+      "guest_count": 0,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-06T09:19:18.812707+00:00"
+    },
+    {
+      "api_id": "evt-zUWeCcVcwZF6Imb",
+      "name": "TechWalk | Phoenix, 11/1",
+      "url": "https://lu.ma/e2b7a24v",
+      "start_at": "2026-11-01T15:00:00.000Z",
+      "end_at": "2026-11-01T16:00:00.000Z",
+      "timezone": "America/Phoenix",
+      "location": "Phoenix, AZ",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Kyle Chalmers",
+        "Yaseen Arshad",
+        "Patrick Neyland",
+        "Caroline Gomes",
+        "Christine Farrier Rosemin"
+      ],
+      "guest_count": 8,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-06T09:19:18.812707+00:00"
+    }
+  ]
 }
