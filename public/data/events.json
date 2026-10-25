@@ -1,6 +1,515 @@
 {
-  "updated_at": "2026-10-24T07:33:38.545002+00:00",
-  "previous_updated_at": "2026-10-23T07:52:46.230842+00:00",
-  "new_event_ids": [],
-  "events": []
+  "updated_at": "2026-10-25T07:46:39.690813+00:00",
+  "previous_updated_at": "2026-10-24T07:33:38.545002+00:00",
+  "new_event_ids": [
+    "evt-0Wa4Bv3R4FZ5RWe",
+    "evt-1qRLXLseufiNhXK",
+    "evt-CFHxkEbFQng3v5V",
+    "evt-DAdi53EY3YlXKvo",
+    "evt-DnWT0NS1IuekYKi",
+    "evt-FQnBHNH1m4CRlO1",
+    "evt-IbthLQb9SFFiarB",
+    "evt-IiOZGNOYrFryMc0",
+    "evt-KHMozVi8Lvt9Uag",
+    "evt-MSeDBIkJQ5CJbnq",
+    "evt-QSXyTqHNXyugQsH",
+    "evt-RB5iHixNlDO0PQ3",
+    "evt-Sa1ZDqY7nNqWUGw",
+    "evt-b95nLvz1FouABuC",
+    "evt-dLZ6WQKQfgZtBql",
+    "evt-iRaFAU6CwvExZXV",
+    "evt-iplJ9xDrWp0ul1s",
+    "evt-m3NkZgkiczq0k76",
+    "evt-oBmHppZASXfcbDv",
+    "evt-xABlLKk2vZUUNnC",
+    "evt-zSjTp9AuUzsYVEL"
+  ],
+  "events": [
+    {
+      "api_id": "evt-IbthLQb9SFFiarB",
+      "name": "ControlAI DC Tabling, 25th Oct",
+      "url": "https://lu.ma/r6a8ow2s",
+      "start_at": "2026-10-25T17:00:00.000Z",
+      "end_at": "2026-10-25T19:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, DC",
+      "location_type": "offline",
+      "calendar_name": "ControlAI - Washington, DC Action Group",
+      "host_names": [
+        "Alex Greene"
+      ],
+      "guest_count": 3,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-25T07:46:37.778367+00:00"
+    },
+    {
+      "api_id": "evt-DAdi53EY3YlXKvo",
+      "name": "Meet Manus 2.0: Roadshow | DC",
+      "url": "https://lu.ma/gt88ilcl",
+      "start_at": "2026-10-27T21:00:00.000Z",
+      "end_at": "2026-10-28T00:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, DC",
+      "location_type": "offline",
+      "calendar_name": "Manus Official Events",
+      "host_names": [
+        "Manus Community"
+      ],
+      "guest_count": 0,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-25T07:46:37.778367+00:00"
+    },
+    {
+      "api_id": "evt-dLZ6WQKQfgZtBql",
+      "name": "Data Horror Stories: Spooky Talks From Beyond the Governed",
+      "url": "https://lu.ma/data_horror_stories_2026",
+      "start_at": "2026-10-28T21:30:00.000Z",
+      "end_at": "2026-10-29T00:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, District of Columbia",
+      "location_type": "offline",
+      "calendar_name": "DC Data & AI Events",
+      "host_names": [
+        "Will Angel",
+        "Alex Gurvich",
+        "Joy",
+        "Nicholas Wagner",
+        "Yingquan Li"
+      ],
+      "guest_count": 55,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-25T07:46:37.778367+00:00"
+    },
+    {
+      "api_id": "evt-zSjTp9AuUzsYVEL",
+      "name": "Who’s Afraid of the Ghost in the Machine? Sibarium v Hammond...",
+      "url": "https://lu.ma/ghostinthemachine",
+      "start_at": "2026-10-29T23:15:00.000Z",
+      "end_at": "2026-10-30T02:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, DC",
+      "location_type": "offline",
+      "calendar_name": "Aspen Philosophy & Society",
+      "host_names": [
+        "Samuel Kimbriel",
+        "Foundation for American Innovation"
+      ],
+      "guest_count": 0,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-25T07:46:37.778367+00:00"
+    },
+    {
+      "api_id": "evt-oBmHppZASXfcbDv",
+      "name": "Human Friendly Tech Mixer",
+      "url": "https://lu.ma/1tlip6cz",
+      "start_at": "2026-11-02T22:30:00.000Z",
+      "end_at": "2026-11-03T01:30:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Arlington, VA",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "David Sandson"
+      ],
+      "guest_count": 10,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-25T07:46:37.778367+00:00"
+    },
+    {
+      "api_id": "evt-CFHxkEbFQng3v5V",
+      "name": "Open Coworking",
+      "url": "https://lu.ma/nuiln612",
+      "start_at": "2026-11-02T23:00:00.000Z",
+      "end_at": "2026-11-03T01:30:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, DC",
+      "location_type": "offline",
+      "calendar_name": "DC Nightowls",
+      "host_names": [
+        "Lucy Chen",
+        "Maryam Shahbaz Ali",
+        "Nicholas Wagner",
+        "Catherine McMillan",
+        "Andrew Conklin"
+      ],
+      "guest_count": 0,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-25T07:46:37.778367+00:00"
+    },
+    {
+      "api_id": "evt-RB5iHixNlDO0PQ3",
+      "name": "The American Frontier Roundtable (STATION DC MEMBERS ONLY)",
+      "url": "https://lu.ma/stationdc-iiys",
+      "start_at": "2026-11-03T14:30:00.000Z",
+      "end_at": "2026-11-03T16:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, DC",
+      "location_type": "offline",
+      "calendar_name": "STATION DC",
+      "host_names": [
+        "STATION DC"
+      ],
+      "guest_count": 12,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-25T07:46:37.778367+00:00"
+    },
+    {
+      "api_id": "evt-xABlLKk2vZUUNnC",
+      "name": "CK Soirée '26 Season Finale @ Bentley Aston Martin Dealership",
+      "url": "https://lu.ma/lzyeqnkq",
+      "start_at": "2026-11-04T00:00:00.000Z",
+      "end_at": "2026-11-04T04:30:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Ashburn, VA",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Cattie Khoury"
+      ],
+      "guest_count": 0,
+      "is_free": false,
+      "price_cents": 25000,
+      "price_currency": "usd",
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-25T07:46:37.778367+00:00"
+    },
+    {
+      "api_id": "evt-1qRLXLseufiNhXK",
+      "name": "AgeTech Startup Alley at GSA 2026",
+      "url": "https://lu.ma/agetech-alley",
+      "start_at": "2026-11-04T13:00:00.000Z",
+      "end_at": "2026-11-07T20:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Oxon Hill, MD",
+      "location_type": "offline",
+      "calendar_name": "AgeTech Connect Events",
+      "host_names": [
+        "Jeffrey Gray",
+        "Shawn D. Smith",
+        "Lisa McGuire"
+      ],
+      "guest_count": 0,
+      "is_free": false,
+      "price_cents": 175000,
+      "price_currency": "usd",
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-25T07:46:37.778367+00:00"
+    },
+    {
+      "api_id": "evt-Sa1ZDqY7nNqWUGw",
+      "name": "\"Humanity, Space, and Industrial Civilization\" With Marko Jukic",
+      "url": "https://lu.ma/palladium-talk-space-dc",
+      "start_at": "2026-11-05T23:30:00.000Z",
+      "end_at": "2026-11-06T02:30:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, DC",
+      "location_type": "offline",
+      "calendar_name": "PALLADIUM Magazine Events",
+      "host_names": [
+        "PALLADIUM Magazine",
+        "Foundation for American Innovation"
+      ],
+      "guest_count": 0,
+      "is_free": false,
+      "price_cents": 3500,
+      "price_currency": "usd",
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-25T07:46:37.778367+00:00"
+    },
+    {
+      "api_id": "evt-DnWT0NS1IuekYKi",
+      "name": "DC Systems 2026-11",
+      "url": "https://lu.ma/oqucofx3",
+      "start_at": "2026-11-10T23:00:00.000Z",
+      "end_at": "2026-11-11T01:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Vienna, Virginia",
+      "location_type": "offline",
+      "calendar_name": "DC Systems",
+      "host_names": [
+        "Bug Bash"
+      ],
+      "guest_count": 56,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-25T07:46:37.778367+00:00"
+    },
+    {
+      "api_id": "evt-b95nLvz1FouABuC",
+      "name": "GovTech Roundtable Hosted By MULU Corp.",
+      "url": "https://lu.ma/nwj4t3jm",
+      "start_at": "2026-11-11T22:30:00.000Z",
+      "end_at": "2026-11-12T00:30:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Alexandria, VA",
+      "location_type": "offline",
+      "calendar_name": "MULU Roundtable",
+      "host_names": [
+        "MULU Corp."
+      ],
+      "guest_count": 6,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "AI Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-25T07:46:37.778367+00:00"
+    },
+    {
+      "api_id": "evt-KHMozVi8Lvt9Uag",
+      "name": "Data Engineers D.C. Presents: DuckDB 2.0",
+      "url": "https://lu.ma/rdw8bag9",
+      "start_at": "2026-11-12T23:00:00.000Z",
+      "end_at": "2026-11-13T01:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, District of Columbia",
+      "location_type": "offline",
+      "calendar_name": "DC Data & AI Events",
+      "host_names": [
+        "Yingquan Li",
+        "Will Angel",
+        "Jabari Grubb",
+        "Nicholas Wagner"
+      ],
+      "guest_count": 13,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-25T07:46:37.778367+00:00"
+    },
+    {
+      "api_id": "evt-m3NkZgkiczq0k76",
+      "name": "Women in Tech: Speaker talks • Open discussion",
+      "url": "https://lu.ma/gv1hewxx",
+      "start_at": "2026-11-14T19:30:00.000Z",
+      "end_at": "2026-11-14T22:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "McLean, VA",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Ukrainian Tech Space"
+      ],
+      "guest_count": 7,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-25T07:46:37.778367+00:00"
+    },
+    {
+      "api_id": "evt-MSeDBIkJQ5CJbnq",
+      "name": "The Deal Room: AWS Sports Marketing Lab",
+      "url": "https://lu.ma/3l7layhq",
+      "start_at": "2026-11-17T15:00:00.000Z",
+      "end_at": "2026-11-17T20:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Springfield, VA",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Key Frager"
+      ],
+      "guest_count": 7,
+      "is_free": false,
+      "price_cents": 10000,
+      "price_currency": "usd",
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-25T07:46:37.778367+00:00"
+    },
+    {
+      "api_id": "evt-QSXyTqHNXyugQsH",
+      "name": "Powering Innovation: Exploring the Intersection of Technology and Energy by CTA",
+      "url": "https://lu.ma/4u759fa2",
+      "start_at": "2026-11-17T22:00:00.000Z",
+      "end_at": "2026-11-18T00:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, DC",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Ally Peck"
+      ],
+      "guest_count": 41,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-25T07:46:37.778367+00:00"
+    },
+    {
+      "api_id": "evt-FQnBHNH1m4CRlO1",
+      "name": "Community Connect #9 | The State of the Innovation Ecosystem",
+      "url": "https://lu.ma/d6y6zru4",
+      "start_at": "2026-11-18T13:00:00.000Z",
+      "end_at": "2026-11-18T16:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Germantown, Maryland",
+      "location_type": "offline",
+      "calendar_name": "BioBuzz | BioHealth Capital Region",
+      "host_names": [
+        "BioBuzz Networks"
+      ],
+      "guest_count": 0,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-25T07:46:37.778367+00:00"
+    },
+    {
+      "api_id": "evt-0Wa4Bv3R4FZ5RWe",
+      "name": "Leopard.FYI DC Fall Happy Hour 🍂",
+      "url": "https://lu.ma/xnr0jvi3",
+      "start_at": "2026-11-19T22:30:00.000Z",
+      "end_at": "2026-11-20T00:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Arlington, VA",
+      "location_type": "offline",
+      "calendar_name": "Leopard.FYI For Women & Genderqueer Software Engineers",
+      "host_names": [
+        "Ivy Temblor",
+        "Noems",
+        "Lexi Lewtan",
+        "Jenny Cha"
+      ],
+      "guest_count": 14,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-25T07:46:37.778367+00:00"
+    },
+    {
+      "api_id": "evt-iplJ9xDrWp0ul1s",
+      "name": "Find Your Co-Founder",
+      "url": "https://lu.ma/3juh77q0",
+      "start_at": "2026-11-21T22:00:00.000Z",
+      "end_at": "2026-11-22T01:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, DC",
+      "location_type": "offline",
+      "calendar_name": "Chocolate City Classic",
+      "host_names": [
+        "Bryce"
+      ],
+      "guest_count": 3,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-25T07:46:37.778367+00:00"
+    },
+    {
+      "api_id": "evt-IiOZGNOYrFryMc0",
+      "name": "Data Viz DC: Mapping Knowledge Across Time, Seven Books that Visualized the World - Paul Kahn",
+      "url": "https://lu.ma/x9upcfju",
+      "start_at": "2026-12-08T22:30:00.000Z",
+      "end_at": "2026-12-09T01:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "Washington, DC",
+      "location_type": "offline",
+      "calendar_name": "DC Data & AI Events",
+      "host_names": [
+        "Will Angel",
+        "Joy",
+        "Abigail",
+        "Alex Gurvich",
+        "Janet Dobbins",
+        "Prema",
+        "Nicholas Wagner"
+      ],
+      "guest_count": 11,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-25T07:46:37.778367+00:00"
+    },
+    {
+      "api_id": "evt-iRaFAU6CwvExZXV",
+      "name": "COMP Ticket Only - Big Idea CONNECTpreneur Holiday Showcase - Dec 10, IN PERSON in McLean, VA",
+      "url": "https://lu.ma/bicpdec2026",
+      "start_at": "2026-12-10T22:00:00.000Z",
+      "end_at": "2026-12-11T02:00:00.000Z",
+      "timezone": "America/New_York",
+      "location": "McLean, VA",
+      "location_type": "offline",
+      "calendar_name": "Personal",
+      "host_names": [
+        "Tien Wong"
+      ],
+      "guest_count": 0,
+      "is_free": true,
+      "price_cents": null,
+      "price_currency": null,
+      "categories": [
+        "Tech Events (Bay Area)"
+      ],
+      "first_seen_at": "2026-10-25T07:46:37.778367+00:00"
+    }
+  ]
 }
