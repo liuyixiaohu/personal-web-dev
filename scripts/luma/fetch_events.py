@@ -14,6 +14,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from common import load_seen_events, stamp_first_seen, save_events, request_with_retry, merge_into
+from event_geography import bay_area_rejection_reason, extract_geo
 
 # --- Configuration ---
 # Bay Area Luma categories. The Luma API filters by the `slug` query param,
@@ -21,6 +22,7 @@ from common import load_seen_events, stamp_first_seen, save_events, request_with
 # 4 different cat-ids and getting identical results). Slugs come from the
 # luma.com/{slug} URL pattern (e.g. luma.com/food → slug "food").
 GEO_SF = {"geo_latitude": 37.7749, "geo_longitude": -122.4194}
+SF_DISCOVER_PLACE_API_ID = "discplace-BDj7GNbGlsF7Cka"
 SOURCES = [
     {"slug": "tech",     "label": "Tech Events (Bay Area)",          "pagination_limit": 50, **GEO_SF},
     {"slug": "ai",       "label": "AI Events (Bay Area)",            "pagination_limit": 50, **GEO_SF},
@@ -69,6 +71,28 @@ def fetch_category_events(source: dict) -> list[dict]:
     return all_entries
 
 
+def verify_discover_place() -> None:
+    """Fail closed if Luma no longer recognizes the configured SF place."""
+    resp = request_with_retry(
+        f"{BASE_URL}/discover/get-paginated-events",
+        params={
+            "discover_place_api_id": SF_DISCOVER_PLACE_API_ID,
+            "pagination_limit": 1,
+        },
+    )
+    entries = resp.json().get("entries", [])
+    if not entries:
+        raise RuntimeError(
+            f"San Francisco discover place {SF_DISCOVER_PLACE_API_ID} returned no events"
+        )
+    geo = extract_geo(entries[0].get("event", {}))
+    reason = bay_area_rejection_reason(geo)
+    if reason:
+        raise RuntimeError(
+            f"San Francisco discover place {SF_DISCOVER_PLACE_API_ID} failed validation: {reason}"
+        )
+
+
 def normalize_event(raw_entry: dict) -> dict:
     event = raw_entry.get("event", {})
     calendar = raw_entry.get("calendar", {})
@@ -76,6 +100,7 @@ def normalize_event(raw_entry: dict) -> dict:
     geo = event.get("geo_address_info") or {}
     ticket_info = raw_entry.get("ticket_info") or {}
     price = ticket_info.get("price")
+    structured_geo = extract_geo(event)
 
     return {
         "api_id": event.get("api_id", raw_entry.get("api_id", "")),
@@ -85,6 +110,7 @@ def normalize_event(raw_entry: dict) -> dict:
         "end_at": event.get("end_at", ""),
         "timezone": event.get("timezone", ""),
         "location": geo.get("city_state", geo.get("city", "")),
+        "geo": structured_geo,
         "location_type": event.get("location_type", ""),
         "calendar_name": calendar.get("name", ""),
         "host_names": [h.get("name", "") for h in hosts if h.get("name")],
@@ -106,8 +132,16 @@ def main() -> None:
     seen_map, _ = load_seen_events(SEEN_FILE)
     print(f"Previous state: {len(seen_map)} seen events")
 
+    # Luma ignores category filters when discover_place_api_id is combined
+    # with them, so verify the canonical SF place separately. Category feeds
+    # keep their slug and geo bias, then the local validator enforces the
+    # actual nine-county boundary before any event is merged or written.
+    print(f"Verifying San Francisco discover place: {SF_DISCOVER_PLACE_API_ID}")
+    verify_discover_place()
+
     # --- Fetch current events ---
     merged: dict[str, dict] = {}
+    failures: list[str] = []
 
     for source in SOURCES:
         print(f"Fetching: {source['label']} (slug={source['slug']})")
@@ -115,10 +149,23 @@ def main() -> None:
             raw_entries = fetch_category_events(source)
             events = [normalize_event(e) for e in raw_entries]
             events = [e for e in events if e["api_id"]]
-            merge_into(merged, events, source["label"])
+            accepted: list[dict] = []
+            for event in events:
+                reason = bay_area_rejection_reason(event["geo"])
+                if reason:
+                    print(
+                        f"  Excluded {event['api_id']} ({event['location'] or 'unknown'}): {reason}"
+                    )
+                else:
+                    accepted.append(event)
+            print(f"  Geography: accepted {len(accepted)}, excluded {len(events) - len(accepted)}")
+            merge_into(merged, accepted, source["label"])
         except Exception as e:
             print(f"  ERROR: {e}")
-            continue
+            failures.append(f"{source['slug']}: {e}")
+
+    if failures:
+        raise RuntimeError("One or more Luma category fetches failed: " + "; ".join(failures))
 
     # --- Stamp first_seen_at (preserve from seen state for known events) ---
     stamp_first_seen(merged, seen_map, now_iso)

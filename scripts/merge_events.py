@@ -35,6 +35,7 @@ PRUNE_INTERVAL = timedelta(days=7)
 FRONTEND_FIELDS = {
     "api_id", "name", "url", "start_at", "end_at", "timezone",
     "location", "location_type", "calendar_name", "guest_count",
+    "geo",
     "is_free", "price_cents", "price_currency", "categories",
     "first_seen_at",
     "host_names",
