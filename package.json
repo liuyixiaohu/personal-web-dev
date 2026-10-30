@@ -15,7 +15,7 @@
     "test:unit": "node --test scripts/tests/*.test.mjs",
     "test:journey": "node scripts/verify-journey-mdx.mjs",
     "test:tooltips": "node scripts/verify-tooltip-style.mjs",
-    "test:event-data": "node scripts/verify-event-data.mjs",
+    "test:event-data": "python -m unittest scripts/tests/test_event_geography.py && node --test scripts/tests/event-data-validation.test.mjs && node scripts/verify-event-data.mjs",
     "check:all": "npm run check && npm run lint:design && npm run format:check && npm run test:unit && npm run build && npm run test:journey && npm run test:tooltips && npm run test:event-data",
     "audit": "node scripts/audit.mjs",
     "seo:diagnose": "node scripts/gsc-diagnose.mjs",

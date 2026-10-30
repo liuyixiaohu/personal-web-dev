@@ -1,5 +1,56 @@
+import { readFileSync } from 'node:fs';
+
+const bayAreaConfig = JSON.parse(
+  readFileSync(new URL('./bay-area-locations.json', import.meta.url), 'utf8'),
+);
+
+function normalizePlace(value) {
+  return String(value ?? '')
+    .toLocaleLowerCase('en-US')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+const allowedCities = new Set(bayAreaConfig.cities.map(normalizePlace));
+const allowedRegions = new Set(bayAreaConfig.regions.map(normalizePlace));
+const allowedCountryCodes = new Set(bayAreaConfig.country_codes.map(normalizePlace));
+
 function isRecord(value) {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
+export function validateBayAreaGeo(geo) {
+  if (!isRecord(geo)) return 'must be an object';
+
+  const city = normalizePlace(geo.city);
+  const region = normalizePlace(geo.region);
+  const regionShort = normalizePlace(geo.region_short);
+  const countryCode = normalizePlace(geo.country_code);
+  const latitude = geo.latitude;
+  const longitude = geo.longitude;
+
+  if (!city || (!region && !regionShort) || !countryCode) {
+    return 'must include structured city, region, and country';
+  }
+  if (!allowedCountryCodes.has(countryCode)) return 'country must be US';
+  if (!allowedRegions.has(region) && !allowedRegions.has(regionShort)) {
+    return 'region must be California';
+  }
+  if (!allowedCities.has(city)) return `${geo.city} is not in the configured nine-county Bay Area`;
+  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+    return 'must include numeric coordinates';
+  }
+
+  const bounds = bayAreaConfig.coordinate_bounds;
+  if (
+    latitude < bounds.min_latitude ||
+    latitude > bounds.max_latitude ||
+    longitude < bounds.min_longitude ||
+    longitude > bounds.max_longitude
+  ) {
+    return `coordinates ${latitude}, ${longitude} are outside the Bay Area`;
+  }
+  return null;
 }
 
 function isIsoTimestamp(value) {
@@ -50,6 +101,16 @@ export function validateEventData(publicData, seenData) {
     requireTimestamp(errors, `${path}.start_at`, event.start_at);
     requireTimestamp(errors, `${path}.end_at`, event.end_at, { optional: true });
     requireTimestamp(errors, `${path}.first_seen_at`, event.first_seen_at);
+
+    const geoError = validateBayAreaGeo(event.geo);
+    if (geoError) errors.push(`${path}.geo ${geoError}`);
+    if (
+      isRecord(event.geo) &&
+      typeof event.location === 'string' &&
+      !normalizePlace(event.location).startsWith(normalizePlace(event.geo.city))
+    ) {
+      errors.push(`${path}.location must agree with structured city ${event.geo.city}`);
+    }
 
     if (typeof event.api_id !== 'string' || event.api_id.trim() === '') continue;
     ids.push(event.api_id);
