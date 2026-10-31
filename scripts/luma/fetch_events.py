@@ -29,6 +29,8 @@ SOURCES = [
 ]
 MAX_PAGES = 50  # effectively unlimited; stops when API returns has_more=false
 REQUEST_DELAY = 1.0
+EMPTY_RESPONSE_RETRIES = 2
+EMPTY_RESPONSE_RETRY_DELAY = 2.0
 DATA_FILE = Path(__file__).resolve().parent.parent.parent / "data" / "luma_events.json"
 SEEN_FILE = Path(__file__).resolve().parent.parent.parent / "data" / "seen_events.json"
 
@@ -52,14 +54,34 @@ def fetch_category_events(source: dict) -> list[dict]:
         if cursor:
             params["pagination_cursor"] = cursor
 
-        resp = request_with_retry(
-            f"{BASE_URL}/discover/get-paginated-events", params=params, page=page
-        )
-        data = resp.json()
+        data = None
+        entries = []
+        for empty_attempt in range(EMPTY_RESPONSE_RETRIES + 1):
+            resp = request_with_retry(
+                f"{BASE_URL}/discover/get-paginated-events", params=params, page=page
+            )
+            data = resp.json()
+            entries = data.get("entries", [])
+            if not isinstance(entries, list):
+                raise RuntimeError(f"{source['label']} returned a malformed entries payload")
+            if entries or page > 0:
+                break
+            if empty_attempt < EMPTY_RESPONSE_RETRIES:
+                print(
+                    f"  Retry {source['label']} after empty first page "
+                    f"({empty_attempt + 1}/{EMPTY_RESPONSE_RETRIES})"
+                )
+                time.sleep(EMPTY_RESPONSE_RETRY_DELAY)
 
-        entries = data.get("entries", [])
+        if page == 0 and not entries:
+            raise RuntimeError(
+                f"{source['label']} returned no events after "
+                f"{EMPTY_RESPONSE_RETRIES + 1} attempts"
+            )
+
         all_entries.extend(entries)
 
+        assert data is not None
         if not data.get("has_more", False):
             break
         cursor = data.get("next_cursor")
@@ -159,6 +181,11 @@ def main() -> None:
                 else:
                     accepted.append(event)
             print(f"  Geography: accepted {len(accepted)}, excluded {len(events) - len(accepted)}")
+            if not accepted:
+                raise RuntimeError(
+                    f"{source['label']} returned {len(events)} events but none passed "
+                    "Bay Area validation"
+                )
             merge_into(merged, accepted, source["label"])
         except Exception as e:
             print(f"  ERROR: {e}")
