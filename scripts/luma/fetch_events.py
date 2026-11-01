@@ -6,6 +6,7 @@ data/seen_events.json — the persistent "what we've already seen" state —
 and produces public/data/events.json with only today's net-new events.
 """
 
+import json
 import os
 import sys
 import time
@@ -21,11 +22,24 @@ from event_geography import bay_area_rejection_reason, extract_geo
 # NOT by `category_api_id` (which is silently ignored — verified by probing
 # 4 different cat-ids and getting identical results). Slugs come from the
 # luma.com/{slug} URL pattern (e.g. luma.com/food → slug "food").
-GEO_SF = {"geo_latitude": 37.7749, "geo_longitude": -122.4194}
+#
+# Luma treats geo_latitude/geo_longitude as a soft relevance hint and may
+# replace it with the caller's IP-derived location. Its category map uses an
+# explicit south/north/west/east viewport instead. Use that deterministic
+# bounding box here, then retain the stricter nine-county validator below.
+BAY_AREA_CONFIG_FILE = Path(__file__).resolve().parent.parent / "lib" / "bay-area-locations.json"
+with open(BAY_AREA_CONFIG_FILE, encoding="utf-8") as _config_file:
+    _coordinate_bounds = json.load(_config_file)["coordinate_bounds"]
+BAY_AREA_VIEWPORT = {
+    "south": _coordinate_bounds["min_latitude"],
+    "north": _coordinate_bounds["max_latitude"],
+    "west": _coordinate_bounds["min_longitude"],
+    "east": _coordinate_bounds["max_longitude"],
+}
 SF_DISCOVER_PLACE_API_ID = "discplace-BDj7GNbGlsF7Cka"
 SOURCES = [
-    {"slug": "tech",     "label": "Tech Events (Bay Area)",          "pagination_limit": 50, **GEO_SF},
-    {"slug": "ai",       "label": "AI Events (Bay Area)",            "pagination_limit": 50, **GEO_SF},
+    {"slug": "tech", "label": "Tech Events (Bay Area)", "pagination_limit": 50},
+    {"slug": "ai", "label": "AI Events (Bay Area)", "pagination_limit": 50},
 ]
 MAX_PAGES = 50  # effectively unlimited; stops when API returns has_more=false
 REQUEST_DELAY = 1.0
@@ -48,8 +62,7 @@ def fetch_category_events(source: dict) -> list[dict]:
         params = {
             "slug": source["slug"],
             "pagination_limit": source["pagination_limit"],
-            "geo_latitude": source["geo_latitude"],
-            "geo_longitude": source["geo_longitude"],
+            **BAY_AREA_VIEWPORT,
         }
         if cursor:
             params["pagination_cursor"] = cursor
@@ -156,7 +169,7 @@ def main() -> None:
 
     # Luma ignores category filters when discover_place_api_id is combined
     # with them, so verify the canonical SF place separately. Category feeds
-    # keep their slug and geo bias, then the local validator enforces the
+    # use Luma's explicit map viewport, then the local validator enforces the
     # actual nine-county boundary before any event is merged or written.
     print(f"Verifying San Francisco discover place: {SF_DISCOVER_PLACE_API_ID}")
     verify_discover_place()

@@ -52,8 +52,6 @@ class EventFetchTests(unittest.TestCase):
             "slug": "tech",
             "label": "Tech Events (Bay Area)",
             "pagination_limit": 50,
-            "geo_latitude": 37.7749,
-            "geo_longitude": -122.4194,
         }
 
     @staticmethod
@@ -91,6 +89,21 @@ class EventFetchTests(unittest.TestCase):
 
         with self.assertRaisesRegex(RuntimeError, "malformed entries payload"):
             fetch_events.fetch_category_events(self.source)
+
+    @patch.object(fetch_events, "request_with_retry")
+    def test_category_fetch_uses_hard_bounding_box_not_soft_geo_hint(self, request):
+        event = {"event": {"api_id": "evt-123"}}
+        request.return_value = self.response([event])
+
+        fetch_events.fetch_category_events(self.source)
+
+        params = request.call_args.kwargs["params"]
+        self.assertEqual(
+            {key: params[key] for key in ("south", "north", "west", "east")},
+            fetch_events.BAY_AREA_VIEWPORT,
+        )
+        self.assertNotIn("geo_latitude", params)
+        self.assertNotIn("geo_longitude", params)
 
 
 if __name__ == "__main__":
