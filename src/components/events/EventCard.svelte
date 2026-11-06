@@ -3,6 +3,7 @@
     formatEventRange,
     formatPrice,
     formatUpdatedAt,
+    hostDisplay,
     locationDisplay,
     type EventDecision,
     type LumaEvent,
@@ -22,6 +23,7 @@
     decision?.status === 'applied' ? 'Applied' : decision ? 'Ignored' : '',
   );
   let decisionWhen = $derived(decision ? formatUpdatedAt(decision.at) : '');
+  let hosts = $derived(hostDisplay(event));
 </script>
 
 <li class="event-card list-row" id="event-{event.api_id}">
@@ -73,6 +75,25 @@
             d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"
           /><circle cx="12" cy="10" r="3" /></svg
         >{locationDisplay(event)}</span
+      >
+    {/if}
+
+    {#if hosts}
+      <span class="event-hosts"
+        ><svg
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle
+            cx="12"
+            cy="7"
+            r="4"
+          /></svg
+        >{hosts}</span
       >
     {/if}
 
@@ -179,6 +200,7 @@
 
   .event-date,
   .event-location,
+  .event-hosts,
   .event-guests {
     display: inline-flex;
     align-items: center;
