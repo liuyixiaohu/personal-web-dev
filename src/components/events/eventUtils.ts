@@ -118,6 +118,13 @@ export function locationDisplay(event: LumaEvent): string {
   return stripState(event.location || '');
 }
 
+/** Hosts from Luma. When a listing has none, the calendar name is the organizer. */
+export function hostDisplay(event: LumaEvent): string {
+  const names = (event.host_names ?? []).map((name) => name.trim()).filter(Boolean);
+  if (names.length) return names.join(', ');
+  return (event.calendar_name ?? '').trim();
+}
+
 export function formatDateGroup(dateKey: string): string {
   const [y, m, d] = dateKey.split('-').map(Number);
   const date = new Date(y, m - 1, d);
