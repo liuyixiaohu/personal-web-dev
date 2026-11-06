@@ -3,6 +3,9 @@
   import {
     type LumaEvent,
     type EventData,
+    type EventDecision,
+    type EventDecisionStatus,
+    type EventListMode,
     DATA_URL,
     STALE_THRESHOLD_MS,
     BLOCKED_CALENDARS,
@@ -13,10 +16,15 @@
     eventDateKey,
     formatUpdatedAt,
     formatDateGroup,
+    snapshotEvent,
+    parseDecisions,
+    pruneDecisions,
+    isUpcoming,
   } from './eventUtils';
   import EventFilters from './EventFilters.svelte';
   import EventCard from './EventCard.svelte';
   import Popup from '../Popup.svelte';
+  import '../../styles/filters.css';
 
   // --- State ---
   let events = $state<LumaEvent[]>([]);
@@ -31,45 +39,44 @@
   let selectedDays = $state<Set<number>>(new Set(loadPref<number[]>(`${PFX}.days`, [])));
   let searchQuery = $state<string>('');
   let excludeKeywords = $state<string[]>(loadPref<string[]>(`${PFX}.exclude`, []));
+  let mode = $state<EventListMode>('upcoming');
+  let handledReason = $state<'all' | EventDecisionStatus>('all');
+  let decisions = $state<Record<string, EventDecision>>(
+    pruneDecisions(parseDecisions(loadPref(`${PFX}.decisions`, {}))),
+  );
 
   let whyOpen = $state(false);
   let excludePopupOpen = $state(false);
 
-  // --- Persist filter state to localStorage ---
+  // --- Persist filter state and decisions to localStorage ---
   $effect(() => {
     localStorage.setItem(`${PFX}.locations`, JSON.stringify([...selectedLocations]));
     localStorage.setItem(`${PFX}.days`, JSON.stringify([...selectedDays]));
     localStorage.setItem(`${PFX}.exclude`, JSON.stringify(excludeKeywords));
+
+    const pruned = pruneDecisions(decisions);
+    if (Object.keys(pruned).length !== Object.keys(decisions).length) {
+      decisions = pruned;
+      return;
+    }
+    localStorage.setItem(`${PFX}.decisions`, JSON.stringify(decisions));
   });
 
   // --- Data fetching ---
-  // The cron now only ingests Bay Area Tech + AI categories, so the JSON is
-  // already scoped — no client-side bucket filter needed. We only show events
-  // that are NEW since the last fetch (per first_seen_at), starting from
-  // tomorrow (today is mostly stale by the time the daily cron lands).
+  // The published JSON is the current Bay Area Tech + AI catalog. Show every
+  // event that has not ended yet. Applied and ignored events leave this list
+  // and stay under Handled for 7 days.
   onMount(async () => {
     try {
       const resp = await fetch(DATA_URL);
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const data: EventData = await resp.json();
 
-      const cutoff = new Date();
-      cutoff.setHours(0, 0, 0, 0);
-      cutoff.setDate(cutoff.getDate() + 1);
-      const cutoffMs = cutoff.getTime();
-      const isFuture = (e: LumaEvent) => new Date(e.start_at).getTime() >= cutoffMs;
-
       const notBlocked = (e: LumaEvent) =>
         !BLOCKED_CALENDARS.has(e.calendar_name) &&
         !BLOCKED_NAME_KEYWORDS.some((kw) => e.name.includes(kw));
 
-      const prevCheck = data.previous_updated_at ? new Date(data.previous_updated_at).getTime() : 0;
-      const isNew = (e: LumaEvent) =>
-        prevCheck > 0 && e.first_seen_at ? new Date(e.first_seen_at).getTime() > prevCheck : false;
-      const filtered =
-        prevCheck > 0
-          ? data.events.filter((e) => notBlocked(e) && isNew(e) && isFuture(e))
-          : data.events.filter((e) => notBlocked(e) && isFuture(e));
+      const filtered = data.events.filter((e) => notBlocked(e) && isUpcoming(e));
 
       enrichEvents(filtered);
       events = filtered;
@@ -88,7 +95,35 @@
   // --- Derived filter options (single-pass) ---
   // Saved locations whose city has no events in today's data are appended at
   // the end so the user can still see and click off filters they previously set.
-  let locationIndex = $derived(buildLocationIndex(events));
+  let upcomingEvents = $derived(events.filter((e) => !(e.api_id in decisions)));
+  let handledEvents = $derived.by(() => {
+    const live = new Map(events.map((e) => [e.api_id, e]));
+    const list: LumaEvent[] = [];
+    for (const decision of Object.values(decisions)) {
+      if (handledReason !== 'all' && decision.status !== handledReason) continue;
+      const current = live.get(decision.event.api_id);
+      if (current) {
+        list.push(current);
+        continue;
+      }
+      const copy = snapshotEvent(decision.event);
+      enrichEvents([copy]);
+      list.push(copy);
+    }
+    return list;
+  });
+  let activeEvents = $derived(mode === 'upcoming' ? upcomingEvents : handledEvents);
+  let handledCounts = $derived.by(() => {
+    let applied = 0;
+    let ignored = 0;
+    for (const decision of Object.values(decisions)) {
+      if (decision.status === 'applied') applied += 1;
+      else ignored += 1;
+    }
+    return { applied, ignored };
+  });
+
+  let locationIndex = $derived(buildLocationIndex(activeEvents));
   let allLocations = $derived.by(() => {
     const base = locationIndex.sorted;
     const orphans: string[] = [];
@@ -99,11 +134,11 @@
   });
   let locationCounts = $derived(locationIndex.counts);
 
-  // --- Filtering (always sorted earliest-first for date grouping) ---
+  // --- Filtering (latest start time first) ---
   let filteredEvents = $derived.by(() => {
     const q = searchQuery.toLowerCase().trim();
 
-    const result = events.filter((e) => {
+    const result = activeEvents.filter((e) => {
       if (selectedLocations.size > 0 && !selectedLocations.has(e._strippedLocation!)) return false;
       if (selectedDays.size > 0 && !selectedDays.has(e._dayOfWeek!)) return false;
       const hostNames = e.host_names ?? [];
@@ -126,7 +161,7 @@
       return true;
     });
 
-    result.sort((a, b) => a._startMs! - b._startMs!);
+    result.sort((a, b) => b._startMs! - a._startMs!);
     return result;
   });
 
@@ -160,33 +195,50 @@
     else next.add(day);
     selectedDays = next;
   }
+
+  function setMode(next: EventListMode) {
+    if (mode === next) return;
+    mode = next;
+  }
+
+  function remember(event: LumaEvent, status: EventDecisionStatus) {
+    decisions = pruneDecisions({
+      ...decisions,
+      [event.api_id]: {
+        status,
+        at: new Date().toISOString(),
+        event: snapshotEvent(event),
+      },
+    });
+  }
+
+  function restore(id: string) {
+    if (!(id in decisions)) return;
+    const next = { ...decisions };
+    delete next[id];
+    decisions = next;
+  }
 </script>
 
 <div class="event-list">
   <header class="event-header">
     <div class="event-title-row">
-      <h2 class="event-title">Newly Added Tech Events · Bay Area</h2>
+      <h2 class="event-title">Bay Area Tech & AI Events</h2>
     </div>
 
     <p class="event-subtitle">
-      Bay Area Tech & AI events from Luma, showing <span class="newly-highlight"
-        >only what's new since the last daily check</span
-      >.
+      Luma's current Bay Area Tech and AI listings, refreshed once a day and ordered with the latest
+      start time first.
       <span class="why-wrap">
         <button class="why-btn" onclick={() => (whyOpen = !whyOpen)}>Why?</button>
-        <Popup
-          open={whyOpen}
-          title="Why show only newly added events?"
-          onClose={() => (whyOpen = false)}
-        >
+        <Popup open={whyOpen} title="What this list includes" onClose={() => (whyOpen = false)}>
           <p class="why-point">
-            This page pulls from Luma's Bay Area Tech and AI categories once a day. It only shows
-            events that appeared since the last check, not the full catalog. If you're looking for a
-            specific event or topic outside Tech/AI, search directly on the platform.
+            Each day this page republishes the events Luma is listing right now in its Bay Area Tech
+            and AI categories. Events that have already left Luma are not kept as history.
           </p>
           <p class="why-point">
-            It's intentionally lightweight: a daily-refreshed glance at Luma's public Bay Area Tech
-            and AI listings, not a full-featured alternative to the platform.
+            Applied and ignored events move to Handled. Those choices stay in this browser for 7
+            days, then they are deleted. If you're looking outside Tech and AI, search on Luma.
           </p>
         </Popup>
       </span>
@@ -199,9 +251,9 @@
     <p class="event-status event-status--error">
       Unable to load events right now. Please try again later.
     </p>
-  {:else if events.length === 0}
+  {:else if events.length === 0 && Object.keys(decisions).length === 0}
     <div class="event-empty">
-      <p>No new events discovered today. Check back tomorrow!</p>
+      <p>No upcoming events in the latest check.</p>
       {#if updatedAt}
         <p class="event-meta">Last checked: {formatUpdatedAt(updatedAt)} (Refreshes once daily)</p>
       {/if}
@@ -213,6 +265,63 @@
           >Last checked: {formatUpdatedAt(updatedAt)} (Refreshes once daily)</span
         >
       </div>
+    {/if}
+
+    <div class="filter-row event-mode">
+      <button
+        type="button"
+        class="pill"
+        class:pill--active={mode === 'upcoming'}
+        aria-pressed={mode === 'upcoming'}
+        onclick={() => setMode('upcoming')}
+      >
+        Upcoming <span class="pill-count">({upcomingEvents.length})</span>
+      </button>
+      <button
+        type="button"
+        class="pill"
+        class:pill--active={mode === 'handled'}
+        aria-pressed={mode === 'handled'}
+        onclick={() => setMode('handled')}
+      >
+        Handled <span class="pill-count">({handledCounts.applied + handledCounts.ignored})</span>
+      </button>
+    </div>
+
+    {#if mode === 'handled'}
+      <div class="filter-row">
+        <button
+          type="button"
+          class="pill"
+          class:pill--active={handledReason === 'all'}
+          aria-pressed={handledReason === 'all'}
+          onclick={() => (handledReason = 'all')}
+        >
+          All
+          <span class="pill-count">({handledCounts.applied + handledCounts.ignored})</span>
+        </button>
+        <button
+          type="button"
+          class="pill"
+          class:pill--active={handledReason === 'applied'}
+          aria-pressed={handledReason === 'applied'}
+          onclick={() => (handledReason = 'applied')}
+        >
+          Applied <span class="pill-count">({handledCounts.applied})</span>
+        </button>
+        <button
+          type="button"
+          class="pill"
+          class:pill--active={handledReason === 'ignored'}
+          aria-pressed={handledReason === 'ignored'}
+          onclick={() => (handledReason = 'ignored')}
+        >
+          Ignored <span class="pill-count">({handledCounts.ignored})</span>
+        </button>
+      </div>
+      <p class="event-handled-note">
+        Applied and ignored events stay here for 7 days, then they are deleted.
+      </p>
     {/if}
 
     <!-- Filter Controls -->
@@ -239,8 +348,8 @@
 
     <div class="event-count">
       <span>
-        {#if filteredEvents.length !== events.length}
-          {filteredEvents.length} / {events.length} events found
+        {#if filteredEvents.length !== activeEvents.length}
+          {filteredEvents.length} / {activeEvents.length} events found
         {:else}
           {filteredEvents.length} events found
         {/if}
@@ -273,7 +382,11 @@
       {/if}
     </div>
 
-    {#if filteredEvents.length === 0}
+    {#if mode === 'handled' && Object.keys(decisions).length === 0}
+      <p class="event-status">Nothing applied or ignored in the last 7 days.</p>
+    {:else if mode === 'upcoming' && upcomingEvents.length === 0}
+      <p class="event-status">Everything in this check is in Handled.</p>
+    {:else if filteredEvents.length === 0}
       <p class="event-status">No events match filters</p>
     {/if}
 
@@ -281,7 +394,13 @@
       <h3 class="date-group-header">{formatDateGroup(group.date)}</h3>
       <ul class="event-cards">
         {#each group.events as event (event.api_id)}
-          <EventCard {event} />
+          <EventCard
+            {event}
+            decision={mode === 'handled' ? decisions[event.api_id] : undefined}
+            onApplied={() => remember(event, 'applied')}
+            onIgnore={() => remember(event, 'ignored')}
+            onRestore={() => restore(event.api_id)}
+          />
         {/each}
       </ul>
     {/each}
@@ -290,7 +409,8 @@
       <h2 class="privacy-heading">Privacy</h2>
       <p class="privacy-desc">
         This page runs entirely in your browser. Event data is fetched from a public source and
-        displayed directly. No personal data is collected, transmitted, or stored.
+        displayed directly. Applied and ignored choices stay on this device for 7 days. Nothing is
+        sent elsewhere.
       </p>
       <a href="/events/privacy" class="privacy-link">Full privacy policy →</a>
     </section>
@@ -324,9 +444,15 @@
     line-height: 1.5;
   }
 
-  .newly-highlight {
-    color: var(--color-pm);
-    font-weight: 600;
+  .event-mode {
+    margin-bottom: var(--space-sm);
+  }
+
+  .event-handled-note {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    line-height: 1.5;
+    margin: 0 0 var(--space-sm);
   }
 
   .why-wrap {

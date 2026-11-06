@@ -57,10 +57,33 @@ test('duplicate event ids fail', () => {
   assert.ok(errors.some((error) => error.includes('duplicate api_id')));
 });
 
-test('new_event_ids must exactly match event api ids', () => {
-  const errors = validateEventData({ ...validPublic, new_event_ids: [] }, validSeen);
+test('new_event_ids must be published event ids', () => {
+  const errors = validateEventData({ ...validPublic, new_event_ids: ['evt-missing'] }, validSeen);
 
   assert.ok(errors.some((error) => error.includes('new_event_ids')));
+});
+
+test('previously seen events may be published without being listed as new', () => {
+  const older = {
+    ...event,
+    api_id: 'evt-old',
+    first_seen_at: '2026-06-01T00:00:00.000Z',
+  };
+  const errors = validateEventData(
+    { ...validPublic, events: [event, older], new_event_ids: ['evt-123'] },
+    {
+      ...validSeen,
+      events: {
+        ...validSeen.events,
+        'evt-old': {
+          first_seen_at: '2026-06-01T00:00:00.000Z',
+          end_at: older.end_at,
+        },
+      },
+    },
+  );
+
+  assert.deepEqual(errors, []);
 });
 
 test('each public event must exist in seen state', () => {

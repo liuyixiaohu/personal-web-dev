@@ -113,11 +113,12 @@ def save_events(
     new_ids: list[str],
     *,
     min_events: int = 1,
-) -> None:
+) -> bool:
     """Write events JSON with a zero-event safety check.
 
     Refuses to overwrite a non-empty file with 0 events, which would
     indicate a fetch failure rather than a genuine empty result.
+    Returns False when that refusal happens, True after a write.
     """
     if len(all_events) < min_events and data_file.exists():
         old_count = 0
@@ -132,7 +133,7 @@ def save_events(
                 f"({old_count} events) with {len(all_events)} events. "
                 f"This looks like a fetch failure."
             )
-            return
+            return False
 
     output = {
         "updated_at": now_iso,
@@ -148,11 +149,12 @@ def save_events(
     print(f"Saved {len(all_events)} events to {data_file}")
     if new_ids:
         print(f"New events: {', '.join(new_ids[:10])}{'...' if len(new_ids) > 10 else ''}")
+    return True
 
 
 # --- Persistent state for "what we've already seen" ---
-# Lives in data/seen_events.json. Lets the public events.json stay tiny
-# (only today's net-new events) without losing the "is this new?" check.
+# Lives in data/seen_events.json. The public file is the live catalog;
+# this state only remembers first_seen_at and end_at across daily fetches.
 
 def load_seen_events(seen_file: Path) -> tuple[dict[str, dict], str]:
     """Load seen-events state. Returns (events_map, last_pruned_at_iso).
@@ -187,12 +189,23 @@ def save_seen_events(
     print(f"Saved {len(events_map)} seen IDs to {seen_file}")
 
 
-def prune_past_events(events_map: dict[str, dict], now: datetime) -> int:
+def prune_past_events(
+    events_map: dict[str, dict],
+    now: datetime,
+    *,
+    keep: set[str] | None = None,
+) -> int:
     """Drop entries whose end_at is in the past — they won't reappear in
     Luma's catalog and we don't need to remember them. Returns count pruned.
+
+    ``keep`` ids stay even if they have already ended, because the public
+    catalog still lists them and every published id must exist in seen state.
     """
+    retained = keep or set()
     pruned = 0
     for aid in list(events_map.keys()):
+        if aid in retained:
+            continue
         end_at = events_map[aid].get("end_at")
         if not end_at:
             continue

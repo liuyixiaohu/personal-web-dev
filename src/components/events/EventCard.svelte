@@ -1,11 +1,27 @@
 <script lang="ts">
-  import { formatEventRange, formatPrice, locationDisplay, type LumaEvent } from './eventUtils';
+  import {
+    formatEventRange,
+    formatPrice,
+    formatUpdatedAt,
+    locationDisplay,
+    type EventDecision,
+    type LumaEvent,
+  } from './eventUtils';
 
   interface Props {
     event: LumaEvent;
+    /** Set when this card is in Handled. Absent on the upcoming list. */
+    decision?: EventDecision;
+    onApplied: () => void;
+    onIgnore: () => void;
+    onRestore: () => void;
   }
 
-  let { event }: Props = $props();
+  let { event, decision, onApplied, onIgnore, onRestore }: Props = $props();
+  let decisionLabel = $derived(
+    decision?.status === 'applied' ? 'Applied' : decision ? 'Ignored' : '',
+  );
+  let decisionWhen = $derived(decision ? formatUpdatedAt(decision.at) : '');
 </script>
 
 <li class="event-card list-row" id="event-{event.api_id}">
@@ -75,6 +91,32 @@
           /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg
         >{event.guest_count} guests</span
       >
+    {/if}
+  </div>
+
+  <div class="event-actions">
+    {#if decision}
+      <span class="event-decision">
+        {decisionLabel}{#if decisionWhen}&nbsp;· {decisionWhen}{/if}
+      </span>
+      <button type="button" class="event-action" onclick={onRestore}>Restore</button>
+    {:else}
+      <button
+        type="button"
+        class="event-action"
+        onclick={onApplied}
+        title="Mark as applied and hide it from the list"
+      >
+        Applied
+      </button>
+      <button
+        type="button"
+        class="event-action"
+        onclick={onIgnore}
+        title="Ignore this event and hide it from the list"
+      >
+        Ignore
+      </button>
     {/if}
   </div>
 </li>
@@ -147,6 +189,36 @@
     height: 0.9em;
     margin-right: 0.25em;
     flex-shrink: 0;
+  }
+
+  .event-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.45rem;
+  }
+
+  .event-action {
+    font-family: inherit;
+    font-size: var(--fs-xs);
+    color: var(--text);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.28em 0.7em;
+    cursor: pointer;
+    line-height: 1.4;
+  }
+
+  .event-action:hover {
+    border-color: var(--text-light);
+  }
+
+  .event-decision {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    line-height: 1.4;
   }
 
   /* Mobile */
