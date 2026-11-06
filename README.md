@@ -28,10 +28,11 @@ GitHub Actions cron), and a Cloudflare Pages deploy.
 Luma API ──► GitHub Actions (cron daily) ──► public/data/events.json ──► /events (Svelte island)
 ```
 
-A scheduled workflow fetches fresh events daily, merges with the prior
-day's snapshot to preserve `first_seen_at` (so "new today" works), and
-commits the result. The front-end reads only the final JSON; no runtime API
-calls.
+A scheduled workflow fetches Luma's current Bay Area Tech and AI catalog
+each day, keeps `first_seen_at` for events it has already seen, and publishes
+that full current catalog. Events Luma no longer lists are left out — this is
+the live catalog, not a historical archive. The front-end reads only the
+final JSON; no runtime API calls.
 
 ## Structure
 

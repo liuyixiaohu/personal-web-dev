@@ -81,7 +81,7 @@
               class:pill--active={selectedLocations.has(loc)}
               class:pill--empty={count === 0}
               aria-pressed={selectedLocations.has(loc)}
-              title={count === 0 ? "Saved filter — no matches in today's events" : undefined}
+              title={count === 0 ? 'Saved filter — no matches in the current list' : undefined}
               onclick={() => onLocationToggle(loc)}
               >{loc} <span class="pill-count">({count})</span></button
             >

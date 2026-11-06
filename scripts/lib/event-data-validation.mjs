@@ -122,12 +122,18 @@ export function validateEventData(publicData, seenData) {
     }
   }
 
+  const publishedIds = new Set(ids);
   const declaredIds = publicData.new_event_ids.filter((value) => typeof value === 'string');
-  if (
-    declaredIds.length !== publicData.new_event_ids.length ||
-    JSON.stringify([...declaredIds].sort()) !== JSON.stringify([...ids].sort())
-  ) {
-    errors.push('new_event_ids must exactly match public event api_id values');
+  if (declaredIds.length !== publicData.new_event_ids.length) {
+    errors.push('new_event_ids must contain only strings');
+  } else if (new Set(declaredIds).size !== declaredIds.length) {
+    errors.push('new_event_ids must be unique');
+  } else {
+    for (const id of declaredIds) {
+      if (!publishedIds.has(id)) {
+        errors.push(`new_event_ids contains ${id}, which is not in the published catalog`);
+      }
+    }
   }
 
   for (const [id, state] of Object.entries(seenData.events)) {

@@ -6,8 +6,11 @@ Reads:
   - public/data/events.json  (yesterday's output, only to carry previous_updated_at)
 
 Writes:
-  - public/data/events.json  (only today's net-new events)
+  - public/data/events.json  (the full current Luma catalog, not only net-new)
   - data/seen_events.json  (updated state; past events pruned weekly)
+
+The fetch is already the live catalog. Publishing that catalog is enough:
+events Luma no longer returns are omitted, rather than kept as history.
 """
 
 import json
@@ -67,8 +70,8 @@ def main():
     now = datetime.now(timezone.utc)
     now_iso = now.isoformat()
 
-    # previous_updated_at is the only thing we need from yesterday's output —
-    # the frontend uses it to filter "first_seen_at > previous_updated_at".
+    # previous_updated_at is carried forward so a later run can still tell
+    # which events were first seen on the previous check.
     _, prev_updated_at = load_old_events(OUTPUT_FILE)
 
     seen_map, last_pruned_at = load_seen_events(SEEN_FILE)
@@ -84,31 +87,36 @@ def main():
             merged[aid] = event
 
     new_ids = sorted(set(merged.keys()) - seen_ids)
-    new_events = sorted(
-        (merged[aid] for aid in new_ids),
-        key=lambda e: e.get("start_at", ""),
-    )
-    trimmed_new = [{k: v for k, v in e.items() if k in FRONTEND_FIELDS} for e in new_events]
 
-    print(f"Output: {len(trimmed_new)} new events (out of {len(merged)} fetched)")
+    for aid, event in merged.items():
+        prior = seen_map.get(aid, {})
+        first_seen = event.get("first_seen_at") or prior.get("first_seen_at") or now_iso
+        event["first_seen_at"] = first_seen
+        seen_map[aid] = {
+            "first_seen_at": first_seen,
+            "end_at": event.get("end_at"),
+        }
 
-    save_events(
+    catalog = sorted(merged.values(), key=lambda e: e.get("start_at", ""))
+    trimmed = [{k: v for k, v in e.items() if k in FRONTEND_FIELDS} for e in catalog]
+
+    print(f"Output: {len(trimmed)} current events ({len(new_ids)} new)")
+
+    # An empty catalog over a non-empty file is a failed fetch, not a real
+    # "Luma listed nothing" day. Keep yesterday's file and do not touch seen state.
+    if not save_events(
         OUTPUT_FILE,
-        trimmed_new,
+        trimmed,
         prev_updated_at,
         now_iso,
         new_ids,
-        min_events=0,
-    )
-
-    for aid in new_ids:
-        seen_map[aid] = {
-            "first_seen_at": now_iso,
-            "end_at": merged[aid].get("end_at"),
-        }
+    ):
+        raise RuntimeError(
+            "Refusing to replace the current catalog with an empty fetch"
+        )
 
     if _should_prune(last_pruned_at, now):
-        pruned = prune_past_events(seen_map, now)
+        pruned = prune_past_events(seen_map, now, keep=set(merged.keys()))
         print(f"  Weekly prune: dropped {pruned} past events from state")
         last_pruned_at = now_iso
 

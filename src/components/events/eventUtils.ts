@@ -153,3 +153,80 @@ export function buildLocationIndex(events: LumaEvent[]): {
   const sorted = [...counts.keys()].sort((a, b) => counts.get(b)! - counts.get(a)!);
   return { sorted, counts };
 }
+
+// --- Applied / ignored ---
+// Decisions live in the browser. A handled event leaves the upcoming list and
+// stays in Handled for 7 days, then the record is deleted.
+
+export const DECISION_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+
+export type EventDecisionStatus = 'applied' | 'ignored';
+export type EventListMode = 'upcoming' | 'handled';
+
+export interface EventDecision {
+  status: EventDecisionStatus;
+  /** ISO timestamp of when the viewer set the event aside. */
+  at: string;
+  event: LumaEvent;
+}
+
+export function snapshotEvent(event: LumaEvent): LumaEvent {
+  return {
+    api_id: event.api_id,
+    name: event.name,
+    url: event.url,
+    start_at: event.start_at,
+    end_at: event.end_at,
+    timezone: event.timezone,
+    location: event.location,
+    location_type: event.location_type,
+    calendar_name: event.calendar_name,
+    host_names: event.host_names ?? [],
+    guest_count: event.guest_count ?? 0,
+    is_free: event.is_free,
+    price_cents: event.price_cents ?? null,
+    price_currency: event.price_currency ?? null,
+    categories: event.categories ?? [],
+    first_seen_at: event.first_seen_at,
+  };
+}
+
+/** Drop malformed localStorage entries. Unknown statuses are ignored. */
+export function parseDecisions(raw: unknown): Record<string, EventDecision> {
+  if (!raw || typeof raw !== 'object') return {};
+  const out: Record<string, EventDecision> = {};
+  for (const value of Object.values(raw as Record<string, unknown>)) {
+    if (!value || typeof value !== 'object') continue;
+    const status = (value as { status?: unknown }).status;
+    const at = (value as { at?: unknown }).at;
+    const event = (value as { event?: LumaEvent }).event;
+    if (status !== 'applied' && status !== 'ignored') continue;
+    if (typeof at !== 'string' || Number.isNaN(Date.parse(at))) continue;
+    if (!event || typeof event.api_id !== 'string' || !event.api_id) continue;
+    if (typeof event.name !== 'string' || !event.name) continue;
+    out[event.api_id] = { status, at, event: snapshotEvent(event) };
+  }
+  return out;
+}
+
+/** Delete decisions that are 7 days old or older. */
+export function pruneDecisions(
+  decisions: Record<string, EventDecision>,
+  now = Date.now(),
+): Record<string, EventDecision> {
+  const out: Record<string, EventDecision> = {};
+  for (const [id, decision] of Object.entries(decisions)) {
+    const at = Date.parse(decision.at);
+    if (!Number.isFinite(at) || now - at >= DECISION_TTL_MS) continue;
+    out[id] = decision;
+  }
+  return out;
+}
+
+/** An event is still listable when it has not ended. */
+export function isUpcoming(event: LumaEvent, now = Date.now()): boolean {
+  const end = event.end_at ? Date.parse(event.end_at) : NaN;
+  if (Number.isFinite(end)) return end >= now;
+  const start = event._startMs ?? Date.parse(event.start_at);
+  return Number.isFinite(start) && start >= now;
+}

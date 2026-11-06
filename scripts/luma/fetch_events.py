@@ -3,7 +3,7 @@
 Writes data/luma_events.json as an in-CI intermediate (gitignored).
 The companion script scripts/merge_events.py reads it together with
 data/seen_events.json — the persistent "what we've already seen" state —
-and produces public/data/events.json with only today's net-new events.
+and publishes the full current catalog to public/data/events.json.
 """
 
 import json
