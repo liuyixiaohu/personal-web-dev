@@ -278,7 +278,7 @@
   });
   let locationCounts = $derived(locationIndex.counts);
 
-  // --- Filtering (latest start time first) ---
+  // --- Filtering (earliest start time first) ---
   let filteredEvents = $derived.by(() => {
     const q = searchQuery.toLowerCase().trim();
 
@@ -306,7 +306,7 @@
       return true;
     });
 
-    result.sort((a, b) => b._startMs! - a._startMs!);
+    result.sort((a, b) => a._startMs! - b._startMs!);
     return result;
   });
 
