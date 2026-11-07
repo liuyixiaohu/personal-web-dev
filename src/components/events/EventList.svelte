@@ -47,7 +47,6 @@
     pruneDecisions(parseDecisions(loadPref(`${PFX}.decisions`, {}))),
   );
 
-  let whyOpen = $state(false);
   let excludePopupOpen = $state(false);
 
   // --- Persist filter state and decisions to localStorage ---
@@ -232,21 +231,7 @@
     </div>
 
     <p class="event-subtitle">
-      Luma's current Bay Area Tech and AI listings, refreshed once a day and ordered with the latest
-      start time first.
-      <span class="why-wrap">
-        <button class="why-btn" onclick={() => (whyOpen = !whyOpen)}>Why?</button>
-        <Popup open={whyOpen} title="What this list includes" onClose={() => (whyOpen = false)}>
-          <p class="why-point">
-            Each day this page republishes the events Luma is listing right now in its Bay Area Tech
-            and AI categories. Events that have already left Luma are not kept as history.
-          </p>
-          <p class="why-point">
-            Applied and ignored events move to Handled. Those choices stay in this browser for 7
-            days, then they are deleted. If you're looking outside Tech and AI, search on Luma.
-          </p>
-        </Popup>
-      </span>
+      Luma's current Bay Area Tech and AI listings, refreshed once a day.
     </p>
   </header>
 
@@ -491,17 +476,6 @@
   .why-btn:hover {
     border-color: rgba(0, 0, 0, 0.25);
     color: var(--text);
-  }
-
-  .why-point {
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    line-height: 1.5;
-    margin: 0 0 0.5rem;
-  }
-
-  .why-point:last-child {
-    margin-bottom: 0;
   }
 
   .event-meta-bar {
