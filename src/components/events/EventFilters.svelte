@@ -56,22 +56,41 @@
   });
 
   let excludeInput = $state('');
-  let searchSentinel: HTMLElement | undefined = $state();
-  let searchStuck = $state(false);
+  let searchBarEl: HTMLElement | undefined = $state();
+  // How far the on-screen keyboard covers the bottom of the layout viewport.
+  // Added to the bar's `bottom` so the fields stay visible while typing.
+  let keyboardOffset = $state(0);
 
-  // The sentinel sits just above the search bar. Once it leaves the viewport,
-  // the bar has taken over the top edge and should read as a pinned toolbar.
   $effect(() => {
-    const sentinel = searchSentinel;
-    if (!sentinel) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        searchStuck = !entry.isIntersecting;
-      },
-      { threshold: 0 },
-    );
-    observer.observe(sentinel);
-    return () => observer.disconnect();
+    const bar = searchBarEl;
+    if (!bar) return;
+
+    const publishHeight = () => {
+      document.documentElement.style.setProperty(
+        '--events-search-bar-height',
+        `${bar.offsetHeight}px`,
+      );
+    };
+    const resizeObserver = new ResizeObserver(publishHeight);
+    resizeObserver.observe(bar);
+    publishHeight();
+
+    const viewport = window.visualViewport;
+    const publishKeyboard = () => {
+      keyboardOffset = viewport
+        ? Math.max(0, Math.round(window.innerHeight - viewport.height - viewport.offsetTop))
+        : 0;
+    };
+    publishKeyboard();
+    viewport?.addEventListener('resize', publishKeyboard);
+    viewport?.addEventListener('scroll', publishKeyboard);
+
+    return () => {
+      resizeObserver.disconnect();
+      viewport?.removeEventListener('resize', publishKeyboard);
+      viewport?.removeEventListener('scroll', publishKeyboard);
+      document.documentElement.style.removeProperty('--events-search-bar-height');
+    };
   });
 
   function handleExcludeKeydown(e: KeyboardEvent) {
@@ -164,10 +183,8 @@
   </div>
 </div>
 
-<!-- Search + Exclude stay pinned to the top of the viewport while the list scrolls.
-     They live outside .filter-controls so the sticky range is the whole event list. -->
-<div class="filter-search-sentinel" bind:this={searchSentinel} aria-hidden="true"></div>
-<div class="filter-search-bar" class:filter-search-bar--stuck={searchStuck}>
+<!-- Fixed to the viewport: bottom-right above Top on desktop, bottom-center on phones. -->
+<div class="filter-search-bar" bind:this={searchBarEl} style:--keyboard-offset="{keyboardOffset}px">
   <div class="filter-row-pair">
     <div class="filter-row filter-row--stacked">
       <span class="filter-label">{'Search Events or Hosts'}</span>
@@ -196,46 +213,61 @@
 </div>
 
 <style>
-  .filter-search-sentinel {
-    height: 1px;
-    margin-bottom: -1px;
-    pointer-events: none;
-  }
-
-  /* Pins under the viewport top for the whole event list. Padding (not margin)
-     keeps the background opaque and stops the input margin from collapsing out. */
+  /* Desktop: a compact panel in the screen's bottom-right, just above the
+     Top button (itself fixed at bottom/right 2rem, about 1.6rem tall). */
   .filter-search-bar {
-    position: sticky;
-    top: 0;
-    z-index: 2;
+    position: fixed;
+    z-index: 20;
+    right: 2rem;
+    bottom: calc(4.5rem + var(--keyboard-offset, 0px));
+    width: min(18rem, calc(100vw - 4rem));
+    padding: var(--space-xs);
     background: var(--bg);
-    padding-top: 0.5rem;
-    padding-bottom: var(--space-xs);
-    border-bottom: 1px solid transparent;
-  }
-
-  .filter-search-bar--stuck {
-    border-bottom-color: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
   }
 
-  /* Labels stay for the resting layout. Once the bar is pinned, the inputs
-     already have accessible names, and dropping the labels keeps the bar short
-     enough that it does not cover the event being read. */
-  .filter-search-bar--stuck :global(.filter-label) {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+  .filter-search-bar :global(.filter-row-pair) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-xs);
   }
 
   .filter-search-bar :global(.search-input) {
     max-width: none;
     margin-bottom: 0;
+  }
+
+  /* Room so the footer and the last event can scroll clear of the panel.
+     4.5rem matches the panel's desktop offset above Top. */
+  :global(body.events-page) {
+    padding-bottom: calc(var(--events-search-bar-height, 6rem) + 4.5rem + var(--space-xs));
+  }
+
+  /* Phones: center along the bottom with its own inset, since the screen edge
+     has no page margin to tuck a corner control into. Top moves above the bar. */
+  @media (max-width: 32rem) {
+    .filter-search-bar {
+      left: var(--space-sm);
+      right: var(--space-sm);
+      width: auto;
+      bottom: calc(
+        var(--space-sm) + env(safe-area-inset-bottom, 0px) + var(--keyboard-offset, 0px)
+      );
+    }
+
+    :global(body.events-page) {
+      padding-bottom: calc(
+        var(--events-search-bar-height, 8rem) + var(--space-sm) + env(safe-area-inset-bottom, 0px)
+      );
+    }
+
+    :global(body.events-page .back-to-top) {
+      bottom: calc(
+        var(--events-search-bar-height, 8rem) + var(--space-sm) + var(--space-xs) +
+          env(safe-area-inset-bottom, 0px)
+      );
+    }
   }
 </style>
