@@ -125,6 +125,21 @@ export function hostDisplay(event: LumaEvent): string {
   return (event.calendar_name ?? '').trim();
 }
 
+/**
+ * The calendar Luma shows as "Presented by". Personal calendars are the
+ * individual's own account, not an organizer, so they return ''.
+ */
+export function presenterDisplay(event: LumaEvent): string {
+  const name = (event.calendar_name ?? '').trim();
+  return name && name !== 'Personal' ? name : '';
+}
+
+/** Name, presented-by calendar, and individual hosts, for search and exclude. */
+export function eventMatchText(event: LumaEvent): string {
+  const hosts = (event.host_names ?? []).join(' ');
+  return `${event.name} ${presenterDisplay(event)} ${hosts}`.toLowerCase();
+}
+
 export function formatDateGroup(dateKey: string): string {
   const [y, m, d] = dateKey.split('-').map(Number);
   const date = new Date(y, m - 1, d);
@@ -249,6 +264,18 @@ export function pruneDecisions(
     out[id] = decision;
   }
   return out;
+}
+
+/**
+ * The list shows an event only when its start day, in Pacific time, is today
+ * or later. An event that started on an earlier day is treated as past, even
+ * if it has not ended yet.
+ */
+export function startsOnOrAfterToday(event: LumaEvent, now = Date.now()): boolean {
+  if (!event.start_at) return false;
+  const startKey = pacificDateKey(event.start_at);
+  const todayKey = pacificDateKey(new Date(now).toISOString());
+  return Boolean(startKey) && Boolean(todayKey) && startKey >= todayKey;
 }
 
 /** An event is still listable when it has not ended. */
