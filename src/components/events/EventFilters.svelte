@@ -56,6 +56,23 @@
   });
 
   let excludeInput = $state('');
+  let searchSentinel: HTMLElement | undefined = $state();
+  let searchStuck = $state(false);
+
+  // The sentinel sits just above the search bar. Once it leaves the viewport,
+  // the bar has taken over the top edge and should read as a pinned toolbar.
+  $effect(() => {
+    const sentinel = searchSentinel;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        searchStuck = !entry.isIntersecting;
+      },
+      { threshold: 0 },
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  });
 
   function handleExcludeKeydown(e: KeyboardEvent) {
     if (e.key === 'Enter' && excludeInput.trim()) {
@@ -145,8 +162,12 @@
       {/each}
     </div>
   </div>
+</div>
 
-  <!-- Search + Exclude (paired on desktop, stacked on mobile) -->
+<!-- Search + Exclude stay pinned to the top of the viewport while the list scrolls.
+     They live outside .filter-controls so the sticky range is the whole event list. -->
+<div class="filter-search-sentinel" bind:this={searchSentinel} aria-hidden="true"></div>
+<div class="filter-search-bar" class:filter-search-bar--stuck={searchStuck}>
   <div class="filter-row-pair">
     <div class="filter-row filter-row--stacked">
       <span class="filter-label">{'Search Events or Hosts'}</span>
@@ -173,3 +194,48 @@
     </div>
   </div>
 </div>
+
+<style>
+  .filter-search-sentinel {
+    height: 1px;
+    margin-bottom: -1px;
+    pointer-events: none;
+  }
+
+  /* Pins under the viewport top for the whole event list. Padding (not margin)
+     keeps the background opaque and stops the input margin from collapsing out. */
+  .filter-search-bar {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--bg);
+    padding-top: 0.5rem;
+    padding-bottom: var(--space-xs);
+    border-bottom: 1px solid transparent;
+  }
+
+  .filter-search-bar--stuck {
+    border-bottom-color: var(--border);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Labels stay for the resting layout. Once the bar is pinned, the inputs
+     already have accessible names, and dropping the labels keeps the bar short
+     enough that it does not cover the event being read. */
+  .filter-search-bar--stuck :global(.filter-label) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .filter-search-bar :global(.search-input) {
+    max-width: none;
+    margin-bottom: 0;
+  }
+</style>
