@@ -8,10 +8,13 @@
     selectedDays: Set<number>;
     searchQuery: string;
     excludeKeywords: string[];
+    newOnly: boolean;
+    newCount: number;
     onLocationToggle: (loc: string) => void;
     onDayToggle: (day: number) => void;
     onSearchChange: (query: string) => void;
     onAddExclude: (keyword: string) => void;
+    onNewOnlyChange: (next: boolean) => void;
   }
 
   let {
@@ -21,10 +24,13 @@
     selectedDays,
     searchQuery,
     excludeKeywords,
+    newOnly,
+    newCount,
     onLocationToggle,
     onDayToggle,
     onSearchChange,
     onAddExclude,
+    onNewOnlyChange,
   }: Props = $props();
 
   const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as const;
@@ -64,6 +70,30 @@
 </script>
 
 <div class="filter-controls">
+  <div class="filter-row">
+    <span class="filter-label">Show</span>
+    <div class="filter-pills">
+      <button
+        type="button"
+        class="pill"
+        class:pill--active={!newOnly}
+        aria-pressed={!newOnly}
+        onclick={() => onNewOnlyChange(false)}
+      >
+        All
+      </button>
+      <button
+        type="button"
+        class="pill"
+        class:pill--active={newOnly}
+        aria-pressed={newOnly}
+        onclick={() => onNewOnlyChange(true)}
+      >
+        New <span class="pill-count">({newCount})</span>
+      </button>
+    </div>
+  </div>
+
   <!-- Location filter (multi-select, collapsible) -->
   {#if allLocations.length > 0}
     <div class="filter-row">

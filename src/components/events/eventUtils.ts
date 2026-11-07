@@ -135,6 +135,27 @@ export function eventDateKey(event: LumaEvent): string {
   return event._dateKey!;
 }
 
+/** Calendar day in Pacific time, matching how event dates are grouped. */
+export function pacificDateKey(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return '';
+  const local = new Date(d.toLocaleString('en-US', { timeZone: TZ }));
+  return `${local.getFullYear()}-${String(local.getMonth() + 1).padStart(2, '0')}-${String(local.getDate()).padStart(2, '0')}`;
+}
+
+/**
+ * Listed for the first time on the same Pacific day as the latest check.
+ * The tag lasts until the next day's refresh, including a second fetch later
+ * that same day. `new_event_ids` only records the latest run, so a same-day
+ * rerun would otherwise drop the morning's additions.
+ */
+export function isNewlyListed(event: LumaEvent, updatedAt: string): boolean {
+  if (!event.first_seen_at || !updatedAt) return false;
+  const seen = pacificDateKey(event.first_seen_at);
+  const updated = pacificDateKey(updatedAt);
+  return Boolean(seen) && seen === updated;
+}
+
 /** Pre-compute derived values once per event to avoid repeated Date parsing. */
 export function enrichEvents(events: LumaEvent[]): void {
   for (const e of events) {
