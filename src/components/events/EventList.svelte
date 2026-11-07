@@ -24,6 +24,19 @@
   } from './eventUtils';
   import EventFilters from './EventFilters.svelte';
   import EventCard from './EventCard.svelte';
+  import EventSync from './EventSync.svelte';
+  import {
+    SYNC_CODE_KEY,
+    SYNC_TIME_KEY,
+    SyncError,
+    type SyncSettings,
+    canonicalJSON,
+    createSync,
+    mergeOnJoin,
+    pullSync,
+    pushSync,
+    rotateSync,
+  } from './syncUtils';
   import Popup from '../Popup.svelte';
   import '../../styles/filters.css';
 
@@ -64,6 +77,133 @@
     localStorage.setItem(`${PFX}.decisions`, JSON.stringify(decisions));
   });
 
+  // --- Optional cross-device sync (off until a sync code is created or joined) ---
+  // Last write wins. A device pulls on load and when it becomes visible, and
+  // pushes its own changes after a short pause.
+  let syncCode = $state(localStorage.getItem(SYNC_CODE_KEY) ?? '');
+  let syncedAt = $state(localStorage.getItem(SYNC_TIME_KEY) ?? '');
+  let syncStatus = $state<'idle' | 'syncing' | 'error'>('idle');
+  let syncError = $state('');
+  // The JSON this device last sent or received. Compared with the current
+  // settings so that applying remote data does not echo back as a push.
+  let lastSyncedJSON = '';
+
+  function currentSettings(): SyncSettings {
+    return {
+      excludeKeywords: [...excludeKeywords],
+      selectedLocations: [...selectedLocations],
+      selectedDays: [...selectedDays],
+      newOnly,
+      decisions,
+    };
+  }
+
+  function applySettings(s: SyncSettings) {
+    const next: SyncSettings = { ...s, decisions: pruneDecisions(s.decisions) };
+    lastSyncedJSON = canonicalJSON(next);
+    excludeKeywords = next.excludeKeywords;
+    selectedLocations = new Set(next.selectedLocations);
+    selectedDays = new Set(next.selectedDays);
+    newOnly = next.newOnly;
+    decisions = next.decisions;
+  }
+
+  function saveSyncCode(code: string, updated_at: string, json: string) {
+    syncCode = code;
+    syncedAt = updated_at;
+    lastSyncedJSON = json;
+    localStorage.setItem(SYNC_CODE_KEY, code);
+    localStorage.setItem(SYNC_TIME_KEY, updated_at);
+  }
+
+  function syncFailed(e: unknown) {
+    syncStatus = 'error';
+    syncError =
+      e instanceof SyncError && e.status === 404
+        ? 'This sync code no longer exists. Disconnect this device and join again.'
+        : 'Sync failed. Your choices are still saved on this device.';
+    console.error('Sync failed:', e);
+  }
+
+  async function syncPull() {
+    if (!syncCode) return;
+    syncStatus = 'syncing';
+    syncError = '';
+    try {
+      const remote = await pullSync(syncCode);
+      const lastSeen = localStorage.getItem(SYNC_TIME_KEY) ?? '';
+      if (!lastSeen || remote.updated_at > lastSeen) {
+        applySettings(remote.settings);
+        syncedAt = remote.updated_at;
+        localStorage.setItem(SYNC_TIME_KEY, remote.updated_at);
+      }
+      syncStatus = 'idle';
+    } catch (e) {
+      syncFailed(e);
+    }
+  }
+
+  async function syncPush(json: string) {
+    const code = syncCode;
+    if (!code) return;
+    syncStatus = 'syncing';
+    try {
+      const { updated_at } = await pushSync(code, JSON.parse(json) as SyncSettings);
+      lastSyncedJSON = json;
+      syncedAt = updated_at;
+      localStorage.setItem(SYNC_TIME_KEY, updated_at);
+      syncStatus = 'idle';
+    } catch (e) {
+      syncFailed(e);
+    }
+  }
+
+  $effect(() => {
+    const json = canonicalJSON(currentSettings());
+    if (!syncCode || json === lastSyncedJSON) return;
+    const timer = setTimeout(() => void syncPush(json), 1500);
+    return () => clearTimeout(timer);
+  });
+
+  async function onSyncCreate(): Promise<string> {
+    const settings = currentSettings();
+    const { code, updated_at } = await createSync(settings);
+    saveSyncCode(code, updated_at, canonicalJSON(settings));
+    return code;
+  }
+
+  async function onSyncJoin(code: string): Promise<void> {
+    const remote = await pullSync(code);
+    const merged = mergeOnJoin(currentSettings(), remote.settings);
+    const { updated_at } = await pushSync(code, merged);
+    applySettings(merged);
+    saveSyncCode(code, updated_at, lastSyncedJSON);
+  }
+
+  async function onSyncRotate(): Promise<string> {
+    const { code, updated_at } = await rotateSync(syncCode);
+    saveSyncCode(code, updated_at, lastSyncedJSON);
+    return code;
+  }
+
+  function onSyncDisconnect() {
+    syncCode = '';
+    syncedAt = '';
+    syncStatus = 'idle';
+    syncError = '';
+    lastSyncedJSON = '';
+    localStorage.removeItem(SYNC_CODE_KEY);
+    localStorage.removeItem(SYNC_TIME_KEY);
+  }
+
+  onMount(() => {
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') void syncPull();
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => document.removeEventListener('visibilitychange', onVisible);
+  });
+
   // --- Data fetching ---
   // The published JSON is the current Bay Area Tech + AI catalog. Show every
   // event that has not ended yet. Applied and ignored events leave this list
@@ -92,6 +232,7 @@
     } finally {
       loading = false;
     }
+    if (syncCode) void syncPull();
   });
 
   // --- Derived filter options (single-pass) ---
@@ -254,6 +395,17 @@
         <span class="event-updated"
           >Last checked: {formatUpdatedAt(updatedAt)} (Refreshes once daily)</span
         >
+        <EventSync
+          code={syncCode}
+          {syncedAt}
+          status={syncStatus}
+          error={syncError}
+          onCreate={onSyncCreate}
+          onJoin={onSyncJoin}
+          onShowCode={() => syncCode}
+          onRotate={onSyncRotate}
+          onDisconnect={onSyncDisconnect}
+        />
       </div>
     {/if}
 
@@ -404,9 +556,9 @@
     <section class="privacy-section">
       <h2 class="privacy-heading">Privacy</h2>
       <p class="privacy-desc">
-        This page runs entirely in your browser. Event data is fetched from a public source and
-        displayed directly. Applied and ignored choices stay on this device for 7 days. Nothing is
-        sent elsewhere.
+        Event data is fetched from a public source and displayed directly in your browser. Applied
+        and ignored choices stay on this device for 7 days. Your choices are sent to this site only
+        if you turn on Sync with a code, and only to the devices that have that code.
       </p>
       <a href="/events/privacy" class="privacy-link">Full privacy policy →</a>
     </section>
