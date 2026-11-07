@@ -1,0 +1,389 @@
+---
+import { lumaAutofiller as project } from '../../data/lumaAutofiller';
+
+const { media, link } = project;
+
+const mockFields = [
+  { label: 'Name', value: 'Ada Lovelace', source: 'profile', sourceLabel: 'Profile' },
+  {
+    label: 'What are you working on?',
+    value: 'A browser tool that…',
+    source: 'saved',
+    sourceLabel: 'Saved answer',
+  },
+  {
+    label: 'Why do you want to attend?',
+    value: 'I want to meet people building…',
+    source: 'ai',
+    sourceLabel: 'AI',
+  },
+  { label: 'Dietary restrictions', value: '', source: 'empty', sourceLabel: 'Unanswered' },
+];
+---
+
+<section class="showcase" id="luma-autofiller" aria-labelledby="luma-autofiller-title">
+  <p class="section-label">Featured tool</p>
+  <div class="showcase-title-row">
+    <h2 id="luma-autofiller-title" class="showcase-title">{project.name}</h2>
+    <span class="showcase-status">{project.status}</span>
+  </div>
+  <p class="showcase-tagline">{project.tagline}</p>
+  <p class="showcase-pitch">{project.pitch}</p>
+
+  <figure class="showcase-media">
+    {
+      media ? (
+        media.kind === 'video' ? (
+          <video src={media.src} aria-label={media.alt} autoplay muted loop playsinline />
+        ) : (
+          <img src={media.src} alt={media.alt} loading="lazy" decoding="async" />
+        )
+      ) : (
+        <div class="mock" aria-hidden="true">
+          <div class="mock-bar">
+            <span class="mock-dot" />
+            <span class="mock-dot" />
+            <span class="mock-dot" />
+            <span class="mock-url">lu.ma · Registration</span>
+          </div>
+          <div class="mock-form">
+            {mockFields.map((f) => (
+              <div class={`mock-field mock-field--${f.source}`}>
+                <div class="mock-field-head">
+                  <span class="mock-label">{f.label}</span>
+                  <span class="mock-source">{f.sourceLabel}</span>
+                </div>
+                <div class="mock-input">{f.value}</div>
+              </div>
+            ))}
+            <div class="mock-submit-row">
+              <span class="mock-submit">Submit</span>
+              <span class="mock-hint">You click this</span>
+            </div>
+          </div>
+        </div>
+      )
+    }
+    {!media && <figcaption class="showcase-caption">Illustration. Demo coming soon.</figcaption>}
+  </figure>
+
+  <h3 class="section-label showcase-subhead">How it works</h3>
+  <ol class="showcase-steps">
+    {
+      project.steps.map((s) => (
+        <li class="showcase-step">
+          <span class="showcase-step-title">{s.title}</span>
+          <span class="showcase-step-body">{s.body}</span>
+        </li>
+      ))
+    }
+  </ol>
+
+  <h3 class="section-label showcase-subhead">Principles</h3>
+  <ul class="showcase-principles">
+    {
+      project.principles.map((p) => (
+        <li class="showcase-principle">
+          <span class="showcase-principle-title">{p.title}</span>
+          <span class="showcase-principle-body">{p.body}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="showcase-cta-row">
+    {
+      link ? (
+        <a href={link.href} class="showcase-cta" target="_blank" rel="noopener">
+          {link.label}
+        </a>
+      ) : (
+        <span class="showcase-cta showcase-cta--pending">Chrome extension · coming soon</span>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .showcase {
+    border-top: 1px solid var(--border);
+    padding-top: var(--space-lg);
+    margin-top: var(--space-xl);
+  }
+
+  .showcase-title-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: var(--space-xs);
+  }
+
+  .showcase-title {
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--color-rose);
+    margin: 0;
+  }
+
+  .showcase-status {
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--text-light);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.1em 0.4em;
+  }
+
+  .showcase-tagline {
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: var(--space-xs);
+  }
+
+  .showcase-pitch {
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: var(--space-md);
+  }
+
+  /* Media slot */
+  .showcase-media {
+    margin: 0 0 var(--space-md);
+  }
+
+  .showcase-media img,
+  .showcase-media video {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+
+  .showcase-caption {
+    font-size: var(--fs-xs);
+    line-height: 1.5;
+    color: var(--text-light);
+    text-align: center;
+    margin-top: var(--space-xs);
+  }
+
+  /* Placeholder mock-up of a filled registration form */
+  .mock {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: rgba(255, 255, 255, 0.55);
+    overflow: hidden;
+  }
+
+  .mock-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mock-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: var(--radius-full);
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  .mock-url {
+    font-size: var(--fs-xs);
+    line-height: 1.5;
+    color: var(--gray-subtle);
+    margin-left: 0.5rem;
+  }
+
+  .mock-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+  }
+
+  .mock-field {
+    --source: var(--gray-subtle);
+    border-left: 3px solid var(--source);
+    padding-left: var(--space-xs);
+  }
+
+  .mock-field--profile {
+    --source: var(--color-ds);
+  }
+
+  .mock-field--saved {
+    --source: var(--color-visual);
+  }
+
+  .mock-field--ai {
+    --source: var(--color-pm);
+  }
+
+  .mock-field-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-xs);
+    margin-bottom: 0.25rem;
+  }
+
+  .mock-label {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  .mock-source {
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--source);
+    border: 1px solid currentColor;
+    border-radius: var(--radius-sm);
+    padding: 0 0.4em;
+    white-space: nowrap;
+  }
+
+  .mock-input {
+    font-size: var(--fs-xs);
+    line-height: 1.5;
+    color: var(--text-light);
+    min-height: 2em;
+    padding: 0.25em 0.6em;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--bg);
+  }
+
+  .mock-field--empty .mock-input {
+    border-style: dashed;
+    background: transparent;
+  }
+
+  .mock-submit-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-top: 0.25rem;
+  }
+
+  .mock-submit {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    line-height: 1.5;
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value -- approved inverse text on the rose surface */
+    color: #fff;
+    background: var(--color-rose);
+    border-radius: var(--radius-md);
+    padding: 0.3em 0.9em;
+  }
+
+  .mock-hint {
+    font-size: var(--fs-xs);
+    line-height: 1.5;
+    color: var(--text-light);
+  }
+
+  /* Steps and principles */
+  .showcase-subhead {
+    margin: var(--space-md) 0 var(--space-xs);
+  }
+
+  .showcase-steps {
+    list-style: none;
+    counter-reset: step;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .showcase-step {
+    counter-increment: step;
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .showcase-step::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0.1em;
+    width: 1.4rem;
+    height: 1.4rem;
+    display: grid;
+    place-items: center;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    color: var(--color-rose);
+    border: 1px solid var(--color-rose);
+    border-radius: var(--radius-full);
+  }
+
+  .showcase-step-title,
+  .showcase-principle-title {
+    display: block;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .showcase-step-body,
+  .showcase-principle-body {
+    display: block;
+    font-size: var(--fs-xs);
+    line-height: 1.5;
+    color: var(--text-light);
+  }
+
+  .showcase-principles {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-sm);
+  }
+
+  .showcase-principle {
+    border-left: 2px solid var(--border);
+    padding-left: var(--space-xs);
+  }
+
+  .showcase-cta-row {
+    margin-top: var(--space-md);
+  }
+
+  .showcase-cta {
+    display: inline-flex;
+    align-items: center;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    line-height: 1.5;
+    padding: 0.5em 1em;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value -- approved inverse text on the rose surface */
+    color: #fff;
+    background: var(--color-rose);
+    transition: opacity 0.2s ease;
+  }
+
+  .showcase-cta:hover {
+    opacity: 0.85;
+  }
+
+  .showcase-cta--pending {
+    color: var(--text-light);
+    background: transparent;
+    border: 1px dashed var(--border);
+  }
+
+  @media (max-width: 32rem) {
+    .showcase-principles {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>
