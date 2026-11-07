@@ -13,12 +13,14 @@
     event: LumaEvent;
     /** Set when this card is in Handled. Absent on the upcoming list. */
     decision?: EventDecision;
+    /** First listed on the same Pacific day as the latest check. */
+    isNew?: boolean;
     onApplied: () => void;
     onIgnore: () => void;
     onRestore: () => void;
   }
 
-  let { event, decision, onApplied, onIgnore, onRestore }: Props = $props();
+  let { event, decision, isNew = false, onApplied, onIgnore, onRestore }: Props = $props();
   let decisionLabel = $derived(
     decision?.status === 'applied' ? 'Applied' : decision ? 'Ignored' : '',
   );
@@ -28,9 +30,16 @@
 
 <li class="event-card list-row" id="event-{event.api_id}">
   <div class="event-card-header">
-    <a href={event.url || '#'} target="_blank" rel="noopener noreferrer" class="event-name">
-      {event.name}
-    </a>
+    <div class="event-name-row">
+      {#if isNew}
+        <span class="event-new"
+          ><span class="sr-only">New</span><span aria-hidden="true">新</span></span
+        >
+      {/if}
+      <a href={event.url || '#'} target="_blank" rel="noopener noreferrer" class="event-name">
+        {event.name}
+      </a>
+    </div>
     <span
       class="event-price"
       class:event-price--free={event.is_free}
@@ -149,6 +158,24 @@
     align-items: flex-start;
     gap: var(--space-sm);
     margin-bottom: 0.3rem;
+  }
+
+  .event-name-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  .event-new {
+    flex-shrink: 0;
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--color-visual);
+    border: 1px solid var(--color-visual);
+    border-radius: var(--radius-sm);
+    padding: 0 0.3em;
   }
 
   .event-name {

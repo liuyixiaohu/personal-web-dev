@@ -20,6 +20,7 @@
     parseDecisions,
     pruneDecisions,
     isUpcoming,
+    isNewlyListed,
   } from './eventUtils';
   import EventFilters from './EventFilters.svelte';
   import EventCard from './EventCard.svelte';
@@ -39,6 +40,7 @@
   let selectedDays = $state<Set<number>>(new Set(loadPref<number[]>(`${PFX}.days`, [])));
   let searchQuery = $state<string>('');
   let excludeKeywords = $state<string[]>(loadPref<string[]>(`${PFX}.exclude`, []));
+  let newOnly = $state(loadPref<boolean>(`${PFX}.newOnly`, false));
   let mode = $state<EventListMode>('upcoming');
   let handledReason = $state<'all' | EventDecisionStatus>('all');
   let decisions = $state<Record<string, EventDecision>>(
@@ -53,6 +55,7 @@
     localStorage.setItem(`${PFX}.locations`, JSON.stringify([...selectedLocations]));
     localStorage.setItem(`${PFX}.days`, JSON.stringify([...selectedDays]));
     localStorage.setItem(`${PFX}.exclude`, JSON.stringify(excludeKeywords));
+    localStorage.setItem(`${PFX}.newOnly`, JSON.stringify(newOnly));
 
     const pruned = pruneDecisions(decisions);
     if (Object.keys(pruned).length !== Object.keys(decisions).length) {
@@ -123,6 +126,7 @@
     return { applied, ignored };
   });
 
+  let newCount = $derived(activeEvents.filter((e) => isNewlyListed(e, updatedAt)).length);
   let locationIndex = $derived(buildLocationIndex(activeEvents));
   let allLocations = $derived.by(() => {
     const base = locationIndex.sorted;
@@ -139,6 +143,7 @@
     const q = searchQuery.toLowerCase().trim();
 
     const result = activeEvents.filter((e) => {
+      if (newOnly && !isNewlyListed(e, updatedAt)) return false;
       if (selectedLocations.size > 0 && !selectedLocations.has(e._strippedLocation!)) return false;
       if (selectedDays.size > 0 && !selectedDays.has(e._dayOfWeek!)) return false;
       const hostNames = e.host_names ?? [];
@@ -332,6 +337,8 @@
       {selectedDays}
       {searchQuery}
       {excludeKeywords}
+      {newOnly}
+      {newCount}
       onLocationToggle={toggleLocation}
       onDayToggle={toggleDay}
       onSearchChange={(q) => {
@@ -339,6 +346,9 @@
       }}
       onAddExclude={(kw) => {
         excludeKeywords = [...excludeKeywords, kw.toLowerCase().trim()];
+      }}
+      onNewOnlyChange={(next) => {
+        newOnly = next;
       }}
     />
 
@@ -396,6 +406,7 @@
         {#each group.events as event (event.api_id)}
           <EventCard
             {event}
+            isNew={isNewlyListed(event, updatedAt)}
             decision={mode === 'handled' ? decisions[event.api_id] : undefined}
             onApplied={() => remember(event, 'applied')}
             onIgnore={() => remember(event, 'ignored')}
