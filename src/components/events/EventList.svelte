@@ -19,7 +19,8 @@
     snapshotEvent,
     parseDecisions,
     pruneDecisions,
-    isUpcoming,
+    eventMatchText,
+    startsOnOrAfterToday,
     isNewlyListed,
   } from './eventUtils';
   import EventFilters from './EventFilters.svelte';
@@ -205,9 +206,9 @@
   });
 
   // --- Data fetching ---
-  // The published JSON is the current Bay Area Tech + AI catalog. Show every
-  // event that has not ended yet. Applied and ignored events leave this list
-  // and stay under Handled for 7 days.
+  // Show events whose Pacific start day is today or later. Applied and ignored
+  // events leave Upcoming. They stay under Handled only while that start day
+  // has not passed, and the record is deleted after 7 days.
   onMount(async () => {
     try {
       const resp = await fetch(DATA_URL);
@@ -218,7 +219,7 @@
         !BLOCKED_CALENDARS.has(e.calendar_name) &&
         !BLOCKED_NAME_KEYWORDS.some((kw) => e.name.includes(kw));
 
-      const filtered = data.events.filter((e) => notBlocked(e) && isUpcoming(e));
+      const filtered = data.events.filter((e) => notBlocked(e) && startsOnOrAfterToday(e));
 
       enrichEvents(filtered);
       events = filtered;
@@ -244,6 +245,9 @@
     const list: LumaEvent[] = [];
     for (const decision of Object.values(decisions)) {
       if (handledReason !== 'all' && decision.status !== handledReason) continue;
+      // A handled event leaves the list once its start day is before today, even
+      // if the 7-day record is still kept on this device.
+      if (!startsOnOrAfterToday(decision.event)) continue;
       const current = live.get(decision.event.api_id);
       if (current) {
         list.push(current);
@@ -260,6 +264,7 @@
     let applied = 0;
     let ignored = 0;
     for (const decision of Object.values(decisions)) {
+      if (!startsOnOrAfterToday(decision.event)) continue;
       if (decision.status === 'applied') applied += 1;
       else ignored += 1;
     }
@@ -286,22 +291,10 @@
       if (newOnly && !isNewlyListed(e, updatedAt)) return false;
       if (selectedLocations.size > 0 && !selectedLocations.has(e._strippedLocation!)) return false;
       if (selectedDays.size > 0 && !selectedDays.has(e._dayOfWeek!)) return false;
-      const hostNames = e.host_names ?? [];
-      if (
-        q &&
-        !e.name.toLowerCase().includes(q) &&
-        !hostNames.some((h) => h.toLowerCase().includes(q))
-      )
+      const haystack = eventMatchText(e);
+      if (q && !haystack.includes(q)) return false;
+      if (excludeKeywords.length > 0 && excludeKeywords.some((kw) => haystack.includes(kw))) {
         return false;
-      if (excludeKeywords.length > 0) {
-        const nameLower = e.name.toLowerCase();
-        const hostsLower = hostNames.map((h) => h.toLowerCase());
-        if (
-          excludeKeywords.some(
-            (kw) => nameLower.includes(kw) || hostsLower.some((h) => h.includes(kw)),
-          )
-        )
-          return false;
       }
       return true;
     });
@@ -469,7 +462,8 @@
         </button>
       </div>
       <p class="event-handled-note">
-        Applied and ignored events stay here for 7 days, then they are deleted.
+        Applied and ignored events stay here through today. Events that started on an earlier day
+        are hidden, and the record is deleted after 7 days.
       </p>
     {/if}
 
@@ -537,7 +531,7 @@
     </div>
 
     {#if mode === 'handled' && Object.keys(decisions).length === 0}
-      <p class="event-status">Nothing applied or ignored in the last 7 days.</p>
+      <p class="event-status">Nothing applied or ignored for today or later.</p>
     {:else if mode === 'upcoming' && upcomingEvents.length === 0}
       <p class="event-status">Everything in this check is in Handled.</p>
     {:else if filteredEvents.length === 0}

@@ -187,11 +187,11 @@
 <div class="filter-search-bar" bind:this={searchBarEl} style:--keyboard-offset="{keyboardOffset}px">
   <div class="filter-row-pair">
     <div class="filter-row filter-row--stacked">
-      <span class="filter-label">{'Search Events or Hosts'}</span>
+      <span class="filter-label">{'Search events, hosts, or presenters'}</span>
       <input
         class="search-input"
         type="text"
-        aria-label="Search events or hosts"
+        aria-label="Search events, hosts, or presenters"
         placeholder={'e.g. hackathon, google, etc'}
         value={searchQuery}
         oninput={(e) => onSearchChange((e.target as HTMLInputElement).value)}

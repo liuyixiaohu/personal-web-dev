@@ -5,6 +5,7 @@
     formatUpdatedAt,
     hostDisplay,
     locationDisplay,
+    presenterDisplay,
     type EventDecision,
     type LumaEvent,
   } from './eventUtils';
@@ -25,10 +26,39 @@
     decision?.status === 'applied' ? 'Applied' : decision ? 'Ignored' : '',
   );
   let decisionWhen = $derived(decision ? formatUpdatedAt(decision.at) : '');
-  let hosts = $derived(hostDisplay(event));
+  // "Presented by" is the calendar Luma shows, which reads better than the long
+  // host list. Fall back to hosts when there is no real calendar (e.g. Personal).
+  let presenter = $derived(presenterDisplay(event));
+  let hosts = $derived(presenter ? '' : hostDisplay(event));
 </script>
 
 <li class="event-card list-row" id="event-{event.api_id}">
+  <div class="event-actions">
+    {#if decision}
+      <span class="event-decision">
+        {decisionLabel}{#if decisionWhen}&nbsp;· {decisionWhen}{/if}
+      </span>
+      <button type="button" class="event-action" onclick={onRestore}>Restore</button>
+    {:else}
+      <button
+        type="button"
+        class="event-action"
+        onclick={onApplied}
+        title="Mark as applied and hide it from the list"
+      >
+        Applied
+      </button>
+      <button
+        type="button"
+        class="event-action"
+        onclick={onIgnore}
+        title="Ignore this event and hide it from the list"
+      >
+        Ignore
+      </button>
+    {/if}
+  </div>
+
   <div class="event-card-header">
     <div class="event-name-row">
       {#if isNew}
@@ -87,7 +117,24 @@
       >
     {/if}
 
-    {#if hosts}
+    {#if presenter}
+      <span class="event-hosts"
+        ><svg
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle
+            cx="12"
+            cy="7"
+            r="4"
+          /></svg
+        >Presented by {presenter}</span
+      >
+    {:else if hosts}
       <span class="event-hosts"
         ><svg
           class="icon"
@@ -121,32 +168,6 @@
           /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><circle cx="9" cy="7" r="4" /></svg
         >{event.guest_count} guests</span
       >
-    {/if}
-  </div>
-
-  <div class="event-actions">
-    {#if decision}
-      <span class="event-decision">
-        {decisionLabel}{#if decisionWhen}&nbsp;· {decisionWhen}{/if}
-      </span>
-      <button type="button" class="event-action" onclick={onRestore}>Restore</button>
-    {:else}
-      <button
-        type="button"
-        class="event-action"
-        onclick={onApplied}
-        title="Mark as applied and hide it from the list"
-      >
-        Applied
-      </button>
-      <button
-        type="button"
-        class="event-action"
-        onclick={onIgnore}
-        title="Ignore this event and hide it from the list"
-      >
-        Ignore
-      </button>
     {/if}
   </div>
 </li>
@@ -245,7 +266,7 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 0.4rem;
-    margin-top: 0.45rem;
+    margin-bottom: 0.45rem;
   }
 
   .event-action {
