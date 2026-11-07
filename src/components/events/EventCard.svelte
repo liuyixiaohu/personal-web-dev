@@ -132,7 +132,7 @@
             cy="7"
             r="4"
           /></svg
-        >Presented by {presenter}</span
+        >{presenter}</span
       >
     {:else if hosts}
       <span class="event-hosts"
