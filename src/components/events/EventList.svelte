@@ -395,17 +395,24 @@
         <span class="event-updated"
           >Last checked: {formatUpdatedAt(updatedAt)} (Refreshes once daily)</span
         >
-        <EventSync
-          code={syncCode}
-          {syncedAt}
-          status={syncStatus}
-          error={syncError}
-          onCreate={onSyncCreate}
-          onJoin={onSyncJoin}
-          onShowCode={() => syncCode}
-          onRotate={onSyncRotate}
-          onDisconnect={onSyncDisconnect}
-        />
+        <p class="sync-hint">
+          {#if syncCode}
+            Your filters and handled events stay in sync across devices.
+          {:else}
+            Keep your filters and handled events on your other devices.
+          {/if}
+          <EventSync
+            code={syncCode}
+            {syncedAt}
+            status={syncStatus}
+            error={syncError}
+            onCreate={onSyncCreate}
+            onJoin={onSyncJoin}
+            onShowCode={() => syncCode}
+            onRotate={onSyncRotate}
+            onDisconnect={onSyncDisconnect}
+          />
+        </p>
       </div>
     {/if}
 
@@ -631,10 +638,17 @@
   }
 
   .event-meta-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
     font-size: var(--fs-xs);
     line-height: 1.5;
     color: var(--text-light);
     margin-bottom: var(--space-sm);
+  }
+
+  .sync-hint {
+    margin: 0;
   }
 
   .event-count {
