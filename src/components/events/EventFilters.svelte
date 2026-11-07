@@ -105,109 +105,109 @@
   }
 </script>
 
-<!-- Fixed panel: bottom-right above Top on desktop, bottom-center on phones.
-     Everything that filters the list lives here, and scrolls inside the panel
-     once the cities no longer fit. -->
-<div class="filter-panel" bind:this={searchBarEl} style:--keyboard-offset="{keyboardOffset}px">
-  <div class="filter-controls">
-    <div class="filter-row">
-      <span class="filter-label">Show</span>
-      <div class="filter-pills">
-        <button
-          type="button"
-          class="pill"
-          class:pill--active={!newOnly}
-          aria-pressed={!newOnly}
-          onclick={() => onNewOnlyChange(false)}
-        >
-          All
-        </button>
-        <button
-          type="button"
-          class="pill"
-          class:pill--active={newOnly}
-          aria-pressed={newOnly}
-          onclick={() => onNewOnlyChange(true)}
-        >
-          New <span class="pill-count">({newCount})</span>
-        </button>
-      </div>
+<div class="filter-controls">
+  <div class="filter-row">
+    <span class="filter-label">Show</span>
+    <div class="filter-pills">
+      <button
+        type="button"
+        class="pill"
+        class:pill--active={!newOnly}
+        aria-pressed={!newOnly}
+        onclick={() => onNewOnlyChange(false)}
+      >
+        All
+      </button>
+      <button
+        type="button"
+        class="pill"
+        class:pill--active={newOnly}
+        aria-pressed={newOnly}
+        onclick={() => onNewOnlyChange(true)}
+      >
+        New <span class="pill-count">({newCount})</span>
+      </button>
     </div>
+  </div>
 
-    {#if allLocations.length > 0}
-      <div class="filter-row">
-        <span class="filter-label">{'Location'}</span>
-        <div class="location-pills-wrap">
-          <div
-            class="filter-pills filter-pills--wrap"
-            class:filter-pills--collapsed={!locationExpanded}
-            bind:this={locationPillsEl}
-          >
-            {#each allLocations as loc}
-              {@const count = locationCounts.get(loc) ?? 0}
-              <button
-                class="pill"
-                class:pill--active={selectedLocations.has(loc)}
-                class:pill--empty={count === 0}
-                aria-pressed={selectedLocations.has(loc)}
-                title={count === 0 ? 'Saved filter — no matches in the current list' : undefined}
-                onclick={() => onLocationToggle(loc)}
-                >{loc} <span class="pill-count">({count})</span></button
-              >
-            {/each}
-          </div>
-          {#if locationOverflows || locationExpanded}
+  <!-- Location filter (multi-select, collapsible) -->
+  {#if allLocations.length > 0}
+    <div class="filter-row">
+      <span class="filter-label">{'Location'}</span>
+      <div class="location-pills-wrap">
+        <div
+          class="filter-pills filter-pills--wrap"
+          class:filter-pills--collapsed={!locationExpanded}
+          bind:this={locationPillsEl}
+        >
+          {#each allLocations as loc}
+            {@const count = locationCounts.get(loc) ?? 0}
             <button
-              class="show-more-btn"
-              class:show-more-btn--collapsed={!locationExpanded}
-              onclick={() => (locationExpanded = !locationExpanded)}
+              class="pill"
+              class:pill--active={selectedLocations.has(loc)}
+              class:pill--empty={count === 0}
+              aria-pressed={selectedLocations.has(loc)}
+              title={count === 0 ? 'Saved filter — no matches in the current list' : undefined}
+              onclick={() => onLocationToggle(loc)}
+              >{loc} <span class="pill-count">({count})</span></button
             >
-              {locationExpanded ? 'Less' : 'More'}
-            </button>
-          {/if}
+          {/each}
         </div>
-      </div>
-    {/if}
-
-    <div class="filter-row">
-      <span class="filter-label">{'Day'}</span>
-      <div class="filter-pills">
-        {#each DAY_LABELS as dayLabel, i}
+        {#if locationOverflows || locationExpanded}
           <button
-            class="pill"
-            class:pill--active={selectedDays.has(i)}
-            aria-pressed={selectedDays.has(i)}
-            aria-label={DAY_NAMES[i]}
-            onclick={() => onDayToggle(i)}>{dayLabel}</button
+            class="show-more-btn"
+            class:show-more-btn--collapsed={!locationExpanded}
+            onclick={() => (locationExpanded = !locationExpanded)}
           >
-        {/each}
+            {locationExpanded ? 'Less' : 'More'}
+          </button>
+        {/if}
       </div>
     </div>
+  {/if}
 
-    <div class="filter-row-pair">
-      <div class="filter-row filter-row--stacked">
-        <span class="filter-label">{'Search Events or Hosts'}</span>
-        <input
-          class="search-input"
-          type="text"
-          aria-label="Search events or hosts"
-          placeholder={'e.g. hackathon, google, etc'}
-          value={searchQuery}
-          oninput={(e) => onSearchChange((e.target as HTMLInputElement).value)}
-        />
-      </div>
+  <!-- Day-of-week filter (multi-select pills) -->
+  <div class="filter-row">
+    <span class="filter-label">{'Day'}</span>
+    <div class="filter-pills">
+      {#each DAY_LABELS as dayLabel, i}
+        <button
+          class="pill"
+          class:pill--active={selectedDays.has(i)}
+          aria-pressed={selectedDays.has(i)}
+          aria-label={DAY_NAMES[i]}
+          onclick={() => onDayToggle(i)}>{dayLabel}</button
+        >
+      {/each}
+    </div>
+  </div>
+</div>
 
-      <div class="filter-row filter-row--stacked">
-        <span class="filter-label">{'Exclude events containing...'}</span>
-        <input
-          class="search-input"
-          type="text"
-          aria-label="Exclude events containing a keyword"
-          placeholder={"in case you don't enjoy happy hour"}
-          bind:value={excludeInput}
-          onkeydown={handleExcludeKeydown}
-        />
-      </div>
+<!-- Fixed to the viewport: bottom-right above Top on desktop, bottom-center on phones. -->
+<div class="filter-search-bar" bind:this={searchBarEl} style:--keyboard-offset="{keyboardOffset}px">
+  <div class="filter-row-pair">
+    <div class="filter-row filter-row--stacked">
+      <span class="filter-label">{'Search Events or Hosts'}</span>
+      <input
+        class="search-input"
+        type="text"
+        aria-label="Search events or hosts"
+        placeholder={'e.g. hackathon, google, etc'}
+        value={searchQuery}
+        oninput={(e) => onSearchChange((e.target as HTMLInputElement).value)}
+      />
+    </div>
+
+    <div class="filter-row filter-row--stacked">
+      <span class="filter-label">{'Exclude events containing...'}</span>
+      <input
+        class="search-input"
+        type="text"
+        aria-label="Exclude events containing a keyword"
+        placeholder={"in case you don't enjoy happy hour"}
+        bind:value={excludeInput}
+        onkeydown={handleExcludeKeydown}
+      />
     </div>
   </div>
 </div>
@@ -215,29 +215,26 @@
 <style>
   /* Desktop: a compact panel in the screen's bottom-right, just above the
      Top button (itself fixed at bottom/right 2rem, about 1.6rem tall). */
-  .filter-panel {
+  .filter-search-bar {
     position: fixed;
     z-index: 20;
     right: 2rem;
     bottom: calc(4.5rem + var(--keyboard-offset, 0px));
-    width: min(22rem, calc(100vw - 4rem));
-    max-height: calc(100dvh - 6.5rem - var(--keyboard-offset, 0px));
+    width: min(18rem, calc(100vw - 4rem));
     padding: var(--space-xs);
-    overflow-y: auto;
-    overscroll-behavior: contain;
     background: var(--bg);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
   }
 
-  .filter-panel :global(.filter-row-pair) {
+  .filter-search-bar :global(.filter-row-pair) {
     flex-direction: column;
     align-items: stretch;
     gap: var(--space-xs);
   }
 
-  .filter-panel :global(.search-input) {
+  .filter-search-bar :global(.search-input) {
     max-width: none;
     margin-bottom: 0;
   }
@@ -251,13 +248,10 @@
   /* Phones: center along the bottom with its own inset, since the screen edge
      has no page margin to tuck a corner control into. Top moves above the bar. */
   @media (max-width: 32rem) {
-    .filter-panel {
+    .filter-search-bar {
       left: var(--space-sm);
       right: var(--space-sm);
       width: auto;
-      max-height: calc(
-        100dvh - var(--space-lg) - var(--keyboard-offset, 0px) - env(safe-area-inset-bottom, 0px)
-      );
       bottom: calc(
         var(--space-sm) + env(safe-area-inset-bottom, 0px) + var(--keyboard-offset, 0px)
       );
