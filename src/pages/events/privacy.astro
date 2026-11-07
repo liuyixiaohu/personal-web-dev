@@ -19,7 +19,8 @@ import '../../styles/privacy.css';
       <h2>What This Page Does</h2>
       <p>
         The Bay Area Tech and AI Events page displays the tech and AI events Luma is currently
-        listing for the Bay Area. It runs entirely in your browser.
+        listing for the Bay Area. It runs in your browser, and it can optionally sync your choices
+        between your devices (see Optional Sync below).
       </p>
     </section>
 
@@ -55,9 +56,22 @@ import '../../styles/privacy.css';
     <section class="section">
       <h2>Local Storage</h2>
       <p>
-        Your selected locations, selected days, excluded keywords, and applied or ignored events are
-        saved using the browser's local storage. Applied and ignored events are deleted after 7
-        days. This data stays on your device unless you clear it in your browser.
+        Your selected locations, selected days, New filter, excluded keywords, and applied or
+        ignored events are saved using the browser's local storage. Applied and ignored events are
+        deleted after 7 days. This data stays on your device unless you clear it in your browser.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Optional Sync</h2>
+      <p>
+        Nothing leaves your browser unless you choose to sync. If you create a sync code, this page
+        sends your selected locations, selected days, New filter, excluded keywords, and applied or
+        ignored events (with the event name, date, location, and host fields) to this site's sync
+        storage, so your other devices can read the same settings. Your sync code is stored only as
+        a one-way hash, so the site cannot read it back. Anyone who has the code can read and change
+        those settings. Disconnecting a device removes the code from that device only. Synced
+        settings are kept until you rotate or stop using the code.
       </p>
     </section>
 

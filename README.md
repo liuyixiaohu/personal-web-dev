@@ -31,8 +31,11 @@ Luma API ──► GitHub Actions (cron daily) ──► public/data/events.json
 A scheduled workflow fetches Luma's current Bay Area Tech and AI catalog
 each day, keeps `first_seen_at` for events it has already seen, and publishes
 that full current catalog. Events Luma no longer lists are left out — this is
-the live catalog, not a historical archive. The front-end reads only the
-final JSON; no runtime API calls.
+the live catalog, not a historical archive. The front-end reads the final JSON.
+
+The only runtime API is an optional sync endpoint, `functions/api/sync/`, a
+Cloudflare Pages Function backed by KV. It is used only when a visitor creates
+or joins a sync code on the events page. Codes are stored as SHA-256 hashes.
 
 ## Structure
 
