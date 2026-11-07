@@ -36,7 +36,7 @@ export const lumaAutofiller: ProjectShowcase = {
   pitch:
     'Luma event applications keep asking the same questions: who you are, what you are building, why you want to attend. Luma Autofiller is a Chrome extension that drafts those answers from your profile and a library of answers you have saved, fills the form, and shows where every answer came from.',
   media: null,
-  link: null,
+  link: { href: 'https://github.com/liuyixiaohu/luma-autofiller', label: 'View on GitHub' },
   steps: [
     {
       title: 'Open the registration page',
