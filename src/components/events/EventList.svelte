@@ -27,6 +27,13 @@
   import EventCard from './EventCard.svelte';
   import EventSync from './EventSync.svelte';
   import {
+    EMBEDDINGS_URL,
+    EMBEDDING_MODEL,
+    EMBEDDING_REVISION,
+    rankWithinDay,
+    type EmbeddingCatalog,
+  } from './intentRanking';
+  import {
     SYNC_CODE_KEY,
     SYNC_TIME_KEY,
     SyncError,
@@ -62,6 +69,85 @@
   );
 
   let excludePopupOpen = $state(false);
+  // Current intent is deliberately absent from localStorage and SyncSettings.
+  let currentIntent = $state('');
+  let intentStatus = $state<'idle' | 'loading' | 'ready' | 'fallback'>('idle');
+  let queryVector = $state.raw<number[] | undefined>(undefined);
+  let embeddingCatalog = $state.raw<EmbeddingCatalog | undefined>(undefined);
+  let catalogPromise: Promise<EmbeddingCatalog> | undefined;
+  let intentWorker: Worker | undefined;
+  let intentTimer: ReturnType<typeof setTimeout> | undefined;
+  let intentSequence = 0;
+
+  async function loadEmbeddings(): Promise<EmbeddingCatalog> {
+    catalogPromise ??= fetch(`${EMBEDDINGS_URL}?v=${encodeURIComponent(updatedAt)}`)
+      .then(async (response) => {
+        if (!response.ok) throw new Error(`Embedding data HTTP ${response.status}`);
+        const data = (await response.json()) as EmbeddingCatalog;
+        if (
+          data.model !== EMBEDDING_MODEL ||
+          data.revision !== EMBEDDING_REVISION ||
+          data.dimension !== 384
+        ) {
+          throw new Error('Embedding model does not match the published event vectors');
+        }
+        return data;
+      })
+      .catch((error) => {
+        catalogPromise = undefined;
+        throw error;
+      });
+    return catalogPromise;
+  }
+
+  $effect(() => {
+    const text = currentIntent.trim();
+    const id = ++intentSequence;
+    if (intentTimer) clearTimeout(intentTimer);
+    queryVector = undefined;
+    if (!text) {
+      intentStatus = 'idle';
+      return;
+    }
+    intentStatus = 'loading';
+    intentTimer = setTimeout(async () => {
+      try {
+        const catalog = await loadEmbeddings();
+        if (id !== intentSequence) return;
+        embeddingCatalog = catalog;
+        if (!Object.keys(catalog.items).length) {
+          intentStatus = 'fallback';
+          return;
+        }
+        intentWorker ??= new Worker(new URL('./intentWorker.ts', import.meta.url), {
+          type: 'module',
+        });
+        intentWorker.onmessage = (
+          message: MessageEvent<{ id: number; vector?: number[]; error?: string }>,
+        ) => {
+          if (message.data.id !== intentSequence) return;
+          if (message.data.vector?.length === catalog.dimension) {
+            queryVector = message.data.vector;
+            intentStatus = 'ready';
+          } else {
+            intentStatus = 'fallback';
+          }
+        };
+        intentWorker.onerror = () => {
+          if (id === intentSequence) intentStatus = 'fallback';
+        };
+        intentWorker.postMessage({ id, text });
+      } catch (error) {
+        if (id === intentSequence) intentStatus = 'fallback';
+        console.error('Intent similarity unavailable:', error);
+      }
+    }, 500);
+  });
+
+  onMount(() => () => {
+    if (intentTimer) clearTimeout(intentTimer);
+    intentWorker?.terminate();
+  });
 
   // --- Persist filter state and decisions to localStorage ---
   $effect(() => {
@@ -316,7 +402,11 @@
         groups[groups.length - 1].events.push(e);
       }
     }
-    return groups;
+    if (!currentIntent.trim()) return groups;
+    return groups.map((group) => ({
+      date: group.date,
+      events: rankWithinDay(group.events, currentIntent, queryVector, embeddingCatalog),
+    }));
   });
 
   // --- Filter callbacks ---
@@ -490,6 +580,30 @@
       }}
     />
 
+    <div class="intent-control">
+      <label for="event-current-intent">What kind of event are you looking for today?</label>
+      <div class="intent-input-row">
+        <input
+          id="event-current-intent"
+          type="text"
+          maxlength="240"
+          placeholder="e.g. Hands-on AI workshops for beginners"
+          autocomplete="off"
+          bind:value={currentIntent}
+        />
+        {#if currentIntent}
+          <button type="button" onclick={() => (currentIntent = '')}>Clear</button>
+        {/if}
+      </div>
+      <p class="intent-note">
+        Only for this visit. Events stay grouped by date.
+        {#if intentStatus === 'loading'}
+          Matching your intent…{/if}
+        {#if intentStatus === 'fallback'}
+          Similarity is unavailable; using available words.{/if}
+      </p>
+    </div>
+
     {#if isStale}
       <p class="event-stale">Data may be stale. Last update was over 48 hours ago.</p>
     {/if}
@@ -559,7 +673,8 @@
       <p class="privacy-desc">
         Event data is fetched from a public source and displayed directly in your browser. Applied
         and ignored choices stay on this device for 7 days. Your choices are sent to this site only
-        if you turn on Sync with a code, and only to the devices that have that code.
+        if you turn on Sync with a code, and only to the devices that have that code. Current intent
+        stays in your browser for this visit.
       </p>
       <a href="/events/privacy" class="privacy-link">Full privacy policy →</a>
     </section>
@@ -567,6 +682,48 @@
 </div>
 
 <style>
+  .intent-control {
+    margin: var(--space-sm) 0;
+  }
+
+  .intent-control label {
+    display: block;
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+  }
+
+  .intent-input-row {
+    display: flex;
+    gap: var(--space-xs);
+  }
+
+  .intent-input-row input {
+    width: 100%;
+    min-width: 0;
+    padding: var(--space-xs);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    color: var(--text);
+    font: inherit;
+  }
+
+  .intent-input-row button {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    color: var(--text);
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .intent-note {
+    margin: var(--space-xs) 0 0;
+    color: var(--text-light);
+    font-size: var(--fs-xs);
+  }
+
   .event-header {
     margin-bottom: var(--space-sm);
   }

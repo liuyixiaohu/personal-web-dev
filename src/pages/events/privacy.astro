@@ -12,7 +12,7 @@ import '../../styles/privacy.css';
 
     <header class="privacy-header">
       <h1>Privacy Policy</h1>
-      <p class="privacy-updated">Last updated: November 6, 2026</p>
+      <p class="privacy-updated">Last updated: November 8, 2026</p>
     </header>
 
     <section class="section">
@@ -32,6 +32,9 @@ import '../../styles/privacy.css';
       </p>
       <ul class="privacy-list">
         <li>Event data is fetched from this website's public data files</li>
+        <li>
+          When you use Current intent, your browser downloads a matching model from Hugging Face
+        </li>
         <li>No cookies set by this page</li>
       </ul>
       <p>
@@ -54,6 +57,15 @@ import '../../styles/privacy.css';
     </section>
 
     <section class="section">
+      <h2>Current Intent</h2>
+      <p>
+        Your Current intent text is matched in your browser. It is not saved to local storage, sent
+        to this site, or included in optional sync. Your browser downloads the matching model only
+        when you use this feature; that request does not include your text.
+      </p>
+    </section>
+
+    <section class="section">
       <h2>Local Storage</h2>
       <p>
         Your selected locations, selected days, New filter, excluded keywords, and applied or
@@ -65,13 +77,13 @@ import '../../styles/privacy.css';
     <section class="section">
       <h2>Optional Sync</h2>
       <p>
-        Nothing leaves your browser unless you choose to sync. If you create a sync code, this page
-        sends your selected locations, selected days, New filter, excluded keywords, and applied or
-        ignored events (with the event name, date, location, and host fields) to this site's sync
-        storage, so your other devices can read the same settings. Your sync code is stored only as
-        a one-way hash, so the site cannot read it back. Anyone who has the code can read and change
-        those settings. Disconnecting a device removes the code from that device only. Synced
-        settings are kept until you rotate or stop using the code.
+        Your filter and handled-event choices leave your browser only if you choose to sync. If you
+        create a sync code, this page sends your selected locations, selected days, New filter,
+        excluded keywords, and applied or ignored events (with the event name, date, location, and
+        host fields) to this site's sync storage, so your other devices can read the same settings.
+        Your sync code is stored only as a one-way hash, so the site cannot read it back. Anyone who
+        has the code can read and change those settings. Disconnecting a device removes the code
+        from that device only. Synced settings are kept until you rotate or stop using the code.
       </p>
     </section>
 

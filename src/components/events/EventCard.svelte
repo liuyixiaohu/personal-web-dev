@@ -80,6 +80,10 @@
     </span>
   </div>
 
+  {#if event.summary}
+    <p class="event-summary">{event.summary}</p>
+  {/if}
+
   <div class="event-card-details">
     <span class="event-date"
       ><svg
@@ -173,6 +177,12 @@
 </li>
 
 <style>
+  .event-summary {
+    margin: 0 0 var(--space-xs);
+    color: var(--text);
+    line-height: 1.5;
+  }
+
   .event-card-header {
     display: flex;
     justify-content: space-between;
