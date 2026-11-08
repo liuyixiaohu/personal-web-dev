@@ -76,7 +76,7 @@ def fetch_detail(event: dict) -> tuple[str, str] | None:
     return None
 
 
-def generate_batch(items: list[dict], key: str) -> dict[str, str | None]:
+def request_batch(items: list[dict], key: str) -> dict[str, str | None]:
     payload = [
         {"id": item["api_id"], "title": item["name"], "description": item["description"]}
         for item in items
@@ -106,14 +106,30 @@ def generate_batch(items: list[dict], key: str) -> dict[str, str | None]:
             time.sleep(min(30, 2 ** attempt * 3))
             continue
         response.raise_for_status()
-        parts = response.json()["candidates"][0]["content"]["parts"]
-        generated = json.loads("".join(part.get("text", "") for part in parts))
+        try:
+            parts = response.json()["candidates"][0]["content"]["parts"]
+        except (KeyError, IndexError, TypeError):
+            print(f"  Gemini returned no content for {len(items)} event(s)")
+            return {}
+        try:
+            generated = json.loads("".join(part.get("text", "") for part in parts))
+        except (ValueError, TypeError):
+            print(f"  Gemini returned invalid JSON for {len(items)} event(s)")
+            return {}
         if not isinstance(generated, list):
-            raise ValueError("Gemini summary response was not a JSON array")
+            print(f"  Gemini returned a non-array response for {len(items)} event(s)")
+            return {}
         expected = {item["api_id"] for item in items}
         result = {}
         for row in generated:
-            if not isinstance(row, dict) or row.get("id") not in expected:
+            if not isinstance(row, dict) or "summary" not in row:
+                continue
+            aid = row.get("id")
+            # A single-event retry cannot mix up two events, even if the model
+            # forgets or rewrites that one ID.
+            if aid not in expected and len(items) == 1 and len(generated) == 1:
+                aid = items[0]["api_id"]
+            if aid not in expected:
                 continue
             summary = row.get("summary")
             if isinstance(summary, str):
@@ -122,11 +138,22 @@ def generate_batch(items: list[dict], key: str) -> dict[str, str | None]:
                     summary = None
             else:
                 summary = None
-            result[row["id"]] = summary
-        if set(result) != expected:
-            raise ValueError("Gemini summary response omitted event ids")
+            result[aid] = summary
         return result
     raise RuntimeError("Gemini summary request failed after retries")
+
+
+def generate_batch(items: list[dict], key: str) -> dict[str, str | None]:
+    result = request_batch(items, key)
+    missing = [item for item in items if item["api_id"] not in result]
+    if missing and len(items) > 1:
+        print(f"  Retrying {len(missing)} omitted summary ID(s) individually")
+        for item in missing:
+            result.update(request_batch([item], key))
+    remaining = [item["api_id"] for item in items if item["api_id"] not in result]
+    if remaining:
+        print(f"  Summary still unavailable for {', '.join(remaining)}; retry next run")
+    return result
 
 
 def main() -> None:
@@ -168,18 +195,26 @@ def main() -> None:
         else:
             to_summarize.append({**event, "description": description, "digest": digest})
 
+    events_by_id = {event["api_id"]: event for event in catalog["events"]}
+    generated_count = 0
     for start in range(0, len(to_summarize), 8):
         batch = to_summarize[start : start + 8]
         generated = generate_batch(batch, key)
         for item in batch:
-            event = next(e for e in catalog["events"] if e["api_id"] == item["api_id"])
+            if item["api_id"] not in generated:
+                continue  # Keep this event due so the next run can retry it.
+            event = events_by_id[item["api_id"]]
             event["summary"] = generated[item["api_id"]]
             event["summary_source_hash"] = item["digest"]
             event["summary_checked_at"] = now_iso
+            generated_count += 1
+
+    if to_summarize and generated_count == 0:
+        raise RuntimeError("Gemini returned no usable summaries for any event")
 
     with EVENTS_FILE.open("w", encoding="utf-8") as handle:
         json.dump(catalog, handle, ensure_ascii=False, indent=2)
-    print(f"Checked {len(fetched)} details; generated {len(to_summarize)} summaries")
+    print(f"Checked {len(fetched)} details; processed {generated_count} summaries")
 
 
 if __name__ == "__main__":
