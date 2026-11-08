@@ -20,6 +20,9 @@ self.onmessage = async (message: MessageEvent<{ id: number; text: string }>) => 
     self.postMessage({ id, vector: Array.from(result.data) });
   } catch (error) {
     extractorPromise = undefined;
-    self.postMessage({ id, error: error instanceof Error ? error.message : 'Embedding failed' });
+    self.postMessage({
+      id,
+      error: error instanceof Error ? `${error.name}: ${error.message}` : 'Embedding failed',
+    });
   }
 };
