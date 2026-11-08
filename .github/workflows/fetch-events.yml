@@ -40,15 +40,25 @@ jobs:
       - name: Merge events
         run: python scripts/merge_events.py
 
+      - name: Summarize event details
+        run: python scripts/enrich_event_summaries.py
+        env:
+          LUMA_API_URL: ${{ secrets.LUMA_API_URL }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
           node-version: '22'
           cache: 'npm'
 
-      - name: Validate generated data
+      - name: Install Node dependencies and generate summary vectors
         run: |
           npm ci
+          node scripts/generate-event-embeddings.mjs
+
+      - name: Validate generated data
+        run: |
           npm run test:event-data
           npm run build
 
@@ -59,7 +69,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/data/events.json data/seen_events.json
+          git add public/data/events.json public/data/event-embeddings.json data/seen_events.json
           if git diff --cached --quiet; then
             echo "No changes to commit"
             echo "changed=false" >> "$GITHUB_OUTPUT"

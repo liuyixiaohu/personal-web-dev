@@ -16,6 +16,7 @@ export interface LumaEvent {
   price_currency: string | null;
   categories: string[];
   first_seen_at?: string;
+  summary?: string | null;
   // Pre-computed (set by enrichEvents)
   _startMs?: number;
   _dayOfWeek?: number; // 0=Sun..6=Sat, in LA timezone
@@ -231,6 +232,7 @@ export function snapshotEvent(event: LumaEvent): LumaEvent {
     price_currency: event.price_currency ?? null,
     categories: event.categories ?? [],
     first_seen_at: event.first_seen_at,
+    summary: event.summary,
   };
 }
 

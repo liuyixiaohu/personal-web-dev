@@ -3,7 +3,7 @@
 Reads:
   - data/luma_events.json  (today's raw fetch — in-CI intermediate, gitignored)
   - data/seen_events.json  (committed state: api_id -> first_seen_at / end_at)
-  - public/data/events.json  (yesterday's output, only to carry previous_updated_at)
+  - public/data/events.json  (yesterday's output and cached summaries)
 
 Writes:
   - public/data/events.json  (the full current Luma catalog, not only net-new)
@@ -42,6 +42,7 @@ FRONTEND_FIELDS = {
     "is_free", "price_cents", "price_currency", "categories",
     "first_seen_at",
     "host_names",
+    "summary", "summary_source_hash", "summary_checked_at",
 }
 
 
@@ -72,7 +73,7 @@ def main():
 
     # previous_updated_at is carried forward so a later run can still tell
     # which events were first seen on the previous check.
-    _, prev_updated_at = load_old_events(OUTPUT_FILE)
+    old_map, prev_updated_at = load_old_events(OUTPUT_FILE)
 
     seen_map, last_pruned_at = load_seen_events(SEEN_FILE)
     seen_ids = set(seen_map.keys())
@@ -96,6 +97,10 @@ def main():
             "first_seen_at": first_seen,
             "end_at": event.get("end_at"),
         }
+        previous = old_map.get(aid, {})
+        for field in ("summary", "summary_source_hash", "summary_checked_at"):
+            if field in previous:
+                event[field] = previous[field]
 
     catalog = sorted(merged.values(), key=lambda e: e.get("start_at", ""))
     trimmed = [{k: v for k, v in e.items() if k in FRONTEND_FIELDS} for e in catalog]
