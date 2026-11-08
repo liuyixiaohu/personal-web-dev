@@ -224,7 +224,6 @@
           Similarity is unavailable; matching available words.
         </span>
       {/if}
-      <span class="intent-note">For this visit only. Dates stay in order.</span>
     </div>
 
     <div class="filter-row filter-row--stacked">
