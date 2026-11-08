@@ -62,9 +62,7 @@
   <div class="event-card-header">
     <div class="event-name-row">
       {#if isNew}
-        <span class="event-new"
-          ><span class="sr-only">New</span><span aria-hidden="true">新</span></span
-        >
+        <span class="event-new">New</span>
       {/if}
       <a href={event.url || '#'} target="_blank" rel="noopener noreferrer" class="event-name">
         {event.name}

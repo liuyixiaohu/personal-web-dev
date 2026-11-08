@@ -71,7 +71,7 @@
   let excludePopupOpen = $state(false);
   // Current intent is deliberately absent from localStorage and SyncSettings.
   let currentIntent = $state('');
-  let intentStatus = $state<'idle' | 'loading' | 'ready' | 'fallback'>('idle');
+  let intentStatus = $state<'idle' | 'loading' | 'ready' | 'fallback' | 'no-data'>('idle');
   let queryVector = $state.raw<number[] | undefined>(undefined);
   let embeddingCatalog = $state.raw<EmbeddingCatalog | undefined>(undefined);
   let catalogPromise: Promise<EmbeddingCatalog> | undefined;
@@ -116,7 +116,7 @@
         if (id !== intentSequence) return;
         embeddingCatalog = catalog;
         if (!Object.keys(catalog.items).length) {
-          intentStatus = 'fallback';
+          intentStatus = 'no-data';
           return;
         }
         intentWorker ??= new Worker(new URL('./intentWorker.ts', import.meta.url), {
@@ -564,6 +564,8 @@
       {selectedLocations}
       {selectedDays}
       {searchQuery}
+      {currentIntent}
+      {intentStatus}
       {excludeKeywords}
       {newOnly}
       {newCount}
@@ -572,6 +574,9 @@
       onSearchChange={(q) => {
         searchQuery = q;
       }}
+      onIntentChange={(intent) => {
+        currentIntent = intent;
+      }}
       onAddExclude={(kw) => {
         excludeKeywords = [...excludeKeywords, kw.toLowerCase().trim()];
       }}
@@ -579,30 +584,6 @@
         newOnly = next;
       }}
     />
-
-    <div class="intent-control">
-      <label for="event-current-intent">What kind of event are you looking for today?</label>
-      <div class="intent-input-row">
-        <input
-          id="event-current-intent"
-          type="text"
-          maxlength="240"
-          placeholder="e.g. Hands-on AI workshops for beginners"
-          autocomplete="off"
-          bind:value={currentIntent}
-        />
-        {#if currentIntent}
-          <button type="button" onclick={() => (currentIntent = '')}>Clear</button>
-        {/if}
-      </div>
-      <p class="intent-note">
-        Only for this visit. Events stay grouped by date.
-        {#if intentStatus === 'loading'}
-          Matching your intent…{/if}
-        {#if intentStatus === 'fallback'}
-          Similarity is unavailable; using available words.{/if}
-      </p>
-    </div>
 
     {#if isStale}
       <p class="event-stale">Data may be stale. Last update was over 48 hours ago.</p>
@@ -682,48 +663,6 @@
 </div>
 
 <style>
-  .intent-control {
-    margin: var(--space-sm) 0;
-  }
-
-  .intent-control label {
-    display: block;
-    color: var(--text);
-    font-weight: 600;
-    margin-bottom: var(--space-xs);
-  }
-
-  .intent-input-row {
-    display: flex;
-    gap: var(--space-xs);
-  }
-
-  .intent-input-row input {
-    width: 100%;
-    min-width: 0;
-    padding: var(--space-xs);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    background: var(--bg);
-    color: var(--text);
-    font: inherit;
-  }
-
-  .intent-input-row button {
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    background: var(--bg);
-    color: var(--text);
-    font: inherit;
-    cursor: pointer;
-  }
-
-  .intent-note {
-    margin: var(--space-xs) 0 0;
-    color: var(--text-light);
-    font-size: var(--fs-xs);
-  }
-
   .event-header {
     margin-bottom: var(--space-sm);
   }

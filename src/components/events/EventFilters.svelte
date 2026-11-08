@@ -7,12 +7,15 @@
     selectedLocations: Set<string>;
     selectedDays: Set<number>;
     searchQuery: string;
+    currentIntent: string;
+    intentStatus: 'idle' | 'loading' | 'ready' | 'fallback' | 'no-data';
     excludeKeywords: string[];
     newOnly: boolean;
     newCount: number;
     onLocationToggle: (loc: string) => void;
     onDayToggle: (day: number) => void;
     onSearchChange: (query: string) => void;
+    onIntentChange: (intent: string) => void;
     onAddExclude: (keyword: string) => void;
     onNewOnlyChange: (next: boolean) => void;
   }
@@ -23,12 +26,15 @@
     selectedLocations,
     selectedDays,
     searchQuery,
+    currentIntent,
+    intentStatus,
     excludeKeywords,
     newOnly,
     newCount,
     onLocationToggle,
     onDayToggle,
     onSearchChange,
+    onIntentChange,
     onAddExclude,
     onNewOnlyChange,
   }: Props = $props();
@@ -187,6 +193,41 @@
 <div class="filter-search-bar" bind:this={searchBarEl} style:--keyboard-offset="{keyboardOffset}px">
   <div class="filter-row-pair">
     <div class="filter-row filter-row--stacked">
+      <label class="filter-label" for="event-current-intent">
+        What kind of event are you looking for today?
+      </label>
+      <div class="intent-input-row">
+        <input
+          id="event-current-intent"
+          class="search-input"
+          type="text"
+          maxlength="240"
+          autocomplete="off"
+          placeholder="e.g. make friends at tech events"
+          value={currentIntent}
+          oninput={(e) => onIntentChange((e.target as HTMLInputElement).value)}
+        />
+        {#if currentIntent}
+          <button class="intent-clear" type="button" onclick={() => onIntentChange('')}
+            >Clear</button
+          >
+        {/if}
+      </div>
+      {#if intentStatus === 'loading'}
+        <span class="intent-note" role="status">Matching your intent…</span>
+      {:else if intentStatus === 'no-data'}
+        <span class="intent-note" role="status">
+          Intent matching is waiting for event summaries.
+        </span>
+      {:else if intentStatus === 'fallback'}
+        <span class="intent-note" role="status">
+          Similarity is unavailable; matching available words.
+        </span>
+      {/if}
+      <span class="intent-note">For this visit only. Dates stay in order.</span>
+    </div>
+
+    <div class="filter-row filter-row--stacked">
       <span class="filter-label">{'Search events, hosts, or presenters'}</span>
       <input
         class="search-input"
@@ -213,6 +254,35 @@
 </div>
 
 <style>
+  .intent-input-row {
+    display: flex;
+    gap: var(--space-xs);
+    width: 100%;
+  }
+
+  .intent-input-row .search-input {
+    min-width: 0;
+  }
+
+  .intent-clear {
+    align-self: flex-start;
+    padding: 0.35em 0.6em;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    font-size: var(--fs-xs);
+    line-height: 1.5;
+    cursor: pointer;
+  }
+
+  .intent-note {
+    color: var(--text-light);
+    font-size: var(--fs-xs);
+    line-height: 1.5;
+  }
+
   /* Desktop: a compact panel in the screen's bottom-right, just above the
      Top button (itself fixed at bottom/right 2rem, about 1.6rem tall). */
   .filter-search-bar {
