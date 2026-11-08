@@ -131,6 +131,8 @@
             intentStatus = 'ready';
           } else {
             intentStatus = 'fallback';
+            if (message.data.error)
+              console.error('Intent similarity unavailable:', message.data.error);
           }
         };
         intentWorker.onerror = () => {
