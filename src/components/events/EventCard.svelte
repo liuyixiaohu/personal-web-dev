@@ -177,8 +177,9 @@
 <style>
   .event-summary {
     margin: 0 0 var(--space-xs);
-    color: var(--text);
-    line-height: 1.5;
+    font-size: var(--fs-base);
+    color: var(--text-light);
+    line-height: 1.6;
   }
 
   .event-card-header {
@@ -186,7 +187,7 @@
     justify-content: space-between;
     align-items: flex-start;
     gap: var(--space-sm);
-    margin-bottom: 0.3rem;
+    margin-bottom: var(--space-xs);
   }
 
   .event-name-row {
@@ -208,11 +209,11 @@
   }
 
   .event-name {
-    font-size: var(--fs-md);
-    font-weight: 600;
+    font-size: var(--fs-lg);
+    font-weight: 700;
     color: var(--text);
     text-decoration: none;
-    line-height: 1.4;
+    line-height: 1.3;
   }
 
   .event-name:hover {
