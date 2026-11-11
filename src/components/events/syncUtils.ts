@@ -1,8 +1,11 @@
 import { type EventDecision, pruneDecisions } from './eventUtils';
+import { compactSettings } from './syncPayload';
 
 // Sync is optional. Nothing here runs until the viewer creates or joins a code.
 export const SYNC_CODE_KEY = 'events.syncCode';
 export const SYNC_TIME_KEY = 'events.syncedAt';
+// Keep this in step with the limit in functions/api/sync/[action].ts.
+const MAX_BODY_BYTES = 4 * 1024 * 1024;
 
 export interface SyncSettings {
   excludeKeywords: string[];
@@ -28,10 +31,14 @@ export class SyncError extends Error {
 }
 
 async function call<T>(action: string, body: Record<string, unknown>): Promise<T> {
+  const payload = JSON.stringify(body);
+  if (new TextEncoder().encode(payload).byteLength > MAX_BODY_BYTES) {
+    throw new SyncError(413, 'Too much data to sync. Your choices are still saved on this device.');
+  }
   const resp = await fetch(`/api/sync/${action}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
+    body: payload,
   });
   const data = await resp.json().catch(() => ({}));
   if (!resp.ok) {
@@ -41,7 +48,9 @@ async function call<T>(action: string, body: Record<string, unknown>): Promise<T
 }
 
 export function createSync(settings: SyncSettings) {
-  return call<{ code: string; updated_at: string }>('create', { settings });
+  return call<{ code: string; updated_at: string }>('create', {
+    settings: compactSettings(settings),
+  });
 }
 
 export function pullSync(code: string) {
@@ -49,7 +58,7 @@ export function pullSync(code: string) {
 }
 
 export function pushSync(code: string, settings: SyncSettings) {
-  return call<{ updated_at: string }>('push', { code, settings });
+  return call<{ updated_at: string }>('push', { code, settings: compactSettings(settings) });
 }
 
 export function rotateSync(code: string) {
