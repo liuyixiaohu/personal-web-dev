@@ -24,9 +24,8 @@
 
 <section class="subscription" aria-labelledby="event-subscription-heading">
   <h3 id="event-subscription-heading">Get new event updates</h3>
-  <p>One email when the daily list adds events. Confirm once, unsubscribe anytime.</p>
   <form onsubmit={subscribe}>
-    <label for="subscription-email">Email</label>
+    <label class="sr-only" for="subscription-email">Email</label>
     <div class="subscription-controls">
       <input
         id="subscription-email"
@@ -68,55 +67,43 @@
 
 <style>
   .subscription {
-    margin: 0 0 var(--space-sm);
-    padding: var(--space-sm);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
+    width: 100%;
+    padding-top: var(--space-xs);
+    border-top: 1px solid var(--border);
   }
 
   h3 {
     margin: 0 0 var(--space-xs);
-    font-size: var(--fs-md);
-  }
-
-  p {
-    margin: 0 0 var(--space-xs);
     color: var(--text-light);
     font-size: var(--fs-xs);
+    font-weight: 400;
     line-height: 1.5;
-  }
-
-  label {
-    display: block;
-    margin-bottom: var(--space-xs);
-    color: var(--text);
-    font-size: var(--fs-xs);
-    font-weight: 600;
   }
 
   .subscription-controls {
     display: flex;
-    gap: var(--space-xs);
+    gap: 0.3rem;
   }
 
   input,
   button {
-    min-height: 2.5rem;
     border: 1px solid var(--border);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
     font: inherit;
+    font-size: var(--fs-xs);
+    line-height: 1.5;
   }
 
   input {
     min-width: 0;
     flex: 1;
-    padding: 0 var(--space-xs);
+    padding: 0.35em 0.6em;
     color: var(--text);
-    background: var(--bg);
+    background: transparent;
   }
 
   button {
-    padding: 0 var(--space-sm);
+    padding: 0.35em 0.6em;
     color: var(--bg);
     background: var(--text);
     cursor: pointer;
@@ -138,15 +125,12 @@
   .subscription-status {
     margin-top: var(--space-xs);
     margin-bottom: 0;
+    color: var(--text-light);
+    font-size: var(--fs-xs);
+    line-height: 1.5;
   }
 
   .subscription-status--error {
     color: var(--color-pm);
-  }
-
-  @media (max-width: 480px) {
-    .subscription-controls {
-      flex-direction: column;
-    }
   }
 </style>
