@@ -23,7 +23,7 @@
 </script>
 
 <section class="subscription" aria-labelledby="event-subscription-heading">
-  <h3 id="event-subscription-heading">Get new event updates</h3>
+  <h3 id="event-subscription-heading">Get notified when new events are added</h3>
   <form onsubmit={subscribe}>
     <label class="sr-only" for="subscription-email">Email</label>
     <div class="subscription-controls">
