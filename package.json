@@ -27,13 +27,13 @@
     "@astrojs/svelte": "^8.1.2",
     "@huggingface/transformers": "^3.8.1",
     "astro": "^6.4.2",
-    "d3-geo": "^3.1.1",
+    "d3-geo": "^3.1.2",
     "svelte": "^5.57.3",
     "typescript": "^6.0.3"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
-    "@cloudflare/workers-types": "^5.20261106.1",
+    "@cloudflare/workers-types": "^5.20261109.1",
     "@types/d3-geo": "^3.1.1",
     "googleapis": "^189.0.0",
     "postcss-html": "^1.8.1",
@@ -42,9 +42,9 @@
     "prettier-plugin-svelte": "^4.1.1",
     "stylelint": "^17.16.0",
     "stylelint-declaration-strict-value": "^1.12.1",
-    "yaml": "2.9.0"
+    "yaml": "2.9.1"
   },
   "overrides": {
-    "yaml": "2.9.0"
+    "yaml": "2.9.1"
   }
 }
