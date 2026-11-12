@@ -1,0 +1,32 @@
+name: Notify Event Subscribers
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    # Daily fallback if the event-update automation could not dispatch this workflow.
+    - cron: '47 4 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: notify-event-subscribers
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+
+      - name: Wait for production deployment and notify subscribers
+        env:
+          EVENT_NOTIFY_SECRET: ${{ secrets.EVENT_NOTIFY_SECRET }}
+          SITE_URL: https://kunli.co
+        run: node scripts/notify-subscribers.mjs
