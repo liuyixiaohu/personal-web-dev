@@ -26,6 +26,7 @@
   import EventFilters from './EventFilters.svelte';
   import EventCard from './EventCard.svelte';
   import EventSync from './EventSync.svelte';
+  import EventSubscription from './EventSubscription.svelte';
   import {
     EMBEDDINGS_URL,
     EMBEDDING_MODEL,
@@ -500,6 +501,8 @@
         </p>
       </div>
     {/if}
+
+    <EventSubscription />
 
     <div class="filter-row event-mode">
       <button
