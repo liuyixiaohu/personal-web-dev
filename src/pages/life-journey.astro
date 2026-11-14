@@ -2,396 +2,111 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { pins } from '../components/globe/pins';
-import type { LabelPos } from '../utils/journey/buildSVG';
 
-const LABEL_POS: LabelPos = {
-  shouguang: { dx: 16, dy: -22, anchor: 'start' },
-  qingdao: { dx: 16, dy: 12, anchor: 'start' },
-  jiaozhou: { dx: -16, dy: 34, anchor: 'end' },
-  madison: { dx: 16, dy: -16, anchor: 'start' },
-  fairfield: { dx: 16, dy: -16, anchor: 'start' },
-  berkeley: { dx: -16, dy: 30, anchor: 'end' },
-};
+const entries = await getCollection('journey');
+const byId = new Map(entries.map((entry) => [entry.id, entry]));
 
-const journeyEntries = await getCollection('journey');
-const journeyById = new Map(journeyEntries.map((entry) => [entry.id, entry]));
-const journeyPins = pins.map((pin) => {
-  const entry = journeyById.get(pin.id);
+const stations = pins.map((pin) => {
+  const entry = byId.get(pin.id);
   if (!entry) throw new Error(`Missing Journey MDX entry for pin "${pin.id}"`);
+  const comingSoon = entry.data.status === 'coming-soon';
   return {
-    ...pin,
+    id: pin.id,
+    year: pin.year,
+    city: pin.city,
     title: entry.data.title,
-    summary: entry.data.summary,
+    comingSoon,
     href: `/life-journey/${pin.id}/`,
   };
 });
 ---
 
-<BaseLayout title="Life Journey" description="Six places I've called home." footerVariant="home">
-  <main id="main" class="journey-page">
-    <h1 class="sr-only">Life Journey</h1>
-    <p class="sr-only">
-      A static map of six places: Jiaozhou, Shouguang, Qingdao in Shandong, China; Madison,
-      Wisconsin; Fairfield and Berkeley, California.
+<BaseLayout title="My Journey | Kun Li" description="Places, in the order I lived them.">
+  <main id="main" class="page-shell">
+    <a href="/" class="back-link">← Cover</a>
+    <h1 class="sr-only">My Journey</h1>
+    <p class="journey-hook">
+      I’m from a seaside city known for beer and tourism, but I don’t drink, don’t like seafood, and
+      don’t know how to swim.
     </p>
-    <a href="/" class="back-link">← Home</a>
-
-    <div class="country-pair" id="country-pair">
-      <div class="panels">
-        <div class="panel">
-          <span class="panel-label">China</span>
-          <svg id="china-svg" class="country-svg"></svg>
-        </div>
-        <div class="panel">
-          <span class="panel-label">United States</span>
-          <svg id="usa-svg" class="country-svg"></svg>
-        </div>
-      </div>
-    </div>
-
-    <div class="journey-tooltip tooltip-card" id="journey-tooltip" aria-hidden="true">
-      <span class="tooltip-title" id="tooltip-title"></span>
-      <span class="tooltip-summary" id="tooltip-summary"></span>
-    </div>
+    <h2 class="journey-label">Contents</h2>
+    <nav class="journey-route" aria-label="Contents">
+      {
+        stations.map((station) =>
+          station.comingSoon ? (
+            <div class="station">
+              <span class="station-year">{station.year}</span>
+              <p class="station-place">{station.city}</p>
+              <p class="station-chapter">{station.title} · still being written</p>
+            </div>
+          ) : (
+            <a class="station" href={station.href}>
+              <span class="station-year">{station.year}</span>
+              <p class="station-place">{station.city}</p>
+              <p class="station-chapter">{station.title}</p>
+            </a>
+          ),
+        )
+      }
+    </nav>
   </main>
 </BaseLayout>
 
-<script is:inline define:vars={{ journeyPins, LABEL_POS }}>
-  window.__journeyData = { pins: journeyPins, LABEL_POS };
-</script>
-
-<script>
-  import { buildSVG, type JourneyMapPin, type LabelPos } from '../utils/journey/buildSVG';
-  import type { GeoPermissibleObjects } from 'd3-geo';
-
-  type JourneyData = {
-    pins: JourneyMapPin[];
-    LABEL_POS: LabelPos;
-  };
-
-  type JourneyCountries = {
-    china: GeoPermissibleObjects;
-    usa: GeoPermissibleObjects;
-    provinces?: GeoPermissibleObjects;
-  };
-
-  const globalWindow = window as Window & {
-    __journeyData?: JourneyData;
-    __journeyAfterSwapBound?: boolean;
-  };
-
-  function getTooltip() {
-    const tooltip = document.getElementById('journey-tooltip');
-    const title = document.getElementById('tooltip-title');
-    const summary = document.getElementById('tooltip-summary');
-    if (!tooltip || !title || !summary) return null;
-    return { tooltip, title, summary };
-  }
-
-  function placeTooltip(x: number, y: number) {
-    const parts = getTooltip();
-    if (!parts) return;
-    const { tooltip } = parts;
-    const margin = 16;
-    const nextLeft = x + margin;
-    const nextTop = y + margin;
-    const maxLeft = window.innerWidth - tooltip.offsetWidth - margin;
-    const maxTop = window.innerHeight - tooltip.offsetHeight - margin;
-    tooltip.style.left = `${Math.max(margin, Math.min(nextLeft, maxLeft))}px`;
-    tooltip.style.top = `${Math.max(margin, Math.min(nextTop, maxTop))}px`;
-  }
-
-  function placeTooltipNearElement(element: Element) {
-    const rect = element.getBoundingClientRect();
-    placeTooltip(rect.left + rect.width / 2, rect.top + rect.height / 2);
-  }
-
-  function showTooltip(pin: JourneyData['pins'][number], event: MouseEvent | FocusEvent) {
-    const parts = getTooltip();
-    if (!parts) return;
-    parts.title.textContent = `${pin.city} · ${pin.year}`;
-    parts.summary.textContent = pin.summary;
-    parts.tooltip.classList.add('visible');
-    parts.tooltip.setAttribute('aria-hidden', 'false');
-
-    if (event instanceof MouseEvent) {
-      placeTooltip(event.clientX, event.clientY);
-      return;
-    }
-
-    if (event.currentTarget instanceof Element) {
-      placeTooltipNearElement(event.currentTarget);
-    }
-  }
-
-  function hideTooltip() {
-    const parts = getTooltip();
-    if (!parts) return;
-    parts.tooltip.classList.remove('visible');
-    parts.tooltip.setAttribute('aria-hidden', 'true');
-  }
-
-  function openPin(pin: JourneyData['pins'][number]) {
-    window.location.assign(pin.href);
-  }
-
-  function initJourney() {
-    const data = globalWindow.__journeyData;
-    if (!data) return;
-    const { pins, LABEL_POS } = data;
-
-    fetch('/data/journey-countries.json')
-      .then((res) => res.json() as Promise<JourneyCountries>)
-      .then((geo) => {
-        const chinaSvg = document.getElementById('china-svg') as unknown as SVGSVGElement | null;
-        const usaSvg = document.getElementById('usa-svg') as unknown as SVGSVGElement | null;
-        if (!chinaSvg || !usaSvg) return;
-
-        const chinaPins = pins.filter((p) => p.country.includes('China'));
-        const usaPins = pins.filter((p) => p.country.includes('USA'));
-        const handlers = {
-          onPinActivate: openPin,
-          onPinEnter: showTooltip,
-          onPinMove: showTooltip,
-          onPinLeave: hideTooltip,
-        };
-
-        buildSVG(
-          chinaSvg,
-          geo.china,
-          geo.provinces,
-          chinaPins,
-          'clip-china',
-          80,
-          LABEL_POS,
-          handlers,
-        );
-        buildSVG(usaSvg, geo.usa, geo.provinces, usaPins, 'clip-usa', 80, LABEL_POS, handlers);
-
-        document.getElementById('country-pair')?.classList.add('loaded');
-      })
-      .catch((err) => {
-        console.error('Failed to load journey map data:', err);
-        // Don't leave the map area stuck invisible (opacity:0) if the fetch fails.
-        document.getElementById('country-pair')?.classList.add('loaded');
-      });
-  }
-
-  initJourney();
-  if (!globalWindow.__journeyAfterSwapBound) {
-    document.addEventListener('astro:after-swap', initJourney);
-    globalWindow.__journeyAfterSwapBound = true;
-  }
-</script>
-
 <style>
-  .journey-page {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: var(--bg);
-    padding: clamp(4rem, 8vh, 6rem) var(--content-padding) 0;
-  }
-
-  @media (max-width: 52rem) {
-    .journey-page {
-      padding-block-start: 3rem;
-    }
-  }
-
-  .journey-page .back-link {
-    align-self: stretch;
-    max-width: var(--grid-content);
-    width: 100%;
-  }
-
-  .country-pair {
-    width: 100%;
-    max-width: 56rem;
-    margin: 0 auto;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-
-  .country-pair.loaded {
-    opacity: 1;
-  }
-
-  .panels {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    align-items: center;
-  }
-
-  .panel {
-    width: 100%;
-    max-width: 44rem;
-    position: relative;
-  }
-
-  .panel-label {
-    display: block;
-    text-align: right;
-    font-size: var(--fs-md);
-    color: var(--text-light);
-    font-weight: 500;
-    line-height: 1.4;
-    padding-right: var(--space-md);
-  }
-
-  .country-svg {
-    width: 100%;
-    height: auto;
-    display: block;
-    overflow: visible;
-  }
-
-  .journey-tooltip {
-    position: fixed;
-    max-width: min(18rem, calc(100vw - 2rem));
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(0.25rem);
-    transition:
-      opacity 0.15s ease,
-      transform 0.15s ease;
-  }
-
-  .journey-tooltip.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Desktop: side-by-side panels. Placed AFTER all base rules so the
-     overrides actually take effect. */
-  @media (min-width: 64rem) {
-    .country-pair {
-      max-width: 80rem;
-    }
-    .panels {
-      flex-direction: row;
-      align-items: flex-start;
-      gap: var(--space-md);
-    }
-    .panel {
-      flex: 1;
-      max-width: none;
-    }
-    .panel-label {
-      text-align: center;
-      padding-right: 0;
-    }
-    /* Width-auto + per-country heights. We tune China taller than USA
-       to compensate for its narrower aspect (1.36 vs USA's 1.75); at
-       equal heights China renders ~140px narrower and reads as
-       "smaller". With these clamps both maps end up at similar visual
-       widths (China ~607px, USA ~630px at 1440vp), so neither
-       dominates. Labels and SVG tops still align (panels flex-start);
-       China's bottom hangs slightly lower, which is the necessary
-       tradeoff for parity in horizontal extent. */
-    .country-svg {
-      width: auto;
-      max-width: 100%;
-      margin: 0 auto;
-    }
-    #usa-svg {
-      height: clamp(15rem, 25vw, 22rem);
-      /* USA is shorter than China by the difference of these two clamps.
-         Push USA down by half that diff so the two maps share a vertical
-         centerline (otherwise USA reads as floating above China). The
-         label-to-SVG gap this creates for USA is the necessary tradeoff:
-         either labels glued to maps + centers misaligned, or labels at
-         same Y + centers aligned + USA breathing room above. We prefer
-         the latter. */
-      margin-top: calc((clamp(18rem, 31vw, 26rem) - clamp(15rem, 25vw, 22rem)) / 2);
-    }
-    #china-svg {
-      height: clamp(18rem, 31vw, 26rem);
-    }
-  }
-</style>
-
-<style is:global>
-  .country-fill {
-    fill: var(--bubble-visual);
-    stroke: var(--border);
-    stroke-width: 1.5;
-  }
-
-  .province-line {
-    fill: none;
-    stroke: var(--color-visual);
-    stroke-width: 1;
-    opacity: 0.5;
-  }
-
-  .pin-marker {
-    cursor: pointer;
-  }
-
-  /* Dots stay brand rose in every state — no hover swap. Labels are brand
-     black (see .map-label); only the dot + its ripple carry the accent. */
-  .pin-dot {
-    cursor: pointer;
-    fill: var(--color-rose);
-  }
-
-  /* Ripple rings: invisible at rest, expand and fade out only while the pin is
-     hovered or keyboard-focused. The sole hover affordance. Reduced-motion is
-     handled globally (global.css neutralises animations). */
-  .pin-ripple {
-    fill: none;
-    stroke: var(--color-rose);
-    stroke-width: 2;
-    opacity: 0;
-    pointer-events: none;
-    transform-box: fill-box;
-    transform-origin: center;
-  }
-
-  .pin-marker:hover .pin-ripple,
-  .pin-marker:focus-within .pin-ripple {
-    animation: journey-ripple 1.6s ease-out infinite;
-  }
-
-  /* Second ring starts half a cycle later so the pair reads as a continuous
-     ripple. Scoped to the active state and placed after the shorthand above —
-     the `animation` shorthand resets animation-delay to 0, so a plain
-     `.pin-ripple-2` rule would be overridden. */
-  .pin-marker:hover .pin-ripple-2,
-  .pin-marker:focus-within .pin-ripple-2 {
-    animation-delay: 0.8s;
-  }
-
-  @keyframes journey-ripple {
-    from {
-      transform: scale(1);
-      opacity: 0.55;
-    }
-    to {
-      transform: scale(3.2);
-      opacity: 0;
-    }
-  }
-
-  .map-label {
+  .journey-hook {
+    margin: var(--space-lg) 0 0;
     font-size: var(--fs-lg);
-    font-family: var(--font-body);
-    fill: var(--text);
-    dominant-baseline: central;
-    cursor: pointer;
+    line-height: 1.45;
+    letter-spacing: -0.01em;
   }
 
-  .map-label:focus {
-    outline: 2px solid var(--text);
-    outline-offset: 2px;
-    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value -- focus outline follows glyph geometry, not a component surface */
-    border-radius: 2px;
+  .journey-label {
+    margin: var(--space-lg) 0 0;
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-light);
   }
 
-  .map-label:focus:not(:focus-visible) {
-    outline: none;
+  .journey-route {
+    margin-top: var(--space-sm);
+  }
+
+  .station {
+    display: grid;
+    grid-template-columns: 4.2rem 1fr;
+    column-gap: var(--space-sm);
+    padding: var(--space-sm) 0;
+    border-top: 1px solid var(--border);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .station:last-child {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .station-year {
+    color: var(--text-light);
+  }
+
+  .station-place {
+    margin: 0;
+    font-size: var(--fs-lg);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+  }
+
+  a.station .station-place {
+    width: fit-content;
+    border-bottom: 1px solid var(--text);
+  }
+
+  .station-chapter {
+    grid-column: 2;
+    margin: 0.2rem 0 0;
+    color: var(--text-light);
+    font-style: italic;
   }
 </style>

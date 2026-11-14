@@ -39,7 +39,8 @@ if (existsSync(join(root, detailPage))) {
 }
 
 const indexPage = read('src/pages/life-journey.astro');
-assert(indexPage.includes('journey-tooltip'), 'Journey page needs a hover/focus tooltip');
+assert(indexPage.includes('aria-label="Contents"'), 'Journey page needs a contents list');
+assert(!indexPage.includes('buildSVG'), 'Journey page should be a contents list, not the map');
 assert(!indexPage.includes('story-modal'), 'Journey page should not render the old story modal');
 assert(
   !existsSync(join(root, 'src/data/journeyStories.ts')),

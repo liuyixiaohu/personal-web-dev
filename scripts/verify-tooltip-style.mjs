@@ -11,8 +11,6 @@ function readProjectFile(path) {
 const tooltip = readProjectFile('src/components/HintTooltip.astro');
 const globalStyles = readProjectFile('src/styles/global.css');
 const tooltipStyles = readProjectFile('src/styles/tooltips.css');
-const journeyPage = readProjectFile('src/pages/life-journey.astro');
-
 const checks = [
   {
     name: 'global styles import shared tooltip styles',
@@ -58,10 +56,6 @@ const checks = [
   {
     name: 'home hint popup is not card-width constrained',
     test: () => !tooltip.includes('width: min(19rem, calc(100vw - 2rem));'),
-  },
-  {
-    name: 'Journey tooltip uses the shared tooltip-card class',
-    test: () => journeyPage.includes('class="journey-tooltip tooltip-card"'),
   },
 ];
 
