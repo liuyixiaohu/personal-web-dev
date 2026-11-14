@@ -101,7 +101,7 @@ src/
   data/           Sift changelog (typed TS data)
 scripts/          Daily fetch pipeline (Luma events)
 .github/workflows/  Cron jobs + CI
-docs/             Brand guidelines
+docs/             Notes
 ```
 
 ## Dev
@@ -134,9 +134,10 @@ npm run seo:diagnose    # query Google Search Console for crawl errors
 npm run seo:resubmit    # request reindex of new/updated URLs
 ```
 
-## Brand
+## Design system
 
-Full design system documented in [`docs/brand-guidelines.md`](docs/brand-guidelines.md).
+Documented at [workbench.kunli.co/design-system](https://workbench.kunli.co/design-system/).
+Tokens in `src/styles/global.css` must match that page.
 
 ## License
 
