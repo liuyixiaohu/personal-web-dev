@@ -10,9 +10,9 @@ These rules apply to every human and coding agent working in this repository.
 
 ## Design system
 
-- Treat `src/pages/design-system.astro` in this repo (published at
-  `kunli.co/design-system`) and `src/styles/global.css` as the single source of
-  truth.
+- Treat `src/styles/global.css` in this repo as the single source of truth for
+  design tokens. The public brand page (`kunli.co/brand`) describes the visual
+  identity but does not define tokens.
 - `personal-web-console` copies the `:root` token block; its `check:tokens`
   script fails if its copy drifts from this repo's `src/styles/global.css`.
 - Use only the tokens defined in `src/styles/global.css`.

@@ -136,8 +136,8 @@ npm run seo:resubmit    # request reindex of new/updated URLs
 
 ## Design system
 
-Documented at [kunli.co/design-system](https://kunli.co/design-system/).
-Tokens in `src/styles/global.css` must match that page.
+Tokens are defined in `src/styles/global.css`. The visual identity is described at
+[kunli.co/brand](https://kunli.co/brand/).
 
 ## License
 
