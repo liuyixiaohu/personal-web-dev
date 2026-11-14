@@ -16,7 +16,7 @@ const SITE_URL = process.env.GSC_SITE_URL || 'sc-domain:kunli.co';
 const SITEMAP_URL = 'https://kunli.co/sitemap-index.xml';
 const SITEMAP_URLS = [
   'https://kunli.co/',
-  'https://kunli.co/brand',
+  'https://kunli.co/making',
   'https://kunli.co/events',
   'https://kunli.co/life-journey',
   'https://kunli.co/sift',
