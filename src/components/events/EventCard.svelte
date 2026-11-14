@@ -89,7 +89,7 @@
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
-        stroke-width="2"
+        stroke-width="1.25"
         stroke-linecap="round"
         stroke-linejoin="round"
         ><path d="M8 2v4" /><path d="M16 2v4" /><rect
@@ -109,7 +109,7 @@
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2"
+          stroke-width="1.25"
           stroke-linecap="round"
           stroke-linejoin="round"
           ><path
@@ -126,7 +126,7 @@
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2"
+          stroke-width="1.25"
           stroke-linecap="round"
           stroke-linejoin="round"
           ><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle
@@ -143,7 +143,7 @@
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2"
+          stroke-width="1.25"
           stroke-linecap="round"
           stroke-linejoin="round"
           ><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle
@@ -162,7 +162,7 @@
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2"
+          stroke-width="1.25"
           stroke-linecap="round"
           stroke-linejoin="round"
           ><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><path
@@ -202,10 +202,9 @@
     font-size: var(--fs-xs);
     font-weight: 500;
     line-height: 1.4;
-    color: var(--color-visual);
-    border: 1px solid var(--color-visual);
-    border-radius: var(--radius-sm);
-    padding: 0 0.3em;
+    color: var(--text-light);
+    border-bottom: 1px solid var(--border);
+    padding: 0 0.15em;
   }
 
   .event-name {
@@ -226,9 +225,7 @@
     color: var(--text-light);
     white-space: nowrap;
     flex-shrink: 0;
-    padding: 0.15em 0.5em;
-    border-radius: var(--radius-sm);
-    background: rgba(0, 0, 0, 0.03);
+    padding: 0.15em 0;
   }
 
   .event-price--free {
@@ -284,7 +281,6 @@
     color: var(--text);
     background: transparent;
     border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
     padding: 0.28em 0.7em;
     cursor: pointer;
     line-height: 1.4;
