@@ -93,7 +93,8 @@ const chapters = headings.filter((heading) => heading.depth === 2);
   .article-summary {
     color: var(--text-light);
     font-size: var(--fs-md);
-    line-height: 1.6;
+    font-style: italic;
+    line-height: 1.5;
     margin: 0;
     max-width: 42rem;
   }
@@ -205,9 +206,19 @@ const chapters = headings.filter((heading) => heading.depth === 2);
   }
 
   .article-content {
-    color: var(--text-light);
+    color: var(--text);
     font-size: var(--fs-base);
-    line-height: 1.7;
+    line-height: 1.6;
+  }
+
+  /* First paragraph of each chapter: drop cap, set on the first letter of the
+     paragraph that follows the first chapter heading. */
+  .article-content :global(h2:first-of-type + p)::first-letter {
+    float: left;
+    font-size: calc(var(--fs-xl) * 2);
+    line-height: 0.9;
+    padding: 0.3rem 0.5rem 0 0;
+    color: var(--text);
   }
 
   .article-content :global(h2) {
@@ -262,11 +273,14 @@ const chapters = headings.filter((heading) => heading.depth === 2);
     margin-bottom: 0.3em;
   }
 
+  /* Pull quote: a short italic line with one warm rule, no box. */
   .article-content :global(blockquote) {
-    margin: var(--space-md) 0;
-    padding-left: 1rem;
-    border-left: 2px solid var(--border);
-    color: var(--text-light);
+    margin: var(--space-lg) 0;
+    padding: 0.2rem 0 0.2rem 1.2rem;
+    border-left: 2px solid var(--color-pm);
+    color: var(--text);
+    font-size: var(--fs-md);
+    line-height: 1.35;
     font-style: italic;
   }
 
@@ -333,7 +347,6 @@ const chapters = headings.filter((heading) => heading.depth === 2);
     width: 100%;
     max-width: 100%;
     height: auto;
-    border-radius: var(--radius-lg);
     margin: var(--space-md) 0;
   }
 
