@@ -11,7 +11,7 @@ These rules apply to every human and coding agent working in this repository.
 ## Design system
 
 - Treat `src/styles/global.css` in this repo as the single source of truth for
-  design tokens. The public brand page (`kunli.co/brand`) describes the visual
+  design tokens. The public page (`kunli.co/making`) describes the visual
   identity but does not define tokens.
 - `personal-web-console` copies the `:root` token block; its `check:tokens`
   script fails if its copy drifts from this repo's `src/styles/global.css`.

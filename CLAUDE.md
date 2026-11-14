@@ -4,7 +4,7 @@ Public personal site at **kunli.co**. See `README.md` for the overview.
 
 ## Design system — read this before touching any UI
 
-This repo is the source of truth for design tokens, which live in `src/styles/global.css`. The public brand page (**kunli.co/brand**, `src/pages/brand.astro`) describes the visual identity. The private workbench (**personal-web-console**) copies the `:root` token block and is checked against this repo. Check `global.css` before adding or changing styles, and prefer extending existing tokens over inventing new ones.
+This repo is the source of truth for design tokens, which live in `src/styles/global.css`. The public page **kunli.co/making** (`src/pages/making.astro`) describes how the site was designed. The private workbench (**personal-web-console**) copies the `:root` token block and is checked against this repo. Check `global.css` before adding or changing styles, and prefer extending existing tokens over inventing new ones.
 
 Rules, enforced in CI:
 
