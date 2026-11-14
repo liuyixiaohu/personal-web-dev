@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Projects | Kun Li"
+  description="Things I've built: side tools and the design system behind this site."
+>
+  <main id="main" class="page-shell">
+    <a href="/" class="back-link">← Home</a>
+
+    <header class="projects-header">
+      <h1>Projects</h1>
+      <p class="projects-lede">Things I've built, grouped loosely by what they're for.</p>
+    </header>
+
+    <section class="projects-list" aria-label="Projects">
+      <a href="/touch-fish/" class="item">
+        <span class="item-title">Touch Fish</span>
+        <span class="item-desc">Side tools built in the spirit of slacking off.</span>
+      </a>
+      <a href="/design-system/" class="item">
+        <span class="item-title">Design System</span>
+        <span class="item-desc">
+          The colors, type, and components behind this site, and how they stay consistent.
+        </span>
+      </a>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .projects-header {
+    margin-bottom: var(--space-lg);
+  }
+
+  .projects-header h1 {
+    font-size: var(--fs-xl);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: var(--space-xs);
+  }
+
+  .projects-lede {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  .projects-list {
+    max-width: 28rem;
+  }
+</style>
