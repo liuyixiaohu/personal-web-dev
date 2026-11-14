@@ -678,7 +678,7 @@
 
   .event-title {
     font-size: var(--fs-lg);
-    font-weight: 700;
+    font-weight: 500;
     line-height: 1.3;
     color: var(--text);
     margin-bottom: var(--space-xs);
@@ -760,7 +760,7 @@
 
   .date-group-header {
     font-size: var(--fs-xs);
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.5;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -845,7 +845,7 @@
 
   .privacy-heading {
     font-size: var(--fs-lg);
-    font-weight: 700;
+    font-weight: 500;
     line-height: 1.3;
     margin-bottom: var(--space-sm);
   }
@@ -859,7 +859,7 @@
   .privacy-link {
     color: var(--color-rose);
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 500;
     font-size: var(--fs-xs);
     line-height: 1.5;
   }

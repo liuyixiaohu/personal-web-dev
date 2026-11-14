@@ -60,7 +60,13 @@ const ogImageURL = new URL('/og-image.png', Astro.site);
     <meta name="twitter:description" content={socialDescription} />
     <meta name="twitter:image" content={ogImageURL} />
 
-    <!-- Fonts: LXGW WenKai Light/Regular/Bold under unified family name -->
+    <!-- EB Garamond for English; LXGW WenKai is the Chinese fallback. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap"
+      rel="stylesheet"
+    />
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/lxgw-wenkai-webfont/1.7.0/lxgwwenkai-light.css"
