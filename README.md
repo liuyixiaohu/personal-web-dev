@@ -136,7 +136,7 @@ npm run seo:resubmit    # request reindex of new/updated URLs
 
 ## Design system
 
-Documented at [workbench.kunli.co/design-system](https://workbench.kunli.co/design-system/).
+Documented at [kunli.co/design-system](https://kunli.co/design-system/).
 Tokens in `src/styles/global.css` must match that page.
 
 ## License
