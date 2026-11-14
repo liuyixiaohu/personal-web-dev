@@ -83,8 +83,8 @@ const radii = [
           pixel size fails the lint check.
         </li>
         <li>
-          The token set is checked in CI against a snapshot of the workbench copy, so the two cannot
-          drift apart unnoticed.
+          The private workbench copies the token set and is checked against this site's global
+          stylesheet in CI, so the two cannot drift apart unnoticed.
         </li>
         <li>Layout and text styles are shared components, not rebuilt on each page.</li>
       </ul>
