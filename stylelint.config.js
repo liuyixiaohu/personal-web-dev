@@ -1,5 +1,5 @@
 /**
- * Design-system lint — guards adherence to /design-system, not formatting
+ * Design-system lint — guards adherence to kunli.co/design-system, not formatting
  * (Prettier owns formatting). Deliberately minimal: only rules that catch
  * design drift, so it stays low-noise.
  *
@@ -40,14 +40,14 @@ export default {
           'black',
         ],
         message:
-          'Use a documented design token instead of a literal value — see workbench.kunli.co/design-system.',
+          'Use a documented design token instead of a literal value — see kunli.co/design-system.',
       },
     ],
     'declaration-property-value-disallowed-list': [
       { 'font-family': ['/mono/i'] },
       {
         message:
-          'Use the one brand typeface (var(--font-body)); no monospace — see /design-system.',
+          'Use the one brand typeface (var(--font-body)); no monospace — see kunli.co/design-system.',
       },
     ],
   },

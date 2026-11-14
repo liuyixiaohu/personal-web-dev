@@ -10,10 +10,11 @@ These rules apply to every human and coding agent working in this repository.
 
 ## Design system
 
-- Treat `personal-web-console/src/pages/design-system.astro` (published at
-  `workbench.kunli.co/design-system`) as the single source of truth.
-- Keep the `:root` token block byte-equivalent to
-  `personal-web-console/src/styles/global.css`.
+- Treat `src/pages/design-system.astro` in this repo (published at
+  `kunli.co/design-system`) and `src/styles/global.css` as the single source of
+  truth.
+- `personal-web-console` copies the `:root` token block; its `check:tokens`
+  script fails if its copy drifts from this repo's `src/styles/global.css`.
 - Use only the tokens defined in `src/styles/global.css`.
 - Do not introduce literal colors, font sizes, border radii, box shadows, or
   font stacks when a token applies.
