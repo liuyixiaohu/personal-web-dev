@@ -3,16 +3,17 @@ import { extname, join, relative } from 'node:path';
 
 import {
   collectGlobalTokens,
-  compareTokenMaps,
   findLiteralColorsOutsideStyles,
   findUndefinedDesignTokens,
-  parseGlobalTokenMap,
 } from './lib/design-system-audit.mjs';
+
+// kunli.co's global.css is the single source of truth for design tokens.
+// This script checks that every token used in the source is defined there,
+// and that no literal colors appear outside style blocks.
 
 const ROOT = process.cwd();
 const SOURCE_ROOT = join(ROOT, 'src');
 const GLOBAL_STYLES = join(SOURCE_ROOT, 'styles', 'global.css');
-const CANONICAL_TOKENS = join(ROOT, 'scripts', 'design-system-tokens.json');
 const EXTENSIONS = new Set(['.css', '.astro', '.svelte', '.ts', '.js', '.mjs']);
 
 function sourceFiles(directory) {
@@ -27,22 +28,8 @@ function sourceFiles(directory) {
   return files;
 }
 
-const globalStyles = readFileSync(GLOBAL_STYLES, 'utf8');
-const definedTokens = collectGlobalTokens(globalStyles);
-const localTokenMap = parseGlobalTokenMap(globalStyles);
-const canonicalTokenMap = new Map(
-  Object.entries(JSON.parse(readFileSync(CANONICAL_TOKENS, 'utf8')).tokens),
-);
+const definedTokens = collectGlobalTokens(readFileSync(GLOBAL_STYLES, 'utf8'));
 const findings = [];
-
-for (const value of compareTokenMaps(localTokenMap, canonicalTokenMap)) {
-  findings.push({
-    rule: 'console-token-parity',
-    path: 'src/styles/global.css',
-    line: 1,
-    value,
-  });
-}
 
 for (const absolutePath of sourceFiles(SOURCE_ROOT)) {
   const path = relative(ROOT, absolutePath).split('\\').join('/');

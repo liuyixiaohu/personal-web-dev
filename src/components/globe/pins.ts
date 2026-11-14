@@ -1,6 +1,6 @@
 // ============================================
 // Pin Data for Kun's Life Journey Globe
-// Each pin marks a place on the globe
+// Each pin marks a place, in the order it was lived
 // Titles, summaries, and stories live in src/content/journey/*.mdx
 // ============================================
 

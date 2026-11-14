@@ -1,5 +1,6 @@
 <script lang="ts">
   import '../../styles/filters.css';
+  import EventSubscription from './EventSubscription.svelte';
 
   interface Props {
     allLocations: string[];
@@ -248,6 +249,7 @@
         bind:value={excludeInput}
         onkeydown={handleExcludeKeydown}
       />
+      <EventSubscription />
     </div>
   </div>
 </div>

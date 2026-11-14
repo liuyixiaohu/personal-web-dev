@@ -10,7 +10,7 @@ const latestSiftVersion = siftChangelog[0]?.version ?? 'v3.1';
   description="Sift is a Chrome extension that cleans up your LinkedIn feed and flags suspicious job listings. Free, open source, runs entirely in your browser. By Kun Li."
 >
   <main id="main" class="sift-page grid-page">
-    <a href="/" class="back-link">← Home</a>
+    <a href="/touch-fish/" class="back-link">← Touch Fish</a>
 
     <!-- Hero -->
     <header class="sift-hero">
@@ -106,31 +106,28 @@ const latestSiftVersion = siftChangelog[0]?.version ?? 'v3.1';
   .sift-logo {
     width: 64px;
     height: 64px;
-    border-radius: var(--radius-lg);
     flex-shrink: 0;
   }
 
   .sift-hero-title h1 {
     font-size: var(--fs-xl);
-    font-weight: 700;
-    line-height: 1.2;
-    color: var(--color-rose);
+    font-weight: 500;
+    line-height: 1.05;
+    color: var(--text);
     display: inline-flex;
     align-items: baseline;
     gap: 0.5rem;
   }
 
   .sift-version {
-    font-size: var(--fs-xs);
+    font-size: var(--fs-base);
     color: var(--text-light);
     font-weight: 400;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 0.1em 0.4em;
   }
 
   .sift-tagline {
     color: var(--text-light);
+    font-style: italic;
     margin-top: var(--space-xs);
   }
 
@@ -144,21 +141,19 @@ const latestSiftVersion = siftChangelog[0]?.version ?? 'v3.1';
   .sift-cta {
     display: inline-flex;
     align-items: center;
-    font-size: var(--fs-xs);
-    font-weight: 600;
+    font-size: var(--fs-base);
+    font-weight: 400;
     line-height: 1.5;
-    padding: 0.5em 1em;
-    border-radius: var(--radius-md);
+    padding: 0.35em 0.9em;
+    border: 1px solid var(--text);
     text-decoration: none;
-    transition:
-      opacity 0.2s ease,
-      border-color 0.2s ease;
+    transition: opacity 0.2s ease;
   }
 
   .sift-cta--primary {
-    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value -- approved inverse text on the rose surface */
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value -- inverse text on the ink surface */
     color: #fff;
-    background: var(--color-rose);
+    background: var(--text);
   }
 
   .sift-cta--primary:hover {
@@ -168,11 +163,6 @@ const latestSiftVersion = siftChangelog[0]?.version ?? 'v3.1';
   .sift-cta--secondary {
     color: var(--text);
     background: transparent;
-    border: 1px solid var(--border);
-  }
-
-  .sift-cta--secondary:hover {
-    border-color: var(--text-light);
   }
 
   .sift-maker {
@@ -197,22 +187,26 @@ const latestSiftVersion = siftChangelog[0]?.version ?? 'v3.1';
   }
 
   .section h2 {
-    font-size: var(--fs-lg);
-    font-weight: 700;
+    font-size: var(--fs-xs);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-light);
     margin-bottom: var(--space-sm);
   }
 
   .section > p {
-    color: var(--text-light);
+    color: var(--text);
     line-height: 1.6;
     margin-bottom: var(--space-xs);
   }
 
   .sift-link {
-    color: var(--color-rose);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: var(--fs-xs);
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    font-weight: 400;
+    font-size: var(--fs-base);
     line-height: 1.5;
   }
 
@@ -228,12 +222,12 @@ const latestSiftVersion = siftChangelog[0]?.version ?? 'v3.1';
   }
 
   .sift-changelog-release {
-    border-left: 2px solid var(--border);
-    padding-left: var(--space-sm);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: var(--space-sm);
   }
 
   .sift-changelog-version {
-    font-size: var(--fs-xs);
+    font-size: var(--fs-base);
     font-weight: 500;
     line-height: 1.5;
     color: var(--text);
@@ -241,7 +235,8 @@ const latestSiftVersion = siftChangelog[0]?.version ?? 'v3.1';
   }
 
   .sift-changelog-why {
-    font-size: var(--fs-xs);
+    font-size: var(--fs-base);
+    font-style: italic;
     color: var(--text-light);
     margin: 0.15rem 0 0.4rem;
     line-height: 1.5;
@@ -250,8 +245,8 @@ const latestSiftVersion = siftChangelog[0]?.version ?? 'v3.1';
   .sift-changelog-list {
     margin: 0.2rem 0 0 1.2rem;
     padding: 0;
-    font-size: var(--fs-xs);
-    color: var(--text-light);
+    font-size: var(--fs-base);
+    color: var(--text);
     line-height: 1.5;
   }
 

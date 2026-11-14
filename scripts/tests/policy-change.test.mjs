@@ -7,12 +7,10 @@ const protectedPaths = [
   '.github/workflows/check.yml',
   'CLAUDE.md',
   'stylelint.config.js',
-  'scripts/design-system-tokens.json',
   'scripts/verify-design-system.mjs',
   'scripts/lib/design-system-audit.mjs',
   'scripts/tests/design-system-audit.test.mjs',
   'package.json',
-  'docs/brand-guidelines.md',
   'AGENTS.md',
 ];
 

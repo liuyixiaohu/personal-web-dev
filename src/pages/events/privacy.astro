@@ -3,16 +3,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/privacy.css';
 ---
 
-<BaseLayout
-  title="Events Privacy Policy"
-  description="Bay Area Tech and AI Events privacy policy. No personal data collected."
->
+<BaseLayout title="Events Privacy Policy" description="Bay Area Tech and AI Events privacy policy.">
   <main id="main" class="privacy-page grid-page">
     <a href="/events/" class="back-link">&larr; Events</a>
 
     <header class="privacy-header">
       <h1>Privacy Policy</h1>
-      <p class="privacy-updated">Last updated: November 8, 2026</p>
+      <p class="privacy-updated">Last updated: November 12, 2026</p>
     </header>
 
     <section class="section">
@@ -27,8 +24,9 @@ import '../../styles/privacy.css';
     <section class="section">
       <h2>Data Collection</h2>
       <p>
-        This page does <strong>not</strong> use accounts or sign-in, and it does not ask for contact information.
-        It does make the network requests needed to load event data and run website analytics:
+        This page does <strong>not</strong> use accounts or sign-in. It asks for an email address only
+        if you choose to subscribe to event updates. It also makes the network requests needed to load
+        event data and run website analytics:
       </p>
       <ul class="privacy-list">
         <li>Event data is fetched from this website's public data files</li>
@@ -45,6 +43,17 @@ import '../../styles/privacy.css';
           rel="noopener"
           class="privacy-link">privacy policy</a
         > applies to that data.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Email Subscriptions</h2>
+      <p>
+        If you subscribe, this site stores your email address and subscription status in Cloudflare
+        D1. Resend processes your address to deliver confirmation and event-update emails. You must
+        confirm within 24 hours before updates are sent. Each update email includes an unsubscribe
+        link; unsubscribing stops future messages while retaining the minimum record needed to honor
+        that choice and prevent duplicate deliveries.
       </p>
     </section>
 

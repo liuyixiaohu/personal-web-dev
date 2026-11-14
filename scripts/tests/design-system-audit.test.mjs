@@ -3,10 +3,8 @@ import test from 'node:test';
 
 import {
   collectGlobalTokens,
-  compareTokenMaps,
   findLiteralColorsOutsideStyles,
   findUndefinedDesignTokens,
-  parseGlobalTokenMap,
 } from '../lib/design-system-audit.mjs';
 
 test('collectGlobalTokens returns declared custom properties', () => {
@@ -14,31 +12,6 @@ test('collectGlobalTokens returns declared custom properties', () => {
     [...collectGlobalTokens(':root { --color-rose: #d9797b; --fs-xs: .75rem; }')],
     ['--color-rose', '--fs-xs'],
   );
-});
-
-test('token maps normalize whitespace and report drift in either direction', () => {
-  const canonical = new Map([
-    ['--bg', '#faf7f2'],
-    ['--fs-base', 'clamp(1rem, 0.9rem + 0.5vw, 1.25rem)'],
-  ]);
-  const actual = parseGlobalTokenMap(`:root {
-    --bg: #faf7f2;
-    --fs-base: clamp(1rem,  0.9rem + 0.5vw, 1.25rem);
-    --extra: 1rem;
-  }`);
-
-  assert.deepEqual(compareTokenMaps(actual, canonical), [
-    '--extra exists locally but not in the Console design system',
-  ]);
-});
-
-test('token value changes are reported', () => {
-  const actual = new Map([['--bg', '#fff']]);
-  const canonical = new Map([['--bg', '#faf7f2']]);
-
-  assert.deepEqual(compareTokenMaps(actual, canonical), [
-    '--bg is "#fff" locally but "#faf7f2" in the Console design system',
-  ]);
 });
 
 test('undefined design tokens are reported but local component variables are ignored', () => {

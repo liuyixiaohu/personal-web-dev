@@ -131,3 +131,24 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ steps.pull-request.outputs.number }}
         run: gh pr merge "$PR_NUMBER" --auto --squash --delete-branch
+
+      - name: Dispatch subscriber notification after merge
+        if: steps.update.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ steps.pull-request.outputs.number }}
+        run: |
+          for attempt in $(seq 1 60); do
+            state="$(gh pr view "$PR_NUMBER" --json state --jq '.state')"
+            if [ "$state" = "MERGED" ]; then
+              gh workflow run notify-subscribers.yml --ref main
+              exit 0
+            fi
+            if [ "$state" = "CLOSED" ]; then
+              echo "Event-data pull request closed without merging" >&2
+              exit 1
+            fi
+            sleep 30
+          done
+          echo "Timed out waiting for event-data pull request to merge" >&2
+          exit 1

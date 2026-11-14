@@ -13,7 +13,8 @@ interface Env {
 // guessing a live code is not practical.
 const ALPHABET = 'abcdefghjkmnpqrstuvwxyz23456789';
 const CODE_LENGTH = 16;
-const MAX_BODY_BYTES = 256 * 1024;
+// Keep this in step with the client limit in src/components/events/syncUtils.ts.
+const MAX_BODY_BYTES = 4 * 1024 * 1024;
 const MAX_LIST = 500;
 const MAX_TEXT = 300;
 const MAX_DECISIONS = 2000;
@@ -33,7 +34,6 @@ const EVENT_FIELDS = [
   'is_free',
   'price_cents',
   'price_currency',
-  'categories',
   'first_seen_at',
 ] as const;
 
@@ -157,8 +157,23 @@ function parseSettings(v: unknown): SyncSettings | null {
 export const onRequestPost: PagesFunction<Env> = async ({ request, env, params }) => {
   if (!env.EVENTS_SYNC) return json({ error: 'Sync storage is not configured' }, 503);
 
-  const text = await request.text();
-  if (text.length > MAX_BODY_BYTES) return json({ error: 'Request is too large' }, 413);
+  // Read in bounded chunks, including when Content-Length is missing or incorrect.
+  const reader = request.body?.getReader();
+  if (!reader) return json({ error: 'Invalid request' }, 400);
+  const decoder = new TextDecoder();
+  let text = '';
+  let bytes = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    bytes += value.byteLength;
+    if (bytes > MAX_BODY_BYTES) {
+      await reader.cancel();
+      return json({ error: 'Request is too large' }, 413);
+    }
+    text += decoder.decode(value, { stream: true });
+  }
+  text += decoder.decode();
 
   let body: Record<string, unknown>;
   try {

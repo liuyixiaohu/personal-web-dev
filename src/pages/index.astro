@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import HintTooltip from '../components/HintTooltip.astro';
 ---
 
 <BaseLayout
@@ -8,114 +7,119 @@ import HintTooltip from '../components/HintTooltip.astro';
   description="Given the SEO Principles, I'm genuinely surprised you found this page. Welcome, I guess."
   ogDescription="Some stories off the record."
   bodyClass="home"
-  footerVariant="home"
+  hideFooter
 >
-  <main id="main">
-    <h1 class="sr-only">Kun Li</h1>
-
-    <section class="home-hero">
-      <div class="home-content">
-        <div class="home-tagline">
-          <p class="greeting-quote">
-            <span>Where’s your </span><HintTooltip
-              ><span>Negative #25</span><span slot="popup"
-                >From <a href="https://www.imdb.com/title/tt0359950/" target="_blank"
-                  >The Secret Life of Walter Mitty</a
-                >, a film that has been encouraging me to explore the world, find myself.</span
-              ></HintTooltip
-            ><span>?</span>
-          </p>
-        </div>
-
-        <nav class="home-nav">
-          <a href="/life-journey/" class="nav-primary nav-link--journey">Journey</a>
-        </nav>
-      </div>
-    </section>
+  <main id="main" class="cover">
+    <div class="cover-body">
+      <h1 class="cover-title">
+        Where’s your Negative #25?<a class="cover-mark" href="#cover-note">1</a>
+      </h1>
+      <a class="cover-enter" href="/life-journey/">My Journey</a>
+    </div>
   </main>
+  <footer class="cover-foot">
+    <div class="cover-side">
+      <p id="cover-note" class="cover-note">
+        <sup>1</sup>
+        <em>The Secret Life of Walter Mitty.</em> A film that has been encouraging me to explore the world
+        and find myself.
+      </p>
+    </div>
+    <div class="cover-side cover-side--end">
+      <a href="/projects/">Projects</a>
+    </div>
+  </footer>
 </BaseLayout>
 
 <style>
-  /* Single-screen flex layout: body is the column, hero fills remaining space */
   :global(body.home) {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    height: 100dvh;
-    overflow: hidden;
+    min-height: 100dvh;
   }
 
   :global(body.home > main) {
     flex: 1;
-    display: flex;
-    flex-direction: column;
   }
 
-  :global(body.home .site-footer) {
-    margin-top: 0;
-    padding-bottom: var(--space-md);
-  }
-
-  .home-hero {
-    flex: 1;
-    position: relative;
+  .cover {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: var(--content-padding);
   }
 
-  .home-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    max-width: 40rem;
+  .cover-body {
     width: 100%;
-    /* Quote + Journey read as one tight, centered pair. */
-    gap: clamp(2rem, 5vw, 3rem);
+    max-width: var(--grid-wide);
   }
 
-  .greeting-quote {
+  .cover-title {
+    margin: 0;
+    max-width: 16ch;
     font-size: var(--fs-xl);
-    font-weight: 700;
-    color: var(--text);
-    line-height: 1.2;
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
   }
 
-  .home-nav {
+  .cover-mark {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    margin-left: 0.2em;
+    vertical-align: super;
+    text-decoration: none;
+  }
+
+  .cover-enter {
+    display: block;
+    width: fit-content;
+    margin: var(--space-xl) auto 0;
+    border-bottom: 1px solid var(--text);
+    padding-bottom: 0.08em;
+    font-size: var(--fs-lg);
+    letter-spacing: -0.015em;
+  }
+
+  .cover-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-md);
+    width: 100%;
+    max-width: var(--grid-wide);
+    margin: 0 auto;
+    padding: 0 var(--content-padding) var(--space-md);
+  }
+
+  .cover-side {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    min-width: 0;
   }
 
-  .nav-primary {
-    position: relative;
-    font-size: var(--fs-lg);
-    font-weight: 700;
-    line-height: 1.3;
-    text-decoration: none;
-    transition: opacity 0.2s ease;
-    padding-bottom: 0.25em;
+  .cover-side--end {
+    align-items: flex-end;
+    flex-shrink: 0;
   }
 
-  .nav-primary::after {
+  .cover-side::before {
     content: '';
-    position: absolute;
-    left: -8%;
-    right: -8%;
-    bottom: -0.15em;
-    height: 0.42em;
-    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 8' preserveAspectRatio='none'><path d='M 2 5 Q 18 1 34 4 Q 50 7 66 3 Q 82 0 96 4 L 99 5' stroke='%23D9797B' stroke-width='1.7' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>")
-      center/100% 100% no-repeat;
-    pointer-events: none;
+    width: 2.5rem;
+    border-top: 1px solid var(--border);
+    margin-bottom: var(--space-xs);
   }
 
-  .nav-primary:hover {
-    opacity: 0.6;
+  .cover-note {
+    max-width: 22rem;
+    margin: 0;
+    color: var(--text-light);
+    font-size: var(--fs-xs);
+    line-height: 1.5;
   }
 
-  .nav-link--journey {
-    color: var(--color-rose);
+  .cover-side--end a {
+    font-size: var(--fs-base);
   }
 </style>
