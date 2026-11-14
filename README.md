@@ -16,7 +16,6 @@ GitHub Actions cron), and a Cloudflare Pages deploy.
 | ------------------- | ---------------------------------------------------------------------- |
 | Framework           | [Astro 6](https://astro.build) (static output)                         |
 | Interactive islands | [Svelte 5](https://svelte.dev) runes (`$state`, `$derived`, `$effect`) |
-| Maps                | [D3-geo](https://d3js.org) for life-journey world map                  |
 | Pages               | 8 routes incl. EN + ZH variants for select pages                       |
 | Data pipelines      | Python scripts + GitHub Actions cron (daily)                           |
 | Hosting             | Cloudflare Pages (static site + Functions)                             |
@@ -97,7 +96,7 @@ src/
   components/     Svelte islands + Astro components
   layouts/        BaseLayout with view transitions
   styles/         Global CSS with design tokens
-  utils/          Analytics, journey buildSVG, etc.
+  utils/          Analytics and shared helpers
   data/           Sift changelog (typed TS data)
 scripts/          Daily fetch pipeline (Luma events)
 .github/workflows/  Cron jobs + CI
@@ -136,8 +135,8 @@ npm run seo:resubmit    # request reindex of new/updated URLs
 
 ## Design system
 
-Documented at [kunli.co/design-system](https://kunli.co/design-system/).
-Tokens in `src/styles/global.css` must match that page.
+Tokens are defined in `src/styles/global.css`. The visual identity is described at
+[kunli.co/making](https://kunli.co/making/).
 
 ## License
 
