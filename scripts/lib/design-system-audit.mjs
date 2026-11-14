@@ -27,28 +27,6 @@ export function collectGlobalTokens(source) {
   return new Set(parseGlobalTokenMap(source).keys());
 }
 
-export function compareTokenMaps(actual, canonical) {
-  const differences = [];
-
-  for (const [name, value] of actual) {
-    if (!canonical.has(name)) {
-      differences.push(`${name} exists locally but not in the Console design system`);
-    } else if (canonical.get(name) !== value) {
-      differences.push(
-        `${name} is "${value}" locally but "${canonical.get(name)}" in the Console design system`,
-      );
-    }
-  }
-
-  for (const name of canonical.keys()) {
-    if (!actual.has(name)) {
-      differences.push(`${name} is missing locally but required by the Console design system`);
-    }
-  }
-
-  return differences.sort();
-}
-
 function isDesignToken(name) {
   return (
     EXACT_DESIGN_TOKENS.has(name) || DESIGN_TOKEN_PREFIXES.some((prefix) => name.startsWith(prefix))

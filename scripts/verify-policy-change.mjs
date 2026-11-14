@@ -6,7 +6,6 @@ const EXACT_PROTECTED_PATHS = new Set([
   'CLAUDE.md',
   'docs/brand-guidelines.md',
   'package.json',
-  'scripts/design-system-tokens.json',
   'stylelint.config.js',
   'scripts/lib/design-system-audit.mjs',
   'scripts/lib/event-data-validation.mjs',
