@@ -1,0 +1,209 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const palette = [
+  { token: '--bg', name: 'Paper', usage: 'The page itself. Warm white, never pure white.' },
+  { token: '--text', name: 'Ink', usage: 'Headings and body text.' },
+  { token: '--text-light', name: 'Soft ink', usage: 'Supporting text and captions.' },
+  { token: '--color-rose', name: 'Rose', usage: 'The one warm accent, from the dragon.' },
+  { token: '--color-journey', name: 'Blue', usage: 'Accent for Journey.' },
+  { token: '--color-visual', name: 'Green', usage: 'Accent for visual work.' },
+];
+
+const sizes = [
+  { token: '--fs-xl', label: 'Title', sample: 'Take back a LinkedIn worth your time' },
+  { token: '--fs-lg', label: 'Section', sample: 'How it looks, and why' },
+  {
+    token: '--fs-base',
+    label: 'Body',
+    sample: 'One typeface carries English and Chinese in the same voice.',
+  },
+];
+---
+
+<BaseLayout
+  title="Making kunli.co | Kun Li"
+  description="How this site was designed, and the decisions behind it."
+>
+  <main id="main" class="grid-page">
+    <a href="/projects/" class="back-link">← Projects</a>
+
+    <header class="making-header wide">
+      <h1>Making kunli.co</h1>
+      <p class="making-note">
+        This site is the design work I can show in full. Here is what I decided, and what I cut.
+      </p>
+    </header>
+
+    <section class="making-section wide">
+      <h2>The goal</h2>
+      <p class="making-body">
+        A quiet site that shows who I am through the stories on Journey, not through decoration.
+        Every element has to earn its place.
+      </p>
+    </section>
+
+    <section class="making-section wide">
+      <h2>Color comes from a character</h2>
+      <p class="making-body">
+        The palette comes from a little dragon I love, 小龙格林. I wanted warmth without loud brand
+        colors, so the page is mostly paper and ink, with one warm accent.
+      </p>
+      <div class="making-swatches">
+        {
+          palette.map((c) => (
+            <div class="making-swatch">
+              <div class="making-swatch-color" style={`background: var(${c.token})`} />
+              <span class="making-swatch-name">{c.name}</span>
+              <span class="making-swatch-usage">{c.usage}</span>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="making-section wide">
+      <h2>One typeface for two languages</h2>
+      <p class="making-body">
+        I use one typeface, LXGW WenKai, for English and Chinese. Pairing a Latin font with a
+        Chinese font makes a page feel like two authors. One face keeps it to one voice.
+      </p>
+      <div class="making-type">
+        {
+          sizes.map((t) => (
+            <div class="making-type-row">
+              <span class="making-sample" style={`font-size: var(${t.token})`}>
+                {t.sample}
+              </span>
+              <span class="making-meta">{t.label}</span>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="making-section wide">
+      <h2>One set of rules</h2>
+      <p class="making-body">
+        Every page uses the same small set of sizes, spacing, and corner radii. A new page doesn't
+        need new decisions, and the site doesn't drift as it grows.
+      </p>
+    </section>
+
+    <section class="making-section wide">
+      <h2>What I cut</h2>
+      <ul class="making-list">
+        <li>
+          A "Personal" principle. The Journey pages already show who I am, so the design doesn't
+          need to say it.
+        </li>
+        <li>A Probes section, so the space could hold real projects instead.</li>
+        <li>
+          Anything that only makes sense to a builder. Visitors see the result, not the workings.
+        </li>
+      </ul>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .making-header {
+    margin-bottom: var(--space-xl);
+  }
+
+  .making-header h1 {
+    font-size: var(--fs-xl);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: var(--space-xs);
+  }
+
+  .making-section {
+    border-top: 1px solid var(--border);
+    padding-top: var(--space-lg);
+    margin-bottom: var(--space-xl);
+  }
+
+  .making-section h2 {
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    margin-bottom: var(--space-sm);
+  }
+
+  .making-note,
+  .making-body {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: var(--space-md);
+  }
+
+  .making-list {
+    padding-left: 1.1rem;
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+
+  .making-list li {
+    margin-bottom: 0.4rem;
+  }
+
+  .making-swatches {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-sm);
+  }
+
+  .making-swatch {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .making-swatch-color {
+    height: 56px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .making-swatch-name {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    padding: 0.4rem 0.5rem 0;
+  }
+
+  .making-swatch-usage {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    line-height: 1.4;
+    padding: 0.2rem 0.5rem 0.4rem;
+  }
+
+  .making-type {
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .making-type-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .making-sample {
+    color: var(--text);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .making-meta {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    white-space: nowrap;
+  }
+</style>
