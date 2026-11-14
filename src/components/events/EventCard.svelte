@@ -200,7 +200,7 @@
   .event-new {
     flex-shrink: 0;
     font-size: var(--fs-xs);
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.4;
     color: var(--color-visual);
     border: 1px solid var(--color-visual);
@@ -210,7 +210,7 @@
 
   .event-name {
     font-size: var(--fs-lg);
-    font-weight: 700;
+    font-weight: 500;
     color: var(--text);
     text-decoration: none;
     line-height: 1.3;
