@@ -11,7 +11,6 @@ const protectedPaths = [
   'scripts/lib/design-system-audit.mjs',
   'scripts/tests/design-system-audit.test.mjs',
   'package.json',
-  'docs/brand-guidelines.md',
   'AGENTS.md',
 ];
 

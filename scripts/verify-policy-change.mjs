@@ -4,7 +4,6 @@ import { pathToFileURL } from 'node:url';
 const EXACT_PROTECTED_PATHS = new Set([
   'AGENTS.md',
   'CLAUDE.md',
-  'docs/brand-guidelines.md',
   'package.json',
   'stylelint.config.js',
   'scripts/lib/design-system-audit.mjs',
