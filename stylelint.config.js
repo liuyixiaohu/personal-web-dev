@@ -1,5 +1,5 @@
 /**
- * Design-system lint — guards adherence to kunli.co/design-system, not formatting
+ * Design-system lint — guards adherence to the tokens in src/styles/global.css, not formatting
  * (Prettier owns formatting). Deliberately minimal: only rules that catch
  * design drift, so it stays low-noise.
  *
@@ -39,15 +39,13 @@ export default {
           '#000000',
           'black',
         ],
-        message:
-          'Use a documented design token instead of a literal value — see kunli.co/design-system.',
+        message: 'Use a design token from src/styles/global.css instead of a literal value.',
       },
     ],
     'declaration-property-value-disallowed-list': [
       { 'font-family': ['/mono/i'] },
       {
-        message:
-          'Use the one brand typeface (var(--font-body)); no monospace — see kunli.co/design-system.',
+        message: 'Use the one brand typeface (var(--font-body)); no monospace.',
       },
     ],
   },
