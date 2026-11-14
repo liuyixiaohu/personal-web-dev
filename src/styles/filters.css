@@ -39,10 +39,9 @@
   font-family: inherit;
   font-size: var(--fs-xs);
   padding: 0.2em 0.55em;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
   background: transparent;
-  color: var(--text-light);
+  color: var(--text);
   cursor: pointer;
   white-space: nowrap;
   transition:
@@ -57,9 +56,9 @@
 }
 
 .pill--active {
-  background: rgba(0, 0, 0, 0.06);
+  background: transparent;
   color: var(--text);
-  border-color: rgba(0, 0, 0, 0.18);
+  border-color: var(--text);
 }
 
 .pill--empty {

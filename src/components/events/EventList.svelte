@@ -677,17 +677,18 @@
   }
 
   .event-title {
-    font-size: var(--fs-lg);
+    font-size: var(--fs-xl);
     font-weight: 500;
-    line-height: 1.3;
+    line-height: 1.05;
     color: var(--text);
     margin-bottom: var(--space-xs);
   }
 
   .event-subtitle {
-    font-size: var(--fs-xs);
+    font-size: var(--fs-base);
+    font-style: italic;
     color: var(--text-light);
-    margin: 0 0 var(--space-xs);
+    margin: 0 0 var(--space-sm);
     line-height: 1.5;
   }
 
@@ -844,23 +845,27 @@
   }
 
   .privacy-heading {
-    font-size: var(--fs-lg);
+    font-size: var(--fs-xs);
     font-weight: 500;
-    line-height: 1.3;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    line-height: 1.5;
     margin-bottom: var(--space-sm);
   }
 
   .privacy-desc {
-    color: var(--text-light);
+    color: var(--text);
     line-height: 1.6;
     margin-bottom: var(--space-xs);
   }
 
   .privacy-link {
-    color: var(--color-rose);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: var(--fs-xs);
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    font-weight: 400;
+    font-size: var(--fs-base);
     line-height: 1.5;
   }
 
