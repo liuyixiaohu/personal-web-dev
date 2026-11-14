@@ -16,7 +16,7 @@ const sizes = [
   {
     token: '--fs-base',
     label: 'Body',
-    sample: 'One typeface carries English and Chinese in the same voice.',
+    sample: 'English is EB Garamond. Chinese falls back to LXGW WenKai.',
   },
 ];
 ---
@@ -38,8 +38,18 @@ const sizes = [
     <section class="making-section wide">
       <h2>The goal</h2>
       <p class="making-body">
-        A quiet site that shows who I am through the stories on Journey, not through decoration.
-        Every element has to earn its place.
+        A quiet site that shows who I am through the stories on Journey, not through decoration. It
+        should read like a book, not scroll like a feed, and it should stay apart from LinkedIn,
+        which already says what I have done. Every element has to earn its place.
+      </p>
+    </section>
+
+    <section class="making-section wide">
+      <h2>It reads like a book</h2>
+      <p class="making-body">
+        The home page is a title page: one question and one way in. Journey is a contents page, with
+        the places in the order I lived them. Each chapter opens with a drop cap, and its quotes sit
+        on a single rule, the way a printed page does.
       </p>
     </section>
 
@@ -63,10 +73,11 @@ const sizes = [
     </section>
 
     <section class="making-section wide">
-      <h2>One typeface for two languages</h2>
+      <h2>One Latin face, Chinese as fallback</h2>
       <p class="making-body">
-        I use one typeface, LXGW WenKai, for English and Chinese. Pairing a Latin font with a
-        Chinese font makes a page feel like two authors. One face keeps it to one voice.
+        English is set in EB Garamond, an open-source Garamond. Chinese falls back to LXGW WenKai,
+        so an occasional Chinese word does not change the voice of the page. Headings and labels use
+        one weight, 500, so the browser never fakes a bold.
       </p>
       <div class="making-type">
         {
@@ -101,6 +112,11 @@ const sizes = [
         <li>
           Anything that only makes sense to a builder. Visitors see the result, not the workings.
         </li>
+        <li>A hand-drawn underline. It made the page feel like a sketch, not a book.</li>
+        <li>
+          The world map on Journey. A list in the order it happened says more, and reads better on a
+          phone.
+        </li>
       </ul>
     </section>
   </main>
@@ -113,7 +129,7 @@ const sizes = [
 
   .making-header h1 {
     font-size: var(--fs-xl);
-    font-weight: 700;
+    font-weight: 500;
     line-height: 1.2;
     margin-bottom: var(--space-xs);
   }
@@ -126,7 +142,7 @@ const sizes = [
 
   .making-section h2 {
     font-size: var(--fs-lg);
-    font-weight: 700;
+    font-weight: 500;
     margin-bottom: var(--space-sm);
   }
 
@@ -170,7 +186,7 @@ const sizes = [
 
   .making-swatch-name {
     font-size: var(--fs-xs);
-    font-weight: 700;
+    font-weight: 500;
     padding: 0.4rem 0.5rem 0;
   }
 
@@ -197,7 +213,7 @@ const sizes = [
 
   .making-sample {
     color: var(--text);
-    font-weight: 700;
+    font-weight: 500;
     line-height: 1.3;
   }
 
