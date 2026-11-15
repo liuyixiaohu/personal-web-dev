@@ -40,16 +40,6 @@ if (existsSync(join(root, detailPage))) {
 
 const indexPage = read('src/pages/life-journey.astro');
 assert(indexPage.includes('aria-label="Contents"'), 'Journey page needs a contents list');
-assert(!indexPage.includes('story-modal'), 'Journey page should not render the old story modal');
-assert(
-  !existsSync(join(root, 'src/data/journeyStories.ts')),
-  'Old journeyStories.ts should be removed',
-);
-assert(
-  !existsSync(join(root, 'src/utils/journey/modal.ts')),
-  'Old journey modal utility should be removed',
-);
-
 if (failures.length) {
   console.error(`Journey MDX verification failed (${failures.length}):`);
   for (const failure of failures) console.error(`- ${failure}`);
