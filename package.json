@@ -21,7 +21,7 @@
     "seo:resubmit": "node scripts/gsc-reindex.mjs"
   },
   "dependencies": {
-    "@astrojs/mdx": "^6.0.1",
+    "@astrojs/mdx": "^8.1.5",
     "@astrojs/sitemap": "^3.7.4",
     "@astrojs/svelte": "^8.1.2",
     "@huggingface/transformers": "^3.8.1",
