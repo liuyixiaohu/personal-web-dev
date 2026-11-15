@@ -11,7 +11,7 @@ const DESIGN_TOKEN_PREFIXES = [
   '--grid-',
 ];
 
-export function parseGlobalTokenMap(source) {
+function parseGlobalTokenMap(source) {
   const root = source.match(/:root\s*\{([\s\S]*?)\}/);
   if (!root) return new Map();
 

@@ -34,8 +34,8 @@ export interface EventData {
 // --- Constants ---
 export const DATA_URL = '/data/events.json';
 export const STALE_THRESHOLD_MS = 48 * 60 * 60 * 1000; // 48 hours
-export const TZ = 'America/Los_Angeles';
-export const LOCALE = 'en-US';
+const TZ = 'America/Los_Angeles';
+const LOCALE = 'en-US';
 export const BLOCKED_CALENDARS = new Set(['社交感染聚会']);
 export const BLOCKED_NAME_KEYWORDS = ["Kiehl's"];
 
@@ -49,7 +49,7 @@ export function loadPref<T>(key: string, fallback: T): T {
   }
 }
 
-export function stripState(loc: string): string {
+function stripState(loc: string): string {
   return loc.replace(/, (California|CA)$/, '');
 }
 
@@ -152,7 +152,7 @@ export function eventDateKey(event: LumaEvent): string {
 }
 
 /** Calendar day in Pacific time, matching how event dates are grouped. */
-export function pacificDateKey(iso: string): string {
+function pacificDateKey(iso: string): string {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return '';
   const local = new Date(d.toLocaleString('en-US', { timeZone: TZ }));
@@ -202,7 +202,7 @@ export function buildLocationIndex(events: LumaEvent[]): {
 // Decisions live in the browser. A handled event leaves the upcoming list and
 // stays in Handled for 7 days, then the record is deleted.
 
-export const DECISION_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+const DECISION_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 
 export type EventDecisionStatus = 'applied' | 'ignored';
 export type EventListMode = 'upcoming' | 'handled';
@@ -278,12 +278,4 @@ export function startsOnOrAfterToday(event: LumaEvent, now = Date.now()): boolea
   const startKey = pacificDateKey(event.start_at);
   const todayKey = pacificDateKey(new Date(now).toISOString());
   return Boolean(startKey) && Boolean(todayKey) && startKey >= todayKey;
-}
-
-/** An event is still listable when it has not ended. */
-export function isUpcoming(event: LumaEvent, now = Date.now()): boolean {
-  const end = event.end_at ? Date.parse(event.end_at) : NaN;
-  if (Number.isFinite(end)) return end >= now;
-  const start = event._startMs ?? Date.parse(event.start_at);
-  return Number.isFinite(start) && start >= now;
 }

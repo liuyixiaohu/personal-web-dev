@@ -15,6 +15,6 @@ Rules, enforced in CI:
 
 ## Gates (run before pushing)
 
-`npm run check` (types) · `npm run lint:css` (design) · `npm run format:check` · `npm run build` · `npm run test:journey` · `npm run test:tooltips`.
+`npm run check` (types) · `npm run lint:css` (design) · `npm run format:check` · `npm run build` · `npm run test:journey`.
 
 Branch off `main` and open a PR; the team squash-merges.
