@@ -55,7 +55,7 @@ function dot(left: number[], right: number[]): number {
 }
 
 /** Factual summary drives relevance. Title can only provide a small exact-word boost. */
-export function intentScore(
+function intentScore(
   event: LumaEvent,
   queryTerms: string[],
   queryVector?: number[],

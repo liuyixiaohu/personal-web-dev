@@ -1,65 +1,43 @@
 // ============================================
-// Pin Data for Kun's Life Journey Globe
-// Each pin marks a place, in the order it was lived
+// Journey stations, in the order they were lived.
 // Titles, summaries, and stories live in src/content/journey/*.mdx
 // ============================================
 
 export interface PinData {
   id: string;
-  lat: number;
-  lng: number;
   city: string;
-  country: string;
   year: number;
 }
 
 export const pins: PinData[] = [
   {
     id: 'jiaozhou',
-    lat: 36.28,
-    lng: 120.0,
     city: 'Jiaozhou',
-    country: 'Shandong, China',
     year: 1996,
   },
   {
     id: 'shouguang',
-    lat: 36.86,
-    lng: 118.73,
     city: 'Shouguang',
-    country: 'Shandong, China',
     year: 2014,
   },
   {
     id: 'qingdao',
-    lat: 36.07,
-    lng: 120.38,
     city: 'Qingdao',
-    country: 'Shandong, China',
     year: 2018,
   },
   {
     id: 'madison',
-    lat: 43.07,
-    lng: -89.4,
     city: 'Madison',
-    country: 'Wisconsin, USA',
     year: 2021,
   },
   {
     id: 'fairfield',
-    lat: 38.25,
-    lng: -122.04,
     city: 'Fairfield',
-    country: 'California, USA',
     year: 2023,
   },
   {
     id: 'berkeley',
-    lat: 37.87,
-    lng: -122.27,
     city: 'Berkeley',
-    country: 'California, USA',
     year: 2025,
   },
 ];

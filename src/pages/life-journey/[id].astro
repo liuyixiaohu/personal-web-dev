@@ -1,7 +1,7 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import ArticleLayout from '../../layouts/ArticleLayout.astro';
-import { pins, type PinData } from '../../components/globe/pins';
+import { pins, type PinData } from '../../data/journey-pins';
 
 export async function getStaticPaths() {
   const entries = await getCollection('journey');
