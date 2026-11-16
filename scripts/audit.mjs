@@ -123,7 +123,7 @@ const LIVE_URLS = [
   'https://kunli.co/events',
   'https://kunli.co/life-journey',
   'https://kunli.co/sift',
-  'https://kunli.co/touch-fish',
+  'https://kunli.co/projects',
 ];
 out.gsc.inspection = [];
 for (const url of LIVE_URLS) {

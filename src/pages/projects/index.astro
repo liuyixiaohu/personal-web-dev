@@ -11,18 +11,35 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     <header class="projects-header">
       <h1>Projects</h1>
-      <p class="projects-lede">Things I've built, grouped loosely by what they're for.</p>
     </header>
 
-    <section class="projects-list" aria-label="Projects">
-      <a href="/touch-fish/" class="item">
-        <span class="item-title">Touch Fish</span>
-        <span class="item-desc">Side tools built in the spirit of slacking off.</span>
-      </a>
+    <div class="projects-list">
       <a href="/making/" class="item">
         <span class="item-title">Making kunli.co</span>
-        <span class="item-desc">How this site was designed, and the decisions behind it.</span>
+        <span class="item-desc">The colors, type, spacing, and components behind this site.</span>
       </a>
+    </div>
+
+    <section class="projects-group" id="touch-fish" aria-labelledby="touch-fish-heading">
+      <h2 class="section-label" id="touch-fish-heading">Touch Fish</h2>
+      <p class="projects-note">
+        “Touch Fish” (摸鱼, mō yú), Chinese slang for slacking off. These tools give back time that
+        feeds and platforms would otherwise take, so you have more time to do nothing in particular.
+      </p>
+      <div class="projects-list">
+        <a href="/events/" class="item">
+          <span class="item-title"
+            >Bay Area Tech & AI Events<span class="item-type">webapp</span></span
+          >
+          <span class="item-desc"
+            >No more doomscrolling event platforms into an existential crisis.</span
+          >
+        </a>
+        <a href="/sift/" class="item">
+          <span class="item-title">Sift<span class="item-type">extension</span></span>
+          <span class="item-desc">Take back a LinkedIn worth your time.</span>
+        </a>
+      </div>
     </section>
   </main>
 </BaseLayout>
@@ -36,16 +53,41 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     font-size: var(--fs-xl);
     font-weight: 500;
     line-height: 1.2;
-    margin-bottom: var(--space-xs);
-  }
-
-  .projects-lede {
-    font-size: var(--fs-xs);
-    color: var(--text-light);
-    line-height: 1.5;
   }
 
   .projects-list {
     max-width: 28rem;
+  }
+
+  .projects-group {
+    max-width: 28rem;
+    margin-top: var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--border);
+    scroll-margin-top: var(--space-md);
+  }
+
+  .projects-group .section-label {
+    margin-bottom: var(--space-xs);
+  }
+
+  .projects-note {
+    font-size: var(--fs-xs);
+    color: var(--text-light);
+    line-height: 1.5;
+    margin-bottom: var(--space-sm);
+  }
+
+  .item-type {
+    font-size: var(--fs-xs);
+    font-weight: 400;
+    color: var(--text-light);
+    background: rgba(0, 0, 0, 0.04);
+    padding: 0.05rem 0.4rem;
+    border-radius: var(--radius-sm);
+    margin-left: 0.5em;
+    vertical-align: middle;
+    text-transform: lowercase;
+    letter-spacing: 0.02em;
   }
 </style>
