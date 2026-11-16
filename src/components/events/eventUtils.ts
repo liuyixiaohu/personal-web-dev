@@ -286,7 +286,10 @@ export function pruneDecisions(
  * or later. An event that started on an earlier day is treated as past, even
  * if it has not ended yet.
  */
-export function startsOnOrAfterToday(event: LumaEvent, now = Date.now()): boolean {
+export function startsOnOrAfterToday(
+  event: Pick<LumaEvent, 'start_at'>,
+  now = Date.now(),
+): boolean {
   if (!event.start_at) return false;
   const startKey = pacificDateKey(event.start_at);
   const todayKey = pacificDateKey(new Date(now).toISOString());
