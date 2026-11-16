@@ -22,7 +22,7 @@ const SITEMAP_URLS = [
   'https://kunli.co/events/',
   'https://kunli.co/life-journey/',
   'https://kunli.co/sift/',
-  'https://kunli.co/touch-fish/',
+  'https://kunli.co/projects/',
 ];
 
 // Resolve service account key file

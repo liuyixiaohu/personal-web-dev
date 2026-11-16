@@ -1,225 +1,317 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const palette = [
-  { token: '--bg', name: 'Paper', usage: 'The page itself. Warm white, never pure white.' },
-  { token: '--text', name: 'Ink', usage: 'Headings and body text.' },
-  { token: '--text-light', name: 'Soft ink', usage: 'Supporting text and captions.' },
-  { token: '--color-rose', name: 'Rose', usage: 'The one warm accent, from the dragon.' },
-  { token: '--color-journey', name: 'Blue', usage: 'Accent for Journey.' },
-  { token: '--color-visual', name: 'Green', usage: 'Accent for visual work.' },
+const colors = [
+  { token: '--bg', usage: 'Page background' },
+  { token: '--bubble-visual', usage: 'Green background' },
+  { token: '--color-visual', usage: 'Green text' },
+  { token: '--bubble-ds', usage: 'Blue background' },
+  { token: '--color-journey', usage: 'Blue accent' },
+  { token: '--color-ds', usage: 'Blue text' },
+  { token: '--bubble-pm', usage: 'Pink background' },
+  { token: '--color-rose', usage: 'Pink accent' },
+  { token: '--color-pm', usage: 'Pink text' },
+  { token: '--gray-subtle', usage: 'Subtle / decorative' },
+  { token: '--text-light', usage: 'Secondary text' },
+  { token: '--text', usage: 'Primary text' },
 ];
 
-const sizes = [
-  { token: '--fs-xl', label: 'Title', sample: 'Take back a LinkedIn worth your time' },
-  { token: '--fs-lg', label: 'Section', sample: 'How it looks, and why' },
-  {
-    token: '--fs-base',
-    label: 'Body',
-    sample: 'English is EB Garamond. Chinese falls back to LXGW WenKai.',
-  },
+const typeScale = [
+  { token: '--fs-xl', label: 'Page title', sample: 'Page Title' },
+  { token: '--fs-lg', label: 'Section heading', sample: 'Section Heading' },
+  { token: '--fs-md', label: 'Subheading', sample: 'Subheading' },
+  { token: '--fs-base', label: 'Body', sample: 'Body text reads like this.' },
+  { token: '--fs-xs', label: 'Caption', sample: 'Caption or label' },
+];
+
+const spacing = [
+  { token: '--space-xs' },
+  { token: '--space-sm' },
+  { token: '--space-md' },
+  { token: '--space-lg' },
+  { token: '--space-xl' },
+];
+const radii = [
+  { token: '--radius-sm' },
+  { token: '--radius-md' },
+  { token: '--radius-lg' },
+  { token: '--radius-full' },
 ];
 ---
 
 <BaseLayout
   title="Making kunli.co | Kun Li"
-  description="How this site was designed, and the decisions behind it."
+  description="The colors, typography, spacing, and components behind kunli.co."
 >
   <main id="main" class="grid-page">
     <a href="/projects/" class="back-link">← Projects</a>
 
-    <header class="making-header wide">
+    <header class="ds-header wide">
       <h1>Making kunli.co</h1>
-      <p class="making-note">
-        This site is the design work I can show in full. Here is what I decided, and what I cut.
+      <p class="ds-note">
+        The colors, type, spacing, and components behind this site. Every value is a named token, so
+        a change in one place shows up everywhere it is used.
       </p>
     </header>
 
-    <section class="making-section wide">
-      <h2>The goal</h2>
-      <p class="making-body">
-        A quiet site that shows who I am through the stories on Journey, not through decoration. It
-        should read like a book, not scroll like a feed, and it should stay apart from LinkedIn,
-        which already says what I have done. Every element has to earn its place.
-      </p>
+    <section class="ds-section wide">
+      <h2>Principles</h2>
+      <dl class="ds-principles">
+        <div>
+          <dt>Minimal</dt>
+          <dd>If a page element doesn't serve a purpose, it doesn't exist.</dd>
+        </div>
+        <div>
+          <dt>Warm</dt>
+          <dd>The palette comes from a little dragon I love, 小龙格林. Warm like the character.</dd>
+        </div>
+      </dl>
     </section>
 
-    <section class="making-section wide">
-      <h2>It reads like a book</h2>
-      <p class="making-body">
-        The home page is a title page: one question and one way in. Journey is a contents page, with
-        the places in the order I lived them. Each chapter opens with a drop cap, and its quotes sit
-        on a single rule, the way a printed page does.
-      </p>
-    </section>
-
-    <section class="making-section wide">
-      <h2>Color comes from a character</h2>
-      <p class="making-body">
-        The palette comes from a little dragon I love, 小龙格林. I wanted warmth without loud brand
-        colors, so the page is mostly paper and ink, with one warm accent.
-      </p>
-      <div class="making-swatches">
+    <section class="ds-section wide">
+      <h2>Color</h2>
+      <div class="ds-swatches">
         {
-          palette.map((c) => (
-            <div class="making-swatch">
-              <div class="making-swatch-color" style={`background: var(${c.token})`} />
-              <span class="making-swatch-name">{c.name}</span>
-              <span class="making-swatch-usage">{c.usage}</span>
+          colors.map((c) => (
+            <div class="ds-swatch">
+              <div class="ds-swatch-color" style={`background: var(${c.token})`} />
+              <span class="ds-swatch-name">{c.token}</span>
+              <span class="ds-swatch-usage">{c.usage}</span>
             </div>
           ))
         }
       </div>
     </section>
 
-    <section class="making-section wide">
-      <h2>One Latin face, Chinese as fallback</h2>
-      <p class="making-body">
-        English is set in EB Garamond, an open-source Garamond. Chinese falls back to LXGW WenKai,
-        so an occasional Chinese word does not change the voice of the page. Headings and labels use
-        one weight, 500, so the browser never fakes a bold.
-      </p>
-      <div class="making-type">
+    <section class="ds-section wide">
+      <h2>Typography</h2>
+      <p class="ds-note">English is EB Garamond. Chinese falls back to LXGW WenKai.</p>
+      <div class="ds-scale">
         {
-          sizes.map((t) => (
-            <div class="making-type-row">
-              <span class="making-sample" style={`font-size: var(${t.token})`}>
+          typeScale.map((t) => (
+            <div class="ds-scale-row">
+              <span class="ds-sample" style={`font-size: var(${t.token})`}>
                 {t.sample}
               </span>
-              <span class="making-meta">{t.label}</span>
+              <span class="ds-meta">
+                {t.token} · {t.label}
+              </span>
             </div>
           ))
         }
       </div>
     </section>
 
-    <section class="making-section wide">
-      <h2>One set of rules</h2>
-      <p class="making-body">
-        Every page uses the same small set of sizes, spacing, and corner radii. A new page doesn't
-        need new decisions, and the site doesn't drift as it grows.
-      </p>
+    <section class="ds-section wide">
+      <h2>Spacing</h2>
+      <div class="ds-spacing">
+        {
+          spacing.map((s) => (
+            <div class="ds-spacing-row">
+              <span class="ds-meta">{s.token}</span>
+              <div class="ds-spacing-bar" style={`width: var(${s.token})`} />
+            </div>
+          ))
+        }
+      </div>
     </section>
 
-    <section class="making-section wide">
-      <h2>What I cut</h2>
-      <ul class="making-list">
-        <li>
-          A "Personal" principle. The Journey pages already show who I am, so the design doesn't
-          need to say it.
-        </li>
-        <li>A Probes section, so the space could hold real projects instead.</li>
-        <li>
-          Anything that only makes sense to a builder. Visitors see the result, not the workings.
-        </li>
-        <li>A hand-drawn underline. It made the page feel like a sketch, not a book.</li>
-        <li>
-          The world map on Journey. A list in the order it happened says more, and reads better on a
-          phone.
-        </li>
-      </ul>
+    <section class="ds-section wide">
+      <h2>Radius and elevation</h2>
+      <div class="ds-radii">
+        {
+          radii.map((r) => (
+            <div class="ds-radius">
+              <div class="ds-radius-box" style={`border-radius: var(${r.token})`} />
+              <span class="ds-meta">{r.token}</span>
+            </div>
+          ))
+        }
+        <div class="ds-radius">
+          <div class="ds-radius-box ds-elevation"></div>
+          <span class="ds-meta">--shadow-md</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="ds-section wide">
+      <h2>Components</h2>
+      <h3 class="section-label">Back link</h3>
+      <p class="ds-note">The small link at the top of each detail page.</p>
+      <span class="back-link">← Back</span>
+
+      <h3 class="section-label">List item</h3>
+      <p class="ds-note">A linked row, used on the Projects list.</p>
+      <div class="ds-demo-list">
+        <a href="/projects/" class="item">
+          <span class="item-title">Item title</span>
+          <span class="item-desc">A short description in secondary text.</span>
+        </a>
+      </div>
     </section>
   </main>
 </BaseLayout>
 
 <style>
-  .making-header {
+  .ds-header {
     margin-bottom: var(--space-xl);
   }
 
-  .making-header h1 {
+  .ds-header h1 {
     font-size: var(--fs-xl);
     font-weight: 500;
     line-height: 1.2;
     margin-bottom: var(--space-xs);
   }
 
-  .making-section {
+  .ds-section {
     border-top: 1px solid var(--border);
     padding-top: var(--space-lg);
     margin-bottom: var(--space-xl);
   }
 
-  .making-section h2 {
+  .ds-section h2 {
     font-size: var(--fs-lg);
     font-weight: 500;
     margin-bottom: var(--space-sm);
   }
 
-  .making-note,
-  .making-body {
+  .ds-note {
     font-size: var(--fs-xs);
     color: var(--text-light);
-    line-height: 1.6;
+    line-height: 1.5;
     margin-bottom: var(--space-md);
   }
 
-  .making-list {
-    padding-left: 1.1rem;
+  .ds-principles {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  .ds-principles dt {
+    font-size: var(--fs-md);
+    font-weight: 500;
+    margin-bottom: 0.15rem;
+  }
+
+  .ds-principles dd {
     font-size: var(--fs-xs);
     color: var(--text-light);
-    line-height: 1.6;
+    line-height: 1.5;
   }
 
-  .making-list li {
-    margin-bottom: 0.4rem;
-  }
-
-  .making-swatches {
+  .ds-swatches {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-sm);
   }
 
-  .making-swatch {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-  }
-
-  .making-swatch-color {
+  .ds-swatch-color {
     height: 56px;
-    border-bottom: 1px solid var(--border);
+    border-top-left-radius: var(--radius-md);
+    border-top-right-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    border-bottom: none;
   }
 
-  .making-swatch-name {
+  .ds-swatch-name,
+  .ds-swatch-usage {
+    display: block;
     font-size: var(--fs-xs);
-    font-weight: 500;
-    padding: 0.4rem 0.5rem 0;
-  }
-
-  .making-swatch-usage {
-    font-size: var(--fs-xs);
-    color: var(--text-light);
     line-height: 1.4;
-    padding: 0.2rem 0.5rem 0.4rem;
+    padding: 0 0.5rem;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    overflow-wrap: anywhere;
   }
 
-  .making-type {
-    display: grid;
-    gap: var(--space-sm);
+  .ds-swatch-name {
+    font-weight: 500;
+    padding-top: 0.4rem;
   }
 
-  .making-type-row {
+  .ds-swatch-usage {
+    color: var(--text-light);
+    padding-bottom: 0.4rem;
+    border: 1px solid var(--border);
+    border-top: none;
+    border-bottom-left-radius: var(--radius-md);
+    border-bottom-right-radius: var(--radius-md);
+  }
+
+  .ds-scale-row {
     display: flex;
     align-items: baseline;
     flex-wrap: wrap;
     gap: var(--space-sm);
     padding: 0.4rem 0;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
   }
 
-  .making-sample {
+  .ds-sample {
     color: var(--text);
     font-weight: 500;
     line-height: 1.3;
   }
 
-  .making-meta {
+  .ds-meta {
     font-size: var(--fs-xs);
     color: var(--text-light);
+    line-height: 1.5;
     white-space: nowrap;
+  }
+
+  .ds-spacing {
+    display: grid;
+    gap: var(--space-xs);
+  }
+
+  .ds-spacing-row {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .ds-spacing-bar {
+    height: 14px;
+    background: var(--bubble-visual);
+    border-radius: var(--radius-sm);
+    min-width: 4px;
+  }
+
+  .ds-radii {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+
+  .ds-radius {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .ds-radius-box {
+    width: 4rem;
+    height: 4rem;
+    background: var(--bubble-ds);
+    border: 1px solid var(--border);
+  }
+
+  .ds-elevation {
+    background: var(--bg);
+    box-shadow: var(--shadow-md);
+    border: none;
+  }
+
+  .ds-demo-list {
+    max-width: 28rem;
+  }
+
+  @media (max-width: 640px) {
+    .ds-swatches {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 </style>
