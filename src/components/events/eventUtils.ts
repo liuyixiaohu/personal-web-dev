@@ -199,10 +199,9 @@ export function buildLocationIndex(events: LumaEvent[]): {
 }
 
 // --- Applied / ignored ---
-// Decisions live in the browser. A handled event leaves the upcoming list and
-// stays in Handled for 7 days, then the record is deleted.
-
-const DECISION_TTL_MS = 7 * 24 * 60 * 60 * 1000;
+// Decisions live in the browser. A handled event leaves Upcoming and stays in
+// Handled through its Pacific start day. The record is deleted once that day
+// has passed, because the event can no longer appear in Upcoming.
 
 export type EventDecisionStatus = 'applied' | 'ignored';
 export type EventListMode = 'upcoming' | 'handled';
@@ -254,16 +253,30 @@ export function parseDecisions(raw: unknown): Record<string, EventDecision> {
   return out;
 }
 
-/** Delete decisions that are 7 days old or older. */
+/**
+ * Delete a decision once the event can no longer show in Upcoming.
+ * A saved start day in the past is not enough when the live catalog still
+ * lists that event on today or a later day (the date moved).
+ */
 export function pruneDecisions(
   decisions: Record<string, EventDecision>,
   now = Date.now(),
+  liveEvents?: Iterable<Pick<LumaEvent, 'api_id' | 'start_at'>>,
 ): Record<string, EventDecision> {
+  const stillListed = new Set<string>();
+  if (liveEvents) {
+    for (const event of liveEvents) {
+      if (event.api_id && startsOnOrAfterToday(event, now)) stillListed.add(event.api_id);
+    }
+  }
+
   const out: Record<string, EventDecision> = {};
   for (const [id, decision] of Object.entries(decisions)) {
     const at = Date.parse(decision.at);
-    if (!Number.isFinite(at) || now - at >= DECISION_TTL_MS) continue;
-    out[id] = decision;
+    if (!Number.isFinite(at)) continue;
+    if (startsOnOrAfterToday(decision.event, now) || stillListed.has(id)) {
+      out[id] = decision;
+    }
   }
   return out;
 }

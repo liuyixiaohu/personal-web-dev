@@ -158,7 +158,7 @@
     localStorage.setItem(`${PFX}.exclude`, JSON.stringify(excludeKeywords));
     localStorage.setItem(`${PFX}.newOnly`, JSON.stringify(newOnly));
 
-    const pruned = pruneDecisions(decisions);
+    const pruned = pruneDecisions(decisions, Date.now(), loading ? undefined : events);
     if (Object.keys(pruned).length !== Object.keys(decisions).length) {
       decisions = pruned;
       return;
@@ -188,7 +188,10 @@
   }
 
   function applySettings(s: SyncSettings) {
-    const next: SyncSettings = { ...s, decisions: pruneDecisions(s.decisions) };
+    const next: SyncSettings = {
+      ...s,
+      decisions: pruneDecisions(s.decisions, Date.now(), loading ? undefined : events),
+    };
     lastSyncedJSON = canonicalJSON(next);
     excludeKeywords = next.excludeKeywords;
     selectedLocations = new Set(next.selectedLocations);
@@ -295,8 +298,8 @@
 
   // --- Data fetching ---
   // Show events whose Pacific start day is today or later. Applied and ignored
-  // events leave Upcoming. They stay under Handled only while that start day
-  // has not passed, and the record is deleted after 7 days.
+  // events leave Upcoming and stay under Handled through that start day. The
+  // record is deleted once the start day has passed.
   onMount(async () => {
     try {
       const resp = await fetch(DATA_URL);
@@ -333,10 +336,10 @@
     const list: LumaEvent[] = [];
     for (const decision of Object.values(decisions)) {
       if (handledReason !== 'all' && decision.status !== handledReason) continue;
-      // A handled event leaves the list once its start day is before today, even
-      // if the 7-day record is still kept on this device.
-      if (!startsOnOrAfterToday(decision.event)) continue;
       const current = live.get(decision.event.api_id);
+      // Leave Handled once the start day is before today. A later date in the
+      // live catalog still counts, so a moved event stays handled.
+      if (!startsOnOrAfterToday(current ?? decision.event)) continue;
       if (current) {
         list.push(current);
         continue;
@@ -349,10 +352,12 @@
   });
   let activeEvents = $derived(mode === 'upcoming' ? upcomingEvents : handledEvents);
   let handledCounts = $derived.by(() => {
+    const live = new Map(events.map((e) => [e.api_id, e]));
     let applied = 0;
     let ignored = 0;
     for (const decision of Object.values(decisions)) {
-      if (!startsOnOrAfterToday(decision.event)) continue;
+      const current = live.get(decision.event.api_id);
+      if (!startsOnOrAfterToday(current ?? decision.event)) continue;
       if (decision.status === 'applied') applied += 1;
       else ignored += 1;
     }
@@ -432,14 +437,18 @@
   }
 
   function remember(event: LumaEvent, status: EventDecisionStatus) {
-    decisions = pruneDecisions({
-      ...decisions,
-      [event.api_id]: {
-        status,
-        at: new Date().toISOString(),
-        event: snapshotEvent(event),
+    decisions = pruneDecisions(
+      {
+        ...decisions,
+        [event.api_id]: {
+          status,
+          at: new Date().toISOString(),
+          event: snapshotEvent(event),
+        },
       },
-    });
+      Date.now(),
+      events,
+    );
   }
 
   function restore(id: string) {
@@ -554,8 +563,8 @@
         </button>
       </div>
       <p class="event-handled-note">
-        Applied and ignored events stay here through today. Events that started on an earlier day
-        are hidden, and the record is deleted after 7 days.
+        Applied and ignored events stay here through their start day. After that day they leave this
+        list, and the record is deleted.
       </p>
     {/if}
 
@@ -655,9 +664,9 @@
       <h2 class="privacy-heading">Privacy</h2>
       <p class="privacy-desc">
         Event data is fetched from a public source and displayed directly in your browser. Applied
-        and ignored choices stay on this device for 7 days. Your choices are sent to this site only
-        if you turn on Sync with a code, and only to the devices that have that code. Current intent
-        stays in your browser for this visit.
+        and ignored choices stay on this device until that event's start day has passed. Your
+        choices are sent to this site only if you turn on Sync with a code, and only to the devices
+        that have that code. Current intent stays in your browser for this visit.
       </p>
       <a href="/events/privacy" class="privacy-link">Full privacy policy →</a>
     </section>
