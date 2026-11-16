@@ -225,7 +225,7 @@
     color: var(--text-light);
     white-space: nowrap;
     flex-shrink: 0;
-    padding: 0.15em 0;
+    padding: 0.12em 0.45em;
   }
 
   .event-price--free {
