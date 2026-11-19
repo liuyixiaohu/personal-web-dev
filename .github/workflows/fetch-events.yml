@@ -53,6 +53,10 @@ jobs:
           cache: 'npm'
 
       - name: Install Node dependencies and generate summary vectors
+        env:
+          # onnxruntime-node otherwise downloads CUDA GPU binaries from GitHub during
+          # postinstall. This job runs on CPU only, and that download now returns 404.
+          ONNXRUNTIME_NODE_INSTALL_CUDA: skip
         run: |
           npm ci
           node scripts/generate-event-embeddings.mjs
