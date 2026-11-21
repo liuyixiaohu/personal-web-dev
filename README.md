@@ -16,7 +16,7 @@ GitHub Actions cron), and a Cloudflare Pages deploy.
 | ------------------- | ---------------------------------------------------------------------- |
 | Framework           | [Astro 6](https://astro.build) (static output)                         |
 | Interactive islands | [Svelte 5](https://svelte.dev) runes (`$state`, `$derived`, `$effect`) |
-| Pages               | 8 routes incl. EN + ZH variants for select pages                       |
+| Pages               | Astro file-based routes; Sift changelog is bilingual (EN + ZH)         |
 | Data pipelines      | Python scripts + GitHub Actions cron (daily)                           |
 | Hosting             | Cloudflare Pages (static site + Functions)                             |
 | Runtime storage     | Cloudflare KV (optional sync) + D1 (email subscriptions)               |
@@ -92,15 +92,16 @@ unsubscribe. No LLM participates in subscription or email generation.
 
 ```
 src/
-  pages/          8 routes (Astro)
-  components/     Svelte islands + Astro components
-  layouts/        BaseLayout with view transitions
-  styles/         Global CSS with design tokens
-  utils/          Analytics and shared helpers
-  data/           Sift changelog (typed TS data)
-scripts/          Daily fetch pipeline (Luma events)
+  pages/            Astro file-based routes
+  components/       Svelte islands + Astro components (events/ = events list)
+  layouts/          BaseLayout with view transitions
+  styles/           Global CSS with design tokens
+  server/           Shared server code for Pages Functions (subscriptions)
+  data/             Typed content (Sift changelog, journey pins)
+functions/          Cloudflare Pages Functions (sync and subscriptions API)
+scripts/            Daily event pipeline, checks, and tests
 .github/workflows/  Cron jobs + CI
-docs/             Notes
+docs/               Notes
 ```
 
 ## Dev
@@ -125,13 +126,6 @@ Use local-only test values through Wrangler's secret mechanisms; never commit a
 Local tests prove routing, schema, and idempotency logic, but production delivery
 is verified separately with a controlled mailbox: subscribe, confirm, receive
 one update, replay the same `updated_at` without a second email, then unsubscribe.
-
-Optional helpers:
-
-```bash
-npm run seo:diagnose    # query Google Search Console for crawl errors
-npm run seo:resubmit    # request reindex of new/updated URLs
-```
 
 ## Design system
 
