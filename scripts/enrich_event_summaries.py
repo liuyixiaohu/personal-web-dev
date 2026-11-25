@@ -199,7 +199,11 @@ def main() -> None:
     generated_count = 0
     for start in range(0, len(to_summarize), 8):
         batch = to_summarize[start : start + 8]
-        generated = generate_batch(batch, key)
+        try:
+            generated = generate_batch(batch, key)
+        except requests.RequestException as exc:
+            print(f"::warning::Gemini summaries deferred until the next run: {exc}")
+            break
         for item in batch:
             if item["api_id"] not in generated:
                 continue  # Keep this event due so the next run can retry it.
@@ -210,7 +214,7 @@ def main() -> None:
             generated_count += 1
 
     if to_summarize and generated_count == 0:
-        raise RuntimeError("Gemini returned no usable summaries for any event")
+        print("::warning::No summaries updated; publishing the event catalog with cached summaries")
 
     with EVENTS_FILE.open("w", encoding="utf-8") as handle:
         json.dump(catalog, handle, ensure_ascii=False, indent=2)
