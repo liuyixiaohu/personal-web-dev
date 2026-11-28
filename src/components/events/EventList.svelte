@@ -26,25 +26,10 @@
   import EventFilters from './EventFilters.svelte';
   import EventCard from './EventCard.svelte';
   import EventSync from './EventSync.svelte';
-  import {
-    EMBEDDINGS_URL,
-    EMBEDDING_MODEL,
-    EMBEDDING_REVISION,
-    rankWithinDay,
-    type EmbeddingCatalog,
-  } from './intentRanking';
-  import {
-    SYNC_CODE_KEY,
-    SYNC_TIME_KEY,
-    SyncError,
-    type SyncSettings,
-    canonicalJSON,
-    createSync,
-    mergeOnJoin,
-    pullSync,
-    pushSync,
-    rotateSync,
-  } from './syncUtils';
+  import { rankWithinDay } from './intentRanking';
+  import { createIntentSearch } from './useIntentSearch.svelte';
+  import { createEventSync } from './useEventSync.svelte';
+  import { type SyncSettings, canonicalJSON } from './syncUtils';
   import Popup from '../Popup.svelte';
   import '../../styles/filters.css';
 
@@ -71,84 +56,9 @@
   let excludePopupOpen = $state(false);
   // Current intent is deliberately absent from localStorage and SyncSettings.
   let currentIntent = $state('');
-  let intentStatus = $state<'idle' | 'loading' | 'ready' | 'fallback' | 'no-data'>('idle');
-  let queryVector = $state.raw<number[] | undefined>(undefined);
-  let embeddingCatalog = $state.raw<EmbeddingCatalog | undefined>(undefined);
-  let catalogPromise: Promise<EmbeddingCatalog> | undefined;
-  let intentWorker: Worker | undefined;
-  let intentTimer: ReturnType<typeof setTimeout> | undefined;
-  let intentSequence = 0;
-
-  async function loadEmbeddings(): Promise<EmbeddingCatalog> {
-    catalogPromise ??= fetch(`${EMBEDDINGS_URL}?v=${encodeURIComponent(updatedAt)}`)
-      .then(async (response) => {
-        if (!response.ok) throw new Error(`Embedding data HTTP ${response.status}`);
-        const data = (await response.json()) as EmbeddingCatalog;
-        if (
-          data.model !== EMBEDDING_MODEL ||
-          data.revision !== EMBEDDING_REVISION ||
-          data.dimension !== 384
-        ) {
-          throw new Error('Embedding model does not match the published event vectors');
-        }
-        return data;
-      })
-      .catch((error) => {
-        catalogPromise = undefined;
-        throw error;
-      });
-    return catalogPromise;
-  }
-
-  $effect(() => {
-    const text = currentIntent.trim();
-    const id = ++intentSequence;
-    if (intentTimer) clearTimeout(intentTimer);
-    queryVector = undefined;
-    if (!text) {
-      intentStatus = 'idle';
-      return;
-    }
-    intentStatus = 'loading';
-    intentTimer = setTimeout(async () => {
-      try {
-        const catalog = await loadEmbeddings();
-        if (id !== intentSequence) return;
-        embeddingCatalog = catalog;
-        if (!Object.keys(catalog.items).length) {
-          intentStatus = 'no-data';
-          return;
-        }
-        intentWorker ??= new Worker(new URL('./intentWorker.ts', import.meta.url), {
-          type: 'module',
-        });
-        intentWorker.onmessage = (
-          message: MessageEvent<{ id: number; vector?: number[]; error?: string }>,
-        ) => {
-          if (message.data.id !== intentSequence) return;
-          if (message.data.vector?.length === catalog.dimension) {
-            queryVector = message.data.vector;
-            intentStatus = 'ready';
-          } else {
-            intentStatus = 'fallback';
-            if (message.data.error)
-              console.error('Intent similarity unavailable:', message.data.error);
-          }
-        };
-        intentWorker.onerror = () => {
-          if (id === intentSequence) intentStatus = 'fallback';
-        };
-        intentWorker.postMessage({ id, text });
-      } catch (error) {
-        if (id === intentSequence) intentStatus = 'fallback';
-        console.error('Intent similarity unavailable:', error);
-      }
-    }, 500);
-  });
-
-  onMount(() => () => {
-    if (intentTimer) clearTimeout(intentTimer);
-    intentWorker?.terminate();
+  const intent = createIntentSearch({
+    intent: () => currentIntent,
+    catalogVersion: () => updatedAt,
   });
 
   // --- Persist filter state and decisions to localStorage ---
@@ -167,16 +77,6 @@
   });
 
   // --- Optional cross-device sync (off until a sync code is created or joined) ---
-  // Last write wins. A device pulls on load and when it becomes visible, and
-  // pushes its own changes after a short pause.
-  let syncCode = $state(localStorage.getItem(SYNC_CODE_KEY) ?? '');
-  let syncedAt = $state(localStorage.getItem(SYNC_TIME_KEY) ?? '');
-  let syncStatus = $state<'idle' | 'syncing' | 'error'>('idle');
-  let syncError = $state('');
-  // The JSON this device last sent or received. Compared with the current
-  // settings so that applying remote data does not echo back as a push.
-  let lastSyncedJSON = '';
-
   function currentSettings(): SyncSettings {
     return {
       excludeKeywords: [...excludeKeywords],
@@ -187,114 +87,22 @@
     };
   }
 
-  function applySettings(s: SyncSettings) {
+  // Returns the canonical JSON of what was applied, so the sync module can
+  // tell that remote data should not echo back as a push.
+  function applySettings(s: SyncSettings): string {
     const next: SyncSettings = {
       ...s,
       decisions: pruneDecisions(s.decisions, Date.now(), loading ? undefined : events),
     };
-    lastSyncedJSON = canonicalJSON(next);
     excludeKeywords = next.excludeKeywords;
     selectedLocations = new Set(next.selectedLocations);
     selectedDays = new Set(next.selectedDays);
     newOnly = next.newOnly;
     decisions = next.decisions;
+    return canonicalJSON(next);
   }
 
-  function saveSyncCode(code: string, updated_at: string, json: string) {
-    syncCode = code;
-    syncedAt = updated_at;
-    lastSyncedJSON = json;
-    localStorage.setItem(SYNC_CODE_KEY, code);
-    localStorage.setItem(SYNC_TIME_KEY, updated_at);
-  }
-
-  function syncFailed(e: unknown) {
-    syncStatus = 'error';
-    syncError =
-      e instanceof SyncError && e.status === 404
-        ? 'This sync code no longer exists. Disconnect this device and join again.'
-        : 'Sync failed. Your choices are still saved on this device.';
-    console.error('Sync failed:', e);
-  }
-
-  async function syncPull() {
-    if (!syncCode) return;
-    syncStatus = 'syncing';
-    syncError = '';
-    try {
-      const remote = await pullSync(syncCode);
-      const lastSeen = localStorage.getItem(SYNC_TIME_KEY) ?? '';
-      if (!lastSeen || remote.updated_at > lastSeen) {
-        applySettings(remote.settings);
-        syncedAt = remote.updated_at;
-        localStorage.setItem(SYNC_TIME_KEY, remote.updated_at);
-      }
-      syncStatus = 'idle';
-    } catch (e) {
-      syncFailed(e);
-    }
-  }
-
-  async function syncPush(json: string) {
-    const code = syncCode;
-    if (!code) return;
-    syncStatus = 'syncing';
-    try {
-      const { updated_at } = await pushSync(code, JSON.parse(json) as SyncSettings);
-      lastSyncedJSON = json;
-      syncedAt = updated_at;
-      localStorage.setItem(SYNC_TIME_KEY, updated_at);
-      syncStatus = 'idle';
-    } catch (e) {
-      syncFailed(e);
-    }
-  }
-
-  $effect(() => {
-    const json = canonicalJSON(currentSettings());
-    if (!syncCode || json === lastSyncedJSON) return;
-    const timer = setTimeout(() => void syncPush(json), 1500);
-    return () => clearTimeout(timer);
-  });
-
-  async function onSyncCreate(): Promise<string> {
-    const settings = currentSettings();
-    const { code, updated_at } = await createSync(settings);
-    saveSyncCode(code, updated_at, canonicalJSON(settings));
-    return code;
-  }
-
-  async function onSyncJoin(code: string): Promise<void> {
-    const remote = await pullSync(code);
-    const merged = mergeOnJoin(currentSettings(), remote.settings);
-    const { updated_at } = await pushSync(code, merged);
-    applySettings(merged);
-    saveSyncCode(code, updated_at, lastSyncedJSON);
-  }
-
-  async function onSyncRotate(): Promise<string> {
-    const { code, updated_at } = await rotateSync(syncCode);
-    saveSyncCode(code, updated_at, lastSyncedJSON);
-    return code;
-  }
-
-  function onSyncDisconnect() {
-    syncCode = '';
-    syncedAt = '';
-    syncStatus = 'idle';
-    syncError = '';
-    lastSyncedJSON = '';
-    localStorage.removeItem(SYNC_CODE_KEY);
-    localStorage.removeItem(SYNC_TIME_KEY);
-  }
-
-  onMount(() => {
-    const onVisible = () => {
-      if (document.visibilityState === 'visible') void syncPull();
-    };
-    document.addEventListener('visibilitychange', onVisible);
-    return () => document.removeEventListener('visibilitychange', onVisible);
-  });
+  const sync = createEventSync({ currentSettings, applySettings });
 
   // --- Data fetching ---
   // Show events whose Pacific start day is today or later. Applied and ignored
@@ -324,7 +132,7 @@
     } finally {
       loading = false;
     }
-    if (syncCode) void syncPull();
+    sync.pullIfConnected();
   });
 
   // --- Derived filter options (single-pass) ---
@@ -412,7 +220,12 @@
     if (!currentIntent.trim()) return groups;
     return groups.map((group) => ({
       date: group.date,
-      events: rankWithinDay(group.events, currentIntent, queryVector, embeddingCatalog),
+      events: rankWithinDay(
+        group.events,
+        currentIntent,
+        intent.queryVector,
+        intent.embeddingCatalog,
+      ),
     }));
   });
 
@@ -490,21 +303,21 @@
           >Last checked: {formatUpdatedAt(updatedAt)} (Refreshes once daily)</span
         >
         <p class="sync-hint">
-          {#if syncCode}
+          {#if sync.code}
             Your filters and handled events stay in sync across devices.
           {:else}
             Keep your filters and handled events on your other devices.
           {/if}
           <EventSync
-            code={syncCode}
-            {syncedAt}
-            status={syncStatus}
-            error={syncError}
-            onCreate={onSyncCreate}
-            onJoin={onSyncJoin}
-            onShowCode={() => syncCode}
-            onRotate={onSyncRotate}
-            onDisconnect={onSyncDisconnect}
+            code={sync.code}
+            syncedAt={sync.syncedAt}
+            status={sync.status}
+            error={sync.error}
+            onCreate={sync.create}
+            onJoin={sync.join}
+            onShowCode={() => sync.code}
+            onRotate={sync.rotate}
+            onDisconnect={sync.disconnect}
           />
         </p>
       </div>
@@ -576,7 +389,7 @@
       {selectedDays}
       {searchQuery}
       {currentIntent}
-      {intentStatus}
+      intentStatus={intent.status}
       {excludeKeywords}
       {newOnly}
       {newCount}
