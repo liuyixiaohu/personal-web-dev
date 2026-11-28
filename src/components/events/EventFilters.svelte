@@ -156,8 +156,9 @@
               aria-pressed={selectedLocations.has(loc)}
               title={count === 0 ? 'Saved filter — no matches in the current list' : undefined}
               onclick={() => onLocationToggle(loc)}
-              >{loc} <span class="pill-count">({count})</span></button
             >
+              {loc} <span class="pill-count">({count})</span>
+            </button>
           {/each}
         </div>
         {#if locationOverflows || locationExpanded}
@@ -183,8 +184,10 @@
           class:pill--active={selectedDays.has(i)}
           aria-pressed={selectedDays.has(i)}
           aria-label={DAY_NAMES[i]}
-          onclick={() => onDayToggle(i)}>{dayLabel}</button
+          onclick={() => onDayToggle(i)}
         >
+          {dayLabel}
+        </button>
       {/each}
     </div>
   </div>
@@ -209,9 +212,9 @@
           oninput={(e) => onIntentChange((e.target as HTMLInputElement).value)}
         />
         {#if currentIntent}
-          <button class="intent-clear" type="button" onclick={() => onIntentChange('')}
-            >Clear</button
-          >
+          <button class="intent-clear" type="button" onclick={() => onIntentChange('')}>
+            Clear
+          </button>
         {/if}
       </div>
       {#if intentStatus === 'loading'}

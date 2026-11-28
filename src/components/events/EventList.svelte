@@ -299,9 +299,9 @@
   {:else}
     {#if updatedAt}
       <div class="event-meta-bar">
-        <span class="event-updated"
-          >Last checked: {formatUpdatedAt(updatedAt)} (Refreshes once daily)</span
-        >
+        <span class="event-updated">
+          Last checked: {formatUpdatedAt(updatedAt)} (Refreshes once daily)
+        </span>
         <p class="sync-hint">
           {#if sync.code}
             Your filters and handled events stay in sync across devices.
@@ -439,8 +439,10 @@
                     class="exclude-chip-remove"
                     onclick={() => {
                       excludeKeywords = excludeKeywords.filter((k) => k !== kw);
-                    }}>&times;</button
+                    }}
                   >
+                    &times;
+                  </button>
                 </span>
               {/each}
             </div>
